@@ -6,12 +6,12 @@ A collection of AWS Lambda Layers for Python3.7
 
 | Package        | ARN                                                                          |          
 | :------------- |:---------------------------------------------------------------------------  |
-| requests       | arn:aws:lambda:<region>:113088814899:layer:Klayers-python37-requests:1       |
-| beautifulsoup4 | arn:aws:lambda:<region>:113088814899:layer:Klayers-python37-beautifulsoup4:1 |
-| sqlite3        | arn:aws:lambda:<region>:113088814899:layer:Klayers-python37-sqlite3:1        |      
-| elasticsearch  | arn:aws:lambda:<region>:113088814899:layer:Klayers-python37-elasticsearch:1  |
-| bcrypt         | arn:aws:lambda:<region>:113088814899:layer:Klayers-python37-bcrypt:1         |
-| pymongo        | arn:aws:lambda:<region>:113088814899:layer:Klayers-python37-pymongo:1        |
+| requests       | arn:aws:lambda:\<region>:113088814899:layer:Klayers-python37-requests:1       |
+| beautifulsoup4 | arn:aws:lambda:\<region>:113088814899:layer:Klayers-python37-beautifulsoup4:1 |
+| sqlite3        | arn:aws:lambda:\<region>:113088814899:layer:Klayers-python37-sqlite3:1        |      
+| elasticsearch  | arn:aws:lambda:\<region>:113088814899:layer:Klayers-python37-elasticsearch:1  |
+| bcrypt         | arn:aws:lambda:\<region>:113088814899:layer:Klayers-python37-bcrypt:1         |
+| pymongo        | arn:aws:lambda:\<region>:113088814899:layer:Klayers-python37-pymongo:1        |
 
 # Using the Layers
 
