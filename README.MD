@@ -4,19 +4,19 @@ A collection of AWS Lambda Layers for Python3.7
 
 # Layer List
 
-| Package        | ARN                                                                          |          
-| :------------- |:---------------------------------------------------------------------------  |
-| requests       | arn:aws:lambda:\<region>:113088814899:layer:Klayers-python37-requests:1       |
-| beautifulsoup4 | arn:aws:lambda:\<region>:113088814899:layer:Klayers-python37-beautifulsoup4:1 |
-| sqlite3        | arn:aws:lambda:\<region>:113088814899:layer:Klayers-python37-sqlite3:1        |      
-| elasticsearch  | arn:aws:lambda:\<region>:113088814899:layer:Klayers-python37-elasticsearch:1  |
-| bcrypt         | arn:aws:lambda:\<region>:113088814899:layer:Klayers-python37-bcrypt:1         |
-| pymongo        | arn:aws:lambda:\<region>:113088814899:layer:Klayers-python37-pymongo:1        |
+| Package        | ARN                                                                             |          
+| :------------- |:---------------------------------------------------------------------------     |
+| requests       | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-requests:1       |
+| beautifulsoup4 | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-beautifulsoup4:1 |
+| sqlite3        | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-sqlite3:1        |      
+| elasticsearch  | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-elasticsearch:1  |
+| bcrypt         | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-bcrypt:1         |
+| pymongo        | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pymongo:1        |
 
 # Using the Layers
 
 You can either:
-* Set any of the ARNs above to be a layer for your function. For list of all layers, view the `arns.json` file.
+* Set any of the ARNs above (for your region) to be a layer for your function. For list of all layers, view the `arns.json` file.
 * Download the zip file from the directory of your package name (e.g. requests) and upload as a layer to your function
 
 # Layer history
