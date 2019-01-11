@@ -1,0 +1,25 @@
+update:
+  all
+
+search: False
+requirements:
+  - bcrypt/latest/requirements.txt:
+      update: all
+      pin: True
+  - beautifulsoup4/latest/requirements.txt:
+      update: all
+      pin: True
+  - elasticsearch/latest/requirements.txt:
+      update: all
+      pin: True
+  - pymongo/latest/requirements.txt:
+      update: all
+      pin: True
+  - requests/latest/requirements.txt:
+      update: all
+      pin: True
+  - sqlite3/latest/requirements.txt:
+      update: all
+      pin: True
+
+label_prs: update
