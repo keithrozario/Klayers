@@ -7,3 +7,4 @@
 ./package.sh -p sqlite3 -l Apache-2.0 -r python3.7 -x public
 ./package.sh -p bcrypt -l Apache-2.0 -r python3.7 -x public
 ./package.sh -p pymongo -l Apache-2.0 -r python3.7 -x public
+./package.sh -p ffmpeg-python -l Apache-2.0 -r python3.7 -x public -a us-east-1
