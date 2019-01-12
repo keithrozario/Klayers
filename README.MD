@@ -6,16 +6,18 @@ A collection of AWS Lambda Layers for Python3.7
 
 [![Updates](https://pyup.io/repos/github/keithrozario/Klayers/shield.svg)](https://pyup.io/repos/github/keithrozario/Klayers/)
 
+If the layers are ever outdated, click the badge above for more info.
+
 # Layer List
 
-| Package        | ARN                                                                             |          
-| :------------- |:---------------------------------------------------------------------------     |
-| requests       | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-requests:1       |
-| beautifulsoup4 | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-beautifulsoup4:2 |
-| sqlite3        | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-sqlite3:1        |      
-| elasticsearch  | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-elasticsearch:1  |
-| bcrypt         | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-bcrypt:1         |
-| pymongo        | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pymongo:1        |
+| Package        | ARN                                                                             | Version |        
+| :------------- |:---------------------------------------------------------------------------     | ------- |
+| requests       | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-requests:1       | 1       |
+| beautifulsoup4 | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-beautifulsoup4:2 | 2       |
+| sqlite3        | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-sqlite3:1        | 1       |
+| elasticsearch  | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-elasticsearch:1  | 1       |
+| bcrypt         | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-bcrypt:1         | 1       |
+| pymongo        | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pymongo:1        | 1       |
 
 # Using the Layers
 
