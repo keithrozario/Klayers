@@ -108,6 +108,8 @@ for i in ${PACKAGES[@]}; do  # install all packages in $PACKAGES array
 	pip install -q $i >> "$LOG_FILE"
 done
 pip freeze > requirements.txt
+# there will be conflict with the typing library for python3.7 lambda, have to remove
+sed '/^typing/d' requirements.txt > temp.txt && mv temp.txt requirements.txt
 deactivate
 rm -rf venv/ # don't need the virtualenv anymore
 
@@ -214,4 +216,3 @@ done
 # Remove left-over files
 rm $ZIP_NAME
 rm requirements.txt
-
