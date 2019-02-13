@@ -1,0 +1,6 @@
+asn1crypto==0.24.0
+cffi==1.11.5
+cryptography==2.5
+pycparser==2.19
+pyOpenSSL==19.0.0
+six==1.12.0
