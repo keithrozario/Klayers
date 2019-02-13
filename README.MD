@@ -20,6 +20,7 @@ If the layers are ever outdated, click the badge above for more info.
 | pymongo        | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pymongo:1        | 1       |
 | pyOpenSSL      | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pyOpenSSL:1      | 1       |
 | aiohttp        | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pyaiohttp:1      | 1       |
+| ffmpeg-python  | arn:aws:lambda:us-east-1:113088814899:layer:Klayers-python37-pyaiohttp:1        | 1       |
 
 
 # Using the Layers
@@ -58,3 +59,9 @@ e.g.
 # Asking for more layers
 
 Make a pull requests!
+
+# Notes
+
+All layers contain a single package except aiohttp, which contains aiohttp, aiodns and cchardet
+
+All layers are deployed in every region (except China) -- except ffmpeg which is deployed only in us-east-1 because that's the only region where the ffmpeg layer is deployed.
