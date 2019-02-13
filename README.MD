@@ -18,6 +18,9 @@ If the layers are ever outdated, click the badge above for more info.
 | elasticsearch  | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-elasticsearch:1  | 1       |
 | bcrypt         | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-bcrypt:1         | 1       |
 | pymongo        | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pymongo:1        | 1       |
+| pyOpenSSL      | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pyOpenSSL:1      | 1       |
+| aiohttp        | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pyaiohttp:1      | 1       |
+
 
 # Using the Layers
 
@@ -31,17 +34,20 @@ Whenever there is an new version of the underlying package, a new layer will be 
 
 # Building your own layer
 
-Script only supports building stand-alone python packages (like requests and beautifulsoup4). While it can build wrappers, it will not be the underlying component that is wrapped.
-
-To build a layer containing the python package abc use the following:
+To build a layer containing a single python package use the following:
 
     $ package.sh -p <package_name> -l <license> -r <runtime> -x <public/private> -a <aws_region>
+
+To buils a layer containing multiple python packages use the following:
+
+	$ ./package_multiple.sh <path_to_textfile_with_package_list> -l <license> -r <runtime> -x <public/private> -a <aws_region> -n <package_name>
 
 e.g.
 
     $ package.sh -x public -a ap-southeast-1 -p requests -r python3.7 -l Apache-2.0
     $ package.sh -x private -a ap-southeast-1 -p beautifulsoup4 -r python3.7 -l MIT
     $ package.sh -p sqlite3 -r python3.7 -l Apache-2.0
+    $ package_multiple.sh -p aiohttp.txt -l Apache-2.0 -r python3.7 -x public -n aiohttp
 
 * -p : (MANDATORY) Package Name
 * -l : (MANDATORY) License information for the Package, use the SPDX license identifier
