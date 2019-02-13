@@ -10,3 +10,4 @@
 ./package.sh -p ffmpeg-python -l Apache-2.0 -r python3.7 -x public -a us-east-1
 ./package.sh -p pyOpenSSL -l Apache-2.0 -r python3.7 -x public
 ./package_multiple.sh -p aiohttp.txt -l Apache-2.0 -r python3.7 -x public -n aiohttp
+./package.sh -p tldextract -l "github.com/john-kurkowski/tldextract/blob/master/LICENSE" -r python3.7 -x public
