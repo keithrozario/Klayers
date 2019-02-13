@@ -19,8 +19,10 @@ If the layers are ever outdated, click the badge above for more info.
 | bcrypt         | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-bcrypt:1         | 1       |
 | pymongo        | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pymongo:1        | 1       |
 | pyOpenSSL      | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pyOpenSSL:1      | 1       |
-| aiohttp        | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pyaiohttp:1      | 1       |
-| ffmpeg-python  | arn:aws:lambda:us-east-1:113088814899:layer:Klayers-python37-pyaiohttp:1        | 1       |
+| aiohttp        | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-aiohttp:4        | 4       |
+| ffmpeg-python  | arn:aws:lambda:us-east-1:113088814899:layer:Klayers-python37-ffmpeg-python:1    | 1       |
+| tldextract     | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-tldextract:1     | 1       |
+| construct      | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-construct:1      | 1       |
 
 
 # Using the Layers
@@ -64,4 +66,6 @@ Make a pull requests!
 
 All layers contain a single package except aiohttp, which contains aiohttp, aiodns and cchardet
 
-All layers are deployed in every region (except China) -- except ffmpeg which is deployed only in us-east-1 because that's the only region where the ffmpeg layer is deployed.
+All layers are deployed in every region (except China). Refer to the arns.json file for more info.
+
+For aiohttp, do not use anything before version 4 for python3.7 -- it won't work.
