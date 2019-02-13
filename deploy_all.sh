@@ -8,3 +8,5 @@
 ./package.sh -p bcrypt -l Apache-2.0 -r python3.7 -x public
 ./package.sh -p pymongo -l Apache-2.0 -r python3.7 -x public
 ./package.sh -p ffmpeg-python -l Apache-2.0 -r python3.7 -x public -a us-east-1
+./package.sh -p pyOpenSSL -l Apache-2.0 -r python3.7 -x public
+./package_multiple.sh -p aiohttp.txt -l Apache-2.0 -r python3.7 -x public -n aiohttp
