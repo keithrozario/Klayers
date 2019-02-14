@@ -66,7 +66,9 @@ else
 	then
 		printf "INFO: Deploying to all regions!\n" 2>&1 | tee -a "$LOG_FILE"
 		# China not included as I'm unable to deploy there
-		AWS_REGIONS=( ap-southeast-1 ap-southeast-2
+		AWS_REGIONS=( ap-northeast-1 ap-northeast-2
+			ap-south-1
+			ap-southeast-1 ap-southeast-2
 			ca-central-1
 			eu-central-1
 			eu-north-1
