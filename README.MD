@@ -68,4 +68,7 @@ All layers contain a single package except aiohttp, which contains aiohttp, aiod
 
 All layers are deployed in every region (except China). Refer to the arns.json file for more info.
 
-For aiohttp, do not use anything before version 4 for python3.7 -- it won't work.
+For aiohttp, the following regions are two versions behind the rest (i'll fix it later):
+* ap-northeast-1
+* ap-northeast-2
+* ap-south-1
