@@ -14,7 +14,6 @@ If the layers are ever outdated, click the badge above for more info.
 | :------------- |:---------------------------------------------------------------------------     | ------- |
 | requests       | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-requests:1       | 1       |
 | beautifulsoup4 | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-beautifulsoup4:2 | 2       |
-| sqlite3        | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-sqlite3:1        | 1       |
 | elasticsearch  | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-elasticsearch:1  | 1       |
 | bcrypt         | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-bcrypt:1         | 1       |
 | pymongo        | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pymongo:1        | 1       |
@@ -33,7 +32,7 @@ You can either:
 
 # Layer history
 
-Whenever there is an new version of the underlying package, a new layer will be created with an incremented version number.View the changelog for each package.
+Whenever there is an new version of the underlying package, a new layer **may** be created with an incremented version number. View the changelog for each package.
 
 # Building your own layer
 
@@ -72,3 +71,9 @@ For aiohttp, the following regions are two versions behind the rest (i'll fix it
 * ap-northeast-1
 * ap-northeast-2
 * ap-south-1
+
+# More notes
+
+For tldextract, set the following environment variable to avoid trying to query the Mozilla tld file from the internet
+
+    $ TLDEXTRACT_CACHE=/opt/python/tldextract/.tld_set_snapshot
