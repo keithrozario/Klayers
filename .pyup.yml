@@ -3,7 +3,7 @@ update:
 
 search: False
 requirements:
-  - bcrypt/latest/requirements.txt:
+  - requests/latest/requirements.txt:
       update: all
       pin: True
   - beautifulsoup4/latest/requirements.txt:
@@ -12,13 +12,25 @@ requirements:
   - elasticsearch/latest/requirements.txt:
       update: all
       pin: True
+  - bcrypt/latest/requirements.txt:
+      update: all
+      pin: True
   - pymongo/latest/requirements.txt:
       update: all
       pin: True
-  - requests/latest/requirements.txt:
+  - pyOpenSSL/latest/requirements.txt:
       update: all
       pin: True
-  - sqlite3/latest/requirements.txt:
+  - aiohttp/latest/requirements.txt:
+      update: all
+      pin: True
+  - ffmpeg-python/latest/requirements.txt:
+      update: all
+      pin: True
+  - tldextract/latest/requirements.txt:
+      update: all
+      pin: True
+  - construct/latest/requirements.txt:
       update: all
       pin: True
 
