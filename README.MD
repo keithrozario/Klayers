@@ -63,8 +63,6 @@ Make a pull requests!
 
 # Notes
 
-All layers contain a single package except aiohttp, which contains aiohttp, aiodns and cchardet
-
 All layers are deployed in every region (except China). Refer to the arns.json file for more info.
 
 For aiohttp, the following regions are two versions behind the rest (i'll fix it later):
