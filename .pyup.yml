@@ -33,5 +33,8 @@ requirements:
   - construct/latest/requirements.txt:
       update: all
       pin: True
+  - Pillow/latest/requirements.txt:
+      update: all
+      pin: True
 
 label_prs: update

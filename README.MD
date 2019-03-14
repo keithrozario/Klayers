@@ -22,6 +22,7 @@ If the layers are ever outdated, click the badge above for more info.
 | ffmpeg-python  | arn:aws:lambda:us-east-1:113088814899:layer:Klayers-python37-ffmpeg-python:1    | 1       |
 | tldextract     | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-tldextract:1     | 1       |
 | construct      | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-construct:1      | 1       |
+| Pillow         | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-Pillow:1         | 1       |
 
 
 # Using the Layers
