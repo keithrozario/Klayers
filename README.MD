@@ -73,4 +73,4 @@ For tldextract, set the following environment variable to avoid trying to query 
 
     $ TLDEXTRACT_CACHE=/opt/python/tldextract/.tld_set_snapshot
 
-For pytesseract, the tesseract binary is not included in the build.
+For pytesseract, the tesseract binary is not included in the build, but the layer includes Pillow
