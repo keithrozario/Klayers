@@ -23,6 +23,7 @@ If the layers are ever outdated, click the badge above for more info.
 | tldextract     | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-tldextract:1     | 1       |
 | construct      | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-construct:1      | 1       |
 | Pillow         | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-Pillow:1         | 1       |
+| pytesseract    | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pytesseract:1    | 1       |
 
 
 # Using the Layers
@@ -41,16 +42,11 @@ To build a layer containing a single python package use the following:
 
     $ package.sh -p <package_name> -l <license> -r <runtime> -x <public/private> -a <aws_region>
 
-To buils a layer containing multiple python packages use the following:
-
-	$ ./package_multiple.sh <path_to_textfile_with_package_list> -l <license> -r <runtime> -x <public/private> -a <aws_region> -n <package_name>
-
 e.g.
 
     $ package.sh -x public -a ap-southeast-1 -p requests -r python3.7 -l Apache-2.0
     $ package.sh -x private -a ap-southeast-1 -p beautifulsoup4 -r python3.7 -l MIT
     $ package.sh -p sqlite3 -r python3.7 -l Apache-2.0
-    $ package_multiple.sh -p aiohttp.txt -l Apache-2.0 -r python3.7 -x public -n aiohttp
 
 * -p : (MANDATORY) Package Name
 * -l : (MANDATORY) License information for the Package, use the SPDX license identifier
@@ -73,6 +69,8 @@ For aiohttp, the following regions are two versions behind the rest (i'll fix it
 
 # More notes
 
-For tldextract, set the following environment variable to avoid trying to query the Mozilla tld file from the internet
+For tldextract, set the following environment variable to avoid trying to query the Mozilla tld file from the internet.
 
     $ TLDEXTRACT_CACHE=/opt/python/tldextract/.tld_set_snapshot
+
+For pytesseract, the tesseract binary is not included in the build.
