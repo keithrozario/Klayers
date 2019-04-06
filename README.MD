@@ -22,7 +22,7 @@ If the layers are ever outdated, click the badge above for more info.
 | ffmpeg-python  | arn:aws:lambda:us-east-1:113088814899:layer:Klayers-python37-ffmpeg-python:1    | 1       |
 | tldextract     | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-tldextract:1     | 1       |
 | construct      | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-construct:1      | 1       |
-| Pillow         | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-Pillow:1         | 1       |
+| Pillow         | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-Pillow:1         | 5       |
 | pytesseract    | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pytesseract:1    | 1       |
 
 
@@ -52,7 +52,8 @@ e.g.
 * -l : (MANDATORY) License information for the Package, use the SPDX license identifier
 * -r : (MANDATORY) Runtime, currently only python3.7 is supported, but should work for python2.7 and python3.6
 * -x : (OPTIONAL) set to public to make layer publicly accessible defaults to private
-* -a : (OPTIONAL) and defaults to deploying layer in all aws_regions where lambda is available (except China)
+* -a : (OPTIONAL) aws regiondefaults to deploying layer in all aws_regions where lambda is available (except China)
+* -b : (OPTIONAL) bypass flag to upload layers even if previous upload has the same hash
 
 # Asking for more layers
 
@@ -62,10 +63,7 @@ Make a pull requests!
 
 All layers are deployed in every region (except China). Refer to the arns.json file for more info.
 
-For aiohttp, the following regions are two versions behind the rest (i'll fix it later):
-* ap-northeast-1
-* ap-northeast-2
-* ap-south-1
+I intend to delete older layers after a while. Functions relying on deleted layers will still work after the layers are deleted. But you won't be able to create new functions referencing older layers.
 
 # More notes
 

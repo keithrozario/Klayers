@@ -8,9 +8,10 @@
 # Usage: ./package.sh -p package_name -r runtime -l license
 #        -p : Name of python package (e.g. requests)
 #        -r : Compatible Runtimes for the Layer (e.g. python3.6, python3.7)
-#        -l : License (e.g. Apache-2.0, MIT)
+#        -l : License (e.g. Apache-2.0, MIT) in SPIX
 #        -x : permission of layer, defaults to private, set -x to public to make layer publicly accessible
 #        -a : aws region to deploy to, defaults to ALL regions
+#        -b : bypass duplicate checks, uploads new version all the time
 #
 # Examples:
 # Deploy requests package to public available layer to all aws regions:
@@ -30,13 +31,14 @@
 
 LOG_FILE="$(date '+%d-%m-%y')_log.txt"
 
-while getopts ":p:r:l:a:x:" arg; do
+while getopts ":p:r:l:a:x:b:" arg; do
   case $arg in
     p) PACKAGE=$OPTARG;;  # Name of the python package to install
     r) LAYER_RUNTIME=$OPTARG;;  # Runtime version e.g. python3.7
     l) LAYER_LICENSE=$OPTARG;;  # License of package in SPIX 
     a) AWS_REGION=$OPTARG;;
 	x) PUBLIC=$OPTARG;;
+	b) BYPASS=$OPTARG;;
    \?) echo "Invalid option: -$OPTARG" >&2
        exit 1;;
   esac
@@ -157,6 +159,13 @@ do
 		printf "Old Requirements.txt Hash: ${LAYER_REQTXT_SHA256}\n" 2>&1 | tee -a "$LOG_FILE"
 		# increment version
 		let "LAYER_VERSION++"
+	fi
+
+	# not the ideal, but let me explain ... I was too lazy
+	if [[ $* == *-b* ]]
+	then
+		printf "Bypass flag detected, uploading files even if hashes match"
+		LAYER_REQTXT_SHA256="dummy"
 	fi
 
 	if [ $REQTXT_SHA256 = $LAYER_REQTXT_SHA256 ]
