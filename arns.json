@@ -8,6 +8,8 @@
             "arn:aws:lambda:ap-northeast-1:113088814899:layer:Klayers-python37-Pillow:1"
         ],
         "Klayers-python37-aiohttp": [
+            "arn:aws:lambda:ap-northeast-1:113088814899:layer:Klayers-python37-aiohttp:5",
+            "arn:aws:lambda:ap-northeast-1:113088814899:layer:Klayers-python37-aiohttp:4",
             "arn:aws:lambda:ap-northeast-1:113088814899:layer:Klayers-python37-aiohttp:3",
             "arn:aws:lambda:ap-northeast-1:113088814899:layer:Klayers-python37-aiohttp:2",
             "arn:aws:lambda:ap-northeast-1:113088814899:layer:Klayers-python37-aiohttp:1"
@@ -55,6 +57,8 @@
             "arn:aws:lambda:ap-northeast-2:113088814899:layer:Klayers-python37-Pillow:1"
         ],
         "Klayers-python37-aiohttp": [
+            "arn:aws:lambda:ap-northeast-2:113088814899:layer:Klayers-python37-aiohttp:5",
+            "arn:aws:lambda:ap-northeast-2:113088814899:layer:Klayers-python37-aiohttp:4",
             "arn:aws:lambda:ap-northeast-2:113088814899:layer:Klayers-python37-aiohttp:3",
             "arn:aws:lambda:ap-northeast-2:113088814899:layer:Klayers-python37-aiohttp:2",
             "arn:aws:lambda:ap-northeast-2:113088814899:layer:Klayers-python37-aiohttp:1"
@@ -102,6 +106,8 @@
             "arn:aws:lambda:ap-south-1:113088814899:layer:Klayers-python37-Pillow:1"
         ],
         "Klayers-python37-aiohttp": [
+            "arn:aws:lambda:ap-south-1:113088814899:layer:Klayers-python37-aiohttp:5",
+            "arn:aws:lambda:ap-south-1:113088814899:layer:Klayers-python37-aiohttp:4",
             "arn:aws:lambda:ap-south-1:113088814899:layer:Klayers-python37-aiohttp:3",
             "arn:aws:lambda:ap-south-1:113088814899:layer:Klayers-python37-aiohttp:2",
             "arn:aws:lambda:ap-south-1:113088814899:layer:Klayers-python37-aiohttp:1"
