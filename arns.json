@@ -1,5 +1,8 @@
 {
     "ap-northeast-1": {
+        "Klayers--tesseract": [
+            "arn:aws:lambda:ap-northeast-1:113088814899:layer:Klayers--tesseract:1"
+        ],
         "Klayers-python37-Pillow": [
             "arn:aws:lambda:ap-northeast-1:113088814899:layer:Klayers-python37-Pillow:5",
             "arn:aws:lambda:ap-northeast-1:113088814899:layer:Klayers-python37-Pillow:4",
@@ -49,6 +52,9 @@
         ]
     },
     "ap-northeast-2": {
+        "Klayers--tesseract": [
+            "arn:aws:lambda:ap-northeast-2:113088814899:layer:Klayers--tesseract:1"
+        ],
         "Klayers-python37-Pillow": [
             "arn:aws:lambda:ap-northeast-2:113088814899:layer:Klayers-python37-Pillow:5",
             "arn:aws:lambda:ap-northeast-2:113088814899:layer:Klayers-python37-Pillow:4",
@@ -98,6 +104,9 @@
         ]
     },
     "ap-south-1": {
+        "Klayers--tesseract": [
+            "arn:aws:lambda:ap-south-1:113088814899:layer:Klayers--tesseract:1"
+        ],
         "Klayers-python37-Pillow": [
             "arn:aws:lambda:ap-south-1:113088814899:layer:Klayers-python37-Pillow:5",
             "arn:aws:lambda:ap-south-1:113088814899:layer:Klayers-python37-Pillow:4",
@@ -147,6 +156,9 @@
         ]
     },
     "ap-southeast-1": {
+        "Klayers--tesseract": [
+            "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers--tesseract:1"
+        ],
         "Klayers-python37-Pillow": [
             "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-Pillow:5",
             "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-Pillow:4",
@@ -196,6 +208,9 @@
         ]
     },
     "ap-southeast-2": {
+        "Klayers--tesseract": [
+            "arn:aws:lambda:ap-southeast-2:113088814899:layer:Klayers--tesseract:1"
+        ],
         "Klayers-python37-Pillow": [
             "arn:aws:lambda:ap-southeast-2:113088814899:layer:Klayers-python37-Pillow:5",
             "arn:aws:lambda:ap-southeast-2:113088814899:layer:Klayers-python37-Pillow:4",
@@ -245,6 +260,9 @@
         ]
     },
     "ca-central-1": {
+        "Klayers--tesseract": [
+            "arn:aws:lambda:ca-central-1:113088814899:layer:Klayers--tesseract:1"
+        ],
         "Klayers-python37-Pillow": [
             "arn:aws:lambda:ca-central-1:113088814899:layer:Klayers-python37-Pillow:5",
             "arn:aws:lambda:ca-central-1:113088814899:layer:Klayers-python37-Pillow:4",
@@ -294,6 +312,9 @@
         ]
     },
     "eu-central-1": {
+        "Klayers--tesseract": [
+            "arn:aws:lambda:eu-central-1:113088814899:layer:Klayers--tesseract:1"
+        ],
         "Klayers-python37-Pillow": [
             "arn:aws:lambda:eu-central-1:113088814899:layer:Klayers-python37-Pillow:5",
             "arn:aws:lambda:eu-central-1:113088814899:layer:Klayers-python37-Pillow:4",
@@ -343,6 +364,9 @@
         ]
     },
     "eu-north-1": {
+        "Klayers--tesseract": [
+            "arn:aws:lambda:eu-north-1:113088814899:layer:Klayers--tesseract:1"
+        ],
         "Klayers-python37-Pillow": [
             "arn:aws:lambda:eu-north-1:113088814899:layer:Klayers-python37-Pillow:5",
             "arn:aws:lambda:eu-north-1:113088814899:layer:Klayers-python37-Pillow:4",
@@ -392,6 +416,9 @@
         ]
     },
     "eu-west-1": {
+        "Klayers--tesseract": [
+            "arn:aws:lambda:eu-west-1:113088814899:layer:Klayers--tesseract:1"
+        ],
         "Klayers-python37-Pillow": [
             "arn:aws:lambda:eu-west-1:113088814899:layer:Klayers-python37-Pillow:5",
             "arn:aws:lambda:eu-west-1:113088814899:layer:Klayers-python37-Pillow:4",
@@ -441,6 +468,9 @@
         ]
     },
     "eu-west-2": {
+        "Klayers--tesseract": [
+            "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers--tesseract:1"
+        ],
         "Klayers-python37-Pillow": [
             "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-Pillow:5",
             "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-Pillow:4",
@@ -490,6 +520,9 @@
         ]
     },
     "eu-west-3": {
+        "Klayers--tesseract": [
+            "arn:aws:lambda:eu-west-3:113088814899:layer:Klayers--tesseract:1"
+        ],
         "Klayers-python37-Pillow": [
             "arn:aws:lambda:eu-west-3:113088814899:layer:Klayers-python37-Pillow:5",
             "arn:aws:lambda:eu-west-3:113088814899:layer:Klayers-python37-Pillow:4",
@@ -539,6 +572,9 @@
         ]
     },
     "sa-east-1": {
+        "Klayers--tesseract": [
+            "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers--tesseract:1"
+        ],
         "Klayers-python37-Pillow": [
             "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-Pillow:5",
             "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-Pillow:4",
@@ -588,6 +624,9 @@
         ]
     },
     "us-east-1": {
+        "Klayers--tesseract": [
+            "arn:aws:lambda:us-east-1:113088814899:layer:Klayers--tesseract:1"
+        ],
         "Klayers-python37-Pillow": [
             "arn:aws:lambda:us-east-1:113088814899:layer:Klayers-python37-Pillow:5",
             "arn:aws:lambda:us-east-1:113088814899:layer:Klayers-python37-Pillow:4",
@@ -640,6 +679,9 @@
         ]
     },
     "us-east-2": {
+        "Klayers--tesseract": [
+            "arn:aws:lambda:us-east-2:113088814899:layer:Klayers--tesseract:1"
+        ],
         "Klayers-python37-Pillow": [
             "arn:aws:lambda:us-east-2:113088814899:layer:Klayers-python37-Pillow:5",
             "arn:aws:lambda:us-east-2:113088814899:layer:Klayers-python37-Pillow:4",
@@ -689,6 +731,9 @@
         ]
     },
     "us-west-1": {
+        "Klayers--tesseract": [
+            "arn:aws:lambda:us-west-1:113088814899:layer:Klayers--tesseract:1"
+        ],
         "Klayers-python37-Pillow": [
             "arn:aws:lambda:us-west-1:113088814899:layer:Klayers-python37-Pillow:5",
             "arn:aws:lambda:us-west-1:113088814899:layer:Klayers-python37-Pillow:4",
@@ -738,6 +783,9 @@
         ]
     },
     "us-west-2": {
+        "Klayers--tesseract": [
+            "arn:aws:lambda:us-west-2:113088814899:layer:Klayers--tesseract:1"
+        ],
         "Klayers-python37-Pillow": [
             "arn:aws:lambda:us-west-2:113088814899:layer:Klayers-python37-Pillow:5",
             "arn:aws:lambda:us-west-2:113088814899:layer:Klayers-python37-Pillow:4",
