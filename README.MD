@@ -10,6 +10,8 @@ If the layers are ever outdated, click the badge above for more info.
 
 # Layer List
 
+## Python Packages
+
 | Package        | ARN                                                                             | Version |        
 | :------------- |:---------------------------------------------------------------------------     | ------- |
 | requests       | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-requests:2       | 2       |
@@ -25,6 +27,11 @@ If the layers are ever outdated, click the badge above for more info.
 | Pillow         | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-Pillow:1         | 5       |
 | pytesseract    | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pytesseract:1    | 1       |
 
+## Binaries
+
+| Package        | ARN                                                                             | Version |        
+| :------------- |:---------------------------------------------------------------------------     | ------- |
+| tesseract      | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers--tesseract:1              | 1       |
 
 # Using the Layers
 
@@ -71,4 +78,5 @@ For tldextract, set the following environment variable to avoid trying to query 
 
     $ TLDEXTRACT_CACHE=/opt/python/tldextract/.tld_set_snapshot
 
-For pytesseract, the tesseract binary is not included in the build, but the layer includes Pillow
+For pytesseract, the tesseract binary is not included in the build, but the layer includes Pillow. To use tesseract you'd need the tesseract binary layer as well.
+
