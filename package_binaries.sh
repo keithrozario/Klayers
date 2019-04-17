@@ -84,7 +84,7 @@ fi
 # I'm using a different AWS_PROFILE to upload my layers
 export AWS_PROFILE=LayerUploader
 
-LAYER_PREFIX=Klayers-
+LAYER_PREFIX=Klayers-python37
 LAYER_NAME=$LAYER_PREFIX-$PACKAGE
 LAYER_DESC="Lambda Layer with $PACKAGE"
 

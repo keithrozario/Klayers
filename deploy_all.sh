@@ -13,3 +13,5 @@
 ./package.sh -p construct -l "github.com/construct/construct/blob/master/LICENSE" -r python3.7 -x public
 ./package.sh -p Pillow -l "raw.githubusercontent.com/python-pillow/Pillow/master/LICENSE" -r python3.7 -x public
 ./package.sh -p pytesseract -l GPL-3 -r python3.7 -x public
+./package_binaries.sh -p tesseract -l Apache-2.0 -x public -d tesseract.zip -b 
+./package_binaries.sh -p spacy -l MIT -x public -d Klayers-python37-spacy.zip -b
