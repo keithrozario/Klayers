@@ -85,7 +85,6 @@ fi
 # I'm using a different AWS_PROFILE to upload my layers
 export AWS_PROFILE=LayerUploader
 
-BUCKET_NAME=klayers
 LAYER_PREFIX=Klayers-
 LAYER_RUNTIME_NODOT="${LAYER_RUNTIME//.}"  # removes . between 3.7
 ZIP_NAME=$LAYER_PREFIX$LAYER_RUNTIME_NODOT-$PACKAGE.zip
@@ -101,11 +100,11 @@ printf "\n" >> "$LOG_FILE"
 printf "########################\n" >> "$LOG_FILE"
 
 # Create new virtualenv and install latest version of package into it
-printf "Creating new virtualenv\n" 
+printf "Creating new virtualenv\n"
 $LAYER_RUNTIME -m venv venv/
 source venv/bin/activate
 printf "Pip-Installing $PACKAGE into virtualenv\n"
-pip install --upgrade pip >> "$LOG_FILE" 
+pip install --upgrade pip >> "$LOG_FILE"
 pip install -q $PACKAGE >> "$LOG_FILE"
 pip freeze > requirements.txt
 deactivate
@@ -138,10 +137,6 @@ rm -rf ${PKG_DIR}
 function sha256sum() { openssl sha256 "$@" | awk '{print $2}'; }
 REQTXT_SHA256=$(sha256sum requirements.txt | xxd -r -p | base64)  # Take the sha, hexlify, and then base64
 printf "New Requirements.txt Hash: ${REQTXT_SHA256}\n" 2>&1 | tee -a "$LOG_FILE"
-
-printf "Uploading $ZIP_NAME to $BUCKET_NAME"
-aws s3 cp $ZIP_NAME s3://$BUCKET_NAME/$ZIP_NAME
-printf "Uploaded -- publishing lambda layers"
 
 
 for AWS_REGION in "${AWS_REGIONS[@]}"
@@ -184,7 +179,7 @@ do
 		aws lambda publish-layer-version \
 		--region $AWS_REGION \
 		--layer-name $LAYER_NAME \
-		--content S3Bucket=$BUCKET_NAME,S3Key=$ZIP_NAME \
+		--zip-file fileb://$ZIP_NAME \
 		--description "$LAYER_DESC |$REQTXT_SHA256" \
 		--compatible-runtimes $LAYER_RUNTIME \
 		--license-info $LAYER_LICENSE | jq '.' 2>&1 | tee -a "$LOG_FILE"
@@ -215,8 +210,8 @@ do
 			mkdir $PACKAGE/$LATEST_DIR
 		fi
 
-		cp $ZIP_NAME $PACKAGE/$LATEST_DIR
-		cp requirements.txt $PACKAGE/$LATEST_DIR
+		cp $ZIP_NAME $PACKAGE/$LATEST_DIR # ensure latest package is stored in repo
+		cp requirements.txt $PACKAGE/$LATEST_DIR  # ensure latest requirements.txt is stored in repo for scanning
 		cp $PACKAGE/$LATEST_DIR/requirements.txt $PACKAGE/$CHANGE_DIR/v$LAYER_VERSION.$AWS_REGION.requirements.txt
 
 	fi
@@ -225,5 +220,3 @@ done
 # Remove left-over files
 rm $ZIP_NAME
 rm requirements.txt
-
-
