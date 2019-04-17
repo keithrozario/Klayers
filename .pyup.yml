@@ -36,5 +36,11 @@ requirements:
   - Pillow/latest/requirements.txt:
       update: all
       pin: True
+  - pytesseract/requirements.txt:
+      update: all
+      pin: True
+  - spacy/requirements.txt:
+      update: all
+      pin: True 
 
 label_prs: update

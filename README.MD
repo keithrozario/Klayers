@@ -10,22 +10,24 @@ If the layers are ever outdated, click the badge above for more info.
 
 # Layer List
 
-## Python Packages
+## Python Packages (in alphabetical order)
 
 | Package        | ARN                                                                             | Version |        
 | :------------- |:---------------------------------------------------------------------------     | ------- |
-| requests       | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-requests:2       | 2       |
-| beautifulsoup4 | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-beautifulsoup4:3 | 3       |
-| elasticsearch  | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-elasticsearch:1  | 1       |
+| aiohttp        | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-aiohttp:5        | 5       |
 | bcrypt         | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-bcrypt:2         | 2       |
+| beautifulsoup4 | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-beautifulsoup4:3 | 3       |
+| construct      | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-construct:1      | 1       |
+| elasticsearch  | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-elasticsearch:1  | 1       |
+| ffmpeg-python  | arn:aws:lambda:us-east-1:113088814899:layer:Klayers-python37-ffmpeg-python:1    | 1       |
+| Pillow         | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-Pillow:1         | 5       |
 | pymongo        | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pymongo:1        | 1       |
 | pyOpenSSL      | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pyOpenSSL:2      | 2       |
-| aiohttp        | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-aiohttp:5        | 5       |
-| ffmpeg-python  | arn:aws:lambda:us-east-1:113088814899:layer:Klayers-python37-ffmpeg-python:1    | 1       |
-| tldextract     | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-tldextract:1     | 1       |
-| construct      | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-construct:1      | 1       |
-| Pillow         | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-Pillow:1         | 5       |
 | pytesseract    | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pytesseract:1    | 1       |
+| requests       | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-requests:2       | 2       |
+| spacy          | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-spacy:1          | 1       |
+| tldextract     | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-tldextract:1     | 1       |
+
 
 ## Binaries
 
@@ -74,9 +76,13 @@ I intend to delete older layers after a while. Functions relying on deleted laye
 
 # More notes
 
-For tldextract, set the following environment variable to avoid trying to query the Mozilla tld file from the internet.
+For `tldextract`, set the following environment variable to avoid trying to query the Mozilla tld file from the internet.
 
     $ TLDEXTRACT_CACHE=/opt/python/tldextract/.tld_set_snapshot
 
-For pytesseract, the tesseract binary is not included in the build, but the layer includes Pillow. To use tesseract you'd need the tesseract binary layer as well.
+For `pytesseract`, the tesseract binary is not included in the build, but the layer includes Pillow. To use tesseract you'd need the tesseract binary layer as well.
+
+For `spacy`, I had to manually tweak a few things to make the package fit into a layer, it only works for English, consider this beta. To use the included model:
+    
+    $ spacy.load('/opt/en_core_web_sm-2.1.0')
 
