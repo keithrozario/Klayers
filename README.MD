@@ -8,6 +8,8 @@ A collection of AWS Lambda Layers for Python3.7
 
 If the layers are ever outdated, click the badge above for more info.
 
+Full list of publicly available layers are [here](../blob/master/arns.json). Summary list is below.
+
 # Layer List
 
 ## Python Packages (in alphabetical order)
@@ -38,12 +40,12 @@ If the layers are ever outdated, click the badge above for more info.
 # Using the Layers
 
 You can either:
-* Set any of the ARNs above (for your region) to be a layer for your function. For list of all layers, view the `arns.json` file.
+* Set any of the ARNs above (for your region) to be a layer for your function. 
 * Download the zip file from the directory of your package name in the packages directory (e.g. requests) and upload as a layer to your function
 
 # Layer history
 
-Whenever there is an new version of the underlying package, a new layer **may** be created with an incremented version number. View the changelog for each package.
+Whenever there is an new version of the underlying package, a new layer **may** be created with an incremented version number.
 
 # Building your own layer
 
@@ -70,11 +72,11 @@ Make a pull requests!
 
 # Notes
 
-All layers are deployed in every region (except China). Refer to the `arns.json` file for more info.
+All layers are deployed in every region (except China). Refer to the [arns.json](../blob/master/arns.json) file for more info.
 
 I intend to delete older layers after a while. Functions relying on deleted layers will still work after the layers are deleted. But you won't be able to create new functions referencing older layers.
 
-# More notes
+# Layer specific notes
 
 For `tldextract`, set the following environment variable to avoid trying to query the Mozilla tld file from the internet.
 
