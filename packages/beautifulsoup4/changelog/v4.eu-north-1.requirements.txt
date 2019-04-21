@@ -1,0 +1,2 @@
+beautifulsoup4==4.7.1
+soupsieve==1.9.1
