@@ -2,3 +2,4 @@
 logs/
 .idea/
 .idea
+venv/
