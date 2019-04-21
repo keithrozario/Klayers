@@ -3,43 +3,43 @@ update:
 
 search: False
 requirements:
-  - requests/latest/requirements.txt:
+  - packages/requests/latest/requirements.txt:
       update: all
       pin: True
-  - beautifulsoup4/latest/requirements.txt:
+  - packages/beautifulsoup4/latest/requirements.txt:
       update: all
       pin: True
-  - elasticsearch/latest/requirements.txt:
+  - packages/elasticsearch/latest/requirements.txt:
       update: all
       pin: True
-  - bcrypt/latest/requirements.txt:
+  - packages/bcrypt/latest/requirements.txt:
       update: all
       pin: True
-  - pymongo/latest/requirements.txt:
+  - packages/pymongo/latest/requirements.txt:
       update: all
       pin: True
-  - pyOpenSSL/latest/requirements.txt:
+  - packages/pyOpenSSL/latest/requirements.txt:
       update: all
       pin: True
-  - aiohttp/latest/requirements.txt:
+  - packages/aiohttp/latest/requirements.txt:
       update: all
       pin: True
-  - ffmpeg-python/latest/requirements.txt:
+  - packages/ffmpeg-python/latest/requirements.txt:
       update: all
       pin: True
-  - tldextract/latest/requirements.txt:
+  - packages/tldextract/latest/requirements.txt:
       update: all
       pin: True
-  - construct/latest/requirements.txt:
+  - packages/construct/latest/requirements.txt:
       update: all
       pin: True
-  - Pillow/latest/requirements.txt:
+  - packages/Pillow/latest/requirements.txt:
       update: all
       pin: True
-  - pytesseract/requirements.txt:
+  - packages/pytesseract/requirements.txt:
       update: all
       pin: True
-  - spacy/requirements.txt:
+  - packages/spacy/requirements.txt:
       update: all
       pin: True 
 
