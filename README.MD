@@ -39,7 +39,7 @@ If the layers are ever outdated, click the badge above for more info.
 
 You can either:
 * Set any of the ARNs above (for your region) to be a layer for your function. For list of all layers, view the `arns.json` file.
-* Download the zip file from the directory of your package name (e.g. requests) and upload as a layer to your function
+* Download the zip file from the directory of your package name in the packages directory (e.g. requests) and upload as a layer to your function
 
 # Layer history
 
@@ -47,7 +47,7 @@ Whenever there is an new version of the underlying package, a new layer **may** 
 
 # Building your own layer
 
-To build a layer containing a single python package use the following:
+To build a layer containing a single python package run the following in the packages directory:
 
     $ package.sh -p <package_name> -l <license> -r <runtime> -x <public/private> -a <aws_region>
 
@@ -70,7 +70,7 @@ Make a pull requests!
 
 # Notes
 
-All layers are deployed in every region (except China). Refer to the arns.json file for more info.
+All layers are deployed in every region (except China). Refer to the `arns.json` file for more info.
 
 I intend to delete older layers after a while. Functions relying on deleted layers will still work after the layers are deleted. But you won't be able to create new functions referencing older layers.
 
