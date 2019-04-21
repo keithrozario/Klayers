@@ -8,7 +8,7 @@ A collection of AWS Lambda Layers for Python3.7
 
 If the layers are ever outdated, click the badge above for more info.
 
-Full list of publicly available layers are [here](../blob/master/arns.json). Summary list is below.
+Full list of publicly available layers are [here](/arns.json). Summary list is below.
 
 # Layer List
 
@@ -72,7 +72,7 @@ Make a pull requests!
 
 # Notes
 
-All layers are deployed in every region (except China). Refer to the [arns.json](../blob/master/arns.json) file for more info.
+All layers are deployed in every region (except China). Refer to the [arns.json](/arns.json) file for more info.
 
 I intend to delete older layers after a while. Functions relying on deleted layers will still work after the layers are deleted. But you won't be able to create new functions referencing older layers.
 
