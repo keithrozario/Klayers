@@ -15,3 +15,4 @@
 ./package.sh -p pytesseract -l GPL-3 -r python3.7 -x public
 ./package_binaries.sh -p tesseract -l Apache-2.0 -x public -d tesseract.zip -b 
 ./package_binaries.sh -p spacy -l MIT -x public -d Klayers-python37-spacy.zip -b
+./package.sh -p boto3 -l "aws.amazon.com/apache2.0/" -r python3.7 -x public

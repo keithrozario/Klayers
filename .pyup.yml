@@ -42,5 +42,8 @@ requirements:
   - packages/spacy/requirements.txt:
       update: all
       pin: True 
+  - packages/boto3/requirements.txt:
+      update: all
+      pin: True
 
 label_prs: update
