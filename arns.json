@@ -28,6 +28,9 @@
             "arn:aws:lambda:ap-northeast-1:113088814899:layer:Klayers-python37-beautifulsoup4:2",
             "arn:aws:lambda:ap-northeast-1:113088814899:layer:Klayers-python37-beautifulsoup4:1"
         ],
+        "Klayers-python37-boto3": [
+            "arn:aws:lambda:ap-northeast-1:113088814899:layer:Klayers-python37-boto3:1"
+        ],
         "Klayers-python37-construct": [
             "arn:aws:lambda:ap-northeast-1:113088814899:layer:Klayers-python37-construct:1"
         ],
@@ -88,6 +91,9 @@
             "arn:aws:lambda:ap-northeast-2:113088814899:layer:Klayers-python37-beautifulsoup4:3",
             "arn:aws:lambda:ap-northeast-2:113088814899:layer:Klayers-python37-beautifulsoup4:2",
             "arn:aws:lambda:ap-northeast-2:113088814899:layer:Klayers-python37-beautifulsoup4:1"
+        ],
+        "Klayers-python37-boto3": [
+            "arn:aws:lambda:ap-northeast-2:113088814899:layer:Klayers-python37-boto3:1"
         ],
         "Klayers-python37-construct": [
             "arn:aws:lambda:ap-northeast-2:113088814899:layer:Klayers-python37-construct:1"
@@ -150,6 +156,9 @@
             "arn:aws:lambda:ap-south-1:113088814899:layer:Klayers-python37-beautifulsoup4:2",
             "arn:aws:lambda:ap-south-1:113088814899:layer:Klayers-python37-beautifulsoup4:1"
         ],
+        "Klayers-python37-boto3": [
+            "arn:aws:lambda:ap-south-1:113088814899:layer:Klayers-python37-boto3:1"
+        ],
         "Klayers-python37-construct": [
             "arn:aws:lambda:ap-south-1:113088814899:layer:Klayers-python37-construct:1"
         ],
@@ -210,6 +219,9 @@
             "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-beautifulsoup4:3",
             "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-beautifulsoup4:2",
             "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-beautifulsoup4:1"
+        ],
+        "Klayers-python37-boto3": [
+            "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-boto3:1"
         ],
         "Klayers-python37-construct": [
             "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-construct:1"
@@ -272,6 +284,9 @@
             "arn:aws:lambda:ap-southeast-2:113088814899:layer:Klayers-python37-beautifulsoup4:2",
             "arn:aws:lambda:ap-southeast-2:113088814899:layer:Klayers-python37-beautifulsoup4:1"
         ],
+        "Klayers-python37-boto3": [
+            "arn:aws:lambda:ap-southeast-2:113088814899:layer:Klayers-python37-boto3:1"
+        ],
         "Klayers-python37-construct": [
             "arn:aws:lambda:ap-southeast-2:113088814899:layer:Klayers-python37-construct:1"
         ],
@@ -332,6 +347,9 @@
             "arn:aws:lambda:ca-central-1:113088814899:layer:Klayers-python37-beautifulsoup4:3",
             "arn:aws:lambda:ca-central-1:113088814899:layer:Klayers-python37-beautifulsoup4:2",
             "arn:aws:lambda:ca-central-1:113088814899:layer:Klayers-python37-beautifulsoup4:1"
+        ],
+        "Klayers-python37-boto3": [
+            "arn:aws:lambda:ca-central-1:113088814899:layer:Klayers-python37-boto3:1"
         ],
         "Klayers-python37-construct": [
             "arn:aws:lambda:ca-central-1:113088814899:layer:Klayers-python37-construct:1"
@@ -394,6 +412,9 @@
             "arn:aws:lambda:eu-central-1:113088814899:layer:Klayers-python37-beautifulsoup4:2",
             "arn:aws:lambda:eu-central-1:113088814899:layer:Klayers-python37-beautifulsoup4:1"
         ],
+        "Klayers-python37-boto3": [
+            "arn:aws:lambda:eu-central-1:113088814899:layer:Klayers-python37-boto3:1"
+        ],
         "Klayers-python37-construct": [
             "arn:aws:lambda:eu-central-1:113088814899:layer:Klayers-python37-construct:1"
         ],
@@ -454,6 +475,9 @@
             "arn:aws:lambda:eu-north-1:113088814899:layer:Klayers-python37-beautifulsoup4:3",
             "arn:aws:lambda:eu-north-1:113088814899:layer:Klayers-python37-beautifulsoup4:2",
             "arn:aws:lambda:eu-north-1:113088814899:layer:Klayers-python37-beautifulsoup4:1"
+        ],
+        "Klayers-python37-boto3": [
+            "arn:aws:lambda:eu-north-1:113088814899:layer:Klayers-python37-boto3:1"
         ],
         "Klayers-python37-construct": [
             "arn:aws:lambda:eu-north-1:113088814899:layer:Klayers-python37-construct:1"
@@ -516,6 +540,9 @@
             "arn:aws:lambda:eu-west-1:113088814899:layer:Klayers-python37-beautifulsoup4:2",
             "arn:aws:lambda:eu-west-1:113088814899:layer:Klayers-python37-beautifulsoup4:1"
         ],
+        "Klayers-python37-boto3": [
+            "arn:aws:lambda:eu-west-1:113088814899:layer:Klayers-python37-boto3:1"
+        ],
         "Klayers-python37-construct": [
             "arn:aws:lambda:eu-west-1:113088814899:layer:Klayers-python37-construct:1"
         ],
@@ -576,6 +603,9 @@
             "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-beautifulsoup4:3",
             "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-beautifulsoup4:2",
             "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-beautifulsoup4:1"
+        ],
+        "Klayers-python37-boto3": [
+            "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-boto3:1"
         ],
         "Klayers-python37-construct": [
             "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-construct:1"
@@ -638,6 +668,9 @@
             "arn:aws:lambda:eu-west-3:113088814899:layer:Klayers-python37-beautifulsoup4:2",
             "arn:aws:lambda:eu-west-3:113088814899:layer:Klayers-python37-beautifulsoup4:1"
         ],
+        "Klayers-python37-boto3": [
+            "arn:aws:lambda:eu-west-3:113088814899:layer:Klayers-python37-boto3:1"
+        ],
         "Klayers-python37-construct": [
             "arn:aws:lambda:eu-west-3:113088814899:layer:Klayers-python37-construct:1"
         ],
@@ -699,6 +732,9 @@
             "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-beautifulsoup4:2",
             "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-beautifulsoup4:1"
         ],
+        "Klayers-python37-boto3": [
+            "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-boto3:1"
+        ],
         "Klayers-python37-construct": [
             "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-construct:1"
         ],
@@ -759,6 +795,9 @@
             "arn:aws:lambda:us-east-1:113088814899:layer:Klayers-python37-beautifulsoup4:3",
             "arn:aws:lambda:us-east-1:113088814899:layer:Klayers-python37-beautifulsoup4:2",
             "arn:aws:lambda:us-east-1:113088814899:layer:Klayers-python37-beautifulsoup4:1"
+        ],
+        "Klayers-python37-boto3": [
+            "arn:aws:lambda:us-east-1:113088814899:layer:Klayers-python37-boto3:1"
         ],
         "Klayers-python37-construct": [
             "arn:aws:lambda:us-east-1:113088814899:layer:Klayers-python37-construct:1"
@@ -824,6 +863,9 @@
             "arn:aws:lambda:us-east-2:113088814899:layer:Klayers-python37-beautifulsoup4:2",
             "arn:aws:lambda:us-east-2:113088814899:layer:Klayers-python37-beautifulsoup4:1"
         ],
+        "Klayers-python37-boto3": [
+            "arn:aws:lambda:us-east-2:113088814899:layer:Klayers-python37-boto3:1"
+        ],
         "Klayers-python37-construct": [
             "arn:aws:lambda:us-east-2:113088814899:layer:Klayers-python37-construct:1"
         ],
@@ -885,6 +927,9 @@
             "arn:aws:lambda:us-west-1:113088814899:layer:Klayers-python37-beautifulsoup4:2",
             "arn:aws:lambda:us-west-1:113088814899:layer:Klayers-python37-beautifulsoup4:1"
         ],
+        "Klayers-python37-boto3": [
+            "arn:aws:lambda:us-west-1:113088814899:layer:Klayers-python37-boto3:1"
+        ],
         "Klayers-python37-construct": [
             "arn:aws:lambda:us-west-1:113088814899:layer:Klayers-python37-construct:1"
         ],
@@ -945,6 +990,9 @@
             "arn:aws:lambda:us-west-2:113088814899:layer:Klayers-python37-beautifulsoup4:3",
             "arn:aws:lambda:us-west-2:113088814899:layer:Klayers-python37-beautifulsoup4:2",
             "arn:aws:lambda:us-west-2:113088814899:layer:Klayers-python37-beautifulsoup4:1"
+        ],
+        "Klayers-python37-boto3": [
+            "arn:aws:lambda:us-west-2:113088814899:layer:Klayers-python37-boto3:1"
         ],
         "Klayers-python37-construct": [
             "arn:aws:lambda:us-west-2:113088814899:layer:Klayers-python37-construct:1"

@@ -14,34 +14,61 @@ Full list of publicly available layers are [here](/arns.json). Summary list is b
 
 ## Python Packages (in alphabetical order)
 
+| Package        | ARN                                                                             |         
+| :------------- |:------------------------------------------------------------------------------- |
+| aiohttp        | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-aiohttp:5        |
+| bcrypt         | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-bcrypt:3         |
+| beautifulsoup4 | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-beautifulsoup4:4 |
+| construct      | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-construct:1      |
+| elasticsearch  | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-elasticsearch:2  |
+| ffmpeg-python  | arn:aws:lambda:**us-east-1**:113088814899:layer:Klayers-python37-ffmpeg-python:1|
+| Pillow         | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-Pillow:5         |
+| pymongo        | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pymongo:1        |
+| pyOpenSSL      | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pyOpenSSL:3      |
+| pytesseract    | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pytesseract:1    |
+| requests       | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-requests:3       |
+| spacy          | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-spacy:1          |
+| tldextract     | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-tldextract:3     |
+
+## Boto3
+
 | Package        | ARN                                                                             | Version |        
-| :------------- |:---------------------------------------------------------------------------     | ------- |
-| aiohttp        | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-aiohttp:5        | 5       |
-| bcrypt         | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-bcrypt:3         | 3       |
-| beautifulsoup4 | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-beautifulsoup4:4 | 4       |
-| construct      | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-construct:1      | 1       |
-| elasticsearch  | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-elasticsearch:2  | 2       |
-| ffmpeg-python  | arn:aws:lambda:**us-east-1**:113088814899:layer:Klayers-python37-ffmpeg-python:1| 1       |
-| Pillow         | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-Pillow:5         | 5       |
-| pymongo        | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pymongo:1        | 1       |
-| pyOpenSSL      | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pyOpenSSL:3      | 3       |
-| pytesseract    | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pytesseract:1    | 1       |
-| requests       | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-requests:3       | 3       |
-| spacy          | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-spacy:1          | 1       |
-| tldextract     | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-tldextract:3     | 3       |
+| :------------- |:------------------------------------------------------------------------------- | ------- |
+| boto3          | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-boto3:1          | 1.9.135 |
 
 
 ## Binaries
 
-| Package        | ARN                                                                             | Version |        
-| :------------- |:---------------------------------------------------------------------------     | ------- |
-| tesseract      | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers--tesseract:1              | 1       |
+| Package        | ARN                                                                             | Version    |         
+| :------------- |:------------------------------------------------------------------------------- | ---------- | 
+| tesseract      | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers--tesseract:1              | 4.1.0-rc1<sup>1</sup>|
+
+<sup>1</sup> Includes leptonica-1.76.0, libjpeg 6b (libjpeg-turbo 1.2.90) : libpng 1.2.49 : libtiff 4.0.3 : zlib 1.2.8 : libwebp 0.3.0
 
 # Using the Layers
 
 You can either:
 * Set any of the ARNs above (for your region) to be a layer for your function. 
 * Download the zip file from the directory of your package name in the packages directory (e.g. requests) and upload as a layer to your function
+
+Currently only the following regions have the layers deployed:
+
+* ap-northeast-1 
+* ap-northeast-2
+* ap-south-1
+* ap-southeast-1 
+* ap-southeast-2
+* ca-central-1
+* eu-central-1
+* eu-north-1
+* eu-west-1
+* eu-west-2
+* eu-west-3
+* sa-east-1
+* us-east-1
+* us-east-2
+* us-west-1
+* us-west-2
 
 # Layer history
 
@@ -87,4 +114,6 @@ For `pytesseract`, the tesseract binary is not included in the build, but the la
 For `spacy`, I had to manually tweak a few things to make the package fit into a layer, it only works for English, consider this beta. To use the included model:
     
     $ spacy.load('/opt/en_core_web_sm-2.1.0')
+
+For `boto3`, the current version (as of Apr-2019) of boto3 available in the lambda environment is 1.9.42 for python 3.7 which is ~5 months out of date, and ~100 versions ago. Placing the latest version of boto3 in case anyone needs it.
 
