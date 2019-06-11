@@ -1,0 +1,16 @@
+cymem-2.0.2.dist-info/INSTALLER,sha256=zuuue4knoyJ-UwPPXg8fezS7VCrXJQrAP7zeNuwvFQg,4
+cymem-2.0.2.dist-info/LICENSE,sha256=ednboUtKqeqeBouyYb59GvQN9K04gEyyw2KwK5cPxHo,1139
+cymem-2.0.2.dist-info/METADATA,sha256=9tePG2KbFvrQ1Sy86GeZfihXDryyKcI1jS_7ZDcrTjc,8585
+cymem-2.0.2.dist-info/RECORD,,
+cymem-2.0.2.dist-info/WHEEL,sha256=QNlK5ivAimyKC6GBwwJ1xZo1FLZqOgbKwJoOKciA_fE,109
+cymem-2.0.2.dist-info/top_level.txt,sha256=dCYwCFWTj_NE7Z9zFrrKqAcWuUCtg52zKRI4l_Wrr7Q,6
+cymem/__init__.pxd,sha256=47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU,0
+cymem/__init__.py,sha256=SZPicygro0c1rh3QY-iN21ZormYrSBeim1R2DSeaOH4,21
+cymem/__pycache__/__init__.cpython-37.pyc,,
+cymem/__pycache__/about.cpython-37.pyc,,
+cymem/about.py,sha256=7Xg2PhAIoeQIQPl1j47Cs8xRWscmh_-0NZeg96zh7Sg,409
+cymem/cymem.cpython-37m-x86_64-linux-gnu.so,sha256=R36ORe5NmBlxQLAFXySgI6lEqlY899mV4iQek3H2Cbo,61176
+cymem/cymem.pxd,sha256=3a6VyWkQ-d6GelUOGNtdTAAg2ksWKjW9mUMu5UzR2zc,779
+cymem/cymem.pyx,sha256=NjYVjVg1HisdH8RIoCLc7CMOGMmQ7mknyl5Ztcd8XOQ,5343
+cymem/tests/__pycache__/test_import.cpython-37.pyc,,
+cymem/tests/test_import.py,sha256=QP4VhFs618LeiJvBSEfZh3deETbWxuzir1mEfL-fOV0,263
