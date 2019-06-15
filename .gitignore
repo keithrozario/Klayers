@@ -3,3 +3,5 @@ logs/
 .idea/
 .idea
 venv/
+.DS_Store
+
