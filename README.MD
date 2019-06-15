@@ -35,6 +35,7 @@ Full list of publicly available layers are [here](/arns.json). Summary list is b
 | Package        | ARN                                                                             | Version |        
 | :------------- |:------------------------------------------------------------------------------- | ------- |
 | boto3          | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-boto3:1          | 1.9.135 |
+| boto3          | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-boto3:2          | 1.9.169 |
 
 
 ## Binaries
