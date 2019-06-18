@@ -9,7 +9,7 @@ numpy==1.16.2
 plac==0.9.6
 preshed==2.0.1
 requests==2.21.0
-spacy==2.1.3
+spacy==2.1.4
 srsly==0.0.5
 thinc==7.0.4
 tqdm==4.31.1
