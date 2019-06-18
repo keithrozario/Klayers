@@ -39,9 +39,9 @@ requirements:
   - packages/pytesseract/requirements.txt:
       update: all
       pin: True
-  - packages/spacy/latest/requirements.txt:
-      update: all
-      pin: True 
+#  - packages/spacy/latest/requirements.txt:
+#      update: all
+#      pin: True 
   - packages/boto3/latest/requirements.txt:
       update: all
       pin: True
