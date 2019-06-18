@@ -5,7 +5,7 @@ cymem==2.0.2
 idna==2.8
 jsonschema==2.6.0
 murmurhash==1.0.2
-numpy==1.16.2
+numpy==1.16.4
 plac==0.9.6
 preshed==2.0.1
 requests==2.21.0
