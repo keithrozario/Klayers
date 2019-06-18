@@ -39,10 +39,16 @@ requirements:
   - packages/pytesseract/requirements.txt:
       update: all
       pin: True
-  - packages/spacy/requirements.txt:
+  - packages/spacy/latest/requirements.txt:
       update: all
       pin: True 
-  - packages/boto3/requirements.txt:
+  - packages/boto3/latest/requirements.txt:
+      update: all
+      pin: True
+  - packages/PyMuPDF/latest/requirements.txt:
+      update: all
+      pin: True
+  - packages/pytz/latest/requirements.txt:
       update: all
       pin: True
 
