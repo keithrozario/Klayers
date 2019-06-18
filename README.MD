@@ -27,6 +27,7 @@ Full list of publicly available layers are [here](/arns.json). Summary list is b
 | PyMuPDF        | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-PyMuPDF:1        |
 | pyOpenSSL      | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pyOpenSSL:4      |
 | pytesseract    | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pytesseract:1    |
+| pytz           | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pytz:1           |
 | requests       | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-requests:4       |
 | spacy          | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-spacy:1          |
 | tldextract     | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-tldextract:4     |

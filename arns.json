@@ -10,6 +10,9 @@
             "arn:aws:lambda:ap-northeast-1:113088814899:layer:Klayers-python37-Pillow:2",
             "arn:aws:lambda:ap-northeast-1:113088814899:layer:Klayers-python37-Pillow:1"
         ],
+        "Klayers-python37-PyMuPDF": [
+            "arn:aws:lambda:ap-northeast-1:113088814899:layer:Klayers-python37-PyMuPDF:1"
+        ],
         "Klayers-python37-aiohttp": [
             "arn:aws:lambda:ap-northeast-1:113088814899:layer:Klayers-python37-aiohttp:5",
             "arn:aws:lambda:ap-northeast-1:113088814899:layer:Klayers-python37-aiohttp:4",
@@ -53,6 +56,9 @@
         "Klayers-python37-pytesseract": [
             "arn:aws:lambda:ap-northeast-1:113088814899:layer:Klayers-python37-pytesseract:1"
         ],
+        "Klayers-python37-pytz": [
+            "arn:aws:lambda:ap-northeast-1:113088814899:layer:Klayers-python37-pytz:1"
+        ],
         "Klayers-python37-requests": [
             "arn:aws:lambda:ap-northeast-1:113088814899:layer:Klayers-python37-requests:4",
             "arn:aws:lambda:ap-northeast-1:113088814899:layer:Klayers-python37-requests:3",
@@ -79,6 +85,9 @@
             "arn:aws:lambda:ap-northeast-2:113088814899:layer:Klayers-python37-Pillow:3",
             "arn:aws:lambda:ap-northeast-2:113088814899:layer:Klayers-python37-Pillow:2",
             "arn:aws:lambda:ap-northeast-2:113088814899:layer:Klayers-python37-Pillow:1"
+        ],
+        "Klayers-python37-PyMuPDF": [
+            "arn:aws:lambda:ap-northeast-2:113088814899:layer:Klayers-python37-PyMuPDF:1"
         ],
         "Klayers-python37-aiohttp": [
             "arn:aws:lambda:ap-northeast-2:113088814899:layer:Klayers-python37-aiohttp:5",
@@ -123,6 +132,9 @@
         "Klayers-python37-pytesseract": [
             "arn:aws:lambda:ap-northeast-2:113088814899:layer:Klayers-python37-pytesseract:1"
         ],
+        "Klayers-python37-pytz": [
+            "arn:aws:lambda:ap-northeast-2:113088814899:layer:Klayers-python37-pytz:1"
+        ],
         "Klayers-python37-requests": [
             "arn:aws:lambda:ap-northeast-2:113088814899:layer:Klayers-python37-requests:4",
             "arn:aws:lambda:ap-northeast-2:113088814899:layer:Klayers-python37-requests:3",
@@ -149,6 +161,9 @@
             "arn:aws:lambda:ap-south-1:113088814899:layer:Klayers-python37-Pillow:3",
             "arn:aws:lambda:ap-south-1:113088814899:layer:Klayers-python37-Pillow:2",
             "arn:aws:lambda:ap-south-1:113088814899:layer:Klayers-python37-Pillow:1"
+        ],
+        "Klayers-python37-PyMuPDF": [
+            "arn:aws:lambda:ap-south-1:113088814899:layer:Klayers-python37-PyMuPDF:1"
         ],
         "Klayers-python37-aiohttp": [
             "arn:aws:lambda:ap-south-1:113088814899:layer:Klayers-python37-aiohttp:5",
@@ -193,6 +208,9 @@
         "Klayers-python37-pytesseract": [
             "arn:aws:lambda:ap-south-1:113088814899:layer:Klayers-python37-pytesseract:1"
         ],
+        "Klayers-python37-pytz": [
+            "arn:aws:lambda:ap-south-1:113088814899:layer:Klayers-python37-pytz:1"
+        ],
         "Klayers-python37-requests": [
             "arn:aws:lambda:ap-south-1:113088814899:layer:Klayers-python37-requests:4",
             "arn:aws:lambda:ap-south-1:113088814899:layer:Klayers-python37-requests:3",
@@ -219,6 +237,9 @@
             "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-Pillow:3",
             "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-Pillow:2",
             "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-Pillow:1"
+        ],
+        "Klayers-python37-PyMuPDF": [
+            "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-PyMuPDF:1"
         ],
         "Klayers-python37-aiohttp": [
             "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-aiohttp:5",
@@ -263,6 +284,9 @@
         "Klayers-python37-pytesseract": [
             "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-pytesseract:1"
         ],
+        "Klayers-python37-pytz": [
+            "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-pytz:1"
+        ],
         "Klayers-python37-requests": [
             "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-requests:4",
             "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-requests:3",
@@ -289,6 +313,9 @@
             "arn:aws:lambda:ap-southeast-2:113088814899:layer:Klayers-python37-Pillow:3",
             "arn:aws:lambda:ap-southeast-2:113088814899:layer:Klayers-python37-Pillow:2",
             "arn:aws:lambda:ap-southeast-2:113088814899:layer:Klayers-python37-Pillow:1"
+        ],
+        "Klayers-python37-PyMuPDF": [
+            "arn:aws:lambda:ap-southeast-2:113088814899:layer:Klayers-python37-PyMuPDF:1"
         ],
         "Klayers-python37-aiohttp": [
             "arn:aws:lambda:ap-southeast-2:113088814899:layer:Klayers-python37-aiohttp:5",
@@ -333,6 +360,9 @@
         "Klayers-python37-pytesseract": [
             "arn:aws:lambda:ap-southeast-2:113088814899:layer:Klayers-python37-pytesseract:1"
         ],
+        "Klayers-python37-pytz": [
+            "arn:aws:lambda:ap-southeast-2:113088814899:layer:Klayers-python37-pytz:1"
+        ],
         "Klayers-python37-requests": [
             "arn:aws:lambda:ap-southeast-2:113088814899:layer:Klayers-python37-requests:4",
             "arn:aws:lambda:ap-southeast-2:113088814899:layer:Klayers-python37-requests:3",
@@ -359,6 +389,9 @@
             "arn:aws:lambda:ca-central-1:113088814899:layer:Klayers-python37-Pillow:3",
             "arn:aws:lambda:ca-central-1:113088814899:layer:Klayers-python37-Pillow:2",
             "arn:aws:lambda:ca-central-1:113088814899:layer:Klayers-python37-Pillow:1"
+        ],
+        "Klayers-python37-PyMuPDF": [
+            "arn:aws:lambda:ca-central-1:113088814899:layer:Klayers-python37-PyMuPDF:1"
         ],
         "Klayers-python37-aiohttp": [
             "arn:aws:lambda:ca-central-1:113088814899:layer:Klayers-python37-aiohttp:5",
@@ -403,6 +436,9 @@
         "Klayers-python37-pytesseract": [
             "arn:aws:lambda:ca-central-1:113088814899:layer:Klayers-python37-pytesseract:1"
         ],
+        "Klayers-python37-pytz": [
+            "arn:aws:lambda:ca-central-1:113088814899:layer:Klayers-python37-pytz:1"
+        ],
         "Klayers-python37-requests": [
             "arn:aws:lambda:ca-central-1:113088814899:layer:Klayers-python37-requests:4",
             "arn:aws:lambda:ca-central-1:113088814899:layer:Klayers-python37-requests:3",
@@ -429,6 +465,9 @@
             "arn:aws:lambda:eu-central-1:113088814899:layer:Klayers-python37-Pillow:3",
             "arn:aws:lambda:eu-central-1:113088814899:layer:Klayers-python37-Pillow:2",
             "arn:aws:lambda:eu-central-1:113088814899:layer:Klayers-python37-Pillow:1"
+        ],
+        "Klayers-python37-PyMuPDF": [
+            "arn:aws:lambda:eu-central-1:113088814899:layer:Klayers-python37-PyMuPDF:1"
         ],
         "Klayers-python37-aiohttp": [
             "arn:aws:lambda:eu-central-1:113088814899:layer:Klayers-python37-aiohttp:5",
@@ -473,6 +512,9 @@
         "Klayers-python37-pytesseract": [
             "arn:aws:lambda:eu-central-1:113088814899:layer:Klayers-python37-pytesseract:1"
         ],
+        "Klayers-python37-pytz": [
+            "arn:aws:lambda:eu-central-1:113088814899:layer:Klayers-python37-pytz:1"
+        ],
         "Klayers-python37-requests": [
             "arn:aws:lambda:eu-central-1:113088814899:layer:Klayers-python37-requests:4",
             "arn:aws:lambda:eu-central-1:113088814899:layer:Klayers-python37-requests:3",
@@ -499,6 +541,9 @@
             "arn:aws:lambda:eu-north-1:113088814899:layer:Klayers-python37-Pillow:3",
             "arn:aws:lambda:eu-north-1:113088814899:layer:Klayers-python37-Pillow:2",
             "arn:aws:lambda:eu-north-1:113088814899:layer:Klayers-python37-Pillow:1"
+        ],
+        "Klayers-python37-PyMuPDF": [
+            "arn:aws:lambda:eu-north-1:113088814899:layer:Klayers-python37-PyMuPDF:1"
         ],
         "Klayers-python37-aiohttp": [
             "arn:aws:lambda:eu-north-1:113088814899:layer:Klayers-python37-aiohttp:5",
@@ -543,6 +588,9 @@
         "Klayers-python37-pytesseract": [
             "arn:aws:lambda:eu-north-1:113088814899:layer:Klayers-python37-pytesseract:1"
         ],
+        "Klayers-python37-pytz": [
+            "arn:aws:lambda:eu-north-1:113088814899:layer:Klayers-python37-pytz:1"
+        ],
         "Klayers-python37-requests": [
             "arn:aws:lambda:eu-north-1:113088814899:layer:Klayers-python37-requests:4",
             "arn:aws:lambda:eu-north-1:113088814899:layer:Klayers-python37-requests:3",
@@ -569,6 +617,9 @@
             "arn:aws:lambda:eu-west-1:113088814899:layer:Klayers-python37-Pillow:3",
             "arn:aws:lambda:eu-west-1:113088814899:layer:Klayers-python37-Pillow:2",
             "arn:aws:lambda:eu-west-1:113088814899:layer:Klayers-python37-Pillow:1"
+        ],
+        "Klayers-python37-PyMuPDF": [
+            "arn:aws:lambda:eu-west-1:113088814899:layer:Klayers-python37-PyMuPDF:1"
         ],
         "Klayers-python37-aiohttp": [
             "arn:aws:lambda:eu-west-1:113088814899:layer:Klayers-python37-aiohttp:5",
@@ -613,6 +664,9 @@
         "Klayers-python37-pytesseract": [
             "arn:aws:lambda:eu-west-1:113088814899:layer:Klayers-python37-pytesseract:1"
         ],
+        "Klayers-python37-pytz": [
+            "arn:aws:lambda:eu-west-1:113088814899:layer:Klayers-python37-pytz:1"
+        ],
         "Klayers-python37-requests": [
             "arn:aws:lambda:eu-west-1:113088814899:layer:Klayers-python37-requests:4",
             "arn:aws:lambda:eu-west-1:113088814899:layer:Klayers-python37-requests:3",
@@ -639,6 +693,9 @@
             "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-Pillow:3",
             "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-Pillow:2",
             "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-Pillow:1"
+        ],
+        "Klayers-python37-PyMuPDF": [
+            "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-PyMuPDF:1"
         ],
         "Klayers-python37-aiohttp": [
             "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-aiohttp:5",
@@ -683,6 +740,9 @@
         "Klayers-python37-pytesseract": [
             "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-pytesseract:1"
         ],
+        "Klayers-python37-pytz": [
+            "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-pytz:1"
+        ],
         "Klayers-python37-requests": [
             "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-requests:4",
             "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-requests:3",
@@ -709,6 +769,9 @@
             "arn:aws:lambda:eu-west-3:113088814899:layer:Klayers-python37-Pillow:3",
             "arn:aws:lambda:eu-west-3:113088814899:layer:Klayers-python37-Pillow:2",
             "arn:aws:lambda:eu-west-3:113088814899:layer:Klayers-python37-Pillow:1"
+        ],
+        "Klayers-python37-PyMuPDF": [
+            "arn:aws:lambda:eu-west-3:113088814899:layer:Klayers-python37-PyMuPDF:1"
         ],
         "Klayers-python37-aiohttp": [
             "arn:aws:lambda:eu-west-3:113088814899:layer:Klayers-python37-aiohttp:5",
@@ -753,6 +816,9 @@
         "Klayers-python37-pytesseract": [
             "arn:aws:lambda:eu-west-3:113088814899:layer:Klayers-python37-pytesseract:1"
         ],
+        "Klayers-python37-pytz": [
+            "arn:aws:lambda:eu-west-3:113088814899:layer:Klayers-python37-pytz:1"
+        ],
         "Klayers-python37-requests": [
             "arn:aws:lambda:eu-west-3:113088814899:layer:Klayers-python37-requests:4",
             "arn:aws:lambda:eu-west-3:113088814899:layer:Klayers-python37-requests:3",
@@ -779,6 +845,9 @@
             "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-Pillow:3",
             "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-Pillow:2",
             "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-Pillow:1"
+        ],
+        "Klayers-python37-PyMuPDF": [
+            "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-PyMuPDF:1"
         ],
         "Klayers-python37-aiohttp": [
             "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-aiohttp:5",
@@ -823,6 +892,9 @@
         "Klayers-python37-pytesseract": [
             "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-pytesseract:1"
         ],
+        "Klayers-python37-pytz": [
+            "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-pytz:1"
+        ],
         "Klayers-python37-requests": [
             "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-requests:4",
             "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-requests:3",
@@ -849,6 +921,9 @@
             "arn:aws:lambda:us-east-1:113088814899:layer:Klayers-python37-Pillow:3",
             "arn:aws:lambda:us-east-1:113088814899:layer:Klayers-python37-Pillow:2",
             "arn:aws:lambda:us-east-1:113088814899:layer:Klayers-python37-Pillow:1"
+        ],
+        "Klayers-python37-PyMuPDF": [
+            "arn:aws:lambda:us-east-1:113088814899:layer:Klayers-python37-PyMuPDF:1"
         ],
         "Klayers-python37-aiohttp": [
             "arn:aws:lambda:us-east-1:113088814899:layer:Klayers-python37-aiohttp:5",
@@ -897,6 +972,9 @@
         "Klayers-python37-pytesseract": [
             "arn:aws:lambda:us-east-1:113088814899:layer:Klayers-python37-pytesseract:1"
         ],
+        "Klayers-python37-pytz": [
+            "arn:aws:lambda:us-east-1:113088814899:layer:Klayers-python37-pytz:1"
+        ],
         "Klayers-python37-requests": [
             "arn:aws:lambda:us-east-1:113088814899:layer:Klayers-python37-requests:4",
             "arn:aws:lambda:us-east-1:113088814899:layer:Klayers-python37-requests:3",
@@ -923,6 +1001,9 @@
             "arn:aws:lambda:us-east-2:113088814899:layer:Klayers-python37-Pillow:3",
             "arn:aws:lambda:us-east-2:113088814899:layer:Klayers-python37-Pillow:2",
             "arn:aws:lambda:us-east-2:113088814899:layer:Klayers-python37-Pillow:1"
+        ],
+        "Klayers-python37-PyMuPDF": [
+            "arn:aws:lambda:us-east-2:113088814899:layer:Klayers-python37-PyMuPDF:1"
         ],
         "Klayers-python37-aiohttp": [
             "arn:aws:lambda:us-east-2:113088814899:layer:Klayers-python37-aiohttp:5",
@@ -967,6 +1048,9 @@
         "Klayers-python37-pytesseract": [
             "arn:aws:lambda:us-east-2:113088814899:layer:Klayers-python37-pytesseract:1"
         ],
+        "Klayers-python37-pytz": [
+            "arn:aws:lambda:us-east-2:113088814899:layer:Klayers-python37-pytz:1"
+        ],
         "Klayers-python37-requests": [
             "arn:aws:lambda:us-east-2:113088814899:layer:Klayers-python37-requests:4",
             "arn:aws:lambda:us-east-2:113088814899:layer:Klayers-python37-requests:3",
@@ -993,6 +1077,9 @@
             "arn:aws:lambda:us-west-1:113088814899:layer:Klayers-python37-Pillow:3",
             "arn:aws:lambda:us-west-1:113088814899:layer:Klayers-python37-Pillow:2",
             "arn:aws:lambda:us-west-1:113088814899:layer:Klayers-python37-Pillow:1"
+        ],
+        "Klayers-python37-PyMuPDF": [
+            "arn:aws:lambda:us-west-1:113088814899:layer:Klayers-python37-PyMuPDF:1"
         ],
         "Klayers-python37-aiohttp": [
             "arn:aws:lambda:us-west-1:113088814899:layer:Klayers-python37-aiohttp:5",
@@ -1037,6 +1124,9 @@
         "Klayers-python37-pytesseract": [
             "arn:aws:lambda:us-west-1:113088814899:layer:Klayers-python37-pytesseract:1"
         ],
+        "Klayers-python37-pytz": [
+            "arn:aws:lambda:us-west-1:113088814899:layer:Klayers-python37-pytz:1"
+        ],
         "Klayers-python37-requests": [
             "arn:aws:lambda:us-west-1:113088814899:layer:Klayers-python37-requests:4",
             "arn:aws:lambda:us-west-1:113088814899:layer:Klayers-python37-requests:3",
@@ -1063,6 +1153,9 @@
             "arn:aws:lambda:us-west-2:113088814899:layer:Klayers-python37-Pillow:3",
             "arn:aws:lambda:us-west-2:113088814899:layer:Klayers-python37-Pillow:2",
             "arn:aws:lambda:us-west-2:113088814899:layer:Klayers-python37-Pillow:1"
+        ],
+        "Klayers-python37-PyMuPDF": [
+            "arn:aws:lambda:us-west-2:113088814899:layer:Klayers-python37-PyMuPDF:1"
         ],
         "Klayers-python37-aiohttp": [
             "arn:aws:lambda:us-west-2:113088814899:layer:Klayers-python37-aiohttp:5",
@@ -1106,6 +1199,9 @@
         ],
         "Klayers-python37-pytesseract": [
             "arn:aws:lambda:us-west-2:113088814899:layer:Klayers-python37-pytesseract:1"
+        ],
+        "Klayers-python37-pytz": [
+            "arn:aws:lambda:us-west-2:113088814899:layer:Klayers-python37-pytz:1"
         ],
         "Klayers-python37-requests": [
             "arn:aws:lambda:us-west-2:113088814899:layer:Klayers-python37-requests:4",
