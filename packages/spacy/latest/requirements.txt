@@ -6,7 +6,7 @@ idna==2.8
 jsonschema==2.6.0
 murmurhash==1.0.2
 numpy==1.16.2
-plac==0.9.6
+plac==1.0.0
 preshed==2.0.1
 requests==2.21.0
 spacy==2.1.3
