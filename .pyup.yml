@@ -42,9 +42,9 @@ requirements:
 #  - packages/spacy/latest/requirements.txt:
 #      update: all
 #      pin: True 
-  - packages/boto3/latest/requirements.txt:
-      update: all
-      pin: True
+  # - packages/boto3/latest/requirements.txt:
+  #     update: all
+  #     pin: True
   - packages/PyMuPDF/latest/requirements.txt:
       update: all
       pin: True
