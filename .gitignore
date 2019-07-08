@@ -4,4 +4,11 @@ logs/
 .idea
 venv/
 .DS_Store
+*.DS_store
+serverless/node_modules
+serverless/.serverless
+infra/terraform.tfstate
+infra/terraform.tfstate.backup
+infra/.terraform
+
 
