@@ -18,10 +18,10 @@ custom:
 
   # environment variables
   s3LayersName: ${ssm:/${self:service.name}/${self:provider.stage}/s3bucket_layers}
-  s3DomainsArn: ${ssm:/${self:service.name}/${self:provider.stage}/s3bucket_layers_arn}
+  s3LayersArn: ${ssm:/${self:service.name}/${self:provider.stage}/s3bucket_layers_arn}
   
-  dbTempName: ${ssm:/${self:service.name}/${self:provider.stage}/dynamodb_layers_table}
-  dbTempArn: ${ssm:/${self:service.name}/${self:provider.stage}/dynamodb_layers_table_arn}
+  dblayers: ${ssm:/${self:service.name}/${self:provider.stage}/dynamodb_layers_table}
+  dblayersArn: ${ssm:/${self:service.name}/${self:provider.stage}/dynamodb_layers_table_arn}
 
 
 functions:
@@ -35,6 +35,16 @@ functions:
     memorySize: 512
     environment:
       BUCKET_NAME: ${self:custom.s3LayersName}
+    iamRoleStatements:
+    - Effect: Allow
+      Action:
+      - s3:PutObject
+      - s3:GetObject
+      - s3:DeleteObject
+      - s3:PutObjectAcl
+      - s3:GetObjectAcl
+      - s3:AbortMultipartUpload
+      Resource: ${self:custom.s3LayersArn}/*
 
 package:
   exclude:
