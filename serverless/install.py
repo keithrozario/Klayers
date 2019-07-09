@@ -29,14 +29,14 @@ def install(package):
 
     import subprocess
     subprocess.run(["pip", "install", package, "-t", f"/tmp/{package}"], capture_output=True)
-    return 
+    return
 
 
 def main(event,context):
 
     package = event['package']
     latest_release = get_latest_release(package)
-
+    print(latest_release)
 
     return True
 
