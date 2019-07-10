@@ -120,7 +120,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/Klayers-python37/default/1562599728719-2019-07-08T15:28:48.719Z/Klayers-python37.zip"
+                "S3Key": "serverless/Klayers-python37/default/1562773355364-2019-07-10T15:42:35.364Z/Klayers-python37.zip"
               },
               "FunctionName": "Klayers-python37-default-install",
               "Handler": "install.main",
@@ -205,6 +205,13 @@
                           "s3:AbortMultipartUpload"
                         ],
                         "Resource": "arn:aws:s3:::klayers-bucket-default/*"
+                      },
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "s3:ListBucket"
+                        ],
+                        "Resource": "arn:aws:s3:::klayers-bucket-default"
                       }
                     ]
                   }
@@ -291,6 +298,9 @@
         "iamRoleStatements": [
           {
             "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"InstallIamRoleLambdaExecution\"][\"Properties\"][\"Policies\"][0][\"PolicyDocument\"][\"Statement\"][1]"
+          },
+          {
+            "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"InstallIamRoleLambdaExecution\"][\"Properties\"][\"Policies\"][0][\"PolicyDocument\"][\"Statement\"][2]"
           }
         ],
         "events": [],
@@ -304,7 +314,7 @@
     "artifact": "/Users/keithrozario/projects/Klayers/serverless/.serverless/Klayers-python37.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/Klayers-python37/default/1562599728719-2019-07-08T15:28:48.719Z",
+    "artifactDirectoryName": "serverless/Klayers-python37/default/1562773355364-2019-07-10T15:42:35.364Z",
     "artifact": "Klayers-python37.zip"
   }
 }
