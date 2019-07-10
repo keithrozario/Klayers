@@ -1,8 +1,11 @@
-import packaging
-import requests
 import json
+import requests
+import logging
 
 from packaging.version import parse
+
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
 
 
 def get_latest_release(package):
@@ -26,6 +29,12 @@ def get_latest_release(package):
 
 
 def install(package):
+    """"
+    Args:
+      package: Name of package to be queried
+    return:
+      path to zip file of final package
+    """
 
     import subprocess
     subprocess.run(["pip", "install", package, "-t", f"/tmp/{package}"], capture_output=True)
@@ -36,11 +45,11 @@ def main(event,context):
 
     package = event['package']
     latest_release = get_latest_release(package)
-    print(latest_release)
+    logger.info(f"Latest release for package {package} is {latest_release}")
 
-    return True
+    return json.dumps({"latest_release": str(latest_release)})
 
 
 if __name__ == '__main__':
-    main({"package": "requests"}, {})
+    print(main({"package": "requests"}, {}))
 
