@@ -4,6 +4,7 @@ import json
 import requests
 import shutil
 import logging
+import zipfile
 
 from packaging.version import parse
 
@@ -12,7 +13,14 @@ logger.setLevel(logging.INFO)
 
 
 def zip_dir(dir_path, package):
-    return f"{package}.zip"
+    zip_file = f'/tmp/{package}'
+    result = shutil.make_archive(base_name=zip_file,
+                                 format="zip",
+                                 base_dir=dir_path,
+                                 root_dir=dir_path,
+                                 logger=logger)
+    logger.info(result)
+    return f"{zip_file}.zip"
 
 
 def delete_dir(dir):
@@ -63,14 +71,15 @@ def install(package, package_dir):
     """
     delete_dir(package_dir)
     import subprocess
-    subprocess.run(["pip", "install", package, "-t", package_dir], capture_output=True)
+    output = subprocess.run(["pip", "install", package, "-t", package_dir, '--upgrade'], capture_output=True)
+    logger.info(output)
     return package_dir
 
 
 def main(event,context):
 
     package = event['package']
-    package_dir = f"/tmp/{package}"
+    package_dir = f"/tmp/python"
 
     latest_release = get_latest_release(package)
     logger.info(f"Latest release for package {package} is {latest_release}")
@@ -79,8 +88,12 @@ def main(event,context):
     package_size = dir_size(package_dir)
     logger.info(f"Installed {package} into {package_dir} with size: {package_size}")
 
+    zip_file = zip_dir(dir_path=package_dir, package=package)
+    logger.info(f"Zipped package info {zip_file}")
+
     return json.dumps({"latest_release": str(latest_release),
-                       "size": package_size})
+                       "size": package_size,
+                       "zip_size": os.path.getsize(zip_file)})
 
 
 if __name__ == '__main__':
