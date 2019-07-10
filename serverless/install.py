@@ -1,10 +1,8 @@
 import os
-import zlib
 import json
 import requests
 import shutil
 import logging
-import zipfile
 
 from packaging.version import parse
 
@@ -12,13 +10,32 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 
+def upload_to_s3(zip_file, package):
+
+    bucket_name = os.environ['BUCKET_NAME']
+
+    import boto3
+    s3 = boto3.resource('s3')
+    s3.meta.client.upload_file(zip_file, bucket_name, f'{package}.zip')
+
+    client = boto3.client('s3')
+    response = client.list_objects_v2(
+        Bucket=bucket_name,
+        Prefix=package
+    )
+
+    logger.info(f"Uploaded {package}.zip with "
+                f"size {response['Contents'][0]['Size']} "
+                f"at {response['Contents'][0]['LastModified']} "
+                f"to {bucket_name}")
+
+
 def zip_dir(dir_path, package):
     zip_file = f'/tmp/{package}'
     result = shutil.make_archive(base_name=zip_file,
                                  format="zip",
-                                 base_dir=dir_path,
-                                 root_dir=dir_path,
-                                 logger=logger)
+                                 base_dir=dir_path.split('/')[-1],
+                                 root_dir="/tmp")
     logger.info(result)
     return f"{zip_file}.zip"
 
@@ -90,6 +107,9 @@ def main(event,context):
 
     zip_file = zip_dir(dir_path=package_dir, package=package)
     logger.info(f"Zipped package info {zip_file}")
+
+    logger.info("Uploading to S3")
+    upload_to_s3(zip_file=zip_file, package=package)
 
     return json.dumps({"latest_release": str(latest_release),
                        "size": package_size,
