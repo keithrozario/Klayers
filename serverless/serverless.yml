@@ -45,6 +45,10 @@ functions:
       - s3:GetObjectAcl
       - s3:AbortMultipartUpload
       Resource: ${self:custom.s3LayersArn}/*
+    - Effect: Allow
+      Action:
+      - s3:ListBucket
+      Resource: ${self:custom.s3LayersArn}
 
 package:
   exclude:
