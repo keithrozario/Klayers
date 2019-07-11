@@ -31,8 +31,8 @@ functions:
     layers:
       - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-packaging:1
       - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-requests:4
-    timeout: 30
-    memorySize: 512
+    timeout: 120
+    memorySize: 1024
     environment:
       BUCKET_NAME: ${self:custom.s3LayersName}
     iamRoleStatements:
