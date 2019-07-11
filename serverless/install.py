@@ -88,7 +88,8 @@ def install(package, package_dir):
     """
     delete_dir(package_dir)
     import subprocess
-    output = subprocess.run(["pip", "install", package, "-t", package_dir, '--upgrade'], capture_output=True)
+    output = subprocess.run(["pip", "install", package, "-t", package_dir, '--quiet', '--upgrade', '--no-cache-dir'],
+                            capture_output=True)
     logger.info(output)
     return package_dir
 
