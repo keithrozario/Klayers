@@ -23,6 +23,13 @@
         "RetentionInDays": 1
       }
     },
+    "DeployLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/Klayers-python37-default-deploy",
+        "RetentionInDays": 1
+      }
+    },
     "IamRoleLambdaExecution": {
       "Type": "AWS::IAM::Role",
       "Properties": {
@@ -65,6 +72,9 @@
                   "Resource": [
                     {
                       "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/Klayers-python37-default-install:*"
+                    },
+                    {
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/Klayers-python37-default-deploy:*"
                     }
                   ]
                 },
@@ -76,6 +86,9 @@
                   "Resource": [
                     {
                       "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/Klayers-python37-default-install:*:*"
+                    },
+                    {
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/Klayers-python37-default-deploy:*:*"
                     }
                   ]
                 }
@@ -104,7 +117,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/Klayers-python37/default/1563025198938-2019-07-13T13:39:58.938Z/Klayers-python37.zip"
+          "S3Key": "serverless/Klayers-python37/default/1563031780890-2019-07-13T15:29:40.890Z/Klayers-python37.zip"
         },
         "FunctionName": "Klayers-python37-default-install",
         "Handler": "install.main",
@@ -131,6 +144,40 @@
       "DependsOn": [
         "InstallIamRoleLambdaExecution",
         "InstallLogGroup"
+      ]
+    },
+    "DeployLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/Klayers-python37/default/1563031780890-2019-07-13T15:29:40.890Z/Klayers-python37.zip"
+        },
+        "FunctionName": "Klayers-python37-default-deploy",
+        "Handler": "deploy.main",
+        "MemorySize": 128,
+        "Role": {
+          "Fn::GetAtt": [
+            "DeployIamRoleLambdaExecution",
+            "Arn"
+          ]
+        },
+        "Runtime": "python3.7",
+        "Timeout": 60,
+        "Environment": {
+          "Variables": {
+            "BUCKET_NAME": "klayers-bucket-default",
+            "REQS_DB": "klayers-requirements",
+            "LAYERS_DB": "klayers-versions",
+            "LAMBDA_PREFIX": "Klayers-python36-default-"
+          }
+        }
+      },
+      "DependsOn": [
+        "DeployIamRoleLambdaExecution",
+        "DeployLogGroup"
       ]
     },
     "InstallIamRoleLambdaExecution": {
@@ -219,6 +266,101 @@
               "Klayers-python37",
               "default",
               "install",
+              "ap-southeast-1",
+              "lambdaRole"
+            ]
+          ]
+        },
+        "ManagedPolicyArns": []
+      }
+    },
+    "DeployIamRoleLambdaExecution": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  "lambda.amazonaws.com"
+                ]
+              },
+              "Action": [
+                "sts:AssumeRole"
+              ]
+            }
+          ]
+        },
+        "Policies": [
+          {
+            "PolicyName": {
+              "Fn::Join": [
+                "-",
+                [
+                  "default",
+                  "Klayers-python37",
+                  "lambda"
+                ]
+              ]
+            },
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "logs:CreateLogStream",
+                    "logs:PutLogEvents"
+                  ],
+                  "Resource": [
+                    {
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/Klayers-python37-default-deploy:*:*"
+                    }
+                  ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "dynamodb:PutItem"
+                  ],
+                  "Resource": "arn:aws:dynamodb:ap-southeast-1:113088814899:table/klayers-versions"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "lambda:AddLayerVersionPermission",
+                    "lambda:GetLayerVersion"
+                  ],
+                  "Resource": "*"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "lambda:PublishLayerVersion"
+                  ],
+                  "Resource": "*"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "s3:GetObject"
+                  ],
+                  "Resource": "arn:aws:s3:::klayers-bucket-default/*"
+                }
+              ]
+            }
+          }
+        ],
+        "Path": "/",
+        "RoleName": {
+          "Fn::Join": [
+            "-",
+            [
+              "Klayers-python37",
+              "default",
+              "deploy",
               "ap-southeast-1",
               "lambdaRole"
             ]

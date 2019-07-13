@@ -108,3 +108,10 @@ resource "aws_ssm_parameter" "s3bucket_layers_arn" {
   value = "${aws_s3_bucket.s3bucket_layers.arn}"
   overwrite = true
 }
+
+resource "aws_ssm_parameter" "lambda_prefix" {
+  type  = "String"
+  name  = "/${var.app_name}/${terraform.workspace}/lambda_prefix"
+  value = "${lookup(var.lambda_prefix, terraform.workspace)}"
+  overwrite = true
+}
