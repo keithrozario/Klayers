@@ -104,11 +104,11 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/Klayers-python37/default/1562773355364-2019-07-10T15:42:35.364Z/Klayers-python37.zip"
+          "S3Key": "serverless/Klayers-python37/default/1563025198938-2019-07-13T13:39:58.938Z/Klayers-python37.zip"
         },
         "FunctionName": "Klayers-python37-default-install",
         "Handler": "install.main",
-        "MemorySize": 512,
+        "MemorySize": 1024,
         "Role": {
           "Fn::GetAtt": [
             "InstallIamRoleLambdaExecution",
@@ -116,10 +116,11 @@
           ]
         },
         "Runtime": "python3.7",
-        "Timeout": 30,
+        "Timeout": 120,
         "Environment": {
           "Variables": {
-            "BUCKET_NAME": "klayers-bucket-default"
+            "BUCKET_NAME": "klayers-bucket-default",
+            "REQS_DB": "klayers-requirements"
           }
         },
         "Layers": [
@@ -196,6 +197,15 @@
                     "s3:ListBucket"
                   ],
                   "Resource": "arn:aws:s3:::klayers-bucket-default"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "dynamodb:GetItem",
+                    "dynamodb:PutItem",
+                    "dynamodb:Query"
+                  ],
+                  "Resource": "arn:aws:dynamodb:ap-southeast-1:113088814899:table/klayers-requirements"
                 }
               ]
             }

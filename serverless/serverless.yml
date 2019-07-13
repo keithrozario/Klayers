@@ -20,8 +20,11 @@ custom:
   s3LayersName: ${ssm:/${self:service.name}/${self:provider.stage}/s3bucket_layers}
   s3LayersArn: ${ssm:/${self:service.name}/${self:provider.stage}/s3bucket_layers_arn}
   
-  dblayers: ${ssm:/${self:service.name}/${self:provider.stage}/dynamodb_layers_table}
-  dblayersArn: ${ssm:/${self:service.name}/${self:provider.stage}/dynamodb_layers_table_arn}
+  dbLayers: ${ssm:/${self:service.name}/${self:provider.stage}/dynamodb_layers_table}
+  dbLayersArn: ${ssm:/${self:service.name}/${self:provider.stage}/dynamodb_layers_table_arn}
+
+  dbReqs: ${ssm:/${self:service.name}/${self:provider.stage}/dynamodb_requirements_table}
+  dbReqsArn: ${ssm:/${self:service.name}/${self:provider.stage}/dynamodb_requirements_table_arn}
 
 
 functions:
@@ -35,6 +38,7 @@ functions:
     memorySize: 1024
     environment:
       BUCKET_NAME: ${self:custom.s3LayersName}
+      REQS_DB: ${self:custom.dbReqs}
     iamRoleStatements:
     - Effect: Allow
       Action:
@@ -49,6 +53,13 @@ functions:
       Action:
       - s3:ListBucket
       Resource: ${self:custom.s3LayersArn}
+    - Effect: Allow
+      Action:
+      - dynamodb:GetItem
+      - dynamodb:PutItem
+      - dynamodb:Query
+      Resource: ${self:custom.dbReqsArn}
+
 
 package:
   exclude:
