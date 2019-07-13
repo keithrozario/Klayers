@@ -2,7 +2,9 @@
   "name": "Klayers-python37",
   "description": "",
   "version": "0.1.0",
-  "dependencies": {},
+  "dependencies": {
+    "serverless": "^1.47.0"
+  },
   "devDependencies": {
     "serverless-iam-roles-per-function": "^2.0.1"
   }
