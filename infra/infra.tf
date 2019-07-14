@@ -20,17 +20,17 @@ resource "aws_dynamodb_table" "dynamodb_layers" {
 
   name           = "${lookup(var.dynamodb_layers, terraform.workspace)}"
   billing_mode   = "PAY_PER_REQUEST"
-  hash_key       = "region"
-  range_key      = "package-version"
+  hash_key       = "region-package"
+  range_key      = "layer_version"
 
   attribute {
-    name = "region"
+    name = "region-package"
     type = "S"
   }
 
   attribute {
-    name = "package-version"
-    type = "S"
+    name = "layer_version"
+    type = "N"
   }
 
 }
