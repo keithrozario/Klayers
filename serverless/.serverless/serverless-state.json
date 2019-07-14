@@ -133,7 +133,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/Klayers-python37/default/1563031780890-2019-07-13T15:29:40.890Z/Klayers-python37.zip"
+                "S3Key": "serverless/Klayers-python37/default/1563089755871-2019-07-14T07:35:55.871Z/Klayers-python37.zip"
               },
               "FunctionName": "Klayers-python37-default-install",
               "Handler": "install.main",
@@ -154,7 +154,8 @@
               },
               "Layers": [
                 "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-packaging:1",
-                "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-requests:4"
+                "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-requests:4",
+                "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-boto3:2"
               ]
             },
             "DependsOn": [
@@ -169,7 +170,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/Klayers-python37/default/1563031780890-2019-07-13T15:29:40.890Z/Klayers-python37.zip"
+                "S3Key": "serverless/Klayers-python37/default/1563089755871-2019-07-14T07:35:55.871Z/Klayers-python37.zip"
               },
               "FunctionName": "Klayers-python37-default-deploy",
               "Handler": "deploy.main",
@@ -189,7 +190,10 @@
                   "LAYERS_DB": "klayers-versions",
                   "LAMBDA_PREFIX": "Klayers-python36-default-"
                 }
-              }
+              },
+              "Layers": [
+                "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-boto3:2"
+              ]
             },
             "DependsOn": [
               "DeployIamRoleLambdaExecution",
@@ -443,7 +447,8 @@
         "runtime": "python3.7",
         "layers": [
           "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-packaging:1",
-          "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-requests:4"
+          "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-requests:4",
+          "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-boto3:2"
         ],
         "timeout": 120,
         "memorySize": 1024,
@@ -471,6 +476,9 @@
       "deploy": {
         "handler": "deploy.main",
         "runtime": "python3.7",
+        "layers": [
+          "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-boto3:2"
+        ],
         "timeout": 60,
         "memorySize": 128,
         "environment": {
@@ -504,7 +512,7 @@
     "artifact": "/Users/keithrozario/projects/Klayers/serverless/.serverless/Klayers-python37.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/Klayers-python37/default/1563031780890-2019-07-13T15:29:40.890Z",
+    "artifactDirectoryName": "serverless/Klayers-python37/default/1563089755871-2019-07-14T07:35:55.871Z",
     "artifact": "Klayers-python37.zip"
   }
 }

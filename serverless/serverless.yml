@@ -38,6 +38,7 @@ functions:
     layers:
       - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-packaging:1
       - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-requests:4
+      - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-boto3:2
     timeout: 120
     memorySize: 1024
     environment:
@@ -66,6 +67,8 @@ functions:
   deploy:
     handler: deploy.main
     runtime: python3.7
+    layers:
+      - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-boto3:2
     timeout: 60
     memorySize: 128
     environment:
@@ -91,10 +94,6 @@ functions:
         Action:
           - s3:GetObject
         Resource: ${self:custom.s3LayersArn}/*
-
-
-
-
 
 package:
   exclude:
