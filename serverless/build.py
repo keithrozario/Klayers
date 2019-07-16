@@ -1,14 +1,10 @@
 import os
-import json
-import requests
 import shutil
 import logging
 import hashlib
 
 import boto3
 from botocore.exceptions import ClientError
-
-from packaging.version import parse
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -94,26 +90,6 @@ def dir_size(path='.'):
     return total
 
 
-def get_latest_release(package):
-    """
-    Args:
-      package: Name of package to be queried
-    returns:
-      version: Version number of latest release that is **not**  a pre-release
-    """
-    req = requests.get(f"https://pypi.python.org/pypi/{package}/json")
-    version = parse('0')
-    if req.status_code == requests.codes.ok:
-        j = json.loads(req.text)
-        releases = j.get('releases', [])
-        for release in releases:
-            ver = parse(release)
-            if not ver.is_prerelease:
-                version = max(version, ver)
-
-    return version
-
-
 def install(package, package_dir):
     """"
     Args:
@@ -134,10 +110,11 @@ def install(package, package_dir):
 def main(event,context):
 
     package = event['package']
-    package_dir = f"/tmp/python"
+    version = event['version']
+    regions = event['regions']
+    license_info = event['license_info']
 
-    latest_release = get_latest_release(package)
-    logger.info(f"Latest release for package {package} is {latest_release}")
+    package_dir = f"/tmp/python"
 
     package_dir = install(package, package_dir=package_dir)
     package_size = dir_size(package_dir)
@@ -145,7 +122,7 @@ def main(event,context):
 
     requirements_txt, requirements_hash = freeze_requirements(package=package,
                                                               path=package_dir,
-                                                              version=latest_release)
+                                                              version=version)
 
     zip_file = zip_dir(dir_path=package_dir, package=package)
     logger.info(f"Zipped package info {zip_file}")
@@ -153,9 +130,13 @@ def main(event,context):
     logger.info("Uploading to S3")
     upload_to_s3(zip_file=zip_file, package=package)
 
-    return json.dumps({"latest_release": str(latest_release),
-                       "size": package_size,
-                       "zip_size": os.path.getsize(zip_file),
-                       "requirements.txt": requirements_txt,
-                       "requirements_hash": requirements_hash})
+    logger.info(f"Built package: {package}=={version} into s3://{os.environ['BUCKET_NAME']}"
+                f"file size {os.path.getsize(zip_file)} "
+                f"with requirements hash: {requirements_hash}")
 
+    return {"zip_file": zip_file,
+            "package": package,
+            "version": version,
+            "regions": regions,
+            "req_hash": requirements_hash,
+            "license": license_info}
