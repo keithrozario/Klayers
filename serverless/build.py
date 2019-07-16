@@ -139,4 +139,4 @@ def main(event,context):
             "version": version,
             "regions": regions,
             "req_hash": requirements_hash,
-            "license": license_info}
+            "license_info": license_info}
