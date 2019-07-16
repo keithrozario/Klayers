@@ -14,7 +14,7 @@ def main(event, context):
     version = event['version']
     regions = event['regions']
     req_hash = event['req_hash']
-    license_info = event.get('license_info')
+    license_info = event['license_info']
 
     layer_name = f"{os.environ['LAMBDA_PREFIX']}{package}"
     package_artifact = f"{package}.zip"
