@@ -32,8 +32,8 @@ custom:
 
 
 functions:
-  install:
-    handler: install.main
+  build:
+    handler: build.main
     runtime: python3.7
     layers:
       - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-packaging:1
@@ -69,7 +69,7 @@ functions:
     runtime: python3.7
     layers:
       - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-boto3:2
-    timeout: 60
+    timeout: 600
     memorySize: 128
     environment:
       BUCKET_NAME: ${self:custom.s3LayersName}
@@ -94,10 +94,27 @@ functions:
         Action:
           - s3:GetObject
         Resource: ${self:custom.s3LayersArn}/*
+  check:
+    handler: check.main
+    runtime: python3.7
+    layers:
+      - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-packaging:1
+      - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-requests:4
+      - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-boto3:2
+    timeout: 120
+    memorySize: 128
+    environment:
+      LAYERS_DB: ${self:custom.dbLayers}
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Query
+        Resource: ${self:custom.dbLayersArn}
 
 package:
   exclude:
     - package-lock.json
+    - package.json
     - node_modules/**
     - serverless.yml
     - .gitignore
