@@ -6,10 +6,8 @@ venv/
 .DS_Store
 *.DS_store
 serverless/node_modules/
-serverless/.serverless/*
+serverless/.serverless/
 infra/terraform.tfstate
 infra/terraform.tfstate.backup
 infra/.terraform
 serverless/package.json
-
-

@@ -6,6 +6,7 @@
     "serverless": "^1.47.0"
   },
   "devDependencies": {
-    "serverless-iam-roles-per-function": "^2.0.1"
+    "serverless-iam-roles-per-function": "^2.0.1",
+    "serverless-step-functions": "^2.1.0"
   }
 }
