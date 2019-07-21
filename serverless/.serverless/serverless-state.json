@@ -12,7 +12,7 @@
       "runtime": "python3.7",
       "profile": "KlayersAccount",
       "versionFunctions": false,
-      "logRetentionInDays": 1,
+      "logRetentionInDays": 120,
       "remoteFunctionData": null,
       "compiledCloudFormationTemplate": {
         "AWSTemplateFormatVersion": "2010-09-09",
@@ -36,21 +36,35 @@
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
               "LogGroupName": "/aws/lambda/Klayers-python37-default-build",
-              "RetentionInDays": 1
+              "RetentionInDays": 120
             }
           },
           "DeployLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
               "LogGroupName": "/aws/lambda/Klayers-python37-default-deploy",
-              "RetentionInDays": 1
+              "RetentionInDays": 120
             }
           },
           "CheckLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
               "LogGroupName": "/aws/lambda/Klayers-python37-default-check",
-              "RetentionInDays": 1
+              "RetentionInDays": 120
+            }
+          },
+          "PublishLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/Klayers-python37-default-publish",
+              "RetentionInDays": 120
+            }
+          },
+          "InvokeUnderscorepipelineLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/Klayers-python37-default-invoke_pipeline",
+              "RetentionInDays": 120
             }
           },
           "IamRoleLambdaExecution": {
@@ -101,6 +115,12 @@
                           },
                           {
                             "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/Klayers-python37-default-check:*"
+                          },
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/Klayers-python37-default-publish:*"
+                          },
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/Klayers-python37-default-invoke_pipeline:*"
                           }
                         ]
                       },
@@ -118,6 +138,12 @@
                           },
                           {
                             "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/Klayers-python37-default-check:*:*"
+                          },
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/Klayers-python37-default-publish:*:*"
+                          },
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/Klayers-python37-default-invoke_pipeline:*:*"
                           }
                         ]
                       }
@@ -146,7 +172,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/Klayers-python37/default/1563689658903-2019-07-21T06:14:18.903Z/Klayers-python37.zip"
+                "S3Key": "serverless/Klayers-python37/default/1563717385417-2019-07-21T13:56:25.417Z/Klayers-python37.zip"
               },
               "FunctionName": "Klayers-python37-default-build",
               "Handler": "build.main",
@@ -181,7 +207,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/Klayers-python37/default/1563689658903-2019-07-21T06:14:18.903Z/Klayers-python37.zip"
+                "S3Key": "serverless/Klayers-python37/default/1563717385417-2019-07-21T13:56:25.417Z/Klayers-python37.zip"
               },
               "FunctionName": "Klayers-python37-default-deploy",
               "Handler": "deploy.main",
@@ -199,7 +225,7 @@
                   "BUCKET_NAME": "klayers-bucket-default",
                   "REQS_DB": "klayers-requirements",
                   "LAYERS_DB": "klayers-versions",
-                  "LAMBDA_PREFIX": "Klayers-python36-default-"
+                  "LAMBDA_PREFIX": "pylayers-python37-default"
                 }
               },
               "Layers": [
@@ -219,7 +245,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/Klayers-python37/default/1563689658903-2019-07-21T06:14:18.903Z/Klayers-python37.zip"
+                "S3Key": "serverless/Klayers-python37/default/1563717385417-2019-07-21T13:56:25.417Z/Klayers-python37.zip"
               },
               "FunctionName": "Klayers-python37-default-check",
               "Handler": "check.main",
@@ -245,6 +271,190 @@
             "DependsOn": [
               "CheckIamRoleLambdaExecution",
               "CheckLogGroup"
+            ]
+          },
+          "PublishLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/Klayers-python37/default/1563717385417-2019-07-21T13:56:25.417Z/Klayers-python37.zip"
+              },
+              "FunctionName": "Klayers-python37-default-publish",
+              "Handler": "publish.main",
+              "MemorySize": 128,
+              "Role": {
+                "Fn::GetAtt": [
+                  "PublishIamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Runtime": "python3.7",
+              "Timeout": 30,
+              "Environment": {
+                "Variables": {
+                  "BUCKET_NAME": "klayers-bucket-default",
+                  "REQS_DB": "klayers-requirements"
+                }
+              },
+              "Layers": [
+                "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-boto3:2"
+              ]
+            },
+            "DependsOn": [
+              "PublishIamRoleLambdaExecution",
+              "PublishLogGroup"
+            ]
+          },
+          "InvokeUnderscorepipelineLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/Klayers-python37/default/1563717385417-2019-07-21T13:56:25.417Z/Klayers-python37.zip"
+              },
+              "FunctionName": "Klayers-python37-default-invoke_pipeline",
+              "Handler": "invoke_pipeline.main",
+              "MemorySize": 128,
+              "Role": {
+                "Fn::GetAtt": [
+                  "InvokeUnderscorepipelineIamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Runtime": "python3.7",
+              "Timeout": 120,
+              "Environment": {
+                "Variables": {
+                  "PIPELINE_ARN": {
+                    "Fn::Join": [
+                      ":",
+                      [
+                        "arn:aws:states",
+                        "ap-southeast-1",
+                        {
+                          "Ref": "AWS::AccountId"
+                        },
+                        "stateMachine:Klayers-python37-default-pipeline"
+                      ]
+                    ]
+                  }
+                }
+              }
+            },
+            "DependsOn": [
+              "InvokeUnderscorepipelineIamRoleLambdaExecution",
+              "InvokeUnderscorepipelineLogGroup"
+            ]
+          },
+          "IamRoleStateMachineExecution": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+              "AssumeRolePolicyDocument": {
+                "Version": "2012-10-17",
+                "Statement": [
+                  {
+                    "Effect": "Allow",
+                    "Principal": {
+                      "Service": "states.ap-southeast-1.amazonaws.com"
+                    },
+                    "Action": "sts:AssumeRole"
+                  }
+                ]
+              },
+              "Policies": [
+                {
+                  "PolicyName": "default-ap-southeast-1-Klayers-python37-statemachine",
+                  "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "lambda:InvokeFunction"
+                        ],
+                        "Resource": [
+                          {
+                            "Fn::GetAtt": [
+                              "CheckLambdaFunction",
+                              "Arn"
+                            ]
+                          },
+                          {
+                            "Fn::GetAtt": [
+                              "BuildLambdaFunction",
+                              "Arn"
+                            ]
+                          },
+                          {
+                            "Fn::GetAtt": [
+                              "DeployLambdaFunction",
+                              "Arn"
+                            ]
+                          },
+                          {
+                            "Fn::GetAtt": [
+                              "PublishLambdaFunction",
+                              "Arn"
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "KlayersDashpython37DashdefaultDashpipeline": {
+            "Type": "AWS::StepFunctions::StateMachine",
+            "Properties": {
+              "DefinitionString": {
+                "Fn::Sub": [
+                  "{\n  \"Comment\": \"Check, Build, Deploy and Publish a Lambda Layer\",\n  \"StartAt\": \"Check\",\n  \"States\": {\n    \"Check\": {\n      \"Type\": \"Task\",\n      \"Resource\": \"${0fYC2szDzl}\",\n      \"Next\": \"Build\",\n      \"Retry\": [\n        {\n          \"ErrorEquals\": [\n            \"States.Timeout\"\n          ],\n          \"MaxAttempts\": 2,\n          \"BackoffRate\": 30,\n          \"IntervalSeconds\": 60\n        }\n      ],\n      \"Catch\": [\n        {\n          \"ErrorEquals\": [\n            \"States.ALL\"\n          ],\n          \"Next\": \"CheckFail\"\n        }\n      ]\n    },\n    \"Build\": {\n      \"Type\": \"Task\",\n      \"Resource\": \"${zF6FQcDB6g}\",\n      \"Next\": \"Deploy\",\n      \"Retry\": [\n        {\n          \"ErrorEquals\": [\n            \"States.Timeout\"\n          ],\n          \"MaxAttempts\": 2,\n          \"BackoffRate\": 30,\n          \"IntervalSeconds\": 60\n        }\n      ],\n      \"Catch\": [\n        {\n          \"ErrorEquals\": [\n            \"States.ALL\"\n          ],\n          \"Next\": \"BuildFail\"\n        }\n      ]\n    },\n    \"Deploy\": {\n      \"Type\": \"Task\",\n      \"Resource\": \"${3u96O46UB7}\",\n      \"Next\": \"PublishOrNot\",\n      \"Retry\": [\n        {\n          \"ErrorEquals\": [\n            \"States.Timeout\"\n          ],\n          \"MaxAttempts\": 2,\n          \"BackoffRate\": 30,\n          \"IntervalSeconds\": 60\n        }\n      ],\n      \"Catch\": [\n        {\n          \"ErrorEquals\": [\n            \"States.ALL\"\n          ],\n          \"Next\": \"DeployFail\"\n        }\n      ]\n    },\n    \"PublishOrNot\": {\n      \"Type\": \"Choice\",\n      \"Choices\": [\n        {\n          \"Variable\": \"$.deployed_flag\",\n          \"BooleanEquals\": true,\n          \"Next\": \"Publish\"\n        },\n        {\n          \"Variable\": \"$.deployed_flag\",\n          \"BooleanEquals\": false,\n          \"Next\": \"NoneDeployed\"\n        }\n      ],\n      \"Default\": \"NoneDeployed\"\n    },\n    \"Publish\": {\n      \"Type\": \"Task\",\n      \"Resource\": \"${CYaHpZTzs0}\",\n      \"Next\": \"Done\",\n      \"Retry\": [\n        {\n          \"ErrorEquals\": [\n            \"States.Timeout\"\n          ],\n          \"MaxAttempts\": 2,\n          \"BackoffRate\": 30,\n          \"IntervalSeconds\": 60\n        }\n      ],\n      \"Catch\": [\n        {\n          \"ErrorEquals\": [\n            \"States.ALL\"\n          ],\n          \"Next\": \"PublishFail\"\n        }\n      ]\n    },\n    \"Done\": {\n      \"Type\": \"Succeed\"\n    },\n    \"NoneDeployed\": {\n      \"Type\": \"Succeed\"\n    },\n    \"CheckFail\": {\n      \"Type\": \"Fail\",\n      \"Error\": \"CheckFailure\",\n      \"Cause\": \"Unknown\"\n    },\n    \"BuildFail\": {\n      \"Type\": \"Fail\",\n      \"Error\": \"BuildFailure\",\n      \"Cause\": \"Unknown\"\n    },\n    \"DeployFail\": {\n      \"Type\": \"Fail\",\n      \"Error\": \"DeployFailure\",\n      \"Cause\": \"Unknown\"\n    },\n    \"PublishFail\": {\n      \"Type\": \"Fail\",\n      \"Error\": \"PublishFailure\",\n      \"Cause\": \"Unknown\"\n    }\n  }\n}",
+                  {
+                    "0fYC2szDzl": {
+                      "Fn::GetAtt": [
+                        "CheckLambdaFunction",
+                        "Arn"
+                      ]
+                    },
+                    "zF6FQcDB6g": {
+                      "Fn::GetAtt": [
+                        "BuildLambdaFunction",
+                        "Arn"
+                      ]
+                    },
+                    "3u96O46UB7": {
+                      "Fn::GetAtt": [
+                        "DeployLambdaFunction",
+                        "Arn"
+                      ]
+                    },
+                    "CYaHpZTzs0": {
+                      "Fn::GetAtt": [
+                        "PublishLambdaFunction",
+                        "Arn"
+                      ]
+                    }
+                  }
+                ]
+              },
+              "RoleArn": {
+                "Fn::GetAtt": [
+                  "IamRoleStateMachineExecution",
+                  "Arn"
+                ]
+              },
+              "Tags": [],
+              "StateMachineName": "Klayers-python37-default-pipeline"
+            },
+            "DependsOn": [
+              "IamRoleStateMachineExecution"
             ]
           },
           "BuildIamRoleLambdaExecution": {
@@ -311,6 +521,13 @@
                           "s3:ListBucket"
                         ],
                         "Resource": "arn:aws:s3:::klayers-bucket-default"
+                      },
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "dynamodb:PutItem"
+                        ],
+                        "Resource": "arn:aws:dynamodb:ap-southeast-1:113088814899:table/klayers-requirements"
                       }
                     ]
                   }
@@ -501,12 +718,180 @@
               },
               "ManagedPolicyArns": []
             }
+          },
+          "PublishIamRoleLambdaExecution": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+              "AssumeRolePolicyDocument": {
+                "Version": "2012-10-17",
+                "Statement": [
+                  {
+                    "Effect": "Allow",
+                    "Principal": {
+                      "Service": [
+                        "lambda.amazonaws.com"
+                      ]
+                    },
+                    "Action": [
+                      "sts:AssumeRole"
+                    ]
+                  }
+                ]
+              },
+              "Policies": [
+                {
+                  "PolicyName": {
+                    "Fn::Join": [
+                      "-",
+                      [
+                        "default",
+                        "Klayers-python37",
+                        "lambda"
+                      ]
+                    ]
+                  },
+                  "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "logs:CreateLogStream",
+                          "logs:PutLogEvents"
+                        ],
+                        "Resource": [
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/Klayers-python37-default-publish:*:*"
+                          }
+                        ]
+                      },
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "s3:PutObject"
+                        ],
+                        "Resource": "arn:aws:s3:::klayers-bucket-default/*"
+                      },
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "dynamodb:GetItem"
+                        ],
+                        "Resource": "arn:aws:dynamodb:ap-southeast-1:113088814899:table/klayers-requirements"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "Path": "/",
+              "RoleName": {
+                "Fn::Join": [
+                  "-",
+                  [
+                    "Klayers-python37",
+                    "default",
+                    "publish",
+                    "ap-southeast-1",
+                    "lambdaRole"
+                  ]
+                ]
+              },
+              "ManagedPolicyArns": []
+            }
+          },
+          "InvokeUnderscorepipelineIamRoleLambdaExecution": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+              "AssumeRolePolicyDocument": {
+                "Version": "2012-10-17",
+                "Statement": [
+                  {
+                    "Effect": "Allow",
+                    "Principal": {
+                      "Service": [
+                        "lambda.amazonaws.com"
+                      ]
+                    },
+                    "Action": [
+                      "sts:AssumeRole"
+                    ]
+                  }
+                ]
+              },
+              "Policies": [
+                {
+                  "PolicyName": {
+                    "Fn::Join": [
+                      "-",
+                      [
+                        "default",
+                        "Klayers-python37",
+                        "lambda"
+                      ]
+                    ]
+                  },
+                  "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "logs:CreateLogStream",
+                          "logs:PutLogEvents"
+                        ],
+                        "Resource": [
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/Klayers-python37-default-invoke_pipeline:*:*"
+                          }
+                        ]
+                      },
+                      {
+                        "Effect": "Allow",
+                        "Action": "states:StartExecution",
+                        "Resource": {
+                          "Fn::Join": [
+                            ":",
+                            [
+                              "arn:aws:states",
+                              "ap-southeast-1",
+                              {
+                                "Ref": "AWS::AccountId"
+                              },
+                              "stateMachine:Klayers-python37-default-pipeline"
+                            ]
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ],
+              "Path": "/",
+              "RoleName": {
+                "Fn::Join": [
+                  "-",
+                  [
+                    "Klayers-python37",
+                    "default",
+                    "invoke_pipeline",
+                    "ap-southeast-1"
+                  ]
+                ]
+              },
+              "ManagedPolicyArns": []
+            }
           }
         },
         "Outputs": {
           "ServerlessDeploymentBucketName": {
             "Value": {
               "Ref": "ServerlessDeploymentBucket"
+            }
+          },
+          "KlayersDashpython37DashdefaultDashpipelineArn": {
+            "Description": "Current StateMachine Arn",
+            "Value": {
+              "Ref": "KlayersDashpython37DashdefaultDashpipeline"
             }
           }
         }
@@ -548,10 +933,12 @@
       "dbLayersArn": "arn:aws:dynamodb:ap-southeast-1:113088814899:table/klayers-versions",
       "dbReqs": "klayers-requirements",
       "dbReqsArn": "arn:aws:dynamodb:ap-southeast-1:113088814899:table/klayers-requirements",
-      "lambdaPrefix": "Klayers-python36-default-"
+      "lambdaPrefix": "pylayers-python37-default",
+      "pipelineName": "Klayers-python37-default-pipeline"
     },
     "plugins": [
-      "serverless-iam-roles-per-function"
+      "serverless-iam-roles-per-function",
+      "serverless-step-functions"
     ],
     "pluginsData": {},
     "functions": {
@@ -573,6 +960,9 @@
           },
           {
             "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"BuildIamRoleLambdaExecution\"][\"Properties\"][\"Policies\"][0][\"PolicyDocument\"][\"Statement\"][2]"
+          },
+          {
+            "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"BuildIamRoleLambdaExecution\"][\"Properties\"][\"Policies\"][0][\"PolicyDocument\"][\"Statement\"][3]"
           }
         ],
         "events": [],
@@ -594,7 +984,7 @@
           "BUCKET_NAME": "klayers-bucket-default",
           "REQS_DB": "klayers-requirements",
           "LAYERS_DB": "klayers-versions",
-          "LAMBDA_PREFIX": "Klayers-python36-default-"
+          "LAMBDA_PREFIX": "pylayers-python37-default"
         },
         "iamRoleStatements": [
           {
@@ -638,13 +1028,218 @@
         "package": {},
         "memory": 128,
         "vpc": {}
+      },
+      "publish": {
+        "handler": "publish.main",
+        "runtime": "python3.7",
+        "layers": [
+          "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-boto3:2"
+        ],
+        "timeout": 30,
+        "memorySize": 128,
+        "environment": {
+          "BUCKET_NAME": "klayers-bucket-default",
+          "REQS_DB": "klayers-requirements"
+        },
+        "iamRoleStatements": [
+          {
+            "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"PublishIamRoleLambdaExecution\"][\"Properties\"][\"Policies\"][0][\"PolicyDocument\"][\"Statement\"][1]"
+          },
+          {
+            "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"PublishIamRoleLambdaExecution\"][\"Properties\"][\"Policies\"][0][\"PolicyDocument\"][\"Statement\"][2]"
+          }
+        ],
+        "events": [],
+        "name": "Klayers-python37-default-publish",
+        "package": {},
+        "memory": 128,
+        "vpc": {}
+      },
+      "invoke_pipeline": {
+        "handler": "invoke_pipeline.main",
+        "runtime": "python3.7",
+        "timeout": 120,
+        "memorySize": 128,
+        "environment": {
+          "PIPELINE_ARN": {
+            "Fn::Join": [
+              ":",
+              [
+                "arn:aws:states",
+                "ap-southeast-1",
+                {
+                  "Ref": "AWS::AccountId"
+                },
+                "stateMachine:Klayers-python37-default-pipeline"
+              ]
+            ]
+          }
+        },
+        "iamRoleStatements": [
+          {
+            "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"InvokeUnderscorepipelineIamRoleLambdaExecution\"][\"Properties\"][\"Policies\"][0][\"PolicyDocument\"][\"Statement\"][1]"
+          }
+        ],
+        "events": [],
+        "name": "Klayers-python37-default-invoke_pipeline",
+        "package": {},
+        "memory": 128,
+        "vpc": {}
       }
     },
     "layers": {},
+    "stepFunctions": {
+      "stateMachines": {
+        "pipeline": {
+          "name": "Klayers-python37-default-pipeline",
+          "definition": {
+            "Comment": "Check, Build, Deploy and Publish a Lambda Layer",
+            "StartAt": "Check",
+            "States": {
+              "Check": {
+                "Type": "Task",
+                "Resource": "${0fYC2szDzl}",
+                "Next": "Build",
+                "Retry": [
+                  {
+                    "ErrorEquals": [
+                      "States.Timeout"
+                    ],
+                    "MaxAttempts": 2,
+                    "BackoffRate": 30,
+                    "IntervalSeconds": 60
+                  }
+                ],
+                "Catch": [
+                  {
+                    "ErrorEquals": [
+                      "States.ALL"
+                    ],
+                    "Next": "CheckFail"
+                  }
+                ]
+              },
+              "Build": {
+                "Type": "Task",
+                "Resource": "${zF6FQcDB6g}",
+                "Next": "Deploy",
+                "Retry": [
+                  {
+                    "ErrorEquals": [
+                      "States.Timeout"
+                    ],
+                    "MaxAttempts": 2,
+                    "BackoffRate": 30,
+                    "IntervalSeconds": 60
+                  }
+                ],
+                "Catch": [
+                  {
+                    "ErrorEquals": [
+                      "States.ALL"
+                    ],
+                    "Next": "BuildFail"
+                  }
+                ]
+              },
+              "Deploy": {
+                "Type": "Task",
+                "Resource": "${3u96O46UB7}",
+                "Next": "PublishOrNot",
+                "Retry": [
+                  {
+                    "ErrorEquals": [
+                      "States.Timeout"
+                    ],
+                    "MaxAttempts": 2,
+                    "BackoffRate": 30,
+                    "IntervalSeconds": 60
+                  }
+                ],
+                "Catch": [
+                  {
+                    "ErrorEquals": [
+                      "States.ALL"
+                    ],
+                    "Next": "DeployFail"
+                  }
+                ]
+              },
+              "PublishOrNot": {
+                "Type": "Choice",
+                "Choices": [
+                  {
+                    "Variable": "$.deployed_flag",
+                    "BooleanEquals": true,
+                    "Next": "Publish"
+                  },
+                  {
+                    "Variable": "$.deployed_flag",
+                    "BooleanEquals": false,
+                    "Next": "NoneDeployed"
+                  }
+                ],
+                "Default": "NoneDeployed"
+              },
+              "Publish": {
+                "Type": "Task",
+                "Resource": "${CYaHpZTzs0}",
+                "Next": "Done",
+                "Retry": [
+                  {
+                    "ErrorEquals": [
+                      "States.Timeout"
+                    ],
+                    "MaxAttempts": 2,
+                    "BackoffRate": 30,
+                    "IntervalSeconds": 60
+                  }
+                ],
+                "Catch": [
+                  {
+                    "ErrorEquals": [
+                      "States.ALL"
+                    ],
+                    "Next": "PublishFail"
+                  }
+                ]
+              },
+              "Done": {
+                "Type": "Succeed"
+              },
+              "NoneDeployed": {
+                "Type": "Succeed"
+              },
+              "CheckFail": {
+                "Type": "Fail",
+                "Error": "CheckFailure",
+                "Cause": "Unknown"
+              },
+              "BuildFail": {
+                "Type": "Fail",
+                "Error": "BuildFailure",
+                "Cause": "Unknown"
+              },
+              "DeployFail": {
+                "Type": "Fail",
+                "Error": "DeployFailure",
+                "Cause": "Unknown"
+              },
+              "PublishFail": {
+                "Type": "Fail",
+                "Error": "PublishFailure",
+                "Cause": "Unknown"
+              }
+            }
+          }
+        }
+      },
+      "activities": []
+    },
     "artifact": "/Users/keithrozario/projects/Klayers/serverless/.serverless/Klayers-python37.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/Klayers-python37/default/1563689658903-2019-07-21T06:14:18.903Z",
+    "artifactDirectoryName": "serverless/Klayers-python37/default/1563717385417-2019-07-21T13:56:25.417Z",
     "artifact": "Klayers-python37.zip"
   }
 }

@@ -4,9 +4,6 @@ import logging
 import requests
 from packaging.version import parse
 
-from shared_functions import get_latest_deployed_version, get_aws_regions
-
-
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
@@ -46,38 +43,16 @@ def main(event, context):
     Args:
       package: Package to check for
     return:
-      needs_building: Boolean indicating if a build is required
       package: Name of package
-      regions: List of AWS regions to deploy to
+      version: Version of package to deploy
+      license_info: License as per PyPI
     """
 
     package = event['package']
-    needs_building=False
-    build_regions = []
-    regions = get_aws_regions()
 
     latest_version, license_info = get_latest_release(package)
     logger.info(f"Latest version of package:{package} on pypi is {latest_version}")
 
-    for region in regions:
-        last_deployed_version, last_deployed_requirements_hash = get_latest_deployed_version(region, package)
-        logger.info(f"Last Deployed version of package:{package} in {region} is {last_deployed_version}")
-
-        if last_deployed_version:
-
-            if latest_version > last_deployed_version:
-                logger.info(f"{region} will be upgraded to {latest_version}")
-                needs_building = True
-                build_regions.append(region)
-            else:
-                logger.info(f"{region} already has {last_deployed_version} -- not deploying")
-
-        else:
-            logger.info(f"{region} has no version of {package} deployed -- deploying")
-            needs_building = True
-            build_regions.append(region)
-
-    return {"needs_building": needs_building,
-            "version": str(latest_version),
+    return {"version": str(latest_version),
             "package": package,
             "license_info": license_info}
