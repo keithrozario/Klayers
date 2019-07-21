@@ -6,6 +6,18 @@ variable "dynamodb_requirements" { type="map" }
 variable "aws_profile" { type="map" }
 variable "lambda_prefix" { type="map" }
 
+terraform {
+  backend "remote" {
+    organization = "keithrozario"
+
+    workspaces {
+      name = "default"
+    }
+  }
+}
+
+
+
 # Provider Block
 provider "aws" {
   version    = "~> 2.7"
@@ -40,7 +52,7 @@ resource "aws_dynamodb_table" "dynamodb_requirements" {
   name           = "${lookup(var.dynamodb_requirements, terraform.workspace)}"
   billing_mode   = "PAY_PER_REQUEST"
   hash_key       = "package"
-  range_key      = "version"
+  range_key      = "requirements_hash"
 
   attribute {
     name = "package"
@@ -50,6 +62,17 @@ resource "aws_dynamodb_table" "dynamodb_requirements" {
   attribute {
     name = "version"
     type = "S"
+  }
+
+  attribute {
+    name = "requirements_hash"
+    type = "S"
+  }
+
+  local_secondary_index {
+    name = "package_version"
+    projection_type = "ALL"
+    range_key = "version"
   }
 
 }
