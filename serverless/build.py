@@ -43,11 +43,19 @@ def freeze_requirements(package, path, version):
 
 
 def upload_to_s3(zip_file, package):
+    """
+    Args:
+      zip_file: Location of zip file to be uploaded to S3 bucket
+      package: Name of python package being uploaded
+    return:
+      uploaded_file_name: Name of file in S3 bucket
+    """
 
     bucket_name = os.environ['BUCKET_NAME']
+    uploaded_file_name = f'{package}.zip'
 
     s3 = boto3.resource('s3')
-    s3.meta.client.upload_file(zip_file, bucket_name, f'{package}.zip')
+    s3.meta.client.upload_file(zip_file, bucket_name, uploaded_file_name)
 
     client = boto3.client('s3')
     response = client.list_objects_v2(
@@ -59,6 +67,8 @@ def upload_to_s3(zip_file, package):
                 f"size {response['Contents'][0]['Size']} "
                 f"at {response['Contents'][0]['LastModified']} "
                 f"to {bucket_name}")
+
+    return uploaded_file_name
 
 
 def zip_dir(dir_path, package):
@@ -104,6 +114,8 @@ def install(package, package_dir):
     logger.info(output)
     output = subprocess.run(["pip", "freeze", ">", "/tmp/requirements.txt"],
                             capture_output=True)
+    logger.info(output)
+
     return package_dir
 
 
@@ -111,7 +123,6 @@ def main(event,context):
 
     package = event['package']
     version = event['version']
-    regions = event['regions']
     license_info = event['license_info']
 
     package_dir = f"/tmp/python"
@@ -128,15 +139,14 @@ def main(event,context):
     logger.info(f"Zipped package info {zip_file}")
 
     logger.info("Uploading to S3")
-    upload_to_s3(zip_file=zip_file, package=package)
+    uploaded_zip = upload_to_s3(zip_file=zip_file, package=package)
 
     logger.info(f"Built package: {package}=={version} into s3://{os.environ['BUCKET_NAME']}"
                 f"file size {os.path.getsize(zip_file)} "
                 f"with requirements hash: {requirements_hash}")
 
-    return {"zip_file": zip_file,
+    return {"zip_file": uploaded_zip,
             "package": package,
             "version": version,
-            "regions": regions,
-            "req_hash": requirements_hash,
+            "requirements_hash": requirements_hash,
             "license_info": license_info}

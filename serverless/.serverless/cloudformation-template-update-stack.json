@@ -130,7 +130,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/Klayers-python37/default/1563294707584-2019-07-16T16:31:47.584Z/Klayers-python37.zip"
+          "S3Key": "serverless/Klayers-python37/default/1563689658903-2019-07-21T06:14:18.903Z/Klayers-python37.zip"
         },
         "FunctionName": "Klayers-python37-default-build",
         "Handler": "build.main",
@@ -150,8 +150,6 @@
           }
         },
         "Layers": [
-          "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-packaging:1",
-          "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-requests:4",
           "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-boto3:2"
         ]
       },
@@ -167,7 +165,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/Klayers-python37/default/1563294707584-2019-07-16T16:31:47.584Z/Klayers-python37.zip"
+          "S3Key": "serverless/Klayers-python37/default/1563689658903-2019-07-21T06:14:18.903Z/Klayers-python37.zip"
         },
         "FunctionName": "Klayers-python37-default-deploy",
         "Handler": "deploy.main",
@@ -189,7 +187,8 @@
           }
         },
         "Layers": [
-          "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-boto3:2"
+          "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-boto3:2",
+          "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-packaging:1"
         ]
       },
       "DependsOn": [
@@ -204,7 +203,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/Klayers-python37/default/1563294707584-2019-07-16T16:31:47.584Z/Klayers-python37.zip"
+          "S3Key": "serverless/Klayers-python37/default/1563689658903-2019-07-21T06:14:18.903Z/Klayers-python37.zip"
         },
         "FunctionName": "Klayers-python37-default-check",
         "Handler": "check.main",
@@ -224,8 +223,7 @@
         },
         "Layers": [
           "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-packaging:1",
-          "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-requests:4",
-          "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-boto3:2"
+          "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-requests:4"
         ]
       },
       "DependsOn": [
@@ -297,15 +295,6 @@
                     "s3:ListBucket"
                   ],
                   "Resource": "arn:aws:s3:::klayers-bucket-default"
-                },
-                {
-                  "Effect": "Allow",
-                  "Action": [
-                    "dynamodb:GetItem",
-                    "dynamodb:PutItem",
-                    "dynamodb:Query"
-                  ],
-                  "Resource": "arn:aws:dynamodb:ap-southeast-1:113088814899:table/klayers-requirements"
                 }
               ]
             }
@@ -376,7 +365,9 @@
                 {
                   "Effect": "Allow",
                   "Action": [
-                    "dynamodb:PutItem"
+                    "dynamodb:GetItem",
+                    "dynamodb:PutItem",
+                    "dynamodb:Query"
                   ],
                   "Resource": "arn:aws:dynamodb:ap-southeast-1:113088814899:table/klayers-versions"
                 },

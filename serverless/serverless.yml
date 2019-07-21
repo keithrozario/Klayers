@@ -36,8 +36,6 @@ functions:
     handler: build.main
     runtime: python3.7
     layers:
-      - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-packaging:1
-      - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-requests:4
       - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-boto3:2
     timeout: 120
     memorySize: 1024
@@ -58,17 +56,12 @@ functions:
       Action:
       - s3:ListBucket
       Resource: ${self:custom.s3LayersArn}
-    - Effect: Allow
-      Action:
-      - dynamodb:GetItem
-      - dynamodb:PutItem
-      - dynamodb:Query
-      Resource: ${self:custom.dbReqsArn}
   deploy:
     handler: deploy.main
     runtime: python3.7
     layers:
       - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-boto3:2
+      - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-packaging:1
     timeout: 600
     memorySize: 128
     environment:
@@ -79,20 +72,22 @@ functions:
     iamRoleStatements:
       - Effect: Allow
         Action:
-          - dynamodb:PutItem
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:Query
         Resource: ${self:custom.dbLayersArn}
       - Effect: Allow
         Action:
-          - lambda:AddLayerVersionPermission
-          - lambda:GetLayerVersion
+        - lambda:AddLayerVersionPermission
+        - lambda:GetLayerVersion
         Resource: "*"
       - Effect: Allow
         Action:
-          - lambda:PublishLayerVersion
+         - lambda:PublishLayerVersion
         Resource: "*"
       - Effect: Allow
         Action:
-          - s3:GetObject
+        - s3:GetObject
         Resource: ${self:custom.s3LayersArn}/*
   check:
     handler: check.main
@@ -100,7 +95,6 @@ functions:
     layers:
       - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-packaging:1
       - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-requests:4
-      - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-boto3:2
     timeout: 120
     memorySize: 128
     environment:
@@ -108,7 +102,7 @@ functions:
     iamRoleStatements:
       - Effect: Allow
         Action:
-          - dynamodb:Query
+        - dynamodb:Query
         Resource: ${self:custom.dbLayersArn}
 
 package:

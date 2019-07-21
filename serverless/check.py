@@ -1,39 +1,14 @@
 import json
-import os
 import logging
 
-import boto3
 import requests
 from packaging.version import parse
-from boto3.dynamodb.conditions import Key
+
+from shared_functions import get_latest_deployed_version, get_aws_regions
+
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
-
-
-def get_latest_deployed_version(region, package):
-    """
-    Args:
-      package: Name of package to be queried
-      region: region to query for
-    returns:
-      last_deployed_version: Last deployed version for that region as packaging.version
-    """
-
-    dynamodb = boto3.resource('dynamodb')
-    table = dynamodb.Table(os.environ['LAYERS_DB'])
-
-    # Sort key is lambda version -- by default takes the latest if ScanIndexForward is false
-    response = table.query(KeyConditionExpression=Key("region-package").eq(f"{region}-{package}"),
-                           Limit=1,
-                           ScanIndexForward=False)
-
-    if len(response['Items']) > 0:
-        last_deployed_version = parse(response['Items'][0]['package_version'])
-    else:
-        last_deployed_version = False
-
-    return last_deployed_version
 
 
 def get_latest_release(package):
@@ -66,22 +41,6 @@ def get_latest_release(package):
     return version, license_info
 
 
-def get_aws_regions():
-
-    aws_regions = ['ap-northeast-1', 'ap-northeast-2',
-                   'ap-south-1',
-                   'ap-southeast-1', 'ap-southeast-2',
-                   'ca-central-1',
-                   'eu-central-1',
-                   'eu-north-1',
-                   'eu-west-1', 'eu-west-2', 'eu-west-3',
-                   'sa-east-1',
-                   'us-east-1', 'us-east-2',
-                   'us-west-1', 'us-west-2']
-
-    return aws_regions
-
-
 def main(event, context):
     """
     Args:
@@ -101,7 +60,7 @@ def main(event, context):
     logger.info(f"Latest version of package:{package} on pypi is {latest_version}")
 
     for region in regions:
-        last_deployed_version = get_latest_deployed_version(region, package)
+        last_deployed_version, last_deployed_requirements_hash = get_latest_deployed_version(region, package)
         logger.info(f"Last Deployed version of package:{package} in {region} is {last_deployed_version}")
 
         if last_deployed_version:
@@ -121,5 +80,4 @@ def main(event, context):
     return {"needs_building": needs_building,
             "version": str(latest_version),
             "package": package,
-            "regions": build_regions,
             "license_info": license_info}
