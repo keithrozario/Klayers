@@ -3,6 +3,7 @@ import json
 import uuid
 
 import boto3
+import requests
 
 
 def main(event, context):
