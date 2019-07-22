@@ -1,2 +1,2 @@
-beautifulsoup4==4.7.1
+beautifulsoup4==4.8.0
 soupsieve==1.9.1
