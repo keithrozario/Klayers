@@ -18,12 +18,28 @@ def freeze_requirements(package, path, version):
 
     requirements = []
     for subdir, dirs, files in os.walk(path):
+
+        # .dist-info
         for dir in dirs:
             if (str(dir)[-10:]) == '.dist-info':
                 package_info = str(dir)[:-10].split('-')
                 package_name = package_info[0]
                 package_version = package_info[1]
                 requirements.append(f"{package_name}=={package_version}")
+
+        # PKG-INFO (.egg-info)
+        for file in files:
+            if str(file) == 'PKG-INFO' and subdir[-8:] == "egg-info":
+                package_version, package_name = False, False
+                with open(f"{subdir}/{file}", 'r') as pkg_info:
+                    lines = pkg_info.readlines()
+                    for line in lines:
+                        if line[:8] == "Version:":
+                            package_version = str(line[8:]).strip()
+                        if line[:5] == "Name:":
+                            package_name = str(line[5:]).strip()
+                    if package_version and package_name:
+                        requirements.append(f"{package_name}=={package_version}")
 
     requirements_txt = '\n'.join(sorted(requirements))
     requirements_hash = hashlib.sha256(requirements_txt.encode('utf-8')).hexdigest()
@@ -37,7 +53,11 @@ def freeze_requirements(package, path, version):
                                 'requirements_hash': {'S': requirements_hash}})
         logger.info(f"Successfully written {package}:{version} status to DB with hash: {requirements_hash}")
     except ClientError as e:
-        logger.info("Unexpected error Writing to DB: {}".format(e.response['Error']['Code']))
+        logger.error(f"{e.response['Error']['Code']}: {e.response['Error']['Message']}")
+        logger.error(f"package: {package}")
+        logger.error(f"version: {version}")
+        logger.error(f"version: {requirements_txt}")
+        logger.error(f"version: {requirements_hash}")
 
     return requirements_txt.strip(), requirements_hash
 
@@ -134,6 +154,9 @@ def main(event,context):
     requirements_txt, requirements_hash = freeze_requirements(package=package,
                                                               path=package_dir,
                                                               version=version)
+
+    with open(f"{package_dir}/requirements.txt", 'w') as requirements_file:
+        requirements_file.write(requirements_txt)
 
     zip_file = zip_dir(dir_path=package_dir, package=package)
     logger.info(f"Zipped package info {zip_file}")
