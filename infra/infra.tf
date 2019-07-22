@@ -45,6 +45,25 @@ resource "aws_dynamodb_table" "dynamodb_layers" {
     type = "N"
   }
 
+  attribute {
+    name = "region"
+    type = "S"
+  }
+
+  attribute {
+    name = "layer_version_arn"
+    type = "S"
+  }
+
+  global_secondary_index {
+    name               = "LayersPerRegion"
+    hash_key           = "region"
+    range_key          = "layer_version_arn"
+    projection_type    = "INCLUDE"
+    non_key_attributes = ["package, package_version"]
+  }
+
+
 }
 
 resource "aws_dynamodb_table" "dynamodb_requirements" {
