@@ -1,5 +1,7 @@
 import os
+import json
 import logging
+from boto3.dynamodb.conditions import Key
 
 import boto3
 
@@ -7,30 +9,42 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 
+# Helper class to convert a DynamoDB item to JSON.
+class DecimalEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, decimal.Decimal):
+            if o % 1 > 0:
+                return float(o)
+            else:
+                return int(o)
+        return super(DecimalEncoder, self).default(o)
+
+
 def main(event, context):
 
     """
-    Gets latest requirements.txt contents from dynamoDB and publishes to S3 bucket under requirements/<package>.txt
+    Gets layer arns for each region and publish to S3
     """
 
-    package = event['package']
-    version = event['version']
-    requirements_hash = event['requirements_hash']
+    region = event['region']
 
     dynamodb = boto3.resource('dynamodb')
-    table = dynamodb.Table(os.environ['REQS_DB'])
+    table = dynamodb.Table(os.environ['LAYERS_DB'])
     bucket = os.environ['BUCKET_NAME']
 
-    response = table.get_item(Key={"package": package,
-                                   "requirements_hash": requirements_hash})
+    response = table.query(IndexName="LayersPerRegion",
+                           Select="SPECIFIC_ATTRIBUTES",
+                           ProjectionExpression="#region, layer_version_arn, package, package_version",
+                           KeyConditionExpression=Key('region').eq(region),
+                           ExpressionAttributeNames={"#region": "region"})
 
-    logger.info(f"Obtained requirements.txt file for {package}=={version}")
-    requirements_txt = response['Item']['requirements']
+    logger.info(f"Found {len(response['Items'])}")
+    arns = json.dumps(response['Items'], cls=DecimalEncoder)
 
     logger.info(f"Uploading to S3 Bucket")
     client = boto3.client('s3')
-    client.put_object(Body=requirements_txt.encode('utf-8'),
+    client.put_object(Body=arns.encode('utf-8'),
                       Bucket=bucket,
-                      Key=f'requirements/{package}/requirements.txt')
+                      Key=f'arns/{region}.json')
 
-    return requirements_txt
+    return len(response['Items'])
