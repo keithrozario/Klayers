@@ -46,7 +46,7 @@ resource "aws_dynamodb_table" "dynamodb_layers" {
   }
 
   attribute {
-    name = "region"
+    name = "deployed_region"
     type = "S"
   }
 
@@ -57,7 +57,7 @@ resource "aws_dynamodb_table" "dynamodb_layers" {
 
   global_secondary_index {
     name               = "LayersPerRegion"
-    hash_key           = "region"
+    hash_key           = "deployed_region"
     range_key          = "layer_version_arn"
     projection_type    = "INCLUDE"
     non_key_attributes = ["package, package_version"]
