@@ -55,41 +55,32 @@ def check_requirement_hash(package, requirements_hash):
     return hash_found
 
 
-def freeze_requirements(package, path, version):
+def freeze_requirements(package, path):
     """
     Walks through path, looking for *.dist-info folders. Parses out the package name and versions
     returns: package name and version in requirements.txt format as a string
     """
+    import subprocess
 
-    requirements = []
-    for subdir, dirs, files in os.walk(path):
-
-        # .dist-info
-        for dir in dirs:
-            if (str(dir)[-10:]) == '.dist-info':
-                package_info = str(dir)[:-10].split('-')
-                package_name = package_info[0]
-                package_version = package_info[1]
-                requirements.append(f"{package_name}=={package_version}")
-
-        # PKG-INFO (.egg-info)
-        for file in files:
-            if str(file) == 'PKG-INFO' and subdir[-8:] == "egg-info":
-                package_version, package_name = False, False
-                with open(f"{subdir}/{file}", 'r') as pkg_info:
-                    lines = pkg_info.readlines()
-                    for line in lines:
-                        if line[:8] == "Version:":
-                            package_version = str(line[8:]).strip()
-                        if line[:5] == "Name:":
-                            package_name = str(line[5:]).strip()
-                    if package_version and package_name:
-                        requirements.append(f"{package_name}=={package_version}")
-
-    requirements_txt = '\n'.join(sorted(requirements))
+    logger.info("Getting requirements.txt file")
+    os.environ['PYTHONPATH'] = '/opt/python'
+    pip_install = subprocess.run(['pip', 'freeze', '--path', path], shell=False, capture_output=True)
+    requirements_txt = pip_install.stdout.decode('utf-8').strip()
+    logger.info(f"Requirements txt : \n{requirements_txt}")
     requirements_hash = hashlib.sha256(requirements_txt.encode('utf-8')).hexdigest()
 
-    return requirements_txt.strip(), requirements_hash
+    version = None
+    for line in requirements_txt.split('\n'):
+        if line[:len(package)] == package:
+            version = line.split('==')[1]
+            logger.info(f"Version of {package} found is {version}")
+            break
+
+    if version is None:
+        logger.error("Unable to determine version fo package....refer to logs for requirements.txt")
+        exit(1)
+
+    return requirements_txt, requirements_hash, version
 
 
 def upload_to_s3(zip_file, package, uploaded_file_name):
@@ -158,10 +149,8 @@ def install(package, package_dir):
     """
     delete_dir(package_dir)
     import subprocess
+    os.environ['PYTHONPATH'] = '/opt/python'
     output = subprocess.run(["pip", "install", package, "-t", package_dir, '--quiet', '--upgrade', '--no-cache-dir'],
-                            capture_output=True)
-    logger.info(output)
-    output = subprocess.run(["pip", "freeze", ">", "/tmp/requirements.txt"],
                             capture_output=True)
     logger.info(output)
 
@@ -171,7 +160,6 @@ def install(package, package_dir):
 def main(event,context):
 
     package = event['package']
-    version = event['version']
     license_info = event['license_info']
 
     package_dir = f"/tmp/python"
@@ -181,9 +169,8 @@ def main(event,context):
     package_size = dir_size(package_dir)
     logger.info(f"Installed {package} into {package_dir} with size: {package_size}")
 
-    requirements_txt, requirements_hash = freeze_requirements(package=package,
-                                                              path=package_dir,
-                                                              version=version)
+    requirements_txt, requirements_hash, version = freeze_requirements(package=package,
+                                                                       path=package_dir)
 
     with open(f"{package_dir}/requirements.txt", 'w') as requirements_file:
         requirements_file.write(requirements_txt)
