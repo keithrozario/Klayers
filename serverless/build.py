@@ -2,12 +2,57 @@ import os
 import shutil
 import logging
 import hashlib
+from datetime import datetime
 
 import boto3
 from botocore.exceptions import ClientError
+from boto3.dynamodb.conditions import Key
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
+
+
+def put_requirements_hash(package, version, requirements_txt, requirements_hash):
+
+    dynamodb = boto3.client('dynamodb')
+    item = {'package': {'S': package},
+            'version': {'S': str(version)},
+            'requirements': {'S': requirements_txt},
+            'requirements_hash': {'S': requirements_hash},
+            'created_date': {'S': datetime.now().isoformat()}}
+    try:
+        response = dynamodb.put_item(TableName=os.environ['REQS_DB'],
+                                     Item=item)
+        logger.info(f"Successfully written {package}:{version} status to DB with hash: {requirements_hash}")
+    except ClientError as e:
+        logger.error(f"{e.response['Error']['Code']}: {e.response['Error']['Message']} for item {item}")
+        exit(1)
+
+    return
+
+
+def check_requirement_hash(package, requirements_hash):
+    """
+    Args:
+      package: Package name
+      requirements_hash: SHA256 hash of the requirements.txt file
+    returns:
+      exists: Boolean value of if the requirements_hash exists in the DB (package was built already)
+    """
+
+    dynamodb = boto3.resource('dynamodb')
+    table = dynamodb.Table(os.environ['REQS_DB'])
+
+    response = table.query(
+        KeyConditionExpression=Key("package").eq(package) & Key("requirements_hash").eq(requirements_hash)
+    )
+
+    if len(response['Items']) > 0:
+        hash_found = True
+    else:
+        hash_found = False
+
+    return hash_found
 
 
 def freeze_requirements(package, path, version):
@@ -44,25 +89,10 @@ def freeze_requirements(package, path, version):
     requirements_txt = '\n'.join(sorted(requirements))
     requirements_hash = hashlib.sha256(requirements_txt.encode('utf-8')).hexdigest()
 
-    dynamodb = boto3.client('dynamodb')
-    try:
-        dynamodb.put_item(TableName=os.environ['REQS_DB'],
-                          Item={'package': {'S': package},
-                                'version': {'S': str(version)},
-                                'requirements': {'S': requirements_txt},
-                                'requirements_hash': {'S': requirements_hash}})
-        logger.info(f"Successfully written {package}:{version} status to DB with hash: {requirements_hash}")
-    except ClientError as e:
-        logger.error(f"{e.response['Error']['Code']}: {e.response['Error']['Message']}")
-        logger.error(f"package: {package}")
-        logger.error(f"version: {version}")
-        logger.error(f"version: {requirements_txt}")
-        logger.error(f"version: {requirements_hash}")
-
     return requirements_txt.strip(), requirements_hash
 
 
-def upload_to_s3(zip_file, package):
+def upload_to_s3(zip_file, package, uploaded_file_name):
     """
     Args:
       zip_file: Location of zip file to be uploaded to S3 bucket
@@ -72,7 +102,6 @@ def upload_to_s3(zip_file, package):
     """
 
     bucket_name = os.environ['BUCKET_NAME']
-    uploaded_file_name = f'{package}.zip'
 
     s3 = boto3.resource('s3')
     s3.meta.client.upload_file(zip_file, bucket_name, uploaded_file_name)
@@ -146,6 +175,7 @@ def main(event,context):
     license_info = event['license_info']
 
     package_dir = f"/tmp/python"
+    uploaded_file_name = f'{package}.zip'
 
     package_dir = install(package, package_dir=package_dir)
     package_size = dir_size(package_dir)
@@ -158,17 +188,30 @@ def main(event,context):
     with open(f"{package_dir}/requirements.txt", 'w') as requirements_file:
         requirements_file.write(requirements_txt)
 
-    zip_file = zip_dir(dir_path=package_dir, package=package)
+    zip_file = zip_dir(dir_path=package_dir,
+                       package=package)
     logger.info(f"Zipped package info {zip_file}")
 
-    logger.info("Uploading to S3")
-    uploaded_zip = upload_to_s3(zip_file=zip_file, package=package)
+    if not check_requirement_hash(package=package,
+                                  requirements_hash=requirements_hash):
+        logger.info(f"Requirements hash {requirements_hash} "
+                    f" for {package}=={version} not previously built, proceeding to upload to S3")
 
-    logger.info(f"Built package: {package}=={version} into s3://{os.environ['BUCKET_NAME']}"
-                f"file size {os.path.getsize(zip_file)} "
-                f"with requirements hash: {requirements_hash}")
+        upload_to_s3(zip_file=zip_file,
+                     package=package,
+                     uploaded_file_name=uploaded_file_name)
+        put_requirements_hash(package=package,
+                              requirements_txt=requirements_txt,
+                              requirements_hash=requirements_hash,
+                              version=version)
 
-    return {"zip_file": uploaded_zip,
+        logger.info(f"Built package: {package}=={version} into s3://{os.environ['BUCKET_NAME']}"
+                    f"file size {os.path.getsize(zip_file)} "
+                    f"with requirements hash: {requirements_hash}")
+    else:
+        logger.info("Requirements hash previously built, proceeding to check for deployment")
+
+    return {"zip_file": uploaded_file_name,
             "package": package,
             "version": version,
             "requirements_hash": requirements_hash,

@@ -11,3 +11,11 @@ infra/terraform.tfstate
 infra/terraform.tfstate.backup
 infra/.terraform
 serverless/package.json
+
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+infra/override.tf
+infra/override.tf.json
+*_override.tf
+*_override.tf.json

@@ -18,3 +18,4 @@
 ./package.sh -p boto3 -l "aws.amazon.com/apache2.0/" -r python3.7 -x public
 ./package.sh -p PyMuPDF -l "GPL-3" -r python3.7 -x public
 ./package.sh -p pytz -l "MIT" -r python3.7 -x public
+./package_binaries.sh -p pip -l MIT -x public -d binaries/pip/pip.zip -b

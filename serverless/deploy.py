@@ -25,7 +25,7 @@ def get_latest_deployed_version(region, package):
     table = dynamodb.Table(os.environ['LAYERS_DB'])
 
     # Sort key is lambda version -- by default takes the latest if ScanIndexForward is false
-    response = table.query(KeyConditionExpression=Key("region-package").eq(f"{region}-{package}"),
+    response = table.query(KeyConditionExpression=Key("deployed_region-package").eq(f"{region}.{package}"),
                            Limit=1,
                            ScanIndexForward=False)
 
@@ -115,12 +115,12 @@ def main(event, context):
             dynamodb_client = boto3.client('dynamodb')
             try:
                 dynamodb_client.put_item(TableName=os.environ['LAYERS_DB'],
-                                         Item={'region': {'S': region},
-                                               'region-package': {'S': f"{region}-{package}"},
+                                         Item={'deployed_region': {'S': region},
+                                               'deployed_region-package': {'S': f"{region}.{package}"},
                                                'package': {'S': package},
                                                'package_version': {'S': f"{str(version)}"},
                                                'requirements_hash': {'S': requirements_hash},
-                                               'createdDate': {'S': layer_version_created_date},
+                                               'created_date': {'S': layer_version_created_date},
                                                'layer_version': {'N': str(layer_version)},
                                                'layer_version_arn': {'S': str(layer_version_arn)}})
                 logger.info(f"Successfully written {package}:{layer_version} status to DB with hash: {requirements_hash}")
