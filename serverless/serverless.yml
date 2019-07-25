@@ -32,6 +32,7 @@ functions:
     runtime: python3.7
     layers:
       - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-boto3:2
+      - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-pip:2
     timeout: 120
     memorySize: 1024
     environment:
