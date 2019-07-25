@@ -54,6 +54,7 @@ functions:
     - Effect: Allow
       Action:
       - dynamodb:PutItem
+      - dynamodb:Query
       Resource: ${self:custom.dbReqsArn}
   deploy:
     handler: deploy.main
@@ -103,25 +104,6 @@ functions:
         Action:
         - dynamodb:Query
         Resource: ${self:custom.dbLayersArn}
-  publish:
-    handler: publish.main
-    runtime: python3.7
-    layers:
-      - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-boto3:2
-    timeout: 30
-    memorySize: 128
-    environment:
-      BUCKET_NAME: ${self:custom.s3LayersName}
-      REQS_DB: ${self:custom.dbReqs}
-    iamRoleStatements:
-      - Effect: Allow
-        Action:
-        - s3:PutObject
-        Resource: ${self:custom.s3LayersArn}/*
-      - Effect: Allow
-        Action:
-        - dynamodb:GetItem
-        Resource: ${self:custom.dbReqsArn}
   publish_arns:
     handler: publish_arns.main
     runtime: python3.7
@@ -173,7 +155,7 @@ stepFunctions:
     pipeline:
       name: ${self:custom.pipelineName}
       definition:
-        Comment: "Check, Build, Deploy and Publish a Lambda Layer"
+        Comment: "Check, Build, and Lambda Layer"
         StartAt: Check
         States:
           Check:
@@ -210,7 +192,7 @@ stepFunctions:
             Type: Task
             Resource:
               Fn::GetAtt: [DeployLambdaFunction, Arn]
-            Next: PublishOrNot
+            Next: DeployedOrNot
             Retry: 
               - ErrorEquals:
                 - States.Timeout
@@ -221,34 +203,19 @@ stepFunctions:
               - ErrorEquals:
                 - States.ALL
                 Next: DeployFail
-          PublishOrNot:
+          DeployedOrNot:
             Type: Choice
             Choices:
               - Variable: $.deployed_flag
                 BooleanEquals: true
-                Next: Publish
+                Next: Done_Deployed
               - Variable: $.deployed_flag
                 BooleanEquals: false
-                Next: NoneDeployed
-            Default: NoneDeployed
-          Publish:
-            Type: Task
-            Resource:
-              Fn::GetAtt: [PublishLambdaFunction, Arn]
-            Next: Done
-            Retry: 
-              - ErrorEquals:
-                - States.Timeout
-                MaxAttempts: 2
-                BackoffRate: 30
-                IntervalSeconds: 60
-            Catch:
-              - ErrorEquals:
-                - States.ALL
-                Next: PublishFail
-          Done:
+                Next: Done_NoneDeployed
+            Default: Done_NoneDeployed
+          Done_Deployed:
             Type: Succeed
-          NoneDeployed:
+          Done_NoneDeployed:
             Type: Succeed
           CheckFail:
             Type: Fail
@@ -261,10 +228,6 @@ stepFunctions:
           DeployFail:
             Type: Fail
             Error: DeployFailure
-            Cause: Unknown
-          PublishFail:
-            Type: Fail
-            Error: PublishFailure
             Cause: Unknown
 
 package:

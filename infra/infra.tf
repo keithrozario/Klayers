@@ -32,11 +32,11 @@ resource "aws_dynamodb_table" "dynamodb_layers" {
 
   name           = "${lookup(var.dynamodb_layers, terraform.workspace)}"
   billing_mode   = "PAY_PER_REQUEST"
-  hash_key       = "region-package"
+  hash_key       = "deployed_region-package"  # use . as separator e.g. us-east-1.requests
   range_key      = "layer_version"
 
   attribute {
-    name = "region-package"
+    name = "deployed_region-package"
     type = "S"
   }
 
@@ -46,23 +46,22 @@ resource "aws_dynamodb_table" "dynamodb_layers" {
   }
 
   attribute {
-    name = "deployed_region"
+    name = "deployed_region" # region is a DynamoDB reserved keyword
     type = "S"
   }
 
   attribute {
-    name = "layer_version_arn"
+    name = "created_date"
     type = "S"
   }
 
   global_secondary_index {
     name               = "LayersPerRegion"
     hash_key           = "deployed_region"
-    range_key          = "layer_version_arn"
+    range_key          = "created_date"
     projection_type    = "INCLUDE"
-    non_key_attributes = ["package, package_version"]
+    non_key_attributes = ["package, package_version, layer_version_arn, layer_version, created_date"]
   }
-
 
 }
 
@@ -79,7 +78,7 @@ resource "aws_dynamodb_table" "dynamodb_requirements" {
   }
 
   attribute {
-    name = "version"
+    name = "created_date"
     type = "S"
   }
 
@@ -89,9 +88,9 @@ resource "aws_dynamodb_table" "dynamodb_requirements" {
   }
 
   local_secondary_index {
-    name = "package_version"
+    name = "packageHistory"
     projection_type = "ALL"
-    range_key = "version"
+    range_key = "created_date"
   }
 
 }
@@ -101,6 +100,21 @@ resource "aws_s3_bucket" "s3bucket_layers" {
   bucket = "${lookup(var.s3bucket_layers, terraform.workspace)}"
   acl    = "private"
   force_destroy = false
+
+  versioning {
+    enabled = true
+  }
+
+  lifecycle_rule {
+
+    enabled = true
+
+    noncurrent_version_transition{
+      days = 7
+      storage_class = "DEEP_ARCHIVE"
+    }
+  }
+
 }
 
 ### Outputs for serverless to consume

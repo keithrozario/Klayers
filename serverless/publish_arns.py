@@ -1,6 +1,7 @@
 import os
 import json
 import logging
+import decimal
 from boto3.dynamodb.conditions import Key
 
 import boto3
