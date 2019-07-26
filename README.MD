@@ -49,7 +49,6 @@ Full list of publicly available layers are [here](/arns.json). Summary list is b
 
 
 <sup>1</sup> Includes leptonica-1.76.0, libjpeg 6b (libjpeg-turbo 1.2.90) : libpng 1.2.49 : libtiff 4.0.3 : zlib 1.2.8 : libwebp 0.3.0
-Thanks for @chahna107 for the [additional config files.](https://github.com/keithrozario/Klayers/pull/52)
 
 # Using the Layers
 
@@ -122,4 +121,8 @@ For `spacy`, I had to manually tweak a few things to make the package fit into a
     $ spacy.load('/opt/en_core_web_sm-2.1.0')
 
 For `boto3`, the current version (as of Apr-2019) of boto3 available in the lambda environment is 1.9.42 for python 3.7 which is ~5 months out of date, and ~100 versions ago. Placing the latest version of boto3 in case anyone needs it.
+
+# Special Thanks
+
+[Chahna107](https://github.com/chahna107) for adding tesseract config files into the tesseract layer.
 
