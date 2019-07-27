@@ -6,6 +6,8 @@ from boto3.dynamodb.conditions import Key
 
 import boto3
 
+import get_config
+
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
@@ -27,25 +29,26 @@ def main(event, context):
     Gets layer arns for each region and publish to S3
     """
 
-    region = event['region']
+    regions = get_config.get_aws_regions()
 
     dynamodb = boto3.resource('dynamodb')
     table = dynamodb.Table(os.environ['LAYERS_DB'])
     bucket = os.environ['BUCKET_NAME']
 
-    response = table.query(IndexName="LayersPerRegion",
-                           Select="SPECIFIC_ATTRIBUTES",
-                           ProjectionExpression="#region, layer_version_arn, package, package_version",
-                           KeyConditionExpression=Key('region').eq(region),
-                           ExpressionAttributeNames={"#region": "region"})
+    for region in regions:
 
-    logger.info(f"Found {len(response['Items'])}")
-    arns = json.dumps(response['Items'], cls=DecimalEncoder)
+        response = table.query(IndexName="LayersPerRegion",
+                               Select="SPECIFIC_ATTRIBUTES",
+                               ProjectionExpression="deployed_region, layer_version_arn, package, package_version",
+                               KeyConditionExpression=Key('deployed_region').eq(region))
 
-    logger.info(f"Uploading to S3 Bucket")
-    client = boto3.client('s3')
-    client.put_object(Body=arns.encode('utf-8'),
-                      Bucket=bucket,
-                      Key=f'arns/{region}.json')
+        logger.info(f"Found {len(response['Items'])}")
+        arns = json.dumps(response['Items'], cls=DecimalEncoder)
 
-    return len(response['Items'])
+        logger.info(f"Uploading to S3 Bucket")
+        client = boto3.client('s3')
+        client.put_object(Body=arns.encode('utf-8'),
+                          Bucket=bucket,
+                          Key=f'arns/{region}.json')
+
+    return {"status": "Done"}

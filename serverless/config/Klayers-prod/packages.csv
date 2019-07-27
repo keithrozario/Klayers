@@ -1,4 +1,4 @@
-Package Name, License, Authors/Maintainers
+Package_Name, License, Authors/Maintainers
 grpcio, Apache-2.0, GRPC Authors <grpc-io@googlegroups.com>
 idna, https://github.com/kjd/idna/blob/master/LICENSE.rst, Kim Davis kim@cynosure.com.au
 PyYAML, MIT, Kirril Simonov <xi@resolvent.net>

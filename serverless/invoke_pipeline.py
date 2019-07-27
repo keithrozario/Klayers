@@ -1,9 +1,10 @@
 import os
 import json
-import uuid
+from datetime import datetime
 
 import boto3
-import requests
+
+import get_config
 
 
 def main(event, context):
@@ -15,15 +16,20 @@ def main(event, context):
       execution_arn: ARN of the state machine execution that is building the package
     """
 
-    package = event['package']
+    packages = get_config.get_packages()
 
-    client = boto3.client('stepfunctions')
-    response = client.start_execution(
-        stateMachineArn=os.environ['PIPELINE_ARN'],
-        name=str(uuid.uuid4()).replace('-', 'X'),  # name cannot contain '-'
-        input=json.dumps({"input": {"package": package}})
-    )
+    execution_arns =[]
 
-    execution_arn = response['executionArn']
+    for package in packages:
 
-    return execution_arn
+        client = boto3.client('stepfunctions')
+        execution_time = datetime.now().isoformat().replace('-', '').replace(':', '')[:14]
+        response = client.start_execution(
+            stateMachineArn=os.environ['PIPELINE_ARN'],
+            name=f"{package}_{execution_time}",
+            input=json.dumps({"package": package})
+        )
+
+        execution_arns.append(response['executionArn'])
+
+    return execution_arns

@@ -13,15 +13,22 @@ regions = ['ap-northeast-1', 'ap-northeast-2', 'ap-south-1',
 
 output = dict()
 
+layer_name_prefix = 'Klayers-python37'
+
 for region in regions:
     client = session.client('lambda', region_name=region)
     output[region] = dict()
+
     # every version of every layer
     for layer in client.list_layers()['Layers']:
-        output[region][layer['LayerName']] = []
-        for version in client.list_layer_versions(LayerName=layer['LayerName'])['LayerVersions']:
-            output[region][layer['LayerName']].append(version['LayerVersionArn'])
-            print("{}: {}".format(region, version['LayerVersionArn']))
+
+        if layer['LayerName'][:len(layer_name_prefix)] == layer_name_prefix:
+            output[region][layer['LayerName']] = []
+            for version in client.list_layer_versions(LayerName=layer['LayerName'])['LayerVersions']:
+                output[region][layer['LayerName']].append(version['LayerVersionArn'])
+                print("{}: {}".format(region, version['LayerVersionArn']))
+        else:
+            pass
 
 with open('arns.json', 'w') as f:
     f.write(json.dumps(output, indent=4, sort_keys=True))

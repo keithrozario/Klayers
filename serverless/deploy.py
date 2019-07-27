@@ -1,6 +1,7 @@
 import os
 import logging
 import boto3
+import get_config
 
 from botocore.exceptions import ClientError
 from boto3.dynamodb.conditions import Key
@@ -39,26 +40,6 @@ def get_latest_deployed_version(region, package):
     return last_deployed_version, last_deployed_requirements_hash
 
 
-def get_aws_regions():
-    """
-    returns:
-        aws_regions : List of all regions to deploy lambdas into
-    """
-
-    aws_regions = ['ap-northeast-1', 'ap-northeast-2',
-                   'ap-south-1',
-                   'ap-southeast-1', 'ap-southeast-2',
-                   'ca-central-1',
-                   'eu-central-1',
-                   'eu-north-1',
-                   'eu-west-1', 'eu-west-2', 'eu-west-3',
-                   'sa-east-1',
-                   'us-east-1', 'us-east-2',
-                   'us-west-1', 'us-west-2']
-
-    return aws_regions
-
-
 def check_latest_deploy(package, region, requirements_hash):
     last_deployed_version, last_deployed_requirements_hash = get_latest_deployed_version(region=region,
                                                                                          package=package)
@@ -71,10 +52,11 @@ def check_latest_deploy(package, region, requirements_hash):
 
 def main(event, context):
 
-    regions = get_aws_regions()
+    regions = get_config.get_aws_regions()
 
     package = event['package']
     version = event['version']
+    build_flag = event['build_flag']
     package_artifact = event['zip_file']
     requirements_hash = event['requirements_hash']
     license_info = event['license_info']
@@ -139,6 +121,7 @@ def main(event, context):
             logger.info(f"{region} already has latest version installed...")
 
     return {"deployed_flag": deployed_flag,
+            "build_flag": build_flag,
             "package": package,
             "version": version,
             "requirements_hash": requirements_hash}
