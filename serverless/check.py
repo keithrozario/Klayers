@@ -53,6 +53,10 @@ def main(event, context):
     latest_version, license_info = get_latest_release(package)
     logger.info(f"Latest version of package:{package} on pypi is {latest_version}")
 
+    # Layer license has a hard limit of 512
+    if len(license_info) > 512:
+        license_info = license_info[:500] + "..."
+
     return {"version": str(latest_version),
             "package": package,
             "license_info": license_info}
