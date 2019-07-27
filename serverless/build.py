@@ -71,7 +71,7 @@ def freeze_requirements(package, path):
 
     version = None
     for line in requirements_txt.split('\n'):
-        if line[:len(package)] == package:
+        if line[:len(package)].lower() == package.lower():
             version = line.split('==')[1]
             logger.info(f"Version of {package} found is {version}")
             break
