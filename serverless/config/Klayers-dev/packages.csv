@@ -36,7 +36,7 @@ nltk,Apache-2.0 , Steven Bird <stevenbird1@gmail.com>
 envelopes, MIT, tomekwojcik <tomek@bthlabs.pl>
 pickleDB, BSD, Harrison Erd <erdh@mail.broward.edu>
 kafka-python, Apache-2.0, Dana Powers <dana.powers@gmail.com>
-opnepyxl, MIT, Charlie Clark <charlie.clark@clark-consulting.eu>
+openpyxl, MIT, Charlie Clark <charlie.clark@clark-consulting.eu>
 tinydb, MIT, Markus Siemens <markus@m-siemens.de>
 PyMySQL, MIT, Inada Naoki <songofacandy@gmail.com>
 aiobotocore, Apache-2.0, Nikolay Novik nickolainovik@gmail.com
