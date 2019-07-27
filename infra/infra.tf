@@ -101,6 +101,7 @@ resource "aws_s3_bucket" "s3bucket_layers" {
   bucket = "${lookup(var.s3bucket_layers, terraform.workspace)}"
   acl    = "private"
   force_destroy = true
+  region     = "${lookup(var.aws_region, terraform.workspace)}"
 
   versioning {
     enabled = true
