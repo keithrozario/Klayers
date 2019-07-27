@@ -192,8 +192,8 @@ stepFunctions:
   stateMachines:
 
     invoke_pipelines:
-      events:
-        - schedule: cron(0 1 * * ? *)  # runs at 1am UTC everyday
+#      events:
+#        - schedule: cron(0 1 * * ? *)  # runs at 1am UTC everyday
       name: ${self:custom.pipelineName}-invoke
       definition:
         Comment: "Invoke the Check, Build and Deploy pipeline for all packages"
@@ -206,7 +206,7 @@ stepFunctions:
             Next: WaitForCompletion
           WaitForCompletion:
             Type: Wait
-            Seconds: 300
+            Seconds: 1200
             Next: ParallelPublish
           ParallelPublish:
             Type: Parallel
