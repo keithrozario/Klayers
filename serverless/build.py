@@ -164,6 +164,7 @@ def main(event,context):
 
     package_dir = f"/tmp/python"
     uploaded_file_name = f'{package}.zip'
+    build_flag = False
 
     package_dir = install(package, package_dir=package_dir)
     package_size = dir_size(package_dir)
@@ -195,11 +196,15 @@ def main(event,context):
         logger.info(f"Built package: {package}=={version} into s3://{os.environ['BUCKET_NAME']}"
                     f"file size {os.path.getsize(zip_file)} "
                     f"with requirements hash: {requirements_hash}")
+        build_flag = True
+
     else:
+        build_flag = False
         logger.info("Requirements hash previously built, proceeding to check for deployment")
 
     return {"zip_file": uploaded_file_name,
             "package": package,
             "version": version,
             "requirements_hash": requirements_hash,
-            "license_info": license_info}
+            "license_info": license_info,
+            "build_flag": build_flag}

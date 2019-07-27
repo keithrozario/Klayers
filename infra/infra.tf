@@ -60,7 +60,8 @@ resource "aws_dynamodb_table" "dynamodb_layers" {
     hash_key           = "deployed_region"
     range_key          = "created_date"
     projection_type    = "INCLUDE"
-    non_key_attributes = ["package, package_version, layer_version_arn, layer_version, created_date"]
+    non_key_attributes = ["package", "package_version", "layer_version_arn",
+                          "layer_version", "created_date"]
   }
 
 }

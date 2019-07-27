@@ -9,11 +9,13 @@ plugins:
 provider:
   name: aws
   runtime: python3.7
-  stage: ${opt:stage, 'Klayers-defaultgreen'}
+  stage: ${opt:stage, 'Klayers-default'}
   region: ${file(../infra/terraform.tfvars.json):aws_region.${self:provider.stage}}
   profile: ${file(../infra/terraform.tfvars.json):aws_profile.${self:provider.stage}}
   versionFunctions: false
-  logRetentionInDays: 120
+  logRetentionInDays: 90
+  environment:
+    STAGE: ${self:provider.stage}
 
 custom:
   awsRegion: ${self:provider.region}
@@ -24,9 +26,27 @@ custom:
   dbReqs: ${ssm:/${self:service.name}/${self:provider.stage}/dynamodb_requirements_table}
   dbReqsArn: ${ssm:/${self:service.name}/${self:provider.stage}/dynamodb_requirements_table_arn}
   lambdaPrefix: ${ssm:/${self:service.name}/${self:provider.stage}/lambda_prefix}
-  pipelineName: ${self:service.name}-${opt:stage, 'default'}-pipeline
+  pipelineName: ${self:service.name}-${self:provider.stage}-pipeline
 
 functions:
+
+  check:
+    handler: check.main
+    runtime: python3.7
+    layers:
+      - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-packaging:1
+      - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-requests:4
+    timeout: 120
+    memorySize: 128
+    environment:
+      LAYERS_DB: ${self:custom.dbLayers}
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+        - dynamodb:Query
+        Resource: ${self:custom.dbLayersArn}
+
+
   build:
     handler: build.main
     runtime: python3.7
@@ -57,6 +77,8 @@ functions:
       - dynamodb:PutItem
       - dynamodb:Query
       Resource: ${self:custom.dbReqsArn}
+
+
   deploy:
     handler: deploy.main
     runtime: python3.7
@@ -90,21 +112,8 @@ functions:
         Action:
         - s3:GetObject
         Resource: ${self:custom.s3LayersArn}/*
-  check:
-    handler: check.main
-    runtime: python3.7
-    layers:
-      - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-packaging:1
-      - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-requests:4
-    timeout: 120
-    memorySize: 128
-    environment:
-      LAYERS_DB: ${self:custom.dbLayers}
-    iamRoleStatements:
-      - Effect: Allow
-        Action:
-        - dynamodb:Query
-        Resource: ${self:custom.dbLayersArn}
+
+
   publish_arns:
     handler: publish_arns.main
     runtime: python3.7
@@ -124,6 +133,36 @@ functions:
         Action:
         - dynamodb:Query
         Resource: ${self:custom.dbLayersArn}/index/*
+
+
+  publish_reqs:
+    handler: publish_reqs.main
+    runtime: python3.7
+    timeout: 120
+    memorySize: 256
+    environment:
+      BUCKET_NAME: ${self:custom.s3LayersName}
+      REQS_DB: ${self:custom.dbReqs}
+    layers:
+      - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-boto3:2
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+        - s3:PutObject
+        Resource: ${self:custom.s3LayersArn}/*
+      - Effect: Allow
+        Action:
+        - dynamodb:Query
+        Resource: ${self:custom.dbReqsArn}/index/*
+
+  publish_to_github:
+    handler: publish_to_github.handler
+    runtime: provided
+    memorySize: 512
+    timeout: 60
+    layers:
+      - arn:aws:lambda:${self:provider.region}:744348701589:layer:bash:8
+
   invoke_pipeline:
     handler: invoke_pipeline.main
     runtime: python3.7
@@ -149,14 +188,80 @@ functions:
               - stateMachine:${self:custom.pipelineName}
 
 
-
-
 stepFunctions:
   stateMachines:
+
+    invoke_pipelines:
+      events:
+        - schedule: cron(0 1 * * ? *)  # runs at 1am UTC everyday
+      name: ${self:custom.pipelineName}-invoke
+      definition:
+        Comment: "Invoke the Check, Build and Deploy pipeline for all packages"
+        StartAt: Invoke
+        States:
+          Invoke:
+            Type: Task
+            Resource:
+              Fn::GetAtt: [InvokeUnderscorepipelineLambdaFunction, Arn]
+            Next: WaitForCompletion
+          WaitForCompletion:
+            Type: Wait
+            Seconds: 300
+            Next: ParallelPublish
+          ParallelPublish:
+            Type: Parallel
+            Branches:
+              - StartAt: PublishArns
+                States:
+                  PublishArns:
+                    Type: Task
+                    Resource:
+                      Fn::GetAtt: [PublishUnderscorearnsLambdaFunction, Arn]
+                    Retry:
+                      - ErrorEquals:
+                          - States.Timeout
+                        MaxAttempts: 2
+                        BackoffRate: 30
+                        IntervalSeconds: 60
+                    Catch:
+                      - ErrorEquals:
+                          - States.ALL
+                        Next: PublishArnsFail
+                    End: True
+                  PublishArnsFail:
+                    Type: Fail
+                    Error: PublishFail
+                    Cause: Unknown
+              - StartAt: PublishReqs
+                States:
+                  PublishReqs:
+                    Type: Task
+                    Resource:
+                      Fn::GetAtt: [PublishUnderscorereqsLambdaFunction, Arn]
+                    Retry:
+                      - ErrorEquals:
+                          - States.Timeout
+                        MaxAttempts: 2
+                        BackoffRate: 30
+                        IntervalSeconds: 60
+                    Catch:
+                      - ErrorEquals:
+                          - States.ALL
+                        Next: PublishReqsFail
+                    End: True
+                  PublishReqsFail:
+                    Type: Fail
+                    Error: PublishFail
+                    Cause: Unknown
+            Next: Done
+          Done:
+            Type: Succeed
+
+
     pipeline:
       name: ${self:custom.pipelineName}
       definition:
-        Comment: "Check, Build, and Lambda Layer"
+        Comment: "Check, Build, and Deploy Lambda Layer"
         StartAt: Check
         States:
           Check:
@@ -193,7 +298,7 @@ stepFunctions:
             Type: Task
             Resource:
               Fn::GetAtt: [DeployLambdaFunction, Arn]
-            Next: DeployedOrNot
+            Next: Done
             Retry: 
               - ErrorEquals:
                 - States.Timeout
@@ -204,19 +309,7 @@ stepFunctions:
               - ErrorEquals:
                 - States.ALL
                 Next: DeployFail
-          DeployedOrNot:
-            Type: Choice
-            Choices:
-              - Variable: $.deployed_flag
-                BooleanEquals: true
-                Next: Done_Deployed
-              - Variable: $.deployed_flag
-                BooleanEquals: false
-                Next: Done_NoneDeployed
-            Default: Done_NoneDeployed
-          Done_Deployed:
-            Type: Succeed
-          Done_NoneDeployed:
+          Done:
             Type: Succeed
           CheckFail:
             Type: Fail
@@ -239,3 +332,6 @@ package:
     - serverless.yml
     - .gitignore
     - .serverless
+    - config/**
+  include:
+    - config/${self:provider.stage}/**

@@ -1,8 +1,5 @@
 {
     "ap-northeast-1": {
-        "Klayers--tesseract": [
-            "arn:aws:lambda:ap-northeast-1:113088814899:layer:Klayers--tesseract:1"
-        ],
         "Klayers-python37-Pillow": [
             "arn:aws:lambda:ap-northeast-1:113088814899:layer:Klayers-python37-Pillow:5",
             "arn:aws:lambda:ap-northeast-1:113088814899:layer:Klayers-python37-Pillow:4",
@@ -46,6 +43,10 @@
         "Klayers-python37-packaging": [
             "arn:aws:lambda:ap-northeast-1:113088814899:layer:Klayers-python37-packaging:1"
         ],
+        "Klayers-python37-pip": [
+            "arn:aws:lambda:ap-northeast-1:113088814899:layer:Klayers-python37-pip:2",
+            "arn:aws:lambda:ap-northeast-1:113088814899:layer:Klayers-python37-pip:1"
+        ],
         "Klayers-python37-pyOpenSSL": [
             "arn:aws:lambda:ap-northeast-1:113088814899:layer:Klayers-python37-pyOpenSSL:4",
             "arn:aws:lambda:ap-northeast-1:113088814899:layer:Klayers-python37-pyOpenSSL:3",
@@ -60,6 +61,7 @@
             "arn:aws:lambda:ap-northeast-1:113088814899:layer:Klayers-python37-pytesseract:1"
         ],
         "Klayers-python37-pytz": [
+            "arn:aws:lambda:ap-northeast-1:113088814899:layer:Klayers-python37-pytz:2",
             "arn:aws:lambda:ap-northeast-1:113088814899:layer:Klayers-python37-pytz:1"
         ],
         "Klayers-python37-requests": [
@@ -71,6 +73,9 @@
         "Klayers-python37-spacy": [
             "arn:aws:lambda:ap-northeast-1:113088814899:layer:Klayers-python37-spacy:1"
         ],
+        "Klayers-python37-tesseract": [
+            "arn:aws:lambda:ap-northeast-1:113088814899:layer:Klayers-python37-tesseract:1"
+        ],
         "Klayers-python37-tldextract": [
             "arn:aws:lambda:ap-northeast-1:113088814899:layer:Klayers-python37-tldextract:4",
             "arn:aws:lambda:ap-northeast-1:113088814899:layer:Klayers-python37-tldextract:3",
@@ -79,9 +84,6 @@
         ]
     },
     "ap-northeast-2": {
-        "Klayers--tesseract": [
-            "arn:aws:lambda:ap-northeast-2:113088814899:layer:Klayers--tesseract:1"
-        ],
         "Klayers-python37-Pillow": [
             "arn:aws:lambda:ap-northeast-2:113088814899:layer:Klayers-python37-Pillow:5",
             "arn:aws:lambda:ap-northeast-2:113088814899:layer:Klayers-python37-Pillow:4",
@@ -125,6 +127,10 @@
         "Klayers-python37-packaging": [
             "arn:aws:lambda:ap-northeast-2:113088814899:layer:Klayers-python37-packaging:1"
         ],
+        "Klayers-python37-pip": [
+            "arn:aws:lambda:ap-northeast-2:113088814899:layer:Klayers-python37-pip:2",
+            "arn:aws:lambda:ap-northeast-2:113088814899:layer:Klayers-python37-pip:1"
+        ],
         "Klayers-python37-pyOpenSSL": [
             "arn:aws:lambda:ap-northeast-2:113088814899:layer:Klayers-python37-pyOpenSSL:4",
             "arn:aws:lambda:ap-northeast-2:113088814899:layer:Klayers-python37-pyOpenSSL:3",
@@ -139,6 +145,7 @@
             "arn:aws:lambda:ap-northeast-2:113088814899:layer:Klayers-python37-pytesseract:1"
         ],
         "Klayers-python37-pytz": [
+            "arn:aws:lambda:ap-northeast-2:113088814899:layer:Klayers-python37-pytz:2",
             "arn:aws:lambda:ap-northeast-2:113088814899:layer:Klayers-python37-pytz:1"
         ],
         "Klayers-python37-requests": [
@@ -150,6 +157,9 @@
         "Klayers-python37-spacy": [
             "arn:aws:lambda:ap-northeast-2:113088814899:layer:Klayers-python37-spacy:1"
         ],
+        "Klayers-python37-tesseract": [
+            "arn:aws:lambda:ap-northeast-2:113088814899:layer:Klayers-python37-tesseract:1"
+        ],
         "Klayers-python37-tldextract": [
             "arn:aws:lambda:ap-northeast-2:113088814899:layer:Klayers-python37-tldextract:4",
             "arn:aws:lambda:ap-northeast-2:113088814899:layer:Klayers-python37-tldextract:3",
@@ -158,9 +168,6 @@
         ]
     },
     "ap-south-1": {
-        "Klayers--tesseract": [
-            "arn:aws:lambda:ap-south-1:113088814899:layer:Klayers--tesseract:1"
-        ],
         "Klayers-python37-Pillow": [
             "arn:aws:lambda:ap-south-1:113088814899:layer:Klayers-python37-Pillow:5",
             "arn:aws:lambda:ap-south-1:113088814899:layer:Klayers-python37-Pillow:4",
@@ -204,6 +211,10 @@
         "Klayers-python37-packaging": [
             "arn:aws:lambda:ap-south-1:113088814899:layer:Klayers-python37-packaging:1"
         ],
+        "Klayers-python37-pip": [
+            "arn:aws:lambda:ap-south-1:113088814899:layer:Klayers-python37-pip:2",
+            "arn:aws:lambda:ap-south-1:113088814899:layer:Klayers-python37-pip:1"
+        ],
         "Klayers-python37-pyOpenSSL": [
             "arn:aws:lambda:ap-south-1:113088814899:layer:Klayers-python37-pyOpenSSL:4",
             "arn:aws:lambda:ap-south-1:113088814899:layer:Klayers-python37-pyOpenSSL:3",
@@ -218,6 +229,7 @@
             "arn:aws:lambda:ap-south-1:113088814899:layer:Klayers-python37-pytesseract:1"
         ],
         "Klayers-python37-pytz": [
+            "arn:aws:lambda:ap-south-1:113088814899:layer:Klayers-python37-pytz:2",
             "arn:aws:lambda:ap-south-1:113088814899:layer:Klayers-python37-pytz:1"
         ],
         "Klayers-python37-requests": [
@@ -229,6 +241,9 @@
         "Klayers-python37-spacy": [
             "arn:aws:lambda:ap-south-1:113088814899:layer:Klayers-python37-spacy:1"
         ],
+        "Klayers-python37-tesseract": [
+            "arn:aws:lambda:ap-south-1:113088814899:layer:Klayers-python37-tesseract:1"
+        ],
         "Klayers-python37-tldextract": [
             "arn:aws:lambda:ap-south-1:113088814899:layer:Klayers-python37-tldextract:4",
             "arn:aws:lambda:ap-south-1:113088814899:layer:Klayers-python37-tldextract:3",
@@ -237,9 +252,6 @@
         ]
     },
     "ap-southeast-1": {
-        "Klayers--tesseract": [
-            "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers--tesseract:1"
-        ],
         "Klayers-python37-Pillow": [
             "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-Pillow:5",
             "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-Pillow:4",
@@ -283,6 +295,10 @@
         "Klayers-python37-packaging": [
             "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-packaging:1"
         ],
+        "Klayers-python37-pip": [
+            "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-pip:2",
+            "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-pip:1"
+        ],
         "Klayers-python37-pyOpenSSL": [
             "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-pyOpenSSL:4",
             "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-pyOpenSSL:3",
@@ -297,6 +313,7 @@
             "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-pytesseract:1"
         ],
         "Klayers-python37-pytz": [
+            "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-pytz:2",
             "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-pytz:1"
         ],
         "Klayers-python37-requests": [
@@ -308,21 +325,17 @@
         "Klayers-python37-spacy": [
             "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-spacy:1"
         ],
+        "Klayers-python37-tesseract": [
+            "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-tesseract:1"
+        ],
         "Klayers-python37-tldextract": [
             "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-tldextract:4",
             "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-tldextract:3",
             "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-tldextract:2",
             "arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-python37-tldextract:1"
-        ],
-        "testLayer-pip3": [
-            "arn:aws:lambda:ap-southeast-1:113088814899:layer:testLayer-pip3:2",
-            "arn:aws:lambda:ap-southeast-1:113088814899:layer:testLayer-pip3:1"
         ]
     },
     "ap-southeast-2": {
-        "Klayers--tesseract": [
-            "arn:aws:lambda:ap-southeast-2:113088814899:layer:Klayers--tesseract:1"
-        ],
         "Klayers-python37-Pillow": [
             "arn:aws:lambda:ap-southeast-2:113088814899:layer:Klayers-python37-Pillow:5",
             "arn:aws:lambda:ap-southeast-2:113088814899:layer:Klayers-python37-Pillow:4",
@@ -366,6 +379,10 @@
         "Klayers-python37-packaging": [
             "arn:aws:lambda:ap-southeast-2:113088814899:layer:Klayers-python37-packaging:1"
         ],
+        "Klayers-python37-pip": [
+            "arn:aws:lambda:ap-southeast-2:113088814899:layer:Klayers-python37-pip:2",
+            "arn:aws:lambda:ap-southeast-2:113088814899:layer:Klayers-python37-pip:1"
+        ],
         "Klayers-python37-pyOpenSSL": [
             "arn:aws:lambda:ap-southeast-2:113088814899:layer:Klayers-python37-pyOpenSSL:4",
             "arn:aws:lambda:ap-southeast-2:113088814899:layer:Klayers-python37-pyOpenSSL:3",
@@ -380,6 +397,7 @@
             "arn:aws:lambda:ap-southeast-2:113088814899:layer:Klayers-python37-pytesseract:1"
         ],
         "Klayers-python37-pytz": [
+            "arn:aws:lambda:ap-southeast-2:113088814899:layer:Klayers-python37-pytz:2",
             "arn:aws:lambda:ap-southeast-2:113088814899:layer:Klayers-python37-pytz:1"
         ],
         "Klayers-python37-requests": [
@@ -391,6 +409,9 @@
         "Klayers-python37-spacy": [
             "arn:aws:lambda:ap-southeast-2:113088814899:layer:Klayers-python37-spacy:1"
         ],
+        "Klayers-python37-tesseract": [
+            "arn:aws:lambda:ap-southeast-2:113088814899:layer:Klayers-python37-tesseract:1"
+        ],
         "Klayers-python37-tldextract": [
             "arn:aws:lambda:ap-southeast-2:113088814899:layer:Klayers-python37-tldextract:4",
             "arn:aws:lambda:ap-southeast-2:113088814899:layer:Klayers-python37-tldextract:3",
@@ -399,9 +420,6 @@
         ]
     },
     "ca-central-1": {
-        "Klayers--tesseract": [
-            "arn:aws:lambda:ca-central-1:113088814899:layer:Klayers--tesseract:1"
-        ],
         "Klayers-python37-Pillow": [
             "arn:aws:lambda:ca-central-1:113088814899:layer:Klayers-python37-Pillow:5",
             "arn:aws:lambda:ca-central-1:113088814899:layer:Klayers-python37-Pillow:4",
@@ -445,6 +463,10 @@
         "Klayers-python37-packaging": [
             "arn:aws:lambda:ca-central-1:113088814899:layer:Klayers-python37-packaging:1"
         ],
+        "Klayers-python37-pip": [
+            "arn:aws:lambda:ca-central-1:113088814899:layer:Klayers-python37-pip:2",
+            "arn:aws:lambda:ca-central-1:113088814899:layer:Klayers-python37-pip:1"
+        ],
         "Klayers-python37-pyOpenSSL": [
             "arn:aws:lambda:ca-central-1:113088814899:layer:Klayers-python37-pyOpenSSL:4",
             "arn:aws:lambda:ca-central-1:113088814899:layer:Klayers-python37-pyOpenSSL:3",
@@ -459,6 +481,7 @@
             "arn:aws:lambda:ca-central-1:113088814899:layer:Klayers-python37-pytesseract:1"
         ],
         "Klayers-python37-pytz": [
+            "arn:aws:lambda:ca-central-1:113088814899:layer:Klayers-python37-pytz:2",
             "arn:aws:lambda:ca-central-1:113088814899:layer:Klayers-python37-pytz:1"
         ],
         "Klayers-python37-requests": [
@@ -470,6 +493,9 @@
         "Klayers-python37-spacy": [
             "arn:aws:lambda:ca-central-1:113088814899:layer:Klayers-python37-spacy:1"
         ],
+        "Klayers-python37-tesseract": [
+            "arn:aws:lambda:ca-central-1:113088814899:layer:Klayers-python37-tesseract:1"
+        ],
         "Klayers-python37-tldextract": [
             "arn:aws:lambda:ca-central-1:113088814899:layer:Klayers-python37-tldextract:4",
             "arn:aws:lambda:ca-central-1:113088814899:layer:Klayers-python37-tldextract:3",
@@ -478,9 +504,6 @@
         ]
     },
     "eu-central-1": {
-        "Klayers--tesseract": [
-            "arn:aws:lambda:eu-central-1:113088814899:layer:Klayers--tesseract:1"
-        ],
         "Klayers-python37-Pillow": [
             "arn:aws:lambda:eu-central-1:113088814899:layer:Klayers-python37-Pillow:5",
             "arn:aws:lambda:eu-central-1:113088814899:layer:Klayers-python37-Pillow:4",
@@ -524,6 +547,10 @@
         "Klayers-python37-packaging": [
             "arn:aws:lambda:eu-central-1:113088814899:layer:Klayers-python37-packaging:1"
         ],
+        "Klayers-python37-pip": [
+            "arn:aws:lambda:eu-central-1:113088814899:layer:Klayers-python37-pip:2",
+            "arn:aws:lambda:eu-central-1:113088814899:layer:Klayers-python37-pip:1"
+        ],
         "Klayers-python37-pyOpenSSL": [
             "arn:aws:lambda:eu-central-1:113088814899:layer:Klayers-python37-pyOpenSSL:4",
             "arn:aws:lambda:eu-central-1:113088814899:layer:Klayers-python37-pyOpenSSL:3",
@@ -538,6 +565,7 @@
             "arn:aws:lambda:eu-central-1:113088814899:layer:Klayers-python37-pytesseract:1"
         ],
         "Klayers-python37-pytz": [
+            "arn:aws:lambda:eu-central-1:113088814899:layer:Klayers-python37-pytz:2",
             "arn:aws:lambda:eu-central-1:113088814899:layer:Klayers-python37-pytz:1"
         ],
         "Klayers-python37-requests": [
@@ -549,6 +577,9 @@
         "Klayers-python37-spacy": [
             "arn:aws:lambda:eu-central-1:113088814899:layer:Klayers-python37-spacy:1"
         ],
+        "Klayers-python37-tesseract": [
+            "arn:aws:lambda:eu-central-1:113088814899:layer:Klayers-python37-tesseract:1"
+        ],
         "Klayers-python37-tldextract": [
             "arn:aws:lambda:eu-central-1:113088814899:layer:Klayers-python37-tldextract:4",
             "arn:aws:lambda:eu-central-1:113088814899:layer:Klayers-python37-tldextract:3",
@@ -557,9 +588,6 @@
         ]
     },
     "eu-north-1": {
-        "Klayers--tesseract": [
-            "arn:aws:lambda:eu-north-1:113088814899:layer:Klayers--tesseract:1"
-        ],
         "Klayers-python37-Pillow": [
             "arn:aws:lambda:eu-north-1:113088814899:layer:Klayers-python37-Pillow:5",
             "arn:aws:lambda:eu-north-1:113088814899:layer:Klayers-python37-Pillow:4",
@@ -603,6 +631,10 @@
         "Klayers-python37-packaging": [
             "arn:aws:lambda:eu-north-1:113088814899:layer:Klayers-python37-packaging:1"
         ],
+        "Klayers-python37-pip": [
+            "arn:aws:lambda:eu-north-1:113088814899:layer:Klayers-python37-pip:2",
+            "arn:aws:lambda:eu-north-1:113088814899:layer:Klayers-python37-pip:1"
+        ],
         "Klayers-python37-pyOpenSSL": [
             "arn:aws:lambda:eu-north-1:113088814899:layer:Klayers-python37-pyOpenSSL:4",
             "arn:aws:lambda:eu-north-1:113088814899:layer:Klayers-python37-pyOpenSSL:3",
@@ -617,6 +649,7 @@
             "arn:aws:lambda:eu-north-1:113088814899:layer:Klayers-python37-pytesseract:1"
         ],
         "Klayers-python37-pytz": [
+            "arn:aws:lambda:eu-north-1:113088814899:layer:Klayers-python37-pytz:2",
             "arn:aws:lambda:eu-north-1:113088814899:layer:Klayers-python37-pytz:1"
         ],
         "Klayers-python37-requests": [
@@ -628,6 +661,9 @@
         "Klayers-python37-spacy": [
             "arn:aws:lambda:eu-north-1:113088814899:layer:Klayers-python37-spacy:1"
         ],
+        "Klayers-python37-tesseract": [
+            "arn:aws:lambda:eu-north-1:113088814899:layer:Klayers-python37-tesseract:1"
+        ],
         "Klayers-python37-tldextract": [
             "arn:aws:lambda:eu-north-1:113088814899:layer:Klayers-python37-tldextract:4",
             "arn:aws:lambda:eu-north-1:113088814899:layer:Klayers-python37-tldextract:3",
@@ -636,9 +672,6 @@
         ]
     },
     "eu-west-1": {
-        "Klayers--tesseract": [
-            "arn:aws:lambda:eu-west-1:113088814899:layer:Klayers--tesseract:1"
-        ],
         "Klayers-python37-Pillow": [
             "arn:aws:lambda:eu-west-1:113088814899:layer:Klayers-python37-Pillow:5",
             "arn:aws:lambda:eu-west-1:113088814899:layer:Klayers-python37-Pillow:4",
@@ -682,6 +715,10 @@
         "Klayers-python37-packaging": [
             "arn:aws:lambda:eu-west-1:113088814899:layer:Klayers-python37-packaging:1"
         ],
+        "Klayers-python37-pip": [
+            "arn:aws:lambda:eu-west-1:113088814899:layer:Klayers-python37-pip:2",
+            "arn:aws:lambda:eu-west-1:113088814899:layer:Klayers-python37-pip:1"
+        ],
         "Klayers-python37-pyOpenSSL": [
             "arn:aws:lambda:eu-west-1:113088814899:layer:Klayers-python37-pyOpenSSL:4",
             "arn:aws:lambda:eu-west-1:113088814899:layer:Klayers-python37-pyOpenSSL:3",
@@ -696,6 +733,7 @@
             "arn:aws:lambda:eu-west-1:113088814899:layer:Klayers-python37-pytesseract:1"
         ],
         "Klayers-python37-pytz": [
+            "arn:aws:lambda:eu-west-1:113088814899:layer:Klayers-python37-pytz:2",
             "arn:aws:lambda:eu-west-1:113088814899:layer:Klayers-python37-pytz:1"
         ],
         "Klayers-python37-requests": [
@@ -707,6 +745,9 @@
         "Klayers-python37-spacy": [
             "arn:aws:lambda:eu-west-1:113088814899:layer:Klayers-python37-spacy:1"
         ],
+        "Klayers-python37-tesseract": [
+            "arn:aws:lambda:eu-west-1:113088814899:layer:Klayers-python37-tesseract:1"
+        ],
         "Klayers-python37-tldextract": [
             "arn:aws:lambda:eu-west-1:113088814899:layer:Klayers-python37-tldextract:4",
             "arn:aws:lambda:eu-west-1:113088814899:layer:Klayers-python37-tldextract:3",
@@ -715,9 +756,6 @@
         ]
     },
     "eu-west-2": {
-        "Klayers--tesseract": [
-            "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers--tesseract:1"
-        ],
         "Klayers-python37-Pillow": [
             "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-Pillow:5",
             "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-Pillow:4",
@@ -761,6 +799,10 @@
         "Klayers-python37-packaging": [
             "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-packaging:1"
         ],
+        "Klayers-python37-pip": [
+            "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-pip:2",
+            "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-pip:1"
+        ],
         "Klayers-python37-pyOpenSSL": [
             "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-pyOpenSSL:4",
             "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-pyOpenSSL:3",
@@ -775,6 +817,7 @@
             "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-pytesseract:1"
         ],
         "Klayers-python37-pytz": [
+            "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-pytz:2",
             "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-pytz:1"
         ],
         "Klayers-python37-requests": [
@@ -786,6 +829,9 @@
         "Klayers-python37-spacy": [
             "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-spacy:1"
         ],
+        "Klayers-python37-tesseract": [
+            "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-tesseract:1"
+        ],
         "Klayers-python37-tldextract": [
             "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-tldextract:4",
             "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-tldextract:3",
@@ -794,9 +840,6 @@
         ]
     },
     "eu-west-3": {
-        "Klayers--tesseract": [
-            "arn:aws:lambda:eu-west-3:113088814899:layer:Klayers--tesseract:1"
-        ],
         "Klayers-python37-Pillow": [
             "arn:aws:lambda:eu-west-3:113088814899:layer:Klayers-python37-Pillow:5",
             "arn:aws:lambda:eu-west-3:113088814899:layer:Klayers-python37-Pillow:4",
@@ -840,6 +883,10 @@
         "Klayers-python37-packaging": [
             "arn:aws:lambda:eu-west-3:113088814899:layer:Klayers-python37-packaging:1"
         ],
+        "Klayers-python37-pip": [
+            "arn:aws:lambda:eu-west-3:113088814899:layer:Klayers-python37-pip:2",
+            "arn:aws:lambda:eu-west-3:113088814899:layer:Klayers-python37-pip:1"
+        ],
         "Klayers-python37-pyOpenSSL": [
             "arn:aws:lambda:eu-west-3:113088814899:layer:Klayers-python37-pyOpenSSL:4",
             "arn:aws:lambda:eu-west-3:113088814899:layer:Klayers-python37-pyOpenSSL:3",
@@ -854,6 +901,7 @@
             "arn:aws:lambda:eu-west-3:113088814899:layer:Klayers-python37-pytesseract:1"
         ],
         "Klayers-python37-pytz": [
+            "arn:aws:lambda:eu-west-3:113088814899:layer:Klayers-python37-pytz:2",
             "arn:aws:lambda:eu-west-3:113088814899:layer:Klayers-python37-pytz:1"
         ],
         "Klayers-python37-requests": [
@@ -865,6 +913,9 @@
         "Klayers-python37-spacy": [
             "arn:aws:lambda:eu-west-3:113088814899:layer:Klayers-python37-spacy:1"
         ],
+        "Klayers-python37-tesseract": [
+            "arn:aws:lambda:eu-west-3:113088814899:layer:Klayers-python37-tesseract:1"
+        ],
         "Klayers-python37-tldextract": [
             "arn:aws:lambda:eu-west-3:113088814899:layer:Klayers-python37-tldextract:4",
             "arn:aws:lambda:eu-west-3:113088814899:layer:Klayers-python37-tldextract:3",
@@ -873,9 +924,6 @@
         ]
     },
     "sa-east-1": {
-        "Klayers--tesseract": [
-            "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers--tesseract:1"
-        ],
         "Klayers-python37-Pillow": [
             "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-Pillow:5",
             "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-Pillow:4",
@@ -919,6 +967,10 @@
         "Klayers-python37-packaging": [
             "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-packaging:1"
         ],
+        "Klayers-python37-pip": [
+            "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-pip:2",
+            "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-pip:1"
+        ],
         "Klayers-python37-pyOpenSSL": [
             "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-pyOpenSSL:4",
             "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-pyOpenSSL:3",
@@ -933,6 +985,7 @@
             "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-pytesseract:1"
         ],
         "Klayers-python37-pytz": [
+            "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-pytz:2",
             "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-pytz:1"
         ],
         "Klayers-python37-requests": [
@@ -944,6 +997,9 @@
         "Klayers-python37-spacy": [
             "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-spacy:1"
         ],
+        "Klayers-python37-tesseract": [
+            "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-tesseract:1"
+        ],
         "Klayers-python37-tldextract": [
             "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-tldextract:4",
             "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-tldextract:3",
@@ -952,9 +1008,6 @@
         ]
     },
     "us-east-1": {
-        "Klayers--tesseract": [
-            "arn:aws:lambda:us-east-1:113088814899:layer:Klayers--tesseract:1"
-        ],
         "Klayers-python37-Pillow": [
             "arn:aws:lambda:us-east-1:113088814899:layer:Klayers-python37-Pillow:5",
             "arn:aws:lambda:us-east-1:113088814899:layer:Klayers-python37-Pillow:4",
@@ -1002,6 +1055,10 @@
         "Klayers-python37-packaging": [
             "arn:aws:lambda:us-east-1:113088814899:layer:Klayers-python37-packaging:1"
         ],
+        "Klayers-python37-pip": [
+            "arn:aws:lambda:us-east-1:113088814899:layer:Klayers-python37-pip:2",
+            "arn:aws:lambda:us-east-1:113088814899:layer:Klayers-python37-pip:1"
+        ],
         "Klayers-python37-pyOpenSSL": [
             "arn:aws:lambda:us-east-1:113088814899:layer:Klayers-python37-pyOpenSSL:4",
             "arn:aws:lambda:us-east-1:113088814899:layer:Klayers-python37-pyOpenSSL:3",
@@ -1016,6 +1073,7 @@
             "arn:aws:lambda:us-east-1:113088814899:layer:Klayers-python37-pytesseract:1"
         ],
         "Klayers-python37-pytz": [
+            "arn:aws:lambda:us-east-1:113088814899:layer:Klayers-python37-pytz:2",
             "arn:aws:lambda:us-east-1:113088814899:layer:Klayers-python37-pytz:1"
         ],
         "Klayers-python37-requests": [
@@ -1027,6 +1085,9 @@
         "Klayers-python37-spacy": [
             "arn:aws:lambda:us-east-1:113088814899:layer:Klayers-python37-spacy:1"
         ],
+        "Klayers-python37-tesseract": [
+            "arn:aws:lambda:us-east-1:113088814899:layer:Klayers-python37-tesseract:1"
+        ],
         "Klayers-python37-tldextract": [
             "arn:aws:lambda:us-east-1:113088814899:layer:Klayers-python37-tldextract:4",
             "arn:aws:lambda:us-east-1:113088814899:layer:Klayers-python37-tldextract:3",
@@ -1035,9 +1096,6 @@
         ]
     },
     "us-east-2": {
-        "Klayers--tesseract": [
-            "arn:aws:lambda:us-east-2:113088814899:layer:Klayers--tesseract:1"
-        ],
         "Klayers-python37-Pillow": [
             "arn:aws:lambda:us-east-2:113088814899:layer:Klayers-python37-Pillow:5",
             "arn:aws:lambda:us-east-2:113088814899:layer:Klayers-python37-Pillow:4",
@@ -1081,6 +1139,10 @@
         "Klayers-python37-packaging": [
             "arn:aws:lambda:us-east-2:113088814899:layer:Klayers-python37-packaging:1"
         ],
+        "Klayers-python37-pip": [
+            "arn:aws:lambda:us-east-2:113088814899:layer:Klayers-python37-pip:2",
+            "arn:aws:lambda:us-east-2:113088814899:layer:Klayers-python37-pip:1"
+        ],
         "Klayers-python37-pyOpenSSL": [
             "arn:aws:lambda:us-east-2:113088814899:layer:Klayers-python37-pyOpenSSL:4",
             "arn:aws:lambda:us-east-2:113088814899:layer:Klayers-python37-pyOpenSSL:3",
@@ -1095,6 +1157,7 @@
             "arn:aws:lambda:us-east-2:113088814899:layer:Klayers-python37-pytesseract:1"
         ],
         "Klayers-python37-pytz": [
+            "arn:aws:lambda:us-east-2:113088814899:layer:Klayers-python37-pytz:2",
             "arn:aws:lambda:us-east-2:113088814899:layer:Klayers-python37-pytz:1"
         ],
         "Klayers-python37-requests": [
@@ -1106,6 +1169,9 @@
         "Klayers-python37-spacy": [
             "arn:aws:lambda:us-east-2:113088814899:layer:Klayers-python37-spacy:1"
         ],
+        "Klayers-python37-tesseract": [
+            "arn:aws:lambda:us-east-2:113088814899:layer:Klayers-python37-tesseract:1"
+        ],
         "Klayers-python37-tldextract": [
             "arn:aws:lambda:us-east-2:113088814899:layer:Klayers-python37-tldextract:4",
             "arn:aws:lambda:us-east-2:113088814899:layer:Klayers-python37-tldextract:3",
@@ -1114,9 +1180,6 @@
         ]
     },
     "us-west-1": {
-        "Klayers--tesseract": [
-            "arn:aws:lambda:us-west-1:113088814899:layer:Klayers--tesseract:1"
-        ],
         "Klayers-python37-Pillow": [
             "arn:aws:lambda:us-west-1:113088814899:layer:Klayers-python37-Pillow:5",
             "arn:aws:lambda:us-west-1:113088814899:layer:Klayers-python37-Pillow:4",
@@ -1160,6 +1223,10 @@
         "Klayers-python37-packaging": [
             "arn:aws:lambda:us-west-1:113088814899:layer:Klayers-python37-packaging:1"
         ],
+        "Klayers-python37-pip": [
+            "arn:aws:lambda:us-west-1:113088814899:layer:Klayers-python37-pip:2",
+            "arn:aws:lambda:us-west-1:113088814899:layer:Klayers-python37-pip:1"
+        ],
         "Klayers-python37-pyOpenSSL": [
             "arn:aws:lambda:us-west-1:113088814899:layer:Klayers-python37-pyOpenSSL:4",
             "arn:aws:lambda:us-west-1:113088814899:layer:Klayers-python37-pyOpenSSL:3",
@@ -1174,6 +1241,7 @@
             "arn:aws:lambda:us-west-1:113088814899:layer:Klayers-python37-pytesseract:1"
         ],
         "Klayers-python37-pytz": [
+            "arn:aws:lambda:us-west-1:113088814899:layer:Klayers-python37-pytz:2",
             "arn:aws:lambda:us-west-1:113088814899:layer:Klayers-python37-pytz:1"
         ],
         "Klayers-python37-requests": [
@@ -1185,6 +1253,9 @@
         "Klayers-python37-spacy": [
             "arn:aws:lambda:us-west-1:113088814899:layer:Klayers-python37-spacy:1"
         ],
+        "Klayers-python37-tesseract": [
+            "arn:aws:lambda:us-west-1:113088814899:layer:Klayers-python37-tesseract:1"
+        ],
         "Klayers-python37-tldextract": [
             "arn:aws:lambda:us-west-1:113088814899:layer:Klayers-python37-tldextract:4",
             "arn:aws:lambda:us-west-1:113088814899:layer:Klayers-python37-tldextract:3",
@@ -1193,9 +1264,6 @@
         ]
     },
     "us-west-2": {
-        "Klayers--tesseract": [
-            "arn:aws:lambda:us-west-2:113088814899:layer:Klayers--tesseract:1"
-        ],
         "Klayers-python37-Pillow": [
             "arn:aws:lambda:us-west-2:113088814899:layer:Klayers-python37-Pillow:5",
             "arn:aws:lambda:us-west-2:113088814899:layer:Klayers-python37-Pillow:4",
@@ -1239,6 +1307,10 @@
         "Klayers-python37-packaging": [
             "arn:aws:lambda:us-west-2:113088814899:layer:Klayers-python37-packaging:1"
         ],
+        "Klayers-python37-pip": [
+            "arn:aws:lambda:us-west-2:113088814899:layer:Klayers-python37-pip:2",
+            "arn:aws:lambda:us-west-2:113088814899:layer:Klayers-python37-pip:1"
+        ],
         "Klayers-python37-pyOpenSSL": [
             "arn:aws:lambda:us-west-2:113088814899:layer:Klayers-python37-pyOpenSSL:4",
             "arn:aws:lambda:us-west-2:113088814899:layer:Klayers-python37-pyOpenSSL:3",
@@ -1253,6 +1325,7 @@
             "arn:aws:lambda:us-west-2:113088814899:layer:Klayers-python37-pytesseract:1"
         ],
         "Klayers-python37-pytz": [
+            "arn:aws:lambda:us-west-2:113088814899:layer:Klayers-python37-pytz:2",
             "arn:aws:lambda:us-west-2:113088814899:layer:Klayers-python37-pytz:1"
         ],
         "Klayers-python37-requests": [
@@ -1263,6 +1336,9 @@
         ],
         "Klayers-python37-spacy": [
             "arn:aws:lambda:us-west-2:113088814899:layer:Klayers-python37-spacy:1"
+        ],
+        "Klayers-python37-tesseract": [
+            "arn:aws:lambda:us-west-2:113088814899:layer:Klayers-python37-tesseract:1"
         ],
         "Klayers-python37-tldextract": [
             "arn:aws:lambda:us-west-2:113088814899:layer:Klayers-python37-tldextract:4",
