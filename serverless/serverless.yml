@@ -9,7 +9,7 @@ plugins:
 provider:
   name: aws
   runtime: python3.7
-  stage: ${opt:stage, 'default'}
+  stage: ${opt:stage, 'Klayers-defaultgreen'}
   region: ${file(../infra/terraform.tfvars.json):aws_region.${self:provider.stage}}
   profile: ${file(../infra/terraform.tfvars.json):aws_profile.${self:provider.stage}}
   versionFunctions: false

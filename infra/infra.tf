@@ -11,7 +11,7 @@ terraform {
     organization = "keithrozario"
 
     workspaces {
-      name = "default"
+      prefix = "Klayers-"
     }
   }
 }
@@ -99,7 +99,7 @@ resource "aws_dynamodb_table" "dynamodb_requirements" {
 resource "aws_s3_bucket" "s3bucket_layers" {
   bucket = "${lookup(var.s3bucket_layers, terraform.workspace)}"
   acl    = "private"
-  force_destroy = false
+  force_destroy = true
 
   versioning {
     enabled = true
