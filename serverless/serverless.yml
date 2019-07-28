@@ -1,0 +1,337 @@
+service: Klayers-python37
+
+frameworkVersion: "=1.40.0"
+
+plugins:
+  - serverless-iam-roles-per-function
+  - serverless-step-functions
+
+provider:
+  name: aws
+  runtime: python3.7
+  stage: ${opt:stage, 'Klayers-default'}
+  region: ${file(../infra/terraform.tfvars.json):aws_region.${self:provider.stage}}
+  profile: ${file(../infra/terraform.tfvars.json):aws_profile.${self:provider.stage}}
+  versionFunctions: false
+  logRetentionInDays: 90
+  environment:
+    STAGE: ${self:provider.stage}
+
+custom:
+  awsRegion: ${self:provider.region}
+  s3LayersName: ${ssm:/${self:service.name}/${self:provider.stage}/s3bucket_layers}
+  s3LayersArn: ${ssm:/${self:service.name}/${self:provider.stage}/s3bucket_layers_arn}
+  dbLayers: ${ssm:/${self:service.name}/${self:provider.stage}/dynamodb_layers_table}
+  dbLayersArn: ${ssm:/${self:service.name}/${self:provider.stage}/dynamodb_layers_table_arn}
+  dbReqs: ${ssm:/${self:service.name}/${self:provider.stage}/dynamodb_requirements_table}
+  dbReqsArn: ${ssm:/${self:service.name}/${self:provider.stage}/dynamodb_requirements_table_arn}
+  lambdaPrefix: ${ssm:/${self:service.name}/${self:provider.stage}/lambda_prefix}
+  pipelineName: ${self:service.name}-${self:provider.stage}-pipeline
+
+functions:
+
+  check:
+    handler: check.main
+    runtime: python3.7
+    layers:
+      - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-packaging:1
+      - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-requests:4
+    timeout: 120
+    memorySize: 128
+    environment:
+      LAYERS_DB: ${self:custom.dbLayers}
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+        - dynamodb:Query
+        Resource: ${self:custom.dbLayersArn}
+
+
+  build:
+    handler: build.main
+    runtime: python3.7
+    layers:
+      - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-boto3:2
+      - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-pip:2
+    timeout: 120
+    memorySize: 1024
+    environment:
+      BUCKET_NAME: ${self:custom.s3LayersName}
+      REQS_DB: ${self:custom.dbReqs}
+    iamRoleStatements:
+    - Effect: Allow
+      Action:
+      - s3:PutObject
+      - s3:GetObject
+      - s3:DeleteObject
+      - s3:PutObjectAcl
+      - s3:GetObjectAcl
+      - s3:AbortMultipartUpload
+      Resource: ${self:custom.s3LayersArn}/*
+    - Effect: Allow
+      Action:
+      - s3:ListBucket
+      Resource: ${self:custom.s3LayersArn}
+    - Effect: Allow
+      Action:
+      - dynamodb:PutItem
+      - dynamodb:Query
+      Resource: ${self:custom.dbReqsArn}
+
+
+  deploy:
+    handler: deploy.main
+    runtime: python3.7
+    layers:
+      - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-boto3:2
+      - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-packaging:1
+    timeout: 600
+    memorySize: 384
+    environment:
+      BUCKET_NAME: ${self:custom.s3LayersName}
+      REQS_DB: ${self:custom.dbReqs}
+      LAYERS_DB: ${self:custom.dbLayers}
+      LAMBDA_PREFIX: ${self:custom.lambdaPrefix}
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:Query
+        Resource: ${self:custom.dbLayersArn}
+      - Effect: Allow
+        Action:
+        - lambda:AddLayerVersionPermission
+        - lambda:GetLayerVersion
+        Resource: "*"
+      - Effect: Allow
+        Action:
+         - lambda:PublishLayerVersion
+        Resource: "*"
+      - Effect: Allow
+        Action:
+        - s3:GetObject
+        Resource: ${self:custom.s3LayersArn}/*
+
+
+  publish_arns:
+    handler: publish_arns.main
+    runtime: python3.7
+    timeout: 240
+    memorySize: 128
+    environment:
+      BUCKET_NAME: ${self:custom.s3LayersName}
+      LAYERS_DB: ${self:custom.dbLayers}
+    layers:
+      - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-boto3:2
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+        - s3:PutObject
+        Resource: ${self:custom.s3LayersArn}/*
+      - Effect: Allow
+        Action:
+        - dynamodb:Query
+        Resource: ${self:custom.dbLayersArn}/index/*
+
+
+  publish_reqs:
+    handler: publish_reqs.main
+    runtime: python3.7
+    timeout: 120
+    memorySize: 256
+    environment:
+      BUCKET_NAME: ${self:custom.s3LayersName}
+      REQS_DB: ${self:custom.dbReqs}
+    layers:
+      - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-boto3:2
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+        - s3:PutObject
+        Resource: ${self:custom.s3LayersArn}/*
+      - Effect: Allow
+        Action:
+        - dynamodb:Query
+        Resource: ${self:custom.dbReqsArn}/index/*
+
+  publish_to_github:
+    handler: publish_to_github.handler
+    runtime: provided
+    memorySize: 512
+    timeout: 60
+    layers:
+      - arn:aws:lambda:${self:provider.region}:744348701589:layer:bash:8
+
+  invoke_pipeline:
+    handler: invoke_pipeline.main
+    runtime: python3.7
+    timeout: 120
+    memorySize: 128
+    environment:
+      PIPELINE_ARN:
+        Fn::Join:
+          - ":"
+          - - arn:aws:states
+            - ${self:provider.region}
+            - Ref: AWS::AccountId
+            - stateMachine:${self:custom.pipelineName}
+    iamRoleStatements:
+      - Effect: Allow
+        Action: states:StartExecution 
+        Resource: 
+          Fn::Join:
+            - ":"
+            - - arn:aws:states
+              - ${self:provider.region}
+              - Ref: AWS::AccountId
+              - stateMachine:${self:custom.pipelineName}
+
+
+stepFunctions:
+  stateMachines:
+
+    invoke_pipelines:
+#      events:
+#        - schedule: cron(0 1 * * ? *)  # runs at 1am UTC everyday
+      name: ${self:custom.pipelineName}-invoke
+      definition:
+        Comment: "Invoke the Check, Build and Deploy pipeline for all packages"
+        StartAt: Invoke
+        States:
+          Invoke:
+            Type: Task
+            Resource:
+              Fn::GetAtt: [InvokeUnderscorepipelineLambdaFunction, Arn]
+            Next: WaitForCompletion
+          WaitForCompletion:
+            Type: Wait
+            Seconds: 1200
+            Next: ParallelPublish
+          ParallelPublish:
+            Type: Parallel
+            Branches:
+              - StartAt: PublishArns
+                States:
+                  PublishArns:
+                    Type: Task
+                    Resource:
+                      Fn::GetAtt: [PublishUnderscorearnsLambdaFunction, Arn]
+                    Retry:
+                      - ErrorEquals:
+                          - States.Timeout
+                        MaxAttempts: 2
+                        BackoffRate: 30
+                        IntervalSeconds: 60
+                    Catch:
+                      - ErrorEquals:
+                          - States.ALL
+                        Next: PublishArnsFail
+                    End: True
+                  PublishArnsFail:
+                    Type: Fail
+                    Error: PublishFail
+                    Cause: Unknown
+              - StartAt: PublishReqs
+                States:
+                  PublishReqs:
+                    Type: Task
+                    Resource:
+                      Fn::GetAtt: [PublishUnderscorereqsLambdaFunction, Arn]
+                    Retry:
+                      - ErrorEquals:
+                          - States.Timeout
+                        MaxAttempts: 2
+                        BackoffRate: 30
+                        IntervalSeconds: 60
+                    Catch:
+                      - ErrorEquals:
+                          - States.ALL
+                        Next: PublishReqsFail
+                    End: True
+                  PublishReqsFail:
+                    Type: Fail
+                    Error: PublishFail
+                    Cause: Unknown
+            Next: Done
+          Done:
+            Type: Succeed
+
+
+    pipeline:
+      name: ${self:custom.pipelineName}
+      definition:
+        Comment: "Check, Build, and Deploy Lambda Layer"
+        StartAt: Check
+        States:
+          Check:
+            Type: Task
+            Resource: 
+              Fn::GetAtt: [CheckLambdaFunction, Arn]
+            Next: Build
+            Retry: 
+              - ErrorEquals:
+                - States.Timeout
+                MaxAttempts: 2
+                BackoffRate: 30
+                IntervalSeconds: 60
+            Catch:
+              - ErrorEquals:
+                - States.ALL
+                Next: CheckFail
+          Build:
+            Type: Task
+            Resource:
+              Fn::GetAtt: [BuildLambdaFunction, Arn]
+            Next: Deploy
+            Retry: 
+              - ErrorEquals:
+                - States.Timeout
+                MaxAttempts: 2
+                BackoffRate: 30
+                IntervalSeconds: 60
+            Catch:
+              - ErrorEquals:
+                - States.ALL
+                Next: BuildFail
+          Deploy:
+            Type: Task
+            Resource:
+              Fn::GetAtt: [DeployLambdaFunction, Arn]
+            Next: Done
+            Retry: 
+              - ErrorEquals:
+                - States.Timeout
+                MaxAttempts: 2
+                BackoffRate: 30
+                IntervalSeconds: 60
+            Catch:
+              - ErrorEquals:
+                - States.ALL
+                Next: DeployFail
+          Done:
+            Type: Succeed
+          CheckFail:
+            Type: Fail
+            Error: CheckFailure
+            Cause: Unknown
+          BuildFail:
+            Type: Fail
+            Error: BuildFailure
+            Cause: Unknown
+          DeployFail:
+            Type: Fail
+            Error: DeployFailure
+            Cause: Unknown
+
+package:
+  exclude:
+    - package-lock.json
+    - package.json
+    - node_modules/**
+    - serverless.yml
+    - .gitignore
+    - .serverless
+    - config/**
+  include:
+    - config/${self:provider.stage}/**
