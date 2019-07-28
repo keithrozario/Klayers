@@ -1,0 +1,46 @@
+Package_Name, License, Authors/Maintainers
+grpcio, Apache-2.0, GRPC Authors <grpc-io@googlegroups.com>
+idna, https://github.com/kjd/idna/blob/master/LICENSE.rst, Kim Davis kim@cynosure.com.au
+PyYAML, MIT, Kirril Simonov <xi@resolvent.net>
+simplejson, MIT, Bob Ippolito <bob@redivi.com>
+numpy, https://www.numpy.org/license.html, numpy-discussion@python.org
+pyparsing, MIT, Paul McGuire <ptmcg@users.sourceforge.net>
+google-auth, MIT, Jon Wayne <jonwayne+google-auth@google.com>
+google-auth-oauthlib, Apache-2.0, Jon Wayne <jonwayne+google-auth@google.com>
+itsdangerous, BSD-3-Clause, Armin Ronache <armin.ronacher@active-4.com>; Pallets <contact@palletsprojects.com>
+SQLAlchemy, MIT, Mike Bayer <mike_mp@zzzcomputing.com>
+PyJWT, MIT, Jose Padilla <hello@jpadilla.com>
+opencv-python-headless, MIT,
+aiohttp, Apache-2.0, Nikolay Kim <fafhrd91@gmail.com>; Andrew Svetlov <andrew.svetlov@gmail.com>
+bcrypt,Apache-2.0 ,cryptography-dev@python.org
+beautifulsoup4, MIT, Leonard Richardson <leonardr@segfault.org>
+construct, MIT, Arkadiusz Bulski<arek.bulski@gmail.com>; Tomer Filiba <tomerfiliba@gmail.com>; Corbin Simpson <MostAwesomeDude@gmail.com>
+elasticsearch, Apache-2.0, Honza Kral <honza.kral@gmail.com>; Nick Lang <nick@nicklang.com>
+ffmpeg-python, Apache-2.0, Karl Kroening <karlk@kralnet.us>
+Pillow, https://github.com/python-pillow/Pillow/blob/master/LICENSE, Alex Clark <aclark@aclark.net>
+pymongo, Apache-2.0, Bernie Hackett <bernie@mongodb.com>
+PyMUPDF, AGPLv3+, Jorj Mckir <jorj.x.mckie@outlook.de>
+pyOpenSSL, Apache-2.0, Hynek Schlawack <hs@ox.cx
+pytesseract, GPLv3, Matthias Lee <pytesseract@madmaze.net>
+pytz, MIT, Stuart Bishop <stuart@stuartbishop.net>
+requests, Apache-2.0, Kenneth Reitz <me@kennethreitz.org>
+tldextract, BSD, John Kurkowski <john.kurkowski@gmail.com>
+PyNaCl, Apache-2.0, <cryptography-dev@python.org>
+python-Levenshtein-wheels, GPLv2+, Antti Haapala <antti@haapala.name>
+gspread, MIT, Anton Burnashev <fuss.here@gmail.com>
+pandas, BSD, <pydata@googlegroups.com>
+scipy, BSD, <scipy-dev@python.org>
+flashtext, MIT, Vikash Singh <vikash.duliajan@gmail.com>
+arrow, Apache-2.0,Chris Smith <crsmithdev@gmail.com>
+nltk,Apache-2.0 , Steven Bird <stevenbird1@gmail.com>
+envelopes, MIT, tomekwojcik <tomek@bthlabs.pl>
+pickleDB, BSD, Harrison Erd <erdh@mail.broward.edu>
+kafka-python, Apache-2.0, Dana Powers <dana.powers@gmail.com>
+openpyxl, MIT, Charlie Clark <charlie.clark@clark-consulting.eu>
+tinydb, MIT, Markus Siemens <markus@m-siemens.de>
+PyMySQL, MIT, Inada Naoki <songofacandy@gmail.com>
+aiobotocore, Apache-2.0, Nikolay Novik nickolainovik@gmail.com
+boltons, BSD, Mahmoud Hashemi <mahmoud@hatnote.com>
+jsonrpclib, Apache-2.0, Josh Marshall <catchjosh@gmail.com>
+python-docx, MIT, Steve Canny <python-docx@googlegroups.com>
+ansible, GPLv3+, Ansible Inc <info@ansible.com>
