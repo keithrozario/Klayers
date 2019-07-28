@@ -8,7 +8,7 @@ A collection of AWS Lambda Layers for Python3.7
 
 If the layers are ever outdated, click the badge above for more info.
 
-Full list of publicly available layers are [here](/arns.json). Summary list is below.
+Full list of publicly available layers by region are in the `arns` folder of this repo.
 
 # Layer List
 
@@ -21,7 +21,7 @@ Full list of publicly available layers are [here](/arns.json). Summary list is b
 | beautifulsoup4 | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-beautifulsoup4:4 |
 | construct      | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-construct:1      |
 | elasticsearch  | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-elasticsearch:2  |
-| ffmpeg-python  | arn:aws:lambda:**us-east-1**:113088814899:layer:Klayers-python37-ffmpeg-python:2|
+| ffmpeg-python  | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-ffmpeg-python:3  |
 | Pillow         | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-Pillow:5         |
 | pymongo        | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pymongo:1        |
 | PyMuPDF        | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-PyMuPDF:1        |
@@ -46,6 +46,7 @@ Full list of publicly available layers are [here](/arns.json). Summary list is b
 | Package        | ARN                                                                             | Version    |         
 | :------------- |:------------------------------------------------------------------------------- | ---------- | 
 | tesseract      | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers--tesseract:1              | 4.1.0-rc1<sup>1</sup>|
+| pip            | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pip:2            | 19.2.1     | 
 
 <sup>1</sup> Includes leptonica-1.76.0, libjpeg 6b (libjpeg-turbo 1.2.90) : libpng 1.2.49 : libtiff 4.0.3 : zlib 1.2.8 : libwebp 0.3.0
 
@@ -53,7 +54,7 @@ Full list of publicly available layers are [here](/arns.json). Summary list is b
 
 You can either:
 * Set any of the ARNs above (for your region) to be a layer for your function. 
-* Download the zip file from the directory of your package name in the packages directory (e.g. requests) and upload as a layer to your function
+* Use the 
 
 Currently only the following regions have the layers deployed:
 
@@ -80,30 +81,15 @@ Whenever there is an new version of the underlying package, a new layer **may** 
 
 # Building your own layer
 
-To build a layer containing a single python package run the following in the packages directory:
+You can use the scripts available in the `infra/` (terraform) and `serverless/` (serverless) directories
 
-    $ package.sh -p <package_name> -l <license> -r <runtime> -x <public/private> -a <aws_region>
-
-e.g.
-
-    $ package.sh -x public -a ap-southeast-1 -p requests -r python3.7 -l Apache-2.0
-    $ package.sh -x private -a ap-southeast-1 -p beautifulsoup4 -r python3.7 -l MIT
-    $ package.sh -p sqlite3 -r python3.7 -l Apache-2.0
-
-* -p : (MANDATORY) Package Name
-* -l : (MANDATORY) License information for the Package, use the SPDX license identifier
-* -r : (MANDATORY) Runtime, currently only python3.7 is supported, but should work for python2.7 and python3.6
-* -x : (OPTIONAL) set to public to make layer publicly accessible defaults to private
-* -a : (OPTIONAL) aws regiondefaults to deploying layer in all aws_regions where lambda is available (except China)
-* -b : (OPTIONAL) bypass flag to upload layers even if previous upload has the same hash
+For a more old-skool way of deployment using Docker containers, you can refer to the `scripts/build_with_docker` package
 
 # Asking for more layers
 
 Make a pull requests!
 
 # Notes
-
-All layers are deployed in every region (except China). Refer to the [arns.json](/arns.json) file for more info.
 
 I intend to delete older layers after a while. Functions relying on deleted layers will still work after the layers are deleted. But you won't be able to create new functions referencing older layers.
 
@@ -121,3 +107,6 @@ For `spacy`, I had to manually tweak a few things to make the package fit into a
 
 For `boto3`, the current version (as of Apr-2019) of boto3 available in the lambda environment is 1.9.42 for python 3.7 which is ~5 months out of date, and ~100 versions ago. Placing the latest version of boto3 in case anyone needs it.
 
+# Special Thanks
+
+[Chahna107](https://github.com/chahna107) for adding tesseract config files into the tesseract layer.

@@ -1,4 +1,0 @@
-plac
-plac_core
-plac_ext
-plac_tk
