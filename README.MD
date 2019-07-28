@@ -23,6 +23,7 @@ arrow| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-arrow:\<*v
 bcrypt| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-bcrypt:\<*version*> |
 beautifulsoup4| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-beautifulsoup4:\<*version*> |
 boltons| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-boltons:\<*version*> |
+boto3| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-boto3:\<*version*> |
 construct| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-construct:\<*version*> |
 elasticsearch| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-elasticsearch:\<*version*> |
 envelopes| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-envelopes:\<*version*> |
@@ -52,7 +53,7 @@ pyOpenSSL| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pyOpen
 pyparsing| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pyparsing:\<*version*> |
 pytesseract| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pytesseract:\<*version*> |
 python-docx| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-python-docx:\<*version*> |
-python-Levenshtein-wheels| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-python-Levenshtein-wheels:\<*version*> |
+python-Levenshtein| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-python-Levenshtein-wheels:\<*version*> |
 pytz| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pytz:\<*version*> |
 PyYAML| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-PyYAML:\<*version*> |
 requests| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-requests:\<*version*> |
@@ -62,15 +63,9 @@ SQLAlchemy| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-SQLAl
 tinydb| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-tinydb:\<*version*> |
 tldextract| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-tldextract:\<*version*> |
 
-## Boto3
-
-| Package        | ARN                                                                             | Version |        
-| :------------- |:------------------------------------------------------------------------------- | ------- |
-| boto3          | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-boto3:1          | 1.9.135 |
-| boto3          | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-boto3:2          | 1.9.169 |
-
-
 ## Binaries
+
+Special hand-crafted binaries for layers. These layers are not automatically built, and hence slower update cycles.
 
 | Package        | ARN                                                                             | Version    |         
 | :------------- |:------------------------------------------------------------------------------- | ---------- | 
