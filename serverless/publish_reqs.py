@@ -52,6 +52,6 @@ def main(event, context):
         client = boto3.client('s3')
         client.put_object(Body=requirements_txt.encode('utf-8'),
                           Bucket=bucket,
-                          Key=f'requirements/{package}/requirements.txt')
+                          Key=f'packages/{package}/requirements.txt')
 
     return {"status": "Done"}
