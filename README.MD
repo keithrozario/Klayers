@@ -87,22 +87,22 @@ You can either:
 
 Currently only the following regions have the layers deployed, click on the link for the list of layer arns:
 
-* ap-northeast-1 
-* ap-northeast-2
-* ap-south-1
-* ap-southeast-1 
-* ap-southeast-2
-* ca-central-1
-* eu-central-1
-* eu-north-1
-* eu-west-1
-* eu-west-2
-* eu-west-3
-* sa-east-1
-* us-east-1
-* us-east-2
-* us-west-1
-* us-west-2
+* [ap-northeast-1](arns/ap-northeast-1.json) 
+* [ap-northeast-2](arns/ap-northeast-2.json)
+* [ap-south-1]((arns/ap-south-1.json))
+* [ap-southeast-1]((arns/ap-southeast-1.json)) 
+* [ap-southeast-2](arns/ap-southeast-2.json)
+* [ca-central-1]((arns/ca-central-1json))
+* [eu-central-1]((arns/eu-central-1.json))
+* [eu-north-1]((arns/eu-north-1.json))
+* [eu-west-1]((arns/eu-west-1.json))
+* [eu-west-2]((arns/eu-west-2.json))
+* [eu-west-3]((arns/eu-west-3.json))
+* [sa-east-1]((arns/sa-east-1.json))
+* [us-east-1]((arns/us-east-1.json))
+* [us-east-2]((arns/us-east-2.json))
+* [us-west-1]((arns/us-west-1.json))
+* [us-west-2]((arns/us-west-2.json))
 
 # Layer history
 
