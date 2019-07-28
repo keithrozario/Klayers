@@ -123,14 +123,17 @@ For `tldextract`, set the following environment variable to avoid trying to quer
 
     $ TLDEXTRACT_CACHE=/opt/python/tldextract/.tld_set_snapshot
 
-For `spacy`, I had to manually tweak a few things to make the package fit into a layer, it only works for English, consider this beta. To use the included model:
-    
-    $ spacy.load('/opt/en_core_web_sm-2.1.0')
-
 For `boto3`, the current version (as of Apr-2019) of boto3 available in the lambda environment is 1.9.42 for python 3.7 which is ~5 months out of date, and ~100 versions ago. Placing the latest version of boto3 in case anyone needs it.
 
 For `pip` you'll need to set your PYTHONPATH to `/opt/python` to override the existing pip inside the lambda environment.
 
+There is an old `spacy` layer -- this has been deprecated.
+
 # Special Thanks
 
 [Chahna107](https://github.com/chahna107) for adding tesseract config files into the tesseract layer.
+
+# To DO
+
+* Cleanup script to delete all lamba layers that are not the latest version (and more than x days old)
+* Schedule this to run everyday for production
