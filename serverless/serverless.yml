@@ -158,8 +158,17 @@ functions:
   publish_to_github:
     handler: publish_to_github.handler
     runtime: provided
-    memorySize: 512
-    timeout: 60
+    memorySize: 1024
+    timeout: 240
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+        - s3:GetObject
+        Resource: ${self:custom.s3LayersArn}/*
+      - Effect: Allow
+        Action:
+          - s3:ListBucket
+        Resource: ${self:custom.s3LayersArn}
     layers:
       - arn:aws:lambda:${self:provider.region}:744348701589:layer:bash:8
 
