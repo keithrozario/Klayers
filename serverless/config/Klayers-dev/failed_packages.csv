@@ -6,3 +6,5 @@ psutil, BSD-3-Clause, Giampaolo Rodola <g.rodola@gmail.com>, Dependencies not in
 stanfordnlp, Apache-2.0, Standford Natural Language Processing Group <jebolton@stanford.edu>, Dependencies not installed
 annoy, Apache-2.0, Erik Bernhardsson <mail@erikbern.com>, Dependencies not installed
 misaka, MIT, Frank smit <frank@61924.nl>, Dependencies not installed
+fbprophet, BSD, Sean Taylor <sjtz@pm.me>
+

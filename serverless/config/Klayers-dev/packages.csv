@@ -45,3 +45,11 @@ simplejson,MIT,Bob Ippolito <bob@redivi.com>
 SQLAlchemy,MIT,Mike Bayer <mike_mp@zzzcomputing.com>
 tinydb,MIT,Markus Siemens <markus@m-siemens.de>
 tldextract,BSD,John Kurkowski <john.kurkowski@gmail.com>
+grequests, BSD,Kenneth Reitz <me@kennethreitz.org>
+jellyfish, BSD, James Turk
+graphene, MIT, Syrus Akbary <me@syrusakbary.com>
+loguru, MIT, Delgan <delgan.py@gmail.com>
+aiodns, MIT, Saúl Ibarra <Corretgés@saghul.net>
+tablib, MIT, Kenneth Reitz <me@kennethreitz.org>
+Cerberus, ISC, Frank Sachsenheim <funkyfuture@riseup.net>
+ldap3, LGPLv3, Giovanni Cannata <cannatag@gmail.com>
