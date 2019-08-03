@@ -28,6 +28,12 @@ custom:
   lambdaPrefix: ${ssm:/${self:service.name}/${self:provider.stage}/lambda_prefix}
   pipelineName: ${self:service.name}-${self:provider.stage}-pipeline
 
+  # Parameter **name** for the KEK used for Github SSH Key
+  kekParameter: /${self:service.name}/${self:provider.stage}/ssh_kek
+  githubRepo: ${ssm:/${self:service.name}/${self:provider.stage}/github_repo}
+  s3KeysName: ${ssm:/${self:service.name}/${self:provider.stage}/s3bucket_keys}
+  s3KeysArn: ${ssm:/${self:service.name}/${self:provider.stage}/s3bucket_keys_arn}
+
 functions:
 
   check:
@@ -155,11 +161,16 @@ functions:
         - dynamodb:Query
         Resource: ${self:custom.dbReqsArn}/index/*
 
-  publish_to_github:
+  publish_github:
     handler: publish_to_github.handler
     runtime: provided
     memorySize: 1024
     timeout: 240
+    environment:
+      GITHUB_REPO: ${self:custom.githubRepo}
+      KEK_PARAMETER: ${self:custom.kekParameter}
+      S3_KEYS: ${self:custom.s3KeysName}
+      BUCKET_NAME: ${self:custom.s3LayersName}
     iamRoleStatements:
       - Effect: Allow
         Action:
@@ -167,8 +178,22 @@ functions:
         Resource: ${self:custom.s3LayersArn}/*
       - Effect: Allow
         Action:
-          - s3:ListBucket
+        - s3:ListBucket
         Resource: ${self:custom.s3LayersArn}
+      - Effect: Allow
+        Action:
+          - ssm:GetParameters
+        Resource:
+          Fn::Join:
+            - ":"
+            - - arn:aws:ssm
+              - ${self:provider.region}
+              - Ref: AWS::AccountId
+              - parameter${self:custom.kekParameter}
+      - Effect: Allow
+        Action:
+        - s3:GetObject
+        Resource: ${self:custom.s3KeysArn}/*
     layers:
       - arn:aws:lambda:${self:provider.region}:744348701589:layer:bash:8
 
