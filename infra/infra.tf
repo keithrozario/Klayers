@@ -1,10 +1,12 @@
 variable "app_name" {}
 variable "aws_region" { type = "map" }
 variable "s3bucket_layers" { type = "map" }
+variable "s3bucket_keys" { type = "map" }
 variable "dynamodb_layers" { type="map" }
 variable "dynamodb_requirements" { type="map" }
 variable "aws_profile" { type="map" }
 variable "lambda_prefix" { type="map" }
+variable "github_repo" { type="map" }
 
 terraform {
   backend "remote" {
@@ -15,7 +17,6 @@ terraform {
     }
   }
 }
-
 
 
 # Provider Block
@@ -119,6 +120,18 @@ resource "aws_s3_bucket" "s3bucket_layers" {
 
 }
 
+resource "aws_s3_bucket" "s3bucket_keys" {
+  bucket = "${lookup(var.s3bucket_keys, terraform.workspace)}"
+  acl    = "private"
+  force_destroy = true
+  region     = "${lookup(var.aws_region, terraform.workspace)}"
+
+  versioning {
+    enabled = false
+  }
+
+}
+
 ### Outputs for serverless to consume
 resource "aws_ssm_parameter" "dynamodb_layers_table" {
   type  = "String"
@@ -135,6 +148,7 @@ resource "aws_ssm_parameter" "dynamodb_layers_table_arn" {
   value = "${aws_dynamodb_table.dynamodb_layers.arn}"
   overwrite = true
 }
+
 
 resource "aws_ssm_parameter" "dynamodb_requirements_table" {
   type  = "String"
@@ -167,9 +181,30 @@ resource "aws_ssm_parameter" "s3bucket_layers_arn" {
   overwrite = true
 }
 
+resource "aws_ssm_parameter" "s3bucket_keys" {
+  type  = "String"
+  name  = "/${var.app_name}/${terraform.workspace}/s3bucket_keys"
+  value = "${aws_s3_bucket.s3bucket_keys.bucket}"
+  overwrite = true
+}
+
+resource "aws_ssm_parameter" "s3bucket_keys_arn" {
+  type  = "String"
+  name  = "/${var.app_name}/${terraform.workspace}/s3bucket_keys_arn"
+  value = "${aws_s3_bucket.s3bucket_keys.arn}"
+  overwrite = true
+}
+
 resource "aws_ssm_parameter" "lambda_prefix" {
   type  = "String"
   name  = "/${var.app_name}/${terraform.workspace}/lambda_prefix"
   value = "${lookup(var.lambda_prefix, terraform.workspace)}"
+  overwrite = true
+}
+
+resource "aws_ssm_parameter" "github_repo" {
+  type  = "String"
+  name  = "/${var.app_name}/${terraform.workspace}/github_repo"
+  value = "${lookup(var.github_repo, terraform.workspace)}"
   overwrite = true
 }
