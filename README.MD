@@ -69,8 +69,13 @@ Special hand-crafted binaries for layers. These layers are not automatically bui
 
 | Package        | ARN                                                                             | Version    |         
 | :------------- |:------------------------------------------------------------------------------- | ---------- | 
+<<<<<<< HEAD
 | tesseract      | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers--tesseract:1              | 4.1.0-rc1<sup>1</sup>|
 | pip            | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pip:2            | 19.2.1     | 
+=======
+| tesseract      | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-tesseract:1      | 4.1.0-rc1<sup>1</sup>|
+
+>>>>>>> master
 
 <sup>1</sup> Includes leptonica-1.76.0, libjpeg 6b (libjpeg-turbo 1.2.90) : libpng 1.2.49 : libtiff 4.0.3 : zlib 1.2.8 : libwebp 0.3.0
 
@@ -135,5 +140,12 @@ There is an old `spacy` layer -- this has been deprecated.
 
 # To DO
 
+<<<<<<< HEAD
 * Cleanup script to delete all lamba layers that are not the latest version (and more than x days old)
 * Schedule this to run everyday for production
+=======
+# Special Thanks
+
+[Chahna107](https://github.com/chahna107) for adding tesseract config files into the tesseract layer.
+
+>>>>>>> master
