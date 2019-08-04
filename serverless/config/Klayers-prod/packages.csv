@@ -1,5 +1,6 @@
 Package_Name,License,Authors/Maintainers
 aiobotocore,Apache-2.0,Nikolay Novik nickolainovik@gmail.com
+aiodns, MIT, Saúl Ibarra <Corretgés@saghul.net>
 aiohttp,Apache-2.0,Nikolay Kim <fafhrd91@gmail.com>; Andrew Svetlov <andrew.svetlov@gmail.com>
 ansible,GPLv3+,Ansible Inc <info@ansible.com>
 arrow,Apache-2.0,Chris Smith <crsmithdev@gmail.com>
@@ -7,22 +8,28 @@ bcrypt,Apache-2.0,cryptography-dev@python.org
 beautifulsoup4,MIT,Leonard Richardson <leonardr@segfault.org>
 boltons,BSD,Mahmoud Hashemi <mahmoud@hatnote.com>
 boto3,Apache-2.0,AWS
+Cerberus, ISC, Frank Sachsenheim <funkyfuture@riseup.net>
 construct,MIT,Arkadiusz Bulski<arek.bulski@gmail.com>; Tomer Filiba <tomerfiliba@gmail.com>; Corbin Simpson <MostAwesomeDude@gmail.com>
 elasticsearch,Apache-2.0,Honza Kral <honza.kral@gmail.com>; Nick Lang <nick@nicklang.com>
 envelopes,MIT,tomekwojcik <tomek@bthlabs.pl>
 ffmpeg-python,Apache-2.0,Karl Kroening <karlk@kralnet.us>
 flashtext,MIT,Vikash Singh <vikash.duliajan@gmail.com>
-google-auth,MIT,Jon Wayne <jonwayne+google-auth@google.com>
 google-auth-oauthlib,Apache-2.0,Jon Wayne <jonwayne+google-auth@google.com>
+google-auth,MIT,Jon Wayne <jonwayne+google-auth@google.com>
+graphene, MIT, Syrus Akbary <me@syrusakbary.com>
+grequests, BSD,Kenneth Reitz <me@kennethreitz.org>
 grpcio,Apache-2.0,GRPC Authors <grpc-io@googlegroups.com>
 gspread,MIT,Anton Burnashev <fuss.here@gmail.com>
 idna,https://github.com/kjd/idna/blob/master/LICENSE.rst,Kim Davis kim@cynosure.com.au
 itsdangerous,BSD-3-Clause,Armin Ronache <armin.ronacher@active-4.com>; Pallets <contact@palletsprojects.com>
+jellyfish, BSD, James Turk
 jsonrpclib,Apache-2.0,Josh Marshall <catchjosh@gmail.com>
 kafka-python,Apache-2.0,Dana Powers <dana.powers@gmail.com>
+ldap3, LGPLv3, Giovanni Cannata <cannatag@gmail.com>
+loguru, MIT, Delgan <delgan.py@gmail.com>
 nltk,Apache-2.0,Steven Bird <stevenbird1@gmail.com>
 numpy,https://www.numpy.org/license.html,numpy-discussion@python.org
-opencv-python-headless,MIT,
+opencv-python-headless,MIT, Unknown
 openpyxl,MIT,Charlie Clark <charlie.clark@clark-consulting.eu>
 pandas,BSD,<pydata@googlegroups.com>
 pickleDB,BSD,Harrison Erd <erdh@mail.broward.edu>
@@ -43,5 +50,6 @@ requests,Apache-2.0,Kenneth Reitz <me@kennethreitz.org>
 scipy,BSD,<scipy-dev@python.org>
 simplejson,MIT,Bob Ippolito <bob@redivi.com>
 SQLAlchemy,MIT,Mike Bayer <mike_mp@zzzcomputing.com>
+tablib, MIT, Kenneth Reitz <me@kennethreitz.org>
 tinydb,MIT,Markus Siemens <markus@m-siemens.de>
 tldextract,BSD,John Kurkowski <john.kurkowski@gmail.com>
