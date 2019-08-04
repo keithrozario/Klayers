@@ -5,8 +5,8 @@ google-auth==1.6.3
 google-auth-oauthlib==0.4.0
 idna==2.8
 oauthlib==3.0.2
-pyasn1==0.4.5
-pyasn1-modules==0.2.5
+pyasn1==0.4.6
+pyasn1-modules==0.2.6
 requests==2.22.0
 requests-oauthlib==1.2.0
 rsa==4.0
