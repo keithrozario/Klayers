@@ -99,6 +99,8 @@ Currently only the following regions have the layers deployed, click on the link
 * [us-west-1](arns/us-west-1.json)
 * [us-west-2](arns/us-west-2.json)
 
+I tried adding `me-south-1` but got an STS token issue. Will investigate, hang tight Bahrain!
+
 # Layer history
 
 Whenever there is an new version of the underlying package, a new layer **may** be created with an incremented version number.
@@ -109,21 +111,8 @@ You can use the scripts available in the `infra/` (terraform) and `serverless/` 
 
 For a more old-skool way of deployment using Docker containers, you can refer to the `scripts/build_with_docker` package. Yes, in serverless, Docker Containers are old-skool.
 
-# Asking for more layers
-
-Make a pull requests, modifying the `serverless/config/Klayers-default.csv` file.
-
-# Notes
-
-I intend to delete older layers after a while. Functions relying on deleted layers will still work after the layers are deleted. But you won't be able to create new functions referencing older layers.
 
 # Layer specific notes
-
-For `tldextract`, set the following environment variable to avoid trying to query the Mozilla tld file from the internet.
-
-    $ TLDEXTRACT_CACHE=/opt/python/tldextract/.tld_set_snapshot
-
-For `boto3`, the current version (as of Apr-2019) of boto3 available in the lambda environment is 1.9.42 for python 3.7 which is ~5 months out of date, and ~100 versions ago. Placing the latest version of boto3 in case anyone needs it.
 
 For `pip` you'll need to set your PYTHONPATH to `/opt/python` to override the existing pip inside the lambda environment.
 
@@ -137,7 +126,4 @@ There is an old `spacy` layer -- this has been deprecated.
 * Cleanup script to delete all lamba layers that are not the latest version (and more than x days old)
 * Schedule this to run everyday for production
 * Package openssl v1.1.x for better encryption of KEK
-
-# Special Thanks
-
-[Chahna107](https://github.com/chahna107) for adding tesseract config files into the tesseract layer.
+* Blog post and architecture review
