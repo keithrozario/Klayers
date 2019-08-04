@@ -28,6 +28,12 @@ custom:
   lambdaPrefix: ${ssm:/${self:service.name}/${self:provider.stage}/lambda_prefix}
   pipelineName: ${self:service.name}-${self:provider.stage}-pipeline
 
+  # Parameter **name** for the KEK used for Github SSH Key
+  kekParameter: /${self:service.name}/${self:provider.stage}/ssh_kek
+  githubRepo: ${ssm:/${self:service.name}/${self:provider.stage}/github_repo}
+  s3KeysName: ${ssm:/${self:service.name}/${self:provider.stage}/s3bucket_keys}
+  s3KeysArn: ${ssm:/${self:service.name}/${self:provider.stage}/s3bucket_keys_arn}
+
 functions:
 
   check:
@@ -36,7 +42,7 @@ functions:
     layers:
       - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-packaging:1
       - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-requests:4
-    timeout: 120
+    timeout: 30
     memorySize: 128
     environment:
       LAYERS_DB: ${self:custom.dbLayers}
@@ -53,7 +59,7 @@ functions:
     layers:
       - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-boto3:2
       - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-pip:2
-    timeout: 120
+    timeout: 180
     memorySize: 1024
     environment:
       BUCKET_NAME: ${self:custom.s3LayersName}
@@ -118,7 +124,7 @@ functions:
     handler: publish_arns.main
     runtime: python3.7
     timeout: 240
-    memorySize: 128
+    memorySize: 256
     environment:
       BUCKET_NAME: ${self:custom.s3LayersName}
       LAYERS_DB: ${self:custom.dbLayers}
@@ -155,11 +161,40 @@ functions:
         - dynamodb:Query
         Resource: ${self:custom.dbReqsArn}/index/*
 
-  publish_to_github:
+  publish_github:
     handler: publish_to_github.handler
     runtime: provided
-    memorySize: 512
-    timeout: 60
+    memorySize: 2048
+    timeout: 600
+    environment:
+      GITHUB_REPO: ${self:custom.githubRepo}
+      KEK_PARAMETER: ${self:custom.kekParameter}
+      S3_KEYS: ${self:custom.s3KeysName}
+      BUCKET_NAME: ${self:custom.s3LayersName}
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+        - s3:GetObject
+        Resource: ${self:custom.s3LayersArn}/*
+      - Effect: Allow
+        Action:
+        - s3:ListBucket
+        Resource: ${self:custom.s3LayersArn}
+      - Effect: Allow
+        Action:
+          - ssm:GetParameters
+          - ssm:GetParameter
+        Resource:
+          Fn::Join:
+            - ":"
+            - - arn:aws:ssm
+              - ${self:provider.region}
+              - Ref: AWS::AccountId
+              - parameter${self:custom.kekParameter}
+      - Effect: Allow
+        Action:
+        - s3:GetObject
+        Resource: ${self:custom.s3KeysArn}/*
     layers:
       - arn:aws:lambda:${self:provider.region}:744348701589:layer:bash:8
 
@@ -167,7 +202,7 @@ functions:
     handler: invoke_pipeline.main
     runtime: python3.7
     timeout: 120
-    memorySize: 128
+    memorySize: 256
     environment:
       PIPELINE_ARN:
         Fn::Join:
@@ -180,6 +215,22 @@ functions:
       - Effect: Allow
         Action: states:StartExecution 
         Resource: 
+          Fn::Join:
+            - ":"
+            - - arn:aws:states
+              - ${self:provider.region}
+              - Ref: AWS::AccountId
+              - stateMachine:${self:custom.pipelineName}
+
+  check_sfns:
+    handler: check_sfns.main
+    runtime: python3.7
+    timeout: 90
+    memorySize: 256
+    iamRoleStatements:
+      - Effect: Allow
+        Action: states:DescribeExecution
+        Resource:
           Fn::Join:
             - ":"
             - - arn:aws:states
@@ -206,7 +257,7 @@ stepFunctions:
             Next: WaitForCompletion
           WaitForCompletion:
             Type: Wait
-            Seconds: 1200
+            Seconds: 600
             Next: ParallelPublish
           ParallelPublish:
             Type: Parallel
@@ -253,10 +304,28 @@ stepFunctions:
                     Type: Fail
                     Error: PublishFail
                     Cause: Unknown
+            Next: PublishGithub
+          PublishGithub:
+            Type: Task
+            Resource:
+              Fn::GetAtt: [PublishUnderscoregithubLambdaFunction, Arn]
+            Retry:
+              - ErrorEquals:
+                  - States.Timeout
+                MaxAttempts: 2
+                BackoffRate: 30
+                IntervalSeconds: 60
+            Catch:
+              - ErrorEquals:
+                  - States.ALL
+                Next: PublishGithubFail
             Next: Done
+          PublishGithubFail:
+            Type: Fail
+            Error: Publish to Github failed
+            Cause: Timeout
           Done:
             Type: Succeed
-
 
     pipeline:
       name: ${self:custom.pipelineName}

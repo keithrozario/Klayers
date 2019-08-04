@@ -19,3 +19,6 @@ infra/override.tf
 infra/override.tf.json
 *_override.tf
 *_override.tf.json
+
+binaries/*
+scripts/key_gen/*

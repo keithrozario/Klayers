@@ -32,4 +32,4 @@ def main(event, context):
 
         execution_arns.append(response['executionArn'])
 
-    return execution_arns
+    return {"arns": execution_arns}

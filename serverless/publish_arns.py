@@ -43,7 +43,7 @@ def main(event, context):
                                KeyConditionExpression=Key('deployed_region').eq(region))
 
         logger.info(f"Found {len(response['Items'])}")
-        arns = json.dumps(response['Items'], cls=DecimalEncoder)
+        arns = json.dumps(response['Items'], cls=DecimalEncoder, indent=4)
 
         logger.info(f"Uploading to S3 Bucket")
         client = boto3.client('s3')
