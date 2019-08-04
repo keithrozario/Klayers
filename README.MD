@@ -8,7 +8,7 @@ A collection of AWS Lambda Layers for Python3.7
 
 If the layers are ever outdated, click the badge above for more info.
 
-Full list of publicly available layers are [here](/arns.json). Summary list is below.
+Full list of publicly available layers by region are [here](arns/).
 
 # Layer List
 
@@ -16,37 +16,66 @@ Full list of publicly available layers are [here](/arns.json). Summary list is b
 
 | Package        | ARN                                                                             |         
 | :------------- |:------------------------------------------------------------------------------- |
-| aiohttp        | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-aiohttp:5        |
-| bcrypt         | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-bcrypt:3         |
-| beautifulsoup4 | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-beautifulsoup4:4 |
-| construct      | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-construct:1      |
-| elasticsearch  | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-elasticsearch:2  |
-| ffmpeg-python  | arn:aws:lambda:**us-east-1**:113088814899:layer:Klayers-python37-ffmpeg-python:2|
-| Pillow         | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-Pillow:5         |
-| pymongo        | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pymongo:1        |
-| PyMuPDF        | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-PyMuPDF:1        |
-| pyOpenSSL      | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pyOpenSSL:4      |
-| pytesseract    | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pytesseract:1    |
-| pytz           | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pytz:1           |
-| requests       | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-requests:4       |
-| spacy          | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-spacy:1          |
-| tldextract     | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-tldextract:4     |
-
-
-## Boto3
-
-| Package        | ARN                                                                             | Version |        
-| :------------- |:------------------------------------------------------------------------------- | ------- |
-| boto3          | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-boto3:1          | 1.9.135 |
-| boto3          | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-boto3:2          | 1.9.169 |
-
+aiobotocore| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-aiobotocore:\<*version*> |
+aiohttp| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-aiohttp:\<*version*> |
+ansible| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-ansible:\<*version*> |
+arrow| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-arrow:\<*version*> |
+bcrypt| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-bcrypt:\<*version*> |
+beautifulsoup4| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-beautifulsoup4:\<*version*> |
+boltons| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-boltons:\<*version*> |
+boto3| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-boto3:\<*version*> |
+construct| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-construct:\<*version*> |
+elasticsearch| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-elasticsearch:\<*version*> |
+envelopes| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-envelopes:\<*version*> |
+ffmpeg-python| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-ffmpeg-python:\<*version*> |
+flashtext| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-flashtext:\<*version*> |
+google-auth| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-google-auth:\<*version*> |
+google-auth-oauthlib| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-google-auth-oauthlib:\<*version*> |
+grpcio| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-grpcio:\<*version*> |
+gspread| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-gspread:\<*version*> |
+idna| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-idna:\<*version*> |
+itsdangerous| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-itsdangerous:\<*version*> |
+jsonrpclib| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-jsonrpclib:\<*version*> |
+kafka-python| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-kafka-python:\<*version*> |
+nltk| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-nltk:\<*version*> |
+numpy| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-numpy:\<*version*> |
+opencv-python-headless| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-opencv-python-headless:\<*version*> |
+openpyxl| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-openpyxl:\<*version*> |
+pandas| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pandas:\<*version*> |
+pickleDB| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pickleDB:\<*version*> |
+Pillow| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-Pillow:\<*version*> |
+PyJWT| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-PyJWT:\<*version*> |
+pymongo| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pymongo:\<*version*> |
+PyMUPDF| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-PyMUPDF:\<*version*> |
+PyMySQL| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-PyMySQL:\<*version*> |
+PyNaCl| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-PyNaCl:\<*version*> |
+pyOpenSSL| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pyOpenSSL:\<*version*> |
+pyparsing| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pyparsing:\<*version*> |
+pytesseract| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pytesseract:\<*version*> |
+python-docx| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-python-docx:\<*version*> |
+python-Levenshtein| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-python-Levenshtein-wheels:\<*version*> |
+pytz| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pytz:\<*version*> |
+PyYAML| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-PyYAML:\<*version*> |
+requests| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-requests:\<*version*> |
+scipy| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-scipy:\<*version*> |
+simplejson| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-simplejson:\<*version*> |
+SQLAlchemy| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-SQLAlchemy:\<*version*> |
+tinydb| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-tinydb:\<*version*> |
+tldextract| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-tldextract:\<*version*> |
 
 ## Binaries
 
+Special hand-crafted binaries for layers. These layers are not automatically built, and hence slower update cycles.
+
 | Package        | ARN                                                                             | Version    |         
 | :------------- |:------------------------------------------------------------------------------- | ---------- | 
+<<<<<<< HEAD
+| tesseract      | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers--tesseract:1              | 4.1.0-rc1<sup>1</sup>|
+| pip            | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pip:2            | 19.2.1     | 
+=======
 | tesseract      | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-tesseract:1      | 4.1.0-rc1<sup>1</sup>|
 
+>>>>>>> master
 
 <sup>1</sup> Includes leptonica-1.76.0, libjpeg 6b (libjpeg-turbo 1.2.90) : libpng 1.2.49 : libtiff 4.0.3 : zlib 1.2.8 : libwebp 0.3.0
 
@@ -54,26 +83,26 @@ Full list of publicly available layers are [here](/arns.json). Summary list is b
 
 You can either:
 * Set any of the ARNs above (for your region) to be a layer for your function. 
-* Download the zip file from the directory of your package name in the packages directory (e.g. requests) and upload as a layer to your function
+* Use the `Get Layer Version by ARN` in [python](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/lambda.html#Lambda.Client.get_layer_version_by_arn) or [bash](https://docs.aws.amazon.com/cli/latest/reference/lambda/get-layer-version-by-arn.html) command which will provide an S3 location to download the layer as a zip
 
-Currently only the following regions have the layers deployed:
+Currently only the following regions have the layers deployed, click on the link for the list of layer arns:
 
-* ap-northeast-1 
-* ap-northeast-2
-* ap-south-1
-* ap-southeast-1 
-* ap-southeast-2
-* ca-central-1
-* eu-central-1
-* eu-north-1
-* eu-west-1
-* eu-west-2
-* eu-west-3
-* sa-east-1
-* us-east-1
-* us-east-2
-* us-west-1
-* us-west-2
+* [ap-northeast-1](arns/ap-northeast-1.json) 
+* [ap-northeast-2](arns/ap-northeast-2.json)
+* [ap-south-1](arns/ap-south-1.json)
+* [ap-southeast-1](arns/ap-southeast-1.json) 
+* [ap-southeast-2](arns/ap-southeast-2.json)
+* [ca-central-1](arns/ca-central-1json)
+* [eu-central-1](arns/eu-central-1.json)
+* [eu-north-1](arns/eu-north-1.json)
+* [eu-west-1](arns/eu-west-1.json)
+* [eu-west-2](arns/eu-west-2.json)
+* [eu-west-3](arns/eu-west-3.json)
+* [sa-east-1](arns/sa-east-1.json)
+* [us-east-1](arns/us-east-1.json)
+* [us-east-2](arns/us-east-2.json)
+* [us-west-1](arns/us-west-1.json)
+* [us-west-2](arns/us-west-2.json)
 
 # Layer history
 
@@ -81,30 +110,15 @@ Whenever there is an new version of the underlying package, a new layer **may** 
 
 # Building your own layer
 
-To build a layer containing a single python package run the following in the packages directory:
+You can use the scripts available in the `infra/` (terraform) and `serverless/` (serverless) directories to build you own lambda layer building pipeline.
 
-    $ package.sh -p <package_name> -l <license> -r <runtime> -x <public/private> -a <aws_region>
-
-e.g.
-
-    $ package.sh -x public -a ap-southeast-1 -p requests -r python3.7 -l Apache-2.0
-    $ package.sh -x private -a ap-southeast-1 -p beautifulsoup4 -r python3.7 -l MIT
-    $ package.sh -p sqlite3 -r python3.7 -l Apache-2.0
-
-* -p : (MANDATORY) Package Name
-* -l : (MANDATORY) License information for the Package, use the SPDX license identifier
-* -r : (MANDATORY) Runtime, currently only python3.7 is supported, but should work for python2.7 and python3.6
-* -x : (OPTIONAL) set to public to make layer publicly accessible defaults to private
-* -a : (OPTIONAL) aws regiondefaults to deploying layer in all aws_regions where lambda is available (except China)
-* -b : (OPTIONAL) bypass flag to upload layers even if previous upload has the same hash
+For a more old-skool way of deployment using Docker containers, you can refer to the `scripts/build_with_docker` package. Yes, in serverless, Docker Containers are old-skool.
 
 # Asking for more layers
 
-Make a pull requests!
+Make a pull requests, modifying the `serverless/config/Klayers-default.csv` file.
 
 # Notes
-
-All layers are deployed in every region (except China). Refer to the [arns.json](/arns.json) file for more info.
 
 I intend to delete older layers after a while. Functions relying on deleted layers will still work after the layers are deleted. But you won't be able to create new functions referencing older layers.
 
@@ -114,15 +128,24 @@ For `tldextract`, set the following environment variable to avoid trying to quer
 
     $ TLDEXTRACT_CACHE=/opt/python/tldextract/.tld_set_snapshot
 
-For `pytesseract`, the tesseract binary is not included in the build, but the layer includes Pillow. To use tesseract you'd need the tesseract binary layer as well.
-
-For `spacy`, I had to manually tweak a few things to make the package fit into a layer, it only works for English, consider this beta. To use the included model:
-    
-    $ spacy.load('/opt/en_core_web_sm-2.1.0')
-
 For `boto3`, the current version (as of Apr-2019) of boto3 available in the lambda environment is 1.9.42 for python 3.7 which is ~5 months out of date, and ~100 versions ago. Placing the latest version of boto3 in case anyone needs it.
+
+For `pip` you'll need to set your PYTHONPATH to `/opt/python` to override the existing pip inside the lambda environment.
+
+There is an old `spacy` layer -- this has been deprecated.
 
 # Special Thanks
 
 [Chahna107](https://github.com/chahna107) for adding tesseract config files into the tesseract layer.
 
+# To DO
+
+<<<<<<< HEAD
+* Cleanup script to delete all lamba layers that are not the latest version (and more than x days old)
+* Schedule this to run everyday for production
+=======
+# Special Thanks
+
+[Chahna107](https://github.com/chahna107) for adding tesseract config files into the tesseract layer.
+
+>>>>>>> master

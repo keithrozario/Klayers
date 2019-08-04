@@ -1,0 +1,16 @@
+aiobotocore==0.10.3
+aiohttp==3.5.4
+async-generator==1.10
+async-timeout==3.0.1
+attrs==19.1.0
+botocore==1.12.189
+chardet==3.0.4
+docutils==0.15.1
+idna==2.8
+jmespath==0.9.4
+multidict==4.5.2
+python-dateutil==2.8.0
+six==1.12.0
+urllib3==1.25.3
+wrapt==1.11.2
+yarl==1.3.0
