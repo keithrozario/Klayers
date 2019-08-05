@@ -35,14 +35,12 @@ grpcio| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-grpcio:\<
 gspread| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-gspread:\<*version*> |
 idna| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-idna:\<*version*> |
 itsdangerous| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-itsdangerous:\<*version*> |
-jsonrpclib| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-jsonrpclib:\<*version*> |
 kafka-python| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-kafka-python:\<*version*> |
 nltk| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-nltk:\<*version*> |
 numpy| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-numpy:\<*version*> |
 opencv-python-headless| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-opencv-python-headless:\<*version*> |
 openpyxl| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-openpyxl:\<*version*> |
 pandas| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pandas:\<*version*> |
-pickleDB| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pickleDB:\<*version*> |
 Pillow| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-Pillow:\<*version*> |
 PyJWT| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-PyJWT:\<*version*> |
 pymongo| arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pymongo:\<*version*> |
