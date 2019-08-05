@@ -5,4 +5,4 @@ schedule: "every day"
 
 requirements:
 - packages/aiobotocore/requirements.txt:
-  update: insecure
+    update: insecure
