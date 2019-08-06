@@ -382,5 +382,11 @@
         "package": "pandas",
         "layer_version_arn": "arn:aws:lambda:ap-south-1:113088814899:layer:Klayers-python37-pandas:2",
         "deployed_region": "ap-south-1"
+    },
+    {
+        "package_version": "1.9.201",
+        "package": "boto3",
+        "layer_version_arn": "arn:aws:lambda:ap-south-1:113088814899:layer:Klayers-python37-boto3:5",
+        "deployed_region": "ap-south-1"
     }
 ]
