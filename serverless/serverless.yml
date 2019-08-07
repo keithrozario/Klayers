@@ -1,6 +1,6 @@
 service: Klayers-python37
 
-frameworkVersion: "=1.40.0"
+frameworkVersion: "=1.49.0"
 
 plugins:
   - serverless-iam-roles-per-function
@@ -46,6 +46,7 @@ functions:
     memorySize: 128
     environment:
       LAYERS_DB: ${self:custom.dbLayers}
+    iamRoleStatementsName: ${self:provider.stage}-check
     iamRoleStatements:
       - Effect: Allow
         Action:
@@ -64,6 +65,7 @@ functions:
     environment:
       BUCKET_NAME: ${self:custom.s3LayersName}
       REQS_DB: ${self:custom.dbReqs}
+    iamRoleStatementsName: ${self:provider.stage}-build
     iamRoleStatements:
     - Effect: Allow
       Action:
@@ -98,6 +100,7 @@ functions:
       REQS_DB: ${self:custom.dbReqs}
       LAYERS_DB: ${self:custom.dbLayers}
       LAMBDA_PREFIX: ${self:custom.lambdaPrefix}
+    iamRoleStatementsName: ${self:provider.stage}-deploy
     iamRoleStatements:
       - Effect: Allow
         Action:
@@ -130,6 +133,7 @@ functions:
       LAYERS_DB: ${self:custom.dbLayers}
     layers:
       - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-boto3:2
+    iamRoleStatementsName: ${self:provider.stage}-publish_arns
     iamRoleStatements:
       - Effect: Allow
         Action:
@@ -151,6 +155,7 @@ functions:
       REQS_DB: ${self:custom.dbReqs}
     layers:
       - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-boto3:2
+    iamRoleStatementsName: ${self:provider.stage}-publish_reqs
     iamRoleStatements:
       - Effect: Allow
         Action:
@@ -171,6 +176,7 @@ functions:
       KEK_PARAMETER: ${self:custom.kekParameter}
       S3_KEYS: ${self:custom.s3KeysName}
       BUCKET_NAME: ${self:custom.s3LayersName}
+    iamRoleStatementsName: ${self:provider.stage}-publish_github
     iamRoleStatements:
       - Effect: Allow
         Action:
@@ -211,6 +217,7 @@ functions:
             - ${self:provider.region}
             - Ref: AWS::AccountId
             - stateMachine:${self:custom.pipelineName}
+    iamRoleStatementsName: ${self:provider.stage}-invoke_pipeline
     iamRoleStatements:
       - Effect: Allow
         Action: states:StartExecution 
@@ -223,10 +230,11 @@ functions:
               - stateMachine:${self:custom.pipelineName}
 
   check_sfns:
-    handler: check_sfns.main
+    handler: check_exec.main
     runtime: python3.7
     timeout: 90
     memorySize: 256
+    iamRoleStatementsName: ${self:provider.stage}-check_sfns
     iamRoleStatements:
       - Effect: Allow
         Action: states:DescribeExecution
