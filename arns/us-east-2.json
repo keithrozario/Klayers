@@ -406,5 +406,17 @@
         "package": "boto3",
         "layer_version_arn": "arn:aws:lambda:us-east-2:113088814899:layer:Klayers-python37-boto3:7",
         "deployed_region": "us-east-2"
+    },
+    {
+        "package_version": "0.14.5",
+        "package": "arrow",
+        "layer_version_arn": "arn:aws:lambda:us-east-2:113088814899:layer:Klayers-python37-arrow:3",
+        "deployed_region": "us-east-2"
+    },
+    {
+        "package_version": "1.9.204",
+        "package": "boto3",
+        "layer_version_arn": "arn:aws:lambda:us-east-2:113088814899:layer:Klayers-python37-boto3:8",
+        "deployed_region": "us-east-2"
     }
 ]
