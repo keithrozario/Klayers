@@ -328,5 +328,11 @@
         "package": "boto3",
         "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-boto3:3",
         "deployed_region": "me-south-1"
+    },
+    {
+        "package_version": "1.9.205",
+        "package": "boto3",
+        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-boto3:4",
+        "deployed_region": "me-south-1"
     }
 ]
