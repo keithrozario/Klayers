@@ -246,13 +246,41 @@ functions:
               - Ref: AWS::AccountId
               - stateMachine:${self:custom.pipelineName}
 
+  cleanup_packages:
+    handler: cleanup_packages.main
+    runtime: python3.7
+    timeout: 300
+    memorySize: 256
+    environment:
+      LAYERS_DB: ${self:custom.dbLayers}
+    iamRoleStatementsName: ${self:provider.stage}-cleanup_packages
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:GetItem
+          - dynamodb:PutItem
+          - dynamodb:Query
+          - dynamodb:DeleteItem
+        Resource: ${self:custom.dbLayersArn}
+      - Effect: Allow
+        Action:
+          - lambda:DeleteLayerVersion
+        Resource:
+          Fn::Join:
+            - ":"
+            - - arn:aws:lambda
+              - ${self:provider.region}
+              - Ref: AWS::AccountId
+              - layer
+              - "*"
+
 
 stepFunctions:
   stateMachines:
 
     invoke_pipelines:
       events:
-        - schedule: cron(0 1 * * ? *)  # runs at 1am UTC everyday
+        - schedule: cron(0 1 ? * MON *)  # runs at 1am UTC on Monday
       name: ${self:custom.pipelineName}-invoke
       definition:
         Comment: "Invoke the Check, Build and Deploy pipeline for all packages"
