@@ -78,7 +78,7 @@ You can either:
 * Set any of the ARNs above (for your region) to be a layer for your function. 
 * Use the `Get Layer Version by ARN` in [python](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/lambda.html#Lambda.Client.get_layer_version_by_arn) or [bash](https://docs.aws.amazon.com/cli/latest/reference/lambda/get-layer-version-by-arn.html) command which will provide an S3 location to download the layer as a zip
 
-Currently only the following regions have the layers deployed, click on the link for the list of layer arns:
+Currently only the following regions have the layers deployed(we just added Hong Kong and Bahrain) click the link for the list of layer arns:
 
 * [ap-northeast-1](arns/ap-northeast-1.json) 
 * [ap-northeast-2](arns/ap-northeast-2.json)
@@ -96,12 +96,9 @@ Currently only the following regions have the layers deployed, click on the link
 * [us-east-2](arns/us-east-2.json)
 * [us-west-1](arns/us-west-1.json)
 * [us-west-2](arns/us-west-2.json)
+* [ap-east-1](arns/ap-east-1.json)
+* [me-south-1](arns/me-south-1.json)
 
-I tried adding `me-south-1` but got an STS token issue. Will investigate, hang tight Bahrain!
-
-# Layer history
-
-Whenever there is an new version of the underlying package, a new layer **may** be created with an incremented version number.
 
 # Building your own layer
 
@@ -122,6 +119,12 @@ There is an old `spacy` layer -- this has been deprecated.
 
 # To DO
 * Cleanup script to delete all lamba layers that are not the latest version (and more than x days old)
-* Schedule this to run everyday for production
+* ~~Schedule this to run everyday for production~~ Currently runs once a week on Monday
 * Package openssl v1.1.x for better encryption of KEK
 * Blog post and architecture review
+
+# Architecture Diagram
+
+Diagram is still pretty draft will add more details later!
+
+![Screenshot](documentation/Klayers-Architecture.png)
