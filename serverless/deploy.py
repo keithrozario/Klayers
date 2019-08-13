@@ -1,15 +1,18 @@
 import os
 import logging
-import boto3
-import get_config
+import time
 
+import boto3
 from botocore.exceptions import ClientError
 from boto3.dynamodb.conditions import Key
-
 from packaging.version import parse
+
+import get_config
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
+dynamodb_client = boto3.client('dynamodb')
+s3 = boto3.resource('s3')
 
 
 def get_latest_deployed_version(region, package):
@@ -65,7 +68,6 @@ def main(event, context):
 
     layer_name = f"{os.environ['LAMBDA_PREFIX']}{package}"
     logger.info(f"Downloading {package_artifact} from {os.environ['BUCKET_NAME']}")
-    s3 = boto3.resource('s3')
     s3.meta.client.download_file(os.environ['BUCKET_NAME'],
                                  package_artifact,
                                  f"/tmp/{package_artifact}")
@@ -94,7 +96,6 @@ def main(event, context):
             layer_version = int(layer_version_arn.split(":")[-1])
             logger.info(f"Layer version for {layer_version_arn} is {layer_version}")
 
-            dynamodb_client = boto3.client('dynamodb')
             try:
                 dynamodb_client.put_item(TableName=os.environ['LAYERS_DB'],
                                          Item={'deployed_region': {'S': region},
@@ -105,9 +106,19 @@ def main(event, context):
                                                'created_date': {'S': layer_version_created_date},
                                                'layer_version': {'N': str(layer_version)},
                                                'layer_version_arn': {'S': str(layer_version_arn)}})
-                logger.info(f"Successfully written {package}:{layer_version} status to DB with hash: {requirements_hash}")
+                logger.info(
+                    f"Successfully written {package}:{layer_version} status to DB with hash: {requirements_hash}")
+
+                dynamodb_client.update_item(TableName=os.environ['LAYERS_DB'],
+                                            Key={'deployed_region-package': f"{region}.{package}",
+                                                 'layer_version': str(layer_version-1)},
+                                            UpdateExpression='SET time_to_live = :val1',
+                                            ExpressionAttributeValues={':val1': time.time() + 24*3600*30})
+                logger.info(
+                    f"Successfully added TTL for 30 days to {region}.{package} version {layer_version-1}")
+
             except ClientError as e:
-                logger.info("Unexpected error Writing to DB: {}".format(e.response['Error']['Code']))
+                logger.error("Unexpected error Writing to DB: {}".format(e.response['Error']['Code']))
 
             response = lambda_client.add_layer_version_permission(LayerName=layer_name,
                                                                   VersionNumber=layer_version,
