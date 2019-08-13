@@ -56,6 +56,11 @@ resource "aws_dynamodb_table" "dynamodb_layers" {
     type = "S"
   }
 
+  ttl {
+    attribute_name = "time_to_live"
+    enabled        = true
+  }
+
   global_secondary_index {
     name               = "LayersPerRegion"
     hash_key           = "deployed_region"
