@@ -27,13 +27,18 @@ def main(event, context):
 
 def remove(record):
 
-    layer_version_arn = record['dynamodb']['OldImage']['layer_version_arn']['S']
-    logger.info(f"Deleting: {layer_version_arn}")
+    try:
 
-    arn_elements = layer_version_arn.split(":")
-    region = arn_elements[3]
-    layer_name = arn_elements[6]
-    layer_version = int(arn_elements[7])
+        layer_version_arn = record['dynamodb']['OldImage']['layer_version_arn']['S']
+        logger.info(f"Deleting: {layer_version_arn}")
+
+        arn_elements = layer_version_arn.split(":")
+        region = arn_elements[3]
+        layer_name = arn_elements[6]
+        layer_version = int(arn_elements[7])
+    except KeyError:
+        logger.error("Unexpected error trying to retrieve layer_Version_arn")
+        return
 
     client = boto3.client('lambda', region_name=region)
 
