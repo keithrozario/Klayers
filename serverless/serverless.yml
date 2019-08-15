@@ -23,6 +23,7 @@ custom:
   s3LayersArn: ${ssm:/${self:service.name}/${self:provider.stage}/s3bucket_layers_arn}
   dbLayers: ${ssm:/${self:service.name}/${self:provider.stage}/dynamodb_layers_table}
   dbLayersArn: ${ssm:/${self:service.name}/${self:provider.stage}/dynamodb_layers_table_arn}
+  dbLayersStreamArn: ${ssm:/${self:service.name}/${self:provider.stage}/dynamodb_layers_stream_arn}
   dbReqs: ${ssm:/${self:service.name}/${self:provider.stage}/dynamodb_requirements_table}
   dbReqsArn: ${ssm:/${self:service.name}/${self:provider.stage}/dynamodb_requirements_table_arn}
   lambdaPrefix: ${ssm:/${self:service.name}/${self:provider.stage}/lambda_prefix}
@@ -107,6 +108,7 @@ functions:
         - dynamodb:GetItem
         - dynamodb:PutItem
         - dynamodb:Query
+        - dynamodb:UpdateItem
         Resource: ${self:custom.dbLayersArn}
       - Effect: Allow
         Action:
@@ -253,6 +255,7 @@ functions:
     memorySize: 256
     environment:
       LAYERS_DB: ${self:custom.dbLayers}
+      LAMBDA_PREFIX: ${self:custom.lambdaPrefix}
     iamRoleStatementsName: ${self:provider.stage}-cleanup_packages
     iamRoleStatements:
       - Effect: Allow
@@ -274,6 +277,43 @@ functions:
               - layer
               - "*"
 
+  stream_processor:
+    handler: stream_processor.main
+    runtime: python3.7
+    timeout: 20
+    memorySize: 256
+    layers:
+      - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-boto3:2
+    iamRoleStatementsName: ${self:provider.stage}-stream_processor
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - lambda:DeleteLayerVersion
+        Resource:
+          Fn::Join:
+            - ":"
+            - - arn:aws:lambda
+              - ${self:provider.region}
+              - Ref: AWS::AccountId
+              - layer
+              - ${self:custom.lambdaPrefix}*
+              - "*"
+
+# Below is automatically set by Serverless Framework
+#    iamRoleStatementsName: ${self:provider.stage}-stream_processor
+#    iamRoleStatements:
+#      - Effect: Allow
+#        Action:
+#          - dynamodb:GetRecords
+#          - dynamodb:GetShardIterator
+#          - dynamodb:DescribeStream
+#          - dynamodb:ListStreams
+#        Resource: ${self:custom.dbLayersStreamArn}
+    events:
+      - stream:
+          type: dynamodb
+          arn: ${self:custom.dbLayersStreamArn}
+          batchSize: 10
 
 stepFunctions:
   stateMachines:
