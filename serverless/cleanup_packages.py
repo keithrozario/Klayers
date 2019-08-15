@@ -1,7 +1,6 @@
 import os
 import logging
 import boto3
-import datetime
 
 from boto3.dynamodb.conditions import Key
 
@@ -10,9 +9,19 @@ from get_config import get_packages
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
+dynamodb = boto3.resource('dynamodb')
+table = dynamodb.Table(os.environ['LAYERS_DB'])
 
 
-def delete_old_layer_versions(table, client, region, package, max_days_older):
+def list_layer_version_arns(client, layer_name):
+
+    response = client.list_layer_version(LayerName=f"{layer_name}")
+    deployed_layer_version_arns = [LayerVersion['LayerVersionArn'] for LayerVersion in response['LayerVersions']]
+
+    return deployed_layer_version_arns
+
+
+def delete_old_layer_versions(client, table, region, package, prefix):
 
     """
     Loops through all layer versions found in DynamoDB and deletes layer version if it's <maximum_days_older> than
@@ -24,43 +33,49 @@ def delete_old_layer_versions(table, client, region, package, max_days_older):
     time.
     """
 
-    # Sort key is lambda version -- by default takes the latest if ScanIndexForward is false
+    deleted_arns = []
+    layer_name = f"{prefix}{package}"
+
+    # Get deployed layer versions
+    deployed_layer_version_arns = list_layer_version_arns(client=client,
+                                                          layer_name=layer_name)
+
+    # Get Live Layer versions (they automatically delete if they're old)
     response = table.query(KeyConditionExpression=Key("deployed_region-package").eq(f"{region}.{package}"),
                            ScanIndexForward=False)
+    live_layer_version_arns = [item['layer_version_arn'] for item in response['Items']]
 
-    latest_created_date = datetime.datetime.strptime(response['Items'][0]['created_date'][:10], "%Y-%m-%d")
+    # Delete layer versions
+    for layer_version_arn in deployed_layer_version_arns:
+        if layer_version_arn not in live_layer_version_arns:
+            logger.info(f"Found dead layer version {layer_version_arn}...deleting")
+            layer_version = layer_version_arn.split(":")[-1]
+            client.delete_layer_version(
+                LayerName=layer_name,
+                VersionNumber=layer_version
+            )
+            deleted_arns.append(layer_version_arn)
+        else:
+            pass
 
-    for item in response['Items'][1:]:  # ensure at least one lambda is left
-        created_date = datetime.datetime.strptime(item['created_date'][:10], "%Y-%m-%d")
-
-        delta = latest_created_date - created_date
-        if delta.days > max_days_older:
-            logger.info(f"{item['layer_version_arn']} is {delta.days} old, deleting...")
-            layer_arn = ":".join(item['layer_version_arn'].split(':')[:-1])
-            delete_lambda_response = client.delete_layer_version(LayerName=layer_arn,
-                                                                VersionNumber=item['layer_version'])
-            logger.info(f"Deleting item {region}.{package} with layer_version {item['layer_version']} from DynamoDB")
-            delete_item_response = table.delete_item(Key={"deployed_region-package": f"{region}.{package}",
-                                                           "layer_version": item['layer_version']})
-
-    return
+    return deleted_arns
 
 
 def main(event, context):
 
     region = event['region']
-    max_days_older = os.environ['MAX_DAYS_OLDER']
     packages = get_packages()
+    lambda_prefix = os.environ['LAMBDA_PREFIX']
 
     client = boto3.client('lambda', region_name=region)
-
-    dynamodb = boto3.resource('dynamodb')
-    table = dynamodb.Table(os.environ['LAYERS_DB'])
+    deleted_arns = []
 
     for package in packages:
-        delete_old_layer_versions(client=client,
-                                  table=table,
-                                  region=region,
-                                  package=package,
-                                  max_days_older=max_days_older)
-    return {"status": "done"}
+        arns = delete_old_layer_versions(client=client,
+                                         table=table,
+                                         region=region,
+                                         package=package,
+                                         prefix=lambda_prefix)
+        deleted_arns.extend(arns)
+
+    return {"deleted_arns": deleted_arns}
