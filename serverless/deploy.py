@@ -44,6 +44,15 @@ def get_latest_deployed_version(region, package):
 
 
 def check_latest_deploy(package, region, requirements_hash):
+    """
+    Args:
+        package: Name of package to query
+        region: region to query for
+        requirements_hash: hash of requirements.txt file
+    returns:
+        Boolean: False if requirements hash matches latest deployhed version (doesn't need deploying)
+                 True if requirements hash does not match latest deployed version (needs deploying)
+    """
     last_deployed_version, last_deployed_requirements_hash = get_latest_deployed_version(region=region,
                                                                                          package=package)
 
@@ -81,6 +90,8 @@ def main(event, context):
         if check_latest_deploy(package=package,
                                region=region,
                                requirements_hash=requirements_hash):
+
+            # Publish Layer Version
             logger.info(f"Deploying {layer_name} to {region}")
             lambda_client = boto3.client('lambda', region_name=region)
             response = lambda_client.publish_layer_version(LayerName=layer_name,
@@ -109,13 +120,18 @@ def main(event, context):
                 logger.info(
                     f"Successfully written {package}:{layer_version} status to DB with hash: {requirements_hash}")
 
-                dynamodb_client.update_item(TableName=os.environ['LAYERS_DB'],
-                                            Key={'deployed_region-package': f"{region}.{package}",
-                                                 'layer_version': str(layer_version-1)},
-                                            UpdateExpression='SET time_to_live = :val1',
-                                            ExpressionAttributeValues={':val1': time.time() + 24*3600*30})
-                logger.info(
-                    f"Successfully added TTL for 30 days to {region}.{package} version {layer_version-1}")
+                if layer_version > 1:
+                    ttl_value = int(time.time() + 24*3600*30)
+                    dynamodb_client.update_item(TableName=os.environ['LAYERS_DB'],
+                                                Key={'deployed_region-package': {'S': f"{region}.{package}"},
+                                                     'layer_version': {'N': str(layer_version-1)}},
+                                                UpdateExpression='SET time_to_live = :val1',
+                                                ExpressionAttributeValues={':val1': {'N': str(ttl_value)}})
+                    logger.info(
+                        f"Successfully added TTL for 30 days to {region}.{package} version {layer_version-1}")
+                else:
+                    logger.info(
+                        f"No previous version for {region}.{package} found, bypassing delete")
 
             except ClientError as e:
                 logger.error("Unexpected error Writing to DB: {}".format(e.response['Error']['Code']))
