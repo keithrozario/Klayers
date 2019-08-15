@@ -293,22 +293,11 @@ functions:
           Fn::Join:
             - ":"
             - - arn:aws:lambda
-              - ${self:provider.region}
+              - "*"  # need permissions to delete layers in other regions
               - Ref: AWS::AccountId
               - layer
               - ${self:custom.lambdaPrefix}*
               - "*"
-
-# Below is automatically set by Serverless Framework
-#    iamRoleStatementsName: ${self:provider.stage}-stream_processor
-#    iamRoleStatements:
-#      - Effect: Allow
-#        Action:
-#          - dynamodb:GetRecords
-#          - dynamodb:GetShardIterator
-#          - dynamodb:DescribeStream
-#          - dynamodb:ListStreams
-#        Resource: ${self:custom.dbLayersStreamArn}
     events:
       - stream:
           type: dynamodb
