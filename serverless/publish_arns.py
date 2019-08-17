@@ -23,6 +23,36 @@ class DecimalEncoder(json.JSONEncoder):
         return super(DecimalEncoder, self).default(o)
 
 
+def query_versions_table(region, table):
+    """
+    Args:
+      table: DynamoDB table object to query
+      region: region to query on
+    returns:
+      items: items returned from the query
+    """
+
+    kwargs = {
+        "IndexName": "LayersPerRegion",
+        "Select": "SPECIFIC_ATTRIBUTES",
+        "ProjectionExpression": "deployed_region, layer_version_arn, package, package_version, time_to_live",
+        "KeyConditionExpression": Key('deployed_region').eq(region)
+    }
+    items = []
+
+    while True:
+        response = table.query(**kwargs)
+        items.extend(response['Items'])
+
+        try:
+            kwargs['ExclusiveStartKey'] = response['ExclusiveStartKey']
+        except KeyError:
+            logger.info(f"Reached end of query for {region}, Returning {len(items)} items")
+            break
+
+    return items
+
+
 def main(event, context):
 
     """
@@ -37,13 +67,9 @@ def main(event, context):
 
     for region in regions:
 
-        response = table.query(IndexName="LayersPerRegion",
-                               Select="SPECIFIC_ATTRIBUTES",
-                               ProjectionExpression="deployed_region, layer_version_arn, package, package_version",
-                               KeyConditionExpression=Key('deployed_region').eq(region))
-
-        logger.info(f"Found {len(response['Items'])}")
-        arns = json.dumps(response['Items'], cls=DecimalEncoder, indent=4)
+        items = query_versions_table(table=table,
+                                     region=region)
+        arns = json.dumps(items, cls=DecimalEncoder, indent=4)
 
         logger.info(f"Uploading to S3 Bucket")
         client = boto3.client('s3')
