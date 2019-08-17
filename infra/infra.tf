@@ -68,8 +68,19 @@ resource "aws_dynamodb_table" "dynamodb_layers" {
     hash_key           = "deployed_region"
     range_key          = "created_date"
     projection_type    = "INCLUDE"
-    non_key_attributes = ["package", "package_version", "layer_version_arn",
-                          "layer_version", "created_date", "time_to_live"]
+    non_key_attributes = ["package_version", "time_to_live", "layer_version_arn",
+                          "layer_version", "created_date", ]
+    # Terraform has an issue where non_key_attributes of GSI must be in **some** order
+    # refer here: https://github.com/terraform-providers/terraform-provider-aws/issues/3828
+  }
+
+  point_in_time_recovery {
+    enabled = true
+  }
+
+  tags = {
+    Name = "db_layers"
+    Environment = terraform.workspace
   }
 
 }
