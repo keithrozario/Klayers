@@ -79,6 +79,7 @@
     },
     {
         "package_version": "4.8.0",
+        "time_to_live": 1568734255,
         "package": "beautifulsoup4",
         "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-beautifulsoup4:5",
         "deployed_region": "sa-east-1"
@@ -121,6 +122,7 @@
     },
     {
         "package_version": "3.8.0",
+        "time_to_live": 1568734266,
         "package": "pymongo",
         "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-pymongo:3",
         "deployed_region": "sa-east-1"
@@ -175,6 +177,7 @@
     },
     {
         "package_version": "1.22.0",
+        "time_to_live": 1568734274,
         "package": "grpcio",
         "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-grpcio:1",
         "deployed_region": "sa-east-1"
@@ -193,6 +196,7 @@
     },
     {
         "package_version": "0.2.7",
+        "time_to_live": 1568734282,
         "package": "pytesseract",
         "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-pytesseract:2",
         "deployed_region": "sa-east-1"
@@ -205,6 +209,7 @@
     },
     {
         "package_version": "1.3.6",
+        "time_to_live": 1568734289,
         "package": "SQLAlchemy",
         "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-SQLAlchemy:1",
         "deployed_region": "sa-east-1"
@@ -343,6 +348,7 @@
     },
     {
         "package_version": "2.1.7",
+        "time_to_live": 1568734276,
         "package": "graphene",
         "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-graphene:1",
         "deployed_region": "sa-east-1"
@@ -373,6 +379,7 @@
     },
     {
         "package_version": "2.8.3",
+        "time_to_live": 1568734547,
         "package": "ansible",
         "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-ansible:2",
         "deployed_region": "sa-east-1"
@@ -421,6 +428,7 @@
     },
     {
         "package_version": "1.9.205",
+        "time_to_live": 1568734343,
         "package": "boto3",
         "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-boto3:9",
         "deployed_region": "sa-east-1"
@@ -441,6 +449,54 @@
         "package_version": "0.8.10",
         "package": "python-docx",
         "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-python-docx:2",
+        "deployed_region": "sa-east-1"
+    },
+    {
+        "package_version": "4.8.0",
+        "package": "beautifulsoup4",
+        "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-beautifulsoup4:6",
+        "deployed_region": "sa-east-1"
+    },
+    {
+        "package_version": "3.9.0",
+        "package": "pymongo",
+        "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-pymongo:4",
+        "deployed_region": "sa-east-1"
+    },
+    {
+        "package_version": "1.23.0",
+        "package": "grpcio",
+        "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-grpcio:2",
+        "deployed_region": "sa-east-1"
+    },
+    {
+        "package_version": "2.1.8",
+        "package": "graphene",
+        "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-graphene:2",
+        "deployed_region": "sa-east-1"
+    },
+    {
+        "package_version": "0.2.9",
+        "package": "pytesseract",
+        "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-pytesseract:3",
+        "deployed_region": "sa-east-1"
+    },
+    {
+        "package_version": "1.3.7",
+        "package": "SQLAlchemy",
+        "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-SQLAlchemy:2",
+        "deployed_region": "sa-east-1"
+    },
+    {
+        "package_version": "1.9.210",
+        "package": "boto3",
+        "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-boto3:10",
+        "deployed_region": "sa-east-1"
+    },
+    {
+        "package_version": "2.8.4",
+        "package": "ansible",
+        "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-ansible:3",
         "deployed_region": "sa-east-1"
     }
 ]
