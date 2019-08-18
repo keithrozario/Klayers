@@ -1,6 +1,9 @@
 # Keith's Layers (Klayers)
 
-A collection of AWS Lambda Layers for Python3.7
+[![Python 3](https://pyup.io/repos/github/keithrozario/Klayers/python-3-shield.svg)](https://pyup.io/repos/github/keithrozario/Klayers/)
+
+
+A collection of AWS Lambda Layers for Python3.7 & Python3.6
 
 # Status of layers
 
@@ -68,9 +71,12 @@ Special hand-crafted binaries for layers. These layers are not automatically bui
 | Package        | ARN                                                                             | Version    |         
 | :------------- |:------------------------------------------------------------------------------- | ---------- | 
 | tesseract      | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers--tesseract:2              | 4.1.0-rc1<sup>1</sup>|
-| pip            | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pip:2            | 19.2.1     | 
+| pip            | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pip:2            | 19.2.1     |
+| netcat         | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-netcat:2         | 0.7.1<sup>12/sup>|
 
 <sup>1</sup> Includes leptonica-1.76.0, libjpeg 6b (libjpeg-turbo 1.2.90) : libpng 1.2.49 : libtiff 4.0.3 : zlib 1.2.8 : libwebp 0.3.0
+
+<sup>2</sup> netcat-traditional with the -e option -- compiled for 64-bit to run on AWS Lambda
 
 # Using the Layers
 
@@ -118,10 +124,10 @@ There is an old `spacy` layer -- this has been deprecated.
 [Chahna107](https://github.com/chahna107) for adding tesseract config files into the tesseract layer.
 
 # To DO
-* Cleanup script to delete all lamba layers that are not the latest version (and more than x days old)
+* ~~Cleanup script to delete all lamba layers that are not the latest version (and more than x days old)~~ Done using TTL on DynamoDB
 * ~~Schedule this to run everyday for production~~ Currently runs once a week on Monday
 * Package openssl v1.1.x for better encryption of KEK
-* Blog post and architecture review
+* Blog post and architecture review (WIP: [here](https://www.keithrozario.com/2019/08/klayers-part-0-introduction.html))
 
 # Architecture Diagram
 
