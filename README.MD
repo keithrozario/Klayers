@@ -72,7 +72,7 @@ Special hand-crafted binaries for layers. These layers are not automatically bui
 | :------------- |:------------------------------------------------------------------------------- | ---------- | 
 | tesseract      | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers--tesseract:2              | 4.1.0-rc1<sup>1</sup>|
 | pip            | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pip:2            | 19.2.1     |
-| netcat         | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-netcat:2         | 0.7.1<sup>12/sup>|
+| netcat         | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-netcat:2         | 0.7.1<sup>2</sup>|
 
 <sup>1</sup> Includes leptonica-1.76.0, libjpeg 6b (libjpeg-turbo 1.2.90) : libpng 1.2.49 : libtiff 4.0.3 : zlib 1.2.8 : libwebp 0.3.0
 
