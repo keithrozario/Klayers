@@ -23,6 +23,7 @@ custom:
   s3LayersArn: ${ssm:/${self:service.name}/${self:provider.stage}/s3bucket_layers_arn}
   dbLayers: ${ssm:/${self:service.name}/${self:provider.stage}/dynamodb_layers_table}
   dbLayersArn: ${ssm:/${self:service.name}/${self:provider.stage}/dynamodb_layers_table_arn}
+  dbLayersStreamArn: ${ssm:/${self:service.name}/${self:provider.stage}/dynamodb_layers_stream_arn}
   dbReqs: ${ssm:/${self:service.name}/${self:provider.stage}/dynamodb_requirements_table}
   dbReqsArn: ${ssm:/${self:service.name}/${self:provider.stage}/dynamodb_requirements_table_arn}
   lambdaPrefix: ${ssm:/${self:service.name}/${self:provider.stage}/lambda_prefix}
@@ -107,6 +108,7 @@ functions:
         - dynamodb:GetItem
         - dynamodb:PutItem
         - dynamodb:Query
+        - dynamodb:UpdateItem
         Resource: ${self:custom.dbLayersArn}
       - Effect: Allow
         Action:
@@ -246,13 +248,68 @@ functions:
               - Ref: AWS::AccountId
               - stateMachine:${self:custom.pipelineName}
 
+  cleanup_packages:
+    handler: cleanup_packages.main
+    runtime: python3.7
+    timeout: 300
+    memorySize: 256
+    environment:
+      LAYERS_DB: ${self:custom.dbLayers}
+      LAMBDA_PREFIX: ${self:custom.lambdaPrefix}
+    iamRoleStatementsName: ${self:provider.stage}-cleanup_packages
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:GetItem
+          - dynamodb:PutItem
+          - dynamodb:Query
+          - dynamodb:DeleteItem
+        Resource: ${self:custom.dbLayersArn}
+      - Effect: Allow
+        Action:
+          - lambda:DeleteLayerVersion
+        Resource:
+          Fn::Join:
+            - ":"
+            - - arn:aws:lambda
+              - ${self:provider.region}
+              - Ref: AWS::AccountId
+              - layer
+              - "*"
+
+  stream_processor:
+    handler: stream_processor.main
+    runtime: python3.7
+    timeout: 20
+    memorySize: 256
+    layers:
+      - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-boto3:2
+    iamRoleStatementsName: ${self:provider.stage}-stream_processor
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - lambda:DeleteLayerVersion
+        Resource:
+          Fn::Join:
+            - ":"
+            - - arn:aws:lambda
+              - "*"  # need permissions to delete layers in other regions
+              - Ref: AWS::AccountId
+              - layer
+              - ${self:custom.lambdaPrefix}*
+              - "*"
+    events:
+      - stream:
+          type: dynamodb
+          arn: ${self:custom.dbLayersStreamArn}
+          batchSize: 10
 
 stepFunctions:
   stateMachines:
 
     invoke_pipelines:
       events:
-        - schedule: cron(0 1 * * ? *)  # runs at 1am UTC everyday
+        - schedule: cron(0 1 ? * MON *)  # runs at 1am UTC on Monday
       name: ${self:custom.pipelineName}-invoke
       definition:
         Comment: "Invoke the Check, Build and Deploy pipeline for all packages"

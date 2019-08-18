@@ -35,6 +35,8 @@ resource "aws_dynamodb_table" "dynamodb_layers" {
   billing_mode   = "PAY_PER_REQUEST"
   hash_key       = "deployed_region-package"  # use . as separator e.g. us-east-1.requests
   range_key      = "layer_version"
+  stream_enabled = true
+  stream_view_type = "NEW_AND_OLD_IMAGES"
 
   attribute {
     name = "deployed_region-package"
@@ -56,13 +58,29 @@ resource "aws_dynamodb_table" "dynamodb_layers" {
     type = "S"
   }
 
+  ttl {
+    attribute_name = "time_to_live"
+    enabled        = true
+  }
+
   global_secondary_index {
     name               = "LayersPerRegion"
     hash_key           = "deployed_region"
     range_key          = "created_date"
     projection_type    = "INCLUDE"
-    non_key_attributes = ["package", "package_version", "layer_version_arn",
-                          "layer_version", "created_date"]
+    non_key_attributes = ["package_version", "time_to_live", "package",
+                          "layer_version_arn", "layer_version", "created_date", ]
+    # Terraform has an issue where non_key_attributes of GSI must be in **some** order
+    # refer here: https://github.com/terraform-providers/terraform-provider-aws/issues/3828
+  }
+
+  point_in_time_recovery {
+    enabled = true
+  }
+
+  tags = {
+    Name = "db_layers"
+    Environment = terraform.workspace
   }
 
 }
@@ -135,7 +153,7 @@ resource "aws_s3_bucket" "s3bucket_keys" {
 ### Outputs for serverless to consume
 resource "aws_ssm_parameter" "dynamodb_layers_table" {
   type  = "String"
-  description = "Name of DynamoDB Temp Table"
+  description = "Name of DynamoDB Layers Table"
   name  = "/${var.app_name}/${terraform.workspace}/dynamodb_layers_table"
   value = "${aws_dynamodb_table.dynamodb_layers.name}"
   overwrite = true
@@ -143,9 +161,25 @@ resource "aws_ssm_parameter" "dynamodb_layers_table" {
 
 resource "aws_ssm_parameter" "dynamodb_layers_table_arn" {
   type  = "String"
-  description = "ARN of DynamoDB Temp Table"
+  description = "ARN of DynamoDB Layers Table"
   name  = "/${var.app_name}/${terraform.workspace}/dynamodb_layers_table_arn"
   value = "${aws_dynamodb_table.dynamodb_layers.arn}"
+  overwrite = true
+}
+
+resource "aws_ssm_parameter" "dynamodb_layers_stream_arn" {
+  type  = "String"
+  description = "ARN of DynamoDB Layers Table Stream"
+  name  = "/${var.app_name}/${terraform.workspace}/dynamodb_layers_stream_arn"
+  value = "${aws_dynamodb_table.dynamodb_layers.stream_arn}"
+  overwrite = true
+}
+
+resource "aws_ssm_parameter" "dynamodb_layers_stream_lable" {
+  type  = "String"
+  description = "Lable of DynamoDB Layers Table Stream"
+  name  = "/${var.app_name}/${terraform.workspace}/dynamodb_layers_stream_lable"
+  value = "${aws_dynamodb_table.dynamodb_layers.stream_label}"
   overwrite = true
 }
 
