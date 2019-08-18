@@ -1,6 +1,7 @@
 # Keith's Layers (Klayers)
 
 [![Python 3](https://pyup.io/repos/github/keithrozario/Klayers/python-3-shield.svg)](https://pyup.io/repos/github/keithrozario/Klayers/)
+[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/keithrozario/Klayers.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/keithrozario/Klayers/context:python)
 
 
 A collection of AWS Lambda Layers for Python3.7 & Python3.6
