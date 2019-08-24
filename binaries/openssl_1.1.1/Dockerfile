@@ -1,18 +1,21 @@
-FROM lambci/lambda-base:build
+FROM amazonlinux:latest
 
 LABEL maintainer="keith@keithrozario.com"
 
 RUN yum install libtool perl-core zlib-devel -y && \
-    yum install wget -y
+    yum install wget -y && \
+    yum group install "Development Tools"  -y && \
+    yum group install "AWS Tools" -y
 
-WORKDIR /tmp/build
+ENV version 1.1.1c
 
-RUN wget https://www.openssl.org/source/openssl-1.1.1c.tar.gz && \
-    tar -zxvf openssl-1.1.1c.tar.gz && \
-    cd openssl-1.1.1c && \
+RUN wget https://www.openssl.org/source/openssl-$version.tar.gz && \
+    tar -zxvf openssl-$version.tar.gz && \
+    cd openssl-$version && \
     ./config --prefix=/opt --openssldir=/opt shared zlib && \
-    make && make test && make install
-
-RUN mkdir /tmp/layer && \
+    make && make test && make install && \
+    mkdir /tmp/layer && \
     cp -R /opt/bin/ /tmp/layer && \
-    cp -R /opt/lib/ /tmp/layer
+    cp -R /opt/lib/ /tmp/layer && \
+    cd /tmp/layer && \
+    zip openssl.zip . -r
