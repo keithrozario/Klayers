@@ -1,11 +1,6 @@
-FROM amazonlinux:latest
+FROM layerbuilder:latest
 
 LABEL maintainer="keith@keithrozario.com"
-
-RUN yum install libtool perl-core zlib-devel -y && \
-    yum install wget -y && \
-    yum group install "Development Tools"  -y && \
-    yum group install "AWS Tools" -y
 
 ENV version 1.1.1c
 
