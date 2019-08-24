@@ -99,6 +99,10 @@ Currently only the following regions have the layers deployed click the links fo
 * [ap-east-1](arns/ap-east-1.json)
 * [me-south-1](arns/me-south-1.json)
 
+## Layer expiry
+
+Some layers will have a `time_to_live` field. This is the UNIX epoch time for when that layer will be deleted, typically this will be 30 days after a new version is deployed. If you use the latest version of a package, it'll be up for at least 30 days before deletion.
+
 ## Binaries
 
 Special hand-crafted binaries for layers. These layers are not automatically built, and hence slower update cycles.
