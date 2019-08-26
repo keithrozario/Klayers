@@ -1,5 +1,5 @@
 numpy==1.17.0
-pandas==0.25.0
+pandas==0.25.1
 python-dateutil==2.8.0
 pytz==2019.2
 six==1.12.0

@@ -3,7 +3,7 @@ defusedxml==0.6.0
 et-xmlfile==1.0.1
 jdcal==1.4.1
 odfpy==1.4.0
-openpyxl==2.6.2
+openpyxl==2.6.3
 PyYAML==5.1.2
 tablib==0.13.0
 xlrd==1.2.0
