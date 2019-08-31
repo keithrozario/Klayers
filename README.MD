@@ -10,7 +10,9 @@ A collection of AWS Lambda Layers for Python3.7
 
 [![Updates](https://pyup.io/repos/github/keithrozario/Klayers/shield.svg)](https://pyup.io/repos/github/keithrozario/Klayers/)
 
-Click on badge above to specific package version of latest built layers.
+Click on badge above to specific package version of latest built layers. 
+
+Layers are built with the latest package version every Monday at 1:00am (UTC)
 
 # Layer List
 
