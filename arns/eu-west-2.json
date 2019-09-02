@@ -236,6 +236,7 @@
     },
     {
         "package_version": "1.17.0",
+        "time_to_live": 1569978188,
         "package": "numpy",
         "layer_version_arn": "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-numpy:1",
         "deployed_region": "eu-west-2"
@@ -267,6 +268,7 @@
     },
     {
         "package_version": "4.1.0.25",
+        "time_to_live": 1569978253,
         "package": "opencv-python-headless",
         "layer_version_arn": "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-opencv-python-headless:1",
         "deployed_region": "eu-west-2"
@@ -333,12 +335,14 @@
     },
     {
         "package_version": "1.6.3",
+        "time_to_live": 1569978071,
         "package": "google-auth",
         "layer_version_arn": "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-google-auth:2",
         "deployed_region": "eu-west-2"
     },
     {
         "package_version": "2.6",
+        "time_to_live": 1569978072,
         "package": "ldap3",
         "layer_version_arn": "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-ldap3:1",
         "deployed_region": "eu-west-2"
@@ -403,6 +407,7 @@
     },
     {
         "package_version": "0.4.0",
+        "time_to_live": 1569978077,
         "package": "google-auth-oauthlib",
         "layer_version_arn": "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-google-auth-oauthlib:3",
         "deployed_region": "eu-west-2"
@@ -421,6 +426,7 @@
     },
     {
         "package_version": "0.14.5",
+        "time_to_live": 1569978067,
         "package": "arrow",
         "layer_version_arn": "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-arrow:3",
         "deployed_region": "eu-west-2"
@@ -440,12 +446,14 @@
     },
     {
         "package_version": "1.3.1",
+        "time_to_live": 1569978296,
         "package": "scipy",
         "layer_version_arn": "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-scipy:2",
         "deployed_region": "eu-west-2"
     },
     {
         "package_version": "1.14.20",
+        "time_to_live": 1569978091,
         "package": "PyMUPDF",
         "layer_version_arn": "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-PyMUPDF:2",
         "deployed_region": "eu-west-2"
@@ -489,6 +497,7 @@
     },
     {
         "package_version": "1.3.7",
+        "time_to_live": 1569978085,
         "package": "SQLAlchemy",
         "layer_version_arn": "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-SQLAlchemy:2",
         "deployed_region": "eu-west-2"
@@ -545,20 +554,95 @@
     },
     {
         "package_version": "1.9.215",
+        "time_to_live": 1569978111,
         "package": "boto3",
         "layer_version_arn": "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-boto3:11",
         "deployed_region": "eu-west-2"
     },
     {
         "package_version": "2.4.2",
+        "time_to_live": 1569978111,
         "package": "aws-xray-sdk",
         "layer_version_arn": "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-aws-xray-sdk:2",
         "deployed_region": "eu-west-2"
     },
     {
         "package_version": "0.25.1",
+        "time_to_live": 1569978253,
         "package": "pandas",
         "layer_version_arn": "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-pandas:3",
+        "deployed_region": "eu-west-2"
+    },
+    {
+        "package_version": "0.14.6",
+        "package": "arrow",
+        "layer_version_arn": "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-arrow:4",
+        "deployed_region": "eu-west-2"
+    },
+    {
+        "package_version": "1.6.3",
+        "package": "google-auth",
+        "layer_version_arn": "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-google-auth:3",
+        "deployed_region": "eu-west-2"
+    },
+    {
+        "package_version": "2.6",
+        "package": "ldap3",
+        "layer_version_arn": "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-ldap3:2",
+        "deployed_region": "eu-west-2"
+    },
+    {
+        "package_version": "0.4.0",
+        "package": "google-auth-oauthlib",
+        "layer_version_arn": "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-google-auth-oauthlib:4",
+        "deployed_region": "eu-west-2"
+    },
+    {
+        "package_version": "1.3.8",
+        "package": "SQLAlchemy",
+        "layer_version_arn": "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-SQLAlchemy:3",
+        "deployed_region": "eu-west-2"
+    },
+    {
+        "package_version": "1.16.0",
+        "package": "PyMUPDF",
+        "layer_version_arn": "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-PyMUPDF:3",
+        "deployed_region": "eu-west-2"
+    },
+    {
+        "package_version": "2.4.2",
+        "package": "aws-xray-sdk",
+        "layer_version_arn": "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-aws-xray-sdk:3",
+        "deployed_region": "eu-west-2"
+    },
+    {
+        "package_version": "1.9.220",
+        "package": "boto3",
+        "layer_version_arn": "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-boto3:12",
+        "deployed_region": "eu-west-2"
+    },
+    {
+        "package_version": "1.17.1",
+        "package": "numpy",
+        "layer_version_arn": "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-numpy:2",
+        "deployed_region": "eu-west-2"
+    },
+    {
+        "package_version": "4.1.0.25",
+        "package": "opencv-python-headless",
+        "layer_version_arn": "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-opencv-python-headless:2",
+        "deployed_region": "eu-west-2"
+    },
+    {
+        "package_version": "0.25.1",
+        "package": "pandas",
+        "layer_version_arn": "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-pandas:4",
+        "deployed_region": "eu-west-2"
+    },
+    {
+        "package_version": "1.3.1",
+        "package": "scipy",
+        "layer_version_arn": "arn:aws:lambda:eu-west-2:113088814899:layer:Klayers-python37-scipy:3",
         "deployed_region": "eu-west-2"
     }
 ]
