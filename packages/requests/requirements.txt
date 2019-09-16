@@ -1,4 +1,4 @@
-certifi==2019.6.16
+certifi==2019.9.11
 chardet==3.0.4
 idna==2.8
 requests==2.22.0
