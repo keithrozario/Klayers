@@ -79,13 +79,6 @@
         "deployed_region": "sa-east-1"
     },
     {
-        "package_version": "4.8.0",
-        "time_to_live": 1568734255,
-        "package": "beautifulsoup4",
-        "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-beautifulsoup4:5",
-        "deployed_region": "sa-east-1"
-    },
-    {
         "package_version": "3.13.0",
         "time_to_live": 1571187711,
         "package": "tinydb",
@@ -120,13 +113,6 @@
         "package_version": "19.1.0",
         "package": "boltons",
         "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-boltons:1",
-        "deployed_region": "sa-east-1"
-    },
-    {
-        "package_version": "3.8.0",
-        "time_to_live": 1568734266,
-        "package": "pymongo",
-        "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-pymongo:3",
         "deployed_region": "sa-east-1"
     },
     {
@@ -181,13 +167,6 @@
         "deployed_region": "sa-east-1"
     },
     {
-        "package_version": "1.22.0",
-        "time_to_live": 1568734274,
-        "package": "grpcio",
-        "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-grpcio:1",
-        "deployed_region": "sa-east-1"
-    },
-    {
         "package_version": "1.3.0",
         "package": "PyNaCl",
         "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-PyNaCl:1",
@@ -201,23 +180,9 @@
         "deployed_region": "sa-east-1"
     },
     {
-        "package_version": "0.2.7",
-        "time_to_live": 1568734282,
-        "package": "pytesseract",
-        "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-pytesseract:2",
-        "deployed_region": "sa-east-1"
-    },
-    {
         "package_version": "19.0.0",
         "package": "pyOpenSSL",
         "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-pyOpenSSL:5",
-        "deployed_region": "sa-east-1"
-    },
-    {
-        "package_version": "1.3.6",
-        "time_to_live": 1568734289,
-        "package": "SQLAlchemy",
-        "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-SQLAlchemy:1",
         "deployed_region": "sa-east-1"
     },
     {
@@ -359,13 +324,6 @@
         "deployed_region": "sa-east-1"
     },
     {
-        "package_version": "2.1.7",
-        "time_to_live": 1568734276,
-        "package": "graphene",
-        "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-graphene:1",
-        "deployed_region": "sa-east-1"
-    },
-    {
         "package_version": "0.13.0",
         "time_to_live": 1569373340,
         "package": "tablib",
@@ -390,13 +348,6 @@
         "time_to_live": 1570583018,
         "package": "aiobotocore",
         "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-aiobotocore:2",
-        "deployed_region": "sa-east-1"
-    },
-    {
-        "package_version": "2.8.3",
-        "time_to_live": 1568734547,
-        "package": "ansible",
-        "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-ansible:2",
         "deployed_region": "sa-east-1"
     },
     {
@@ -442,13 +393,6 @@
         "package_version": "1.9.204",
         "package": "boto3",
         "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-boto3:8",
-        "deployed_region": "sa-east-1"
-    },
-    {
-        "package_version": "1.9.205",
-        "time_to_live": 1568734343,
-        "package": "boto3",
-        "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-boto3:9",
         "deployed_region": "sa-east-1"
     },
     {
@@ -532,6 +476,7 @@
     },
     {
         "package_version": "7.0.4",
+        "time_to_live": 1571792518,
         "package": "elasticsearch",
         "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-elasticsearch:5",
         "deployed_region": "sa-east-1"
@@ -678,6 +623,7 @@
     },
     {
         "package_version": "3.6.0",
+        "time_to_live": 1571792532,
         "package": "aiohttp",
         "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-aiohttp:7",
         "deployed_region": "sa-east-1"
@@ -705,6 +651,7 @@
     },
     {
         "package_version": "0.10.3",
+        "time_to_live": 1571792619,
         "package": "aiobotocore",
         "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-aiobotocore:3",
         "deployed_region": "sa-east-1"
@@ -747,24 +694,28 @@
     },
     {
         "package_version": "3.1.0",
+        "time_to_live": 1571792520,
         "package": "gspread",
         "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-gspread:2",
         "deployed_region": "sa-east-1"
     },
     {
         "package_version": "2.22.0",
+        "time_to_live": 1571792526,
         "package": "requests",
         "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-requests:6",
         "deployed_region": "sa-east-1"
     },
     {
         "package_version": "0.4.0",
+        "time_to_live": 1571792536,
         "package": "google-auth-oauthlib",
         "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-google-auth-oauthlib:5",
         "deployed_region": "sa-east-1"
     },
     {
         "package_version": "2.2.1",
+        "time_to_live": 1571792543,
         "package": "tldextract",
         "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-tldextract:6",
         "deployed_region": "sa-east-1"
@@ -777,18 +728,21 @@
     },
     {
         "package_version": "0.4.0",
+        "time_to_live": 1571792580,
         "package": "grequests",
         "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-grequests:2",
         "deployed_region": "sa-east-1"
     },
     {
         "package_version": "1.9.228",
+        "time_to_live": 1571792601,
         "package": "boto3",
         "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-boto3:14",
         "deployed_region": "sa-east-1"
     },
     {
         "package_version": "2.4.2",
+        "time_to_live": 1571792603,
         "package": "aws-xray-sdk",
         "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-aws-xray-sdk:5",
         "deployed_region": "sa-east-1"
@@ -797,6 +751,66 @@
         "package_version": "2.8.5",
         "package": "ansible",
         "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-ansible:4",
+        "deployed_region": "sa-east-1"
+    },
+    {
+        "package_version": "7.0.4",
+        "package": "elasticsearch",
+        "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-elasticsearch:6",
+        "deployed_region": "sa-east-1"
+    },
+    {
+        "package_version": "3.1.0",
+        "package": "gspread",
+        "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-gspread:3",
+        "deployed_region": "sa-east-1"
+    },
+    {
+        "package_version": "2.22.0",
+        "package": "requests",
+        "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-requests:7",
+        "deployed_region": "sa-east-1"
+    },
+    {
+        "package_version": "3.6.1",
+        "package": "aiohttp",
+        "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-aiohttp:8",
+        "deployed_region": "sa-east-1"
+    },
+    {
+        "package_version": "0.4.0",
+        "package": "google-auth-oauthlib",
+        "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-google-auth-oauthlib:6",
+        "deployed_region": "sa-east-1"
+    },
+    {
+        "package_version": "2.2.1",
+        "package": "tldextract",
+        "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-tldextract:7",
+        "deployed_region": "sa-east-1"
+    },
+    {
+        "package_version": "0.4.0",
+        "package": "grequests",
+        "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-grequests:3",
+        "deployed_region": "sa-east-1"
+    },
+    {
+        "package_version": "1.9.233",
+        "package": "boto3",
+        "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-boto3:15",
+        "deployed_region": "sa-east-1"
+    },
+    {
+        "package_version": "2.4.2",
+        "package": "aws-xray-sdk",
+        "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-aws-xray-sdk:6",
+        "deployed_region": "sa-east-1"
+    },
+    {
+        "package_version": "0.10.3",
+        "package": "aiobotocore",
+        "layer_version_arn": "arn:aws:lambda:sa-east-1:113088814899:layer:Klayers-python37-aiobotocore:4",
         "deployed_region": "sa-east-1"
     }
 ]
