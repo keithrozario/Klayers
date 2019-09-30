@@ -36,13 +36,6 @@
         "deployed_region": "me-south-1"
     },
     {
-        "package_version": "7.0.2",
-        "time_to_live": 1569373333,
-        "package": "elasticsearch",
-        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-elasticsearch:1",
-        "deployed_region": "me-south-1"
-    },
-    {
         "package_version": "1.1.0",
         "package": "itsdangerous",
         "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-itsdangerous:1",
@@ -174,13 +167,6 @@
         "deployed_region": "me-south-1"
     },
     {
-        "package_version": "2.6.2",
-        "time_to_live": 1569373329,
-        "package": "openpyxl",
-        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-openpyxl:1",
-        "deployed_region": "me-south-1"
-    },
-    {
         "package_version": "3.5.4",
         "time_to_live": 1570582950,
         "package": "aiohttp",
@@ -198,20 +184,6 @@
         "time_to_live": 1571187752,
         "package": "tldextract",
         "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-tldextract:1",
-        "deployed_region": "me-south-1"
-    },
-    {
-        "package_version": "3.4.4",
-        "time_to_live": 1569373369,
-        "package": "nltk",
-        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-nltk:1",
-        "deployed_region": "me-south-1"
-    },
-    {
-        "package_version": "0.13.0",
-        "time_to_live": 1569373354,
-        "package": "tablib",
-        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-tablib:1",
         "deployed_region": "me-south-1"
     },
     {
@@ -258,13 +230,6 @@
         "time_to_live": 1569978531,
         "package": "opencv-python-headless",
         "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-opencv-python-headless:1",
-        "deployed_region": "me-south-1"
-    },
-    {
-        "package_version": "0.25.0",
-        "time_to_live": 1569373715,
-        "package": "pandas",
-        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-pandas:1",
         "deployed_region": "me-south-1"
     },
     {
@@ -327,6 +292,7 @@
     },
     {
         "package_version": "4.8.0",
+        "time_to_live": 1572397324,
         "package": "beautifulsoup4",
         "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-beautifulsoup4:2",
         "deployed_region": "me-south-1"
@@ -339,6 +305,7 @@
     },
     {
         "package_version": "1.23.0",
+        "time_to_live": 1572397348,
         "package": "grpcio",
         "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-grpcio:2",
         "deployed_region": "me-south-1"
@@ -350,24 +317,10 @@
         "deployed_region": "me-south-1"
     },
     {
-        "package_version": "0.2.9",
-        "time_to_live": 1569373359,
-        "package": "pytesseract",
-        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-pytesseract:2",
-        "deployed_region": "me-south-1"
-    },
-    {
         "package_version": "1.3.7",
         "time_to_live": 1569978156,
         "package": "SQLAlchemy",
         "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-SQLAlchemy:2",
-        "deployed_region": "me-south-1"
-    },
-    {
-        "package_version": "1.9.210",
-        "time_to_live": 1569373423,
-        "package": "boto3",
-        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-boto3:5",
         "deployed_region": "me-south-1"
     },
     {
@@ -378,14 +331,8 @@
         "deployed_region": "me-south-1"
     },
     {
-        "package_version": "2.4.2",
-        "time_to_live": 1569373438,
-        "package": "aws-xray-sdk",
-        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-aws-xray-sdk:1",
-        "deployed_region": "me-south-1"
-    },
-    {
         "package_version": "2.6.3",
+        "time_to_live": 1572397324,
         "package": "openpyxl",
         "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-openpyxl:2",
         "deployed_region": "me-south-1"
@@ -399,6 +346,7 @@
     },
     {
         "package_version": "0.13.0",
+        "time_to_live": 1572397352,
         "package": "tablib",
         "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-tablib:2",
         "deployed_region": "me-south-1"
@@ -665,18 +613,21 @@
     },
     {
         "package_version": "7.0.4",
+        "time_to_live": 1572397320,
         "package": "elasticsearch",
         "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-elasticsearch:3",
         "deployed_region": "me-south-1"
     },
     {
         "package_version": "3.1.0",
+        "time_to_live": 1572397338,
         "package": "gspread",
         "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-gspread:3",
         "deployed_region": "me-south-1"
     },
     {
         "package_version": "2.22.0",
+        "time_to_live": 1572397333,
         "package": "requests",
         "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-requests:3",
         "deployed_region": "me-south-1"
@@ -689,38 +640,122 @@
     },
     {
         "package_version": "0.4.0",
+        "time_to_live": 1572397350,
         "package": "google-auth-oauthlib",
         "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-google-auth-oauthlib:4",
         "deployed_region": "me-south-1"
     },
     {
         "package_version": "2.2.1",
+        "time_to_live": 1572397355,
         "package": "tldextract",
         "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-tldextract:3",
         "deployed_region": "me-south-1"
     },
     {
         "package_version": "0.4.0",
+        "time_to_live": 1572397409,
         "package": "grequests",
         "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-grequests:3",
         "deployed_region": "me-south-1"
     },
     {
         "package_version": "1.9.233",
+        "time_to_live": 1572397421,
         "package": "boto3",
         "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-boto3:10",
         "deployed_region": "me-south-1"
     },
     {
         "package_version": "2.4.2",
+        "time_to_live": 1572397435,
         "package": "aws-xray-sdk",
         "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-aws-xray-sdk:6",
         "deployed_region": "me-south-1"
     },
     {
         "package_version": "0.10.3",
+        "time_to_live": 1572397437,
         "package": "aiobotocore",
         "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-aiobotocore:3",
+        "deployed_region": "me-south-1"
+    },
+    {
+        "package_version": "7.0.4",
+        "package": "elasticsearch",
+        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-elasticsearch:4",
+        "deployed_region": "me-south-1"
+    },
+    {
+        "package_version": "4.8.0",
+        "package": "beautifulsoup4",
+        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-beautifulsoup4:3",
+        "deployed_region": "me-south-1"
+    },
+    {
+        "package_version": "3.0.0",
+        "package": "openpyxl",
+        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-openpyxl:3",
+        "deployed_region": "me-south-1"
+    },
+    {
+        "package_version": "2.22.0",
+        "package": "requests",
+        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-requests:4",
+        "deployed_region": "me-south-1"
+    },
+    {
+        "package_version": "3.1.0",
+        "package": "gspread",
+        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-gspread:4",
+        "deployed_region": "me-south-1"
+    },
+    {
+        "package_version": "1.24.0",
+        "package": "grpcio",
+        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-grpcio:3",
+        "deployed_region": "me-south-1"
+    },
+    {
+        "package_version": "0.4.0",
+        "package": "google-auth-oauthlib",
+        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-google-auth-oauthlib:5",
+        "deployed_region": "me-south-1"
+    },
+    {
+        "package_version": "0.13.0",
+        "package": "tablib",
+        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-tablib:3",
+        "deployed_region": "me-south-1"
+    },
+    {
+        "package_version": "2.2.1",
+        "package": "tldextract",
+        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-tldextract:4",
+        "deployed_region": "me-south-1"
+    },
+    {
+        "package_version": "0.4.0",
+        "package": "grequests",
+        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-grequests:4",
+        "deployed_region": "me-south-1"
+    },
+    {
+        "package_version": "1.9.238",
+        "package": "boto3",
+        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-boto3:11",
+        "deployed_region": "me-south-1"
+    },
+    {
+        "package_version": "2.4.2",
+        "package": "aws-xray-sdk",
+        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-aws-xray-sdk:7",
+        "deployed_region": "me-south-1"
+    },
+    {
+        "package_version": "0.10.3",
+        "package": "aiobotocore",
+        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-aiobotocore:4",
         "deployed_region": "me-south-1"
     }
 ]
