@@ -1,6 +1,6 @@
 service: Klayers-python37
 
-frameworkVersion: "=1.49.0"
+frameworkVersion: "=1.52.2"
 
 plugins:
   - serverless-iam-roles-per-function
