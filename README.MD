@@ -70,6 +70,7 @@ PyYAML|Klayers-python37-PyYAML
 requests|Klayers-python37-requests
 scipy|Klayers-python37-scipy
 simplejson|Klayers-python37-simplejson
+spacy|Klayers-python37-spacy
 SQLAlchemy|Klayers-python37-SQLAlchemy
 tinydb|Klayers-python37-tinydb
 tldextract|Klayers-python37-tldextract
@@ -124,7 +125,7 @@ Special hand-crafted binaries for layers. These layers are not automatically bui
 
 For `pip` you'll need to set your PYTHONPATH to `/opt/python` to override the existing pip inside the lambda environment.
 
-There is an old `spacy` layer -- this has been deprecated.
+For `spacy`, this is version 2.2 and above (without the language files). You'll need to bring your own language files/model.
 
 # To DO
 * ~~Cleanup script to delete all lamba layers that are not the latest version (and more than x days old)~~ Done using TTL on DynamoDB
