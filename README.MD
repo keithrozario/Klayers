@@ -1,6 +1,6 @@
 # Keith's Layers (Klayers)
 
-[![Python 3](https://pyup.io/repos/github/keithrozario/Klayers/python-3-shield.svg)](https://pyup.io/repos/github/keithrozario/Klayers/)
+[![Python 3.7](https://img.shields.io/badge/python-3.7-green.svg)](https://www.python.org/downloads/release/python-360/)
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/keithrozario/Klayers.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/keithrozario/Klayers/context:python)
 
 
