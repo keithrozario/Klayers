@@ -1,0 +1,16 @@
+blis==0.4.1
+certifi==2019.9.11
+chardet==3.0.4
+cymem==2.0.2
+idna==2.8
+murmurhash==1.0.2
+numpy==1.17.2
+plac==0.9.6
+preshed==3.0.2
+requests==2.22.0
+spacy==2.2.1
+srsly==0.1.0
+thinc==7.1.1
+tqdm==4.36.1
+urllib3==1.25.6
+wasabi==0.2.2
