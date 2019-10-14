@@ -1,5 +1,5 @@
 ansible==2.8.5
-asn1crypto==1.0.1
+asn1crypto==1.1.0
 cffi==1.12.3
 cryptography==2.7
 Jinja2==2.10.3
