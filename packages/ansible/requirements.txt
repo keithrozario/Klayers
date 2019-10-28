@@ -1,5 +1,5 @@
 ansible==2.8.6
-cffi==1.13.0
+cffi==1.13.1
 cryptography==2.8
 Jinja2==2.10.3
 MarkupSafe==1.1.1

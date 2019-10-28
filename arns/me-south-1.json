@@ -228,13 +228,6 @@
         "deployed_region": "me-south-1"
     },
     {
-        "package_version": "7.0.4",
-        "time_to_live": 1571792529,
-        "package": "elasticsearch",
-        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-elasticsearch:2",
-        "deployed_region": "me-south-1"
-    },
-    {
         "package_version": "0.13.0",
         "time_to_live": 1572397352,
         "package": "tablib",
@@ -272,20 +265,6 @@
         "package_version": "2.6.1",
         "package": "ldap3",
         "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-ldap3:3",
-        "deployed_region": "me-south-1"
-    },
-    {
-        "package_version": "3.6.0",
-        "time_to_live": 1571792547,
-        "package": "aiohttp",
-        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-aiohttp:2",
-        "deployed_region": "me-south-1"
-    },
-    {
-        "package_version": "0.10.3",
-        "time_to_live": 1571792642,
-        "package": "aiobotocore",
-        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-aiobotocore:2",
         "deployed_region": "me-south-1"
     },
     {
@@ -330,59 +309,10 @@
         "deployed_region": "me-south-1"
     },
     {
-        "package_version": "3.1.0",
-        "time_to_live": 1571792534,
-        "package": "gspread",
-        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-gspread:2",
-        "deployed_region": "me-south-1"
-    },
-    {
-        "package_version": "2.22.0",
-        "time_to_live": 1571792538,
-        "package": "requests",
-        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-requests:2",
-        "deployed_region": "me-south-1"
-    },
-    {
-        "package_version": "0.4.0",
-        "time_to_live": 1571792552,
-        "package": "google-auth-oauthlib",
-        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-google-auth-oauthlib:3",
-        "deployed_region": "me-south-1"
-    },
-    {
-        "package_version": "2.2.1",
-        "time_to_live": 1571792554,
-        "package": "tldextract",
-        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-tldextract:2",
-        "deployed_region": "me-south-1"
-    },
-    {
         "package_version": "1.16.2",
         "time_to_live": 1573002178,
         "package": "PyMUPDF",
         "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-PyMUPDF:5",
-        "deployed_region": "me-south-1"
-    },
-    {
-        "package_version": "0.4.0",
-        "time_to_live": 1571792598,
-        "package": "grequests",
-        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-grequests:2",
-        "deployed_region": "me-south-1"
-    },
-    {
-        "package_version": "1.9.228",
-        "time_to_live": 1571792622,
-        "package": "boto3",
-        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-boto3:9",
-        "deployed_region": "me-south-1"
-    },
-    {
-        "package_version": "2.4.2",
-        "time_to_live": 1571792623,
-        "package": "aws-xray-sdk",
-        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-aws-xray-sdk:5",
         "deployed_region": "me-south-1"
     },
     {
@@ -576,6 +506,7 @@
     },
     {
         "package_version": "1.24.1",
+        "time_to_live": 1574816553,
         "package": "grpcio",
         "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-grpcio:4",
         "deployed_region": "me-south-1"
@@ -589,6 +520,7 @@
     },
     {
         "package_version": "0.3.0",
+        "time_to_live": 1574816557,
         "package": "pytesseract",
         "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-pytesseract:4",
         "deployed_region": "me-south-1"
@@ -602,6 +534,7 @@
     },
     {
         "package_version": "6.2.0",
+        "time_to_live": 1574816553,
         "package": "Pillow",
         "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-Pillow:2",
         "deployed_region": "me-south-1"
@@ -657,6 +590,7 @@
     },
     {
         "package_version": "3.15.0",
+        "time_to_live": 1574816513,
         "package": "tinydb",
         "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-tinydb:3",
         "deployed_region": "me-south-1"
@@ -756,6 +690,7 @@
     },
     {
         "package_version": "2.0.0",
+        "time_to_live": 1574816531,
         "package": "aiodns",
         "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-aiodns:2",
         "deployed_region": "me-south-1"
@@ -768,6 +703,7 @@
     },
     {
         "package_version": "3.1.7",
+        "time_to_live": 1574816529,
         "package": "bcrypt",
         "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-bcrypt:2",
         "deployed_region": "me-south-1"
@@ -786,6 +722,7 @@
     },
     {
         "package_version": "1.3.0",
+        "time_to_live": 1574816540,
         "package": "PyNaCl",
         "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-PyNaCl:2",
         "deployed_region": "me-south-1"
@@ -798,6 +735,7 @@
     },
     {
         "package_version": "19.0.0",
+        "time_to_live": 1574816563,
         "package": "pyOpenSSL",
         "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-pyOpenSSL:4",
         "deployed_region": "me-south-1"
@@ -810,18 +748,21 @@
     },
     {
         "package_version": "1.9.253",
+        "time_to_live": 1574816611,
         "package": "boto3",
         "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-boto3:14",
         "deployed_region": "me-south-1"
     },
     {
         "package_version": "2.4.2",
+        "time_to_live": 1574816622,
         "package": "aws-xray-sdk",
         "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-aws-xray-sdk:10",
         "deployed_region": "me-south-1"
     },
     {
         "package_version": "0.10.3",
+        "time_to_live": 1574816640,
         "package": "aiobotocore",
         "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-aiobotocore:7",
         "deployed_region": "me-south-1"
@@ -834,6 +775,7 @@
     },
     {
         "package_version": "2.8.6",
+        "time_to_live": 1574816851,
         "package": "ansible",
         "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-ansible:6",
         "deployed_region": "me-south-1"
@@ -846,6 +788,7 @@
     },
     {
         "package_version": "2.2.1",
+        "time_to_live": 1574816936,
         "package": "spacy",
         "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-spacy:2",
         "deployed_region": "me-south-1"
@@ -860,6 +803,84 @@
         "package_version": "1.3.1",
         "package": "scipy",
         "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-scipy:5",
+        "deployed_region": "me-south-1"
+    },
+    {
+        "package_version": "3.15.1",
+        "package": "tinydb",
+        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-tinydb:4",
+        "deployed_region": "me-south-1"
+    },
+    {
+        "package_version": "3.1.7",
+        "package": "bcrypt",
+        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-bcrypt:3",
+        "deployed_region": "me-south-1"
+    },
+    {
+        "package_version": "2.0.0",
+        "package": "aiodns",
+        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-aiodns:3",
+        "deployed_region": "me-south-1"
+    },
+    {
+        "package_version": "1.3.0",
+        "package": "PyNaCl",
+        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-PyNaCl:3",
+        "deployed_region": "me-south-1"
+    },
+    {
+        "package_version": "6.2.1",
+        "package": "Pillow",
+        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-Pillow:3",
+        "deployed_region": "me-south-1"
+    },
+    {
+        "package_version": "1.24.3",
+        "package": "grpcio",
+        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-grpcio:5",
+        "deployed_region": "me-south-1"
+    },
+    {
+        "package_version": "0.3.0",
+        "package": "pytesseract",
+        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-pytesseract:5",
+        "deployed_region": "me-south-1"
+    },
+    {
+        "package_version": "19.0.0",
+        "package": "pyOpenSSL",
+        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-pyOpenSSL:5",
+        "deployed_region": "me-south-1"
+    },
+    {
+        "package_version": "1.10.2",
+        "package": "boto3",
+        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-boto3:15",
+        "deployed_region": "me-south-1"
+    },
+    {
+        "package_version": "2.4.2",
+        "package": "aws-xray-sdk",
+        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-aws-xray-sdk:11",
+        "deployed_region": "me-south-1"
+    },
+    {
+        "package_version": "0.10.4",
+        "package": "aiobotocore",
+        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-aiobotocore:8",
+        "deployed_region": "me-south-1"
+    },
+    {
+        "package_version": "2.8.6",
+        "package": "ansible",
+        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-ansible:7",
+        "deployed_region": "me-south-1"
+    },
+    {
+        "package_version": "2.2.1",
+        "package": "spacy",
+        "layer_version_arn": "arn:aws:lambda:me-south-1:113088814899:layer:Klayers-python37-spacy:3",
         "deployed_region": "me-south-1"
     }
 ]
