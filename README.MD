@@ -112,7 +112,7 @@ Special hand-crafted binaries for layers. These layers are not automatically bui
 
 | Package        | ARN                                                                             | Version    |         
 | :------------- |:------------------------------------------------------------------------------- | ---------- | 
-| tesseract      | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers--tesseract:2              | 4.1.0-rc1<sup>1</sup>|
+| tesseract      | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-tesseract:1            | 4.1.0-rc1<sup>1</sup>|
 | pip            | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pip:2            | 19.2.1     |
 | netcat         | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-netcat:2         | 0.7.1<sup>2</sup>|
 
