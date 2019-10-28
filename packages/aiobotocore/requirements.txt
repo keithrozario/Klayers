@@ -1,9 +1,9 @@
-aiobotocore==0.10.3
+aiobotocore==0.10.4
 aiohttp==3.6.2
 async-generator==1.10
 async-timeout==3.0.1
 attrs==19.3.0
-botocore==1.12.189
+botocore==1.12.252
 chardet==3.0.4
 docutils==0.15.2
 idna==2.8
