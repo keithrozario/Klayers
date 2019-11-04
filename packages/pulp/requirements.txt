@@ -1,0 +1,2 @@
+PuLP==1.6.10
+pyparsing==2.4.2
