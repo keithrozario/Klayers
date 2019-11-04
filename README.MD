@@ -55,7 +55,7 @@ opencv-python-headless|Klayers-python37-opencv-python-headless
 openpyxl|Klayers-python37-openpyxl
 pandas|Klayers-python37-pandas
 Pillow|Klayers-python37-Pillow
-pulp[![new](https://img.shields.io/badge/-new-brightgreen)]|Klayers-python37-pulp
+pulp ![new](https://img.shields.io/badge/-new-brightgreen)|Klayers-python37-pulp
 PyJWT|Klayers-python37-PyJWT
 pymongo|Klayers-python37-pymongo
 PyMUPDF|Klayers-python37-PyMUPDF
@@ -63,7 +63,7 @@ PyMySQL|Klayers-python37-PyMySQL
 PyNaCl|Klayers-python37-PyNaCl
 pyOpenSSL|Klayers-python37-pyOpenSSL
 pyparsing|Klayers-python37-pyparsing
-pyqldb[![new](https://img.shields.io/badge/-new-brightgreen)]|Klayers-python37-pyqldb
+pyqldb ![new](https://img.shields.io/badge/-new-brightgreen)|Klayers-python37-pyqldb
 pytesseract|Klayers-python37-pytesseract
 python-docx|Klayers-python37-python-docx
 python-Levenshtein|Klayers-python37-python-Levenshtein-wheels
@@ -74,7 +74,7 @@ scipy|Klayers-python37-scipy
 simplejson|Klayers-python37-simplejson
 spacy|Klayers-python37-spacy
 SQLAlchemy|Klayers-python37-SQLAlchemy
-textdistance[![new](https://img.shields.io/badge/-new-brightgreen)]|Klayers-python37-textdistance
+textdistance ![new](https://img.shields.io/badge/-new-brightgreen)|Klayers-python37-textdistance
 tinydb|Klayers-python37-tinydb
 tldextract|Klayers-python37-tldextract
 
