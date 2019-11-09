@@ -1,3 +1,5 @@
+org: keithrozario
+app: klayers-python37
 service: Klayers-python37
 
 # frameworkVersion: "=1.52.2"
@@ -230,52 +232,6 @@ functions:
               - ${self:provider.region}
               - Ref: AWS::AccountId
               - stateMachine:${self:custom.pipelineName}
-
-  check_sfns:
-    handler: check_exec.main
-    runtime: python3.7
-    timeout: 90
-    memorySize: 256
-    iamRoleStatementsName: ${self:provider.stage}-check_sfns
-    iamRoleStatements:
-      - Effect: Allow
-        Action: states:DescribeExecution
-        Resource:
-          Fn::Join:
-            - ":"
-            - - arn:aws:states
-              - ${self:provider.region}
-              - Ref: AWS::AccountId
-              - stateMachine:${self:custom.pipelineName}
-
-  cleanup_packages:
-    handler: cleanup_packages.main
-    runtime: python3.7
-    timeout: 300
-    memorySize: 256
-    environment:
-      LAYERS_DB: ${self:custom.dbLayers}
-      LAMBDA_PREFIX: ${self:custom.lambdaPrefix}
-    iamRoleStatementsName: ${self:provider.stage}-cleanup_packages
-    iamRoleStatements:
-      - Effect: Allow
-        Action:
-          - dynamodb:GetItem
-          - dynamodb:PutItem
-          - dynamodb:Query
-          - dynamodb:DeleteItem
-        Resource: ${self:custom.dbLayersArn}
-      - Effect: Allow
-        Action:
-          - lambda:DeleteLayerVersion
-        Resource:
-          Fn::Join:
-            - ":"
-            - - arn:aws:lambda
-              - ${self:provider.region}
-              - Ref: AWS::AccountId
-              - layer
-              - "*"
 
   stream_processor:
     handler: stream_processor.main
