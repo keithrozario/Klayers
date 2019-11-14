@@ -1,5 +1,3 @@
-org: keithrozario
-app: klayers-python37
 service: Klayers-python37
 
 # frameworkVersion: "=1.52.2"
@@ -252,8 +250,8 @@ functions:
               - "*"  # need permissions to delete layers in other regions
               - Ref: AWS::AccountId
               - layer
-              - ${self:custom.lambdaPrefix}*
-              - "*"
+              - ${self:custom.lambdaPrefix}*  # prefix is different for different stages
+              - "*" # ability to delete any version
     events:
       - stream:
           type: dynamodb
