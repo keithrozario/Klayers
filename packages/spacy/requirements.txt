@@ -1,12 +1,12 @@
 blis==0.4.1
 certifi==2019.9.11
 chardet==3.0.4
-cymem==2.0.2
+cymem==2.0.3
 idna==2.8
 importlib-metadata==0.23
 more-itertools==7.2.0
 murmurhash==1.0.2
-numpy==1.17.3
+numpy==1.17.4
 plac==1.1.3
 preshed==3.0.2
 requests==2.22.0
@@ -14,6 +14,6 @@ spacy==2.2.2
 srsly==0.2.0
 thinc==7.3.1
 tqdm==4.38.0
-urllib3==1.25.6
+urllib3==1.25.7
 wasabi==0.4.0
 zipp==0.6.0

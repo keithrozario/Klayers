@@ -3,7 +3,7 @@ et-xmlfile==1.0.1
 jdcal==1.4.1
 MarkupPy==1.14
 odfpy==1.4.0
-openpyxl==3.0.0
+openpyxl==3.0.1
 PyYAML==5.1.2
 tablib==0.14.0
 xlrd==1.2.0
