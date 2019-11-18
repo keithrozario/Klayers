@@ -3,4 +3,4 @@ chardet==3.0.4
 gspread==3.1.0
 idna==2.8
 requests==2.22.0
-urllib3==1.25.6
+urllib3==1.25.7
