@@ -82,7 +82,7 @@ tldextract|Klayers-python37-tldextract
 
 You can either:
 * Set any of the ARNs below (for your region) to be a layer for your function. 
-* Use the `Get Layer Version by ARN` in [python](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/lambda.html#Lambda.Client.get_layer_version_by_arn) or [bash](https://docs.aws.amazon.com/cli/latest/reference/lambda/get-layer-version-by-arn.html) command which will provide an S3 location to download the layer as a zip
+* Use the `Get Layer Version by ARN` in [python](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/lambda.html#Lambda.Client.get_layer_version_by_arn) or [bash](https://docs.aws.amazon.com/cli/latest/reference/lambda/get-layer-version-by-arn.html) command which will provide an S3 location to download the layer as a zip. *Note: You can only get layers from the specific region your awscli is configured for, otherwise you'll get a `AccessDeniedException` error. In python, setup the boto3 client for the same region as the arn you're getting.*
 
 Currently only the following regions have the layers deployed click the links for the full list of layer arns:
 
