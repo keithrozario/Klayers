@@ -4,4 +4,4 @@ attrs==19.3.0
 chardet==3.0.4
 idna==2.8
 multidict==4.6.1
-yarl==1.3.0
+yarl==1.4.1

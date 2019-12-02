@@ -1,5 +1,5 @@
 cachetools==3.1.1
-certifi==2019.9.11
+certifi==2019.11.28
 chardet==3.0.4
 google-auth==1.7.1
 google-auth-oauthlib==0.4.1
