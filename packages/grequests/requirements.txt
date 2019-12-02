@@ -1,4 +1,4 @@
-certifi==2019.9.11
+certifi==2019.11.28
 chardet==3.0.4
 gevent==1.4.0
 greenlet==0.4.15
