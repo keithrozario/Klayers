@@ -1,7 +1,7 @@
 handler () {
     set -e
 
-    SSH_KEY_DIR=/tmp/,ssh
+    SSH_KEY_DIR=/tmp/.ssh
     SSH_KEY_FILE=$SSH_KEY_DIR/id_rsa
     KNOWN_HOSTS_FILE=/tmp/.ssh/known_hosts
 
@@ -40,6 +40,15 @@ handler () {
     then
         rm -rf $SSH_KEY_DIR
     fi
+
+    if [ -d $REPO_NAME ];
+    then
+        echo "found previous copy of repo, deleting..."
+        rm -rf $REPO_NAME 
+    else
+        echo "No previous repo clones found"
+    fi
+
     git clone $GITHUB_REPO
     cd $REPO_NAME
 
@@ -50,8 +59,8 @@ handler () {
 
 	# Checkout and push
 	cd /tmp/$REPO_NAME
-	aws s3 cp s3://$BUCKET_NAME/arns arns --recursive
-	aws s3 cp s3://$BUCKET_NAME/packages packages --recursive
+	aws s3 cp s3://$BUCKET_NAME/arns deployments/python3.8/arns --recursive
+	aws s3 cp s3://$BUCKET_NAME/packages deployments/python3.8/packages --recursive
 	git add -A
 
 	if [ -n "$(git status --porcelain)" ];
