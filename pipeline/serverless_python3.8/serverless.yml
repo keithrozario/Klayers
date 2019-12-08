@@ -8,8 +8,8 @@ plugins:
 
 provider:
   name: aws
-  runtime: python3.7
-  stage: ${opt:stage, 'Klayers-default'}
+  runtime: python3.8
+  stage: ${opt:stage, 'Klayers-defaultp38'}
   region: ${file(../infra/terraform.tfvars.json):aws_region.${self:provider.stage}}
   profile: ${file(../infra/terraform.tfvars.json):aws_profile.${self:provider.stage}}
   versionFunctions: false
@@ -57,10 +57,7 @@ functions:
 
   build:
     handler: build.main
-    runtime: python3.7
-    layers:
-      - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-boto3:2
-      - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-pip:2
+    runtime: python3.8
     timeout: 180
     memorySize: 1024
     environment:
