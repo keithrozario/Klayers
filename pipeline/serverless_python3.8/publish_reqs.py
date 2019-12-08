@@ -44,14 +44,17 @@ def main(event, context):
                                Limit=1,
                                ScanIndexForward=False)  # takes the package with the latest created date
 
-        logger.info(f"Found {len(response['Items'])}")
-        requirements_txt = response['Items'][0]['requirements']
+        logger.info(f"Found {len(response['Items'])} entries for {package}")
 
-        logger.info(f"Requirements.txt for {package} is {requirements_txt}")
-        logger.info(f"Uploading to S3 Bucket")
-        client = boto3.client('s3')
-        client.put_object(Body=requirements_txt.encode('utf-8'),
+        try:
+            requirements_txt = response['Items'][0]['requirements']
+            logger.info(f"Requirements.txt for {package} is {requirements_txt}")
+            logger.info(f"Uploading to S3 Bucket")
+            client = boto3.client('s3')
+            client.put_object(Body=requirements_txt.encode('utf-8'),
                           Bucket=bucket,
                           Key=f'packages/{package}/requirements.txt')
+        except IndexError:
+            logger.error(f"No records found for {package}")
 
     return {"status": "Done"}
