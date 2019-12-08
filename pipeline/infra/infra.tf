@@ -80,7 +80,7 @@ resource "aws_dynamodb_table" "dynamodb_layers" {
 
   tags = {
     Name = "db_layers"
-    Environment = terraform.workspace
+    Environment = "${terraform.workspace}"
   }
 
 }
