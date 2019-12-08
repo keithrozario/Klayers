@@ -9,3 +9,5 @@ misaka, MIT, Frank smit <frank@61924.nl>, Dependencies not installed
 fbprophet, BSD, Sean Taylor <sjtz@pm.me>
 jsonrpclib,Apache-2.0,Josh Marshall <catchjosh@gmail.com>, python2 only
 pickleDB,BSD,Harrison Erd <erdh@mail.broward.edu>, python2 only
+aiodns, MIT, Saúl Ibarra <Corretgés@saghul.net>, doesn't work with python 3.8
+grequests, BSD,Kenneth Reitz <me@kennethreitz.org>, doesn't work with python 3.8

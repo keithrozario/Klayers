@@ -1,6 +1,5 @@
 Package_Name,License,Authors/Maintainers
 aiobotocore,Apache-2.0,Nikolay Novik nickolainovik@gmail.com
-aiodns, MIT, Saúl Ibarra <Corretgés@saghul.net>
 aiohttp,Apache-2.0,Nikolay Kim <fafhrd91@gmail.com>; Andrew Svetlov <andrew.svetlov@gmail.com>
 ansible,GPLv3+,Ansible Inc <info@ansible.com>
 aws-lambda-powertools,https://github.com/awslabs/aws-lambda-powertools/blob/develop/LICENSE,AWS
@@ -19,7 +18,6 @@ flashtext,MIT,Vikash Singh <vikash.duliajan@gmail.com>
 google-auth-oauthlib,Apache-2.0,Jon Wayne <jonwayne+google-auth@google.com>
 google-auth,MIT,Jon Wayne <jonwayne+google-auth@google.com>
 graphene, MIT, Syrus Akbary <me@syrusakbary.com>
-grequests, BSD,Kenneth Reitz <me@kennethreitz.org>
 grpcio,Apache-2.0,GRPC Authors <grpc-io@googlegroups.com>
 gspread,MIT,Anton Burnashev <fuss.here@gmail.com>
 idna,https://github.com/kjd/idna/blob/master/LICENSE.rst,Kim Davis kim@cynosure.com.au
