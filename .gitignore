@@ -6,11 +6,12 @@ venv/
 .DS_Store
 *.DS_store
 pipeline/serverless_python3.7/node_modules/
+pipeline/serverless_python3.8/node_modules/
 pipeline/serverless_python3.7/.serverless/
+pipeline/serverless_python3.8/.serverless/
 pipeline/infra/terraform.tfstate
 pipeline/infra/terraform.tfstate.backup
 pipeline/infra/.terraform
-pipeling/serverless_python3.7/package.json
 
 **/.terraform/*
 *.tfstate
