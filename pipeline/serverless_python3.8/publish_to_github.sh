@@ -2,7 +2,6 @@ handler () {
     set -e
 
     SSH_KEY_DIR=/tmp/.ssh
-    SSH_KEY_FILE=$SSH_KEY_DIR/id_rsa
     KNOWN_HOSTS_FILE=/tmp/.ssh/known_hosts
 
     if [ ! -d $SSH_KEY_DIR ];
