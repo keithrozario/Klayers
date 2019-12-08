@@ -5,12 +5,12 @@ logs/
 venv/
 .DS_Store
 *.DS_store
-serverless/node_modules/
-serverless/.serverless/
-infra/terraform.tfstate
-infra/terraform.tfstate.backup
-infra/.terraform
-serverless/package.json
+pipeline/serverless_python3.7/node_modules/
+pipeline/serverless_python3.7/.serverless/
+pipeline/infra/terraform.tfstate
+pipeline/infra/terraform.tfstate.backup
+pipeline/infra/.terraform
+pipeling/serverless_python3.7/package.json
 
 **/.terraform/*
 *.tfstate
