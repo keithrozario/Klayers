@@ -27,3 +27,9 @@ The Key-Encrypting-Key for the GitHub SSH credentials is the only thing missing 
 * Uploading the openssl password to /<app_name>/<workspace>/ssh_kek paramter in parameter store
 
 This key is a deploy key for the repo in GitHub, and allows for both read/write access.
+
+# Remote backend & workspaces
+
+There is a known issue with remote backends and workspaces. To overcome this issue for free-tier users, you'll need to set the deployment type of the remote backend to `local` in order for the script to work. By default, all deployments on terraforms backend default to `remote` deployments which default all workspaces to `default`.
+
+To change the deployment type to `local`, login to terraform.io, select the workspace. Go to setting, and set the deployment type to local.
