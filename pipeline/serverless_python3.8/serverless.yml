@@ -260,7 +260,7 @@ stepFunctions:
 
     invoke_pipelines:
       events:
-        - schedule: cron(0 1 ? * MON *)  # runs at 1am UTC on Monday
+        - schedule: cron(0 2 ? * MON *)  # runs at 2am UTC on Monday
       name: ${self:custom.pipelineName}-invoke
       definition:
         Comment: "Invoke the Check, Build and Deploy pipeline for all packages"
