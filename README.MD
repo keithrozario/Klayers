@@ -91,7 +91,7 @@ You can either:
 
 Currently only the following regions have the layers deployed click the links for the full list of layer arns:
 
-| Region         | Python3.7               | Python3.8               |
+| Region         |               |              
 | :------------- |:----------------------- |:----------------------- |
 ap-northeast-1|[python3.7](deployments/python3.7/arns/ap-northeast-1.json)|[python3.8](deployments/python3.8/arns/ap-northeast-1.json)
 ap-northeast-2|[python3.7](deployments/python3.7/arns/ap-northeast-2.json)|[python3.8](deployments/python3.8/arns/ap-northeast-2.json)
