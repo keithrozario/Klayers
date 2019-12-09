@@ -1,0 +1,13 @@
+Package_Name, License, Authors/Maintainers, Reason for failure
+pyflux, BSD, Ross Taylor <rj-taylor@live.co.uk>, Dependencies not installed
+scrapy, https://github.com/scrapy/scrapy/blob/master/LICENSE, Pablo Hoffman <pablo@pablohoffman.com>, Dependencies not installed
+crytography, https://github.com/pyca/cryptography/blob/master/LICENSE, cryptography-dev@python.org, Dependencies not installed
+psutil, BSD-3-Clause, Giampaolo Rodola <g.rodola@gmail.com>, Dependencies not installed
+stanfordnlp, Apache-2.0, Standford Natural Language Processing Group <jebolton@stanford.edu>, Dependencies not installed
+annoy, Apache-2.0, Erik Bernhardsson <mail@erikbern.com>, Dependencies not installed
+misaka, MIT, Frank smit <frank@61924.nl>, Dependencies not installed
+fbprophet, BSD, Sean Taylor <sjtz@pm.me>
+jsonrpclib,Apache-2.0,Josh Marshall <catchjosh@gmail.com>, python2 only
+pickleDB,BSD,Harrison Erd <erdh@mail.broward.edu>, python2 only
+aiodns, MIT, Saúl Ibarra <Corretgés@saghul.net>, doesn't work with python 3.8
+grequests, BSD,Kenneth Reitz <me@kennethreitz.org>, doesn't work with python 3.8
