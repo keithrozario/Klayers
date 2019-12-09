@@ -58,8 +58,8 @@ handler () {
 
 	# Checkout and push
 	cd /tmp/$REPO_NAME
-	aws s3 cp s3://$BUCKET_NAME/arns deployments/python3.8/arns --recursive
-	aws s3 cp s3://$BUCKET_NAME/packages deployments/python3.8/packages --recursive
+	aws s3 cp s3://$BUCKET_NAME/arns deployments/python3.7/arns --recursive
+	aws s3 cp s3://$BUCKET_NAME/packages deployments/python3.7/packages --recursive
 	git add -A
 
 	if [ -n "$(git status --porcelain)" ];
