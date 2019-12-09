@@ -7,6 +7,7 @@ variable "dynamodb_requirements" { type="map" }
 variable "aws_profile" { type="map" }
 variable "lambda_prefix" { type="map" }
 variable "github_repo" { type="map" }
+variable "runtime" { type = "map" }
 
 terraform {
   backend "remote" {
@@ -80,7 +81,7 @@ resource "aws_dynamodb_table" "dynamodb_layers" {
 
   tags = {
     Name = "db_layers"
-    Environment = terraform.workspace
+    Environment = "${terraform.workspace}"
   }
 
 }
@@ -154,7 +155,7 @@ resource "aws_s3_bucket" "s3bucket_keys" {
 resource "aws_ssm_parameter" "dynamodb_layers_table" {
   type  = "String"
   description = "Name of DynamoDB Layers Table"
-  name  = "/${var.app_name}/${terraform.workspace}/dynamodb_layers_table"
+  name  = "/${lookup(var.app_name, terraform.workspace)}/${terraform.workspace}/dynamodb_layers_table"
   value = "${aws_dynamodb_table.dynamodb_layers.name}"
   overwrite = true
 }
@@ -162,7 +163,7 @@ resource "aws_ssm_parameter" "dynamodb_layers_table" {
 resource "aws_ssm_parameter" "dynamodb_layers_table_arn" {
   type  = "String"
   description = "ARN of DynamoDB Layers Table"
-  name  = "/${var.app_name}/${terraform.workspace}/dynamodb_layers_table_arn"
+  name  = "/${lookup(var.app_name, terraform.workspace)}/${terraform.workspace}/dynamodb_layers_table_arn"
   value = "${aws_dynamodb_table.dynamodb_layers.arn}"
   overwrite = true
 }
@@ -170,7 +171,7 @@ resource "aws_ssm_parameter" "dynamodb_layers_table_arn" {
 resource "aws_ssm_parameter" "dynamodb_layers_stream_arn" {
   type  = "String"
   description = "ARN of DynamoDB Layers Table Stream"
-  name  = "/${var.app_name}/${terraform.workspace}/dynamodb_layers_stream_arn"
+  name  = "/${lookup(var.app_name, terraform.workspace)}/${terraform.workspace}/dynamodb_layers_stream_arn"
   value = "${aws_dynamodb_table.dynamodb_layers.stream_arn}"
   overwrite = true
 }
@@ -178,7 +179,7 @@ resource "aws_ssm_parameter" "dynamodb_layers_stream_arn" {
 resource "aws_ssm_parameter" "dynamodb_layers_stream_lable" {
   type  = "String"
   description = "Lable of DynamoDB Layers Table Stream"
-  name  = "/${var.app_name}/${terraform.workspace}/dynamodb_layers_stream_lable"
+  name  = "/${lookup(var.app_name, terraform.workspace)}/${terraform.workspace}/dynamodb_layers_stream_lable"
   value = "${aws_dynamodb_table.dynamodb_layers.stream_label}"
   overwrite = true
 }
@@ -187,7 +188,7 @@ resource "aws_ssm_parameter" "dynamodb_layers_stream_lable" {
 resource "aws_ssm_parameter" "dynamodb_requirements_table" {
   type  = "String"
   description = "Name of DynamoDB Temp Table"
-  name  = "/${var.app_name}/${terraform.workspace}/dynamodb_requirements_table"
+  name  = "/${lookup(var.app_name, terraform.workspace)}/${terraform.workspace}/dynamodb_requirements_table"
   value = "${aws_dynamodb_table.dynamodb_requirements.name}"
   overwrite = true
 }
@@ -195,7 +196,7 @@ resource "aws_ssm_parameter" "dynamodb_requirements_table" {
 resource "aws_ssm_parameter" "dynamodb_requirements_table_arn" {
   type  = "String"
   description = "ARN of DynamoDB Temp Table"
-  name  = "/${var.app_name}/${terraform.workspace}/dynamodb_requirements_table_arn"
+  name  = "/${lookup(var.app_name, terraform.workspace)}/${terraform.workspace}/dynamodb_requirements_table_arn"
   value = "${aws_dynamodb_table.dynamodb_requirements.arn}"
   overwrite = true
 }
@@ -203,42 +204,42 @@ resource "aws_ssm_parameter" "dynamodb_requirements_table_arn" {
 
 resource "aws_ssm_parameter" "s3bucket_layers" {
   type  = "String"
-  name  = "/${var.app_name}/${terraform.workspace}/s3bucket_layers"
+  name  = "/${lookup(var.app_name, terraform.workspace)}/${terraform.workspace}/s3bucket_layers"
   value = "${aws_s3_bucket.s3bucket_layers.bucket}"
   overwrite = true
 }
 
 resource "aws_ssm_parameter" "s3bucket_layers_arn" {
   type  = "String"
-  name  = "/${var.app_name}/${terraform.workspace}/s3bucket_layers_arn"
+  name  = "/${lookup(var.app_name, terraform.workspace)}/${terraform.workspace}/s3bucket_layers_arn"
   value = "${aws_s3_bucket.s3bucket_layers.arn}"
   overwrite = true
 }
 
 resource "aws_ssm_parameter" "s3bucket_keys" {
   type  = "String"
-  name  = "/${var.app_name}/${terraform.workspace}/s3bucket_keys"
+  name  = "/${lookup(var.app_name, terraform.workspace)}/${terraform.workspace}/s3bucket_keys"
   value = "${aws_s3_bucket.s3bucket_keys.bucket}"
   overwrite = true
 }
 
 resource "aws_ssm_parameter" "s3bucket_keys_arn" {
   type  = "String"
-  name  = "/${var.app_name}/${terraform.workspace}/s3bucket_keys_arn"
+  name  = "/${lookup(var.app_name, terraform.workspace)}/${terraform.workspace}/s3bucket_keys_arn"
   value = "${aws_s3_bucket.s3bucket_keys.arn}"
   overwrite = true
 }
 
 resource "aws_ssm_parameter" "lambda_prefix" {
   type  = "String"
-  name  = "/${var.app_name}/${terraform.workspace}/lambda_prefix"
+  name  = "/${lookup(var.app_name, terraform.workspace)}/${terraform.workspace}/lambda_prefix"
   value = "${lookup(var.lambda_prefix, terraform.workspace)}"
   overwrite = true
 }
 
 resource "aws_ssm_parameter" "github_repo" {
   type  = "String"
-  name  = "/${var.app_name}/${terraform.workspace}/github_repo"
+  name  = "/${lookup(var.app_name, terraform.workspace)}/${terraform.workspace}/github_repo"
   value = "${lookup(var.github_repo, terraform.workspace)}"
   overwrite = true
 }
