@@ -13,7 +13,7 @@ A collection of AWS Lambda Layers for Python3.7 & Python3.8
 
 Click on badge above to see the specific package version of the latest builds. 
 
-Layers are built with the latest package version (available on PyPI) every Monday at 1:00am (UTC)
+Layers are built with the latest package version (available on PyPI) every Monday at 1am (python 3.7) and 2am (python3.8) UTC.
 
 # Layer List
 
