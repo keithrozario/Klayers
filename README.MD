@@ -27,57 +27,61 @@ Full list of publicly available layers by region are [here](deployments/).
 
 All packages below were built with the Python 3.7 runtime. May (or may not) work with Python 3.6. View [here](https://pyup.io/repos/github/keithrozario/Klayers/) for detail list of package versions.
 
-| Package        | Layer Name              |         
-| :------------- |:----------------------- |
-aiobotocore| Klayers-python37-aiobotocore
-aiohttp|Klayers-python37-aiohttp
-ansible|Klayers-python37-ansible
-arrow|Klayers-python37-arrow
-aws-xray-sdk|Klayers-python37-aws-xray-sdk
-bcrypt|Klayers-python37-bcrypt
-beautifulsoup4|Klayers-python37-beautifulsoup4
-boltons|Klayers-python37-boltons
-boto3|Klayers-python37-boto3
-construct|Klayers-python37-construct
-elasticsearch|Klayers-python37-elasticsearch
-envelopes|Klayers-python37-envelopes
-ffmpeg-python|Klayers-python37-ffmpeg-python
-flashtext|Klayers-python37-flashtext
-google-auth|Klayers-python37-google-auth
-google-auth-oauthlib|Klayers-python37-google-auth-oauthlib
-grpcio|Klayers-python37-grpcio
-gspread|Klayers-python37-gspread
-idna|Klayers-python37-idna
-itsdangerous|Klayers-python37-itsdangerous
-kafka-python|Klayers-python37-kafka-python
-nltk|Klayers-python37-nltk
-numpy|Klayers-python37-numpy
-opencv-python-headless|Klayers-python37-opencv-python-headless
-openpyxl|Klayers-python37-openpyxl
-pandas|Klayers-python37-pandas
-Pillow|Klayers-python37-Pillow
-pulp|Klayers-python37-pulp
-PyJWT|Klayers-python37-PyJWT
-pymongo|Klayers-python37-pymongo
-PyMUPDF|Klayers-python37-PyMUPDF
-PyMySQL|Klayers-python37-PyMySQL
-PyNaCl|Klayers-python37-PyNaCl
-pyOpenSSL|Klayers-python37-pyOpenSSL
-pyparsing|Klayers-python37-pyparsing
-pyqldb|Klayers-python37-pyqldb
-pytesseract|Klayers-python37-pytesseract
-python-docx|Klayers-python37-python-docx
-python-Levenshtein|Klayers-python37-python-Levenshtein-wheels
-pytz|Klayers-python37-pytz
-PyYAML|Klayers-python37-PyYAML
-requests|Klayers-python37-requests
-scipy|Klayers-python37-scipy
-simplejson|Klayers-python37-simplejson
-spacy|Klayers-python37-spacy
-SQLAlchemy|Klayers-python37-SQLAlchemy
-textdistance|Klayers-python37-textdistance
-tinydb|Klayers-python37-tinydb
-tldextract|Klayers-python37-tldextract
+| Package        | Python3.7               | Python3.8               |
+| :------------- |:----------------------- |:----------------------- |
+aiobotocore|[x]|[x]
+aiodns|[x]|
+aiohttp|[x]|[x]
+ansible|[x]|[x]
+aws-lambda-powertools||[x]
+arrow|[x]|[x]
+aws-xray-sdk|[x]|[x]
+bcrypt|[x]|[x]
+beautifulsoup4|[x]|[x]
+boltons|[x]|[x]
+boto3|[x]|[x]
+construct|[x]|[x]
+elasticsearch|[x]|[x]
+envelopes|[x]|[x]
+ffmpeg-python|[x]|[x]
+flashtext|[x]|[x]
+google-auth|[x]|[x]
+google-auth-oauthlib|[x]|[x]
+graphene|[x]|[x]
+grequests|[x]|
+grpcio|[x]|[x]
+gspread|[x]|[x]
+idna|[x]|[x]
+itsdangerous|[x]|[x]
+kafka-python|[x]|[x]
+nltk|[x]|[x]
+numpy|[x]|[x]
+opencv-python-headless|[x]|[x]
+openpyxl|[x]|[x]
+pandas|[x]|[x]
+Pillow|[x]|[x]
+pulp|[x]|[x]
+PyJWT|[x]|[x]
+pymongo|[x]|[x]
+PyMUPDF|[x]|[x]
+PyMySQL|[x]|[x]
+PyNaCl|[x]|[x]
+pyOpenSSL|[x]|[x]
+pyparsing|[x]|[x]
+pyqldb|[x]|[x]
+pytesseract|[x]|[x]
+python-docx|[x]|[x]
+python-Levenshtein|[x]|[x]
+pytz|[x]|[x]
+PyYAML|[x]|[x]
+requests|[x]|[x]
+scipy|[x]|[x]
+simplejson|[x]|[x]
+spacy|[x]|[x]
+SQLAlchemy|[x]|[x]
+textdistance|[x]|[x]
+tinydb|[x]|[x]
+tldextract|[x]|[x]
 
 # Using the Layers
 
@@ -132,12 +136,6 @@ Special hand-crafted binaries for layers. These layers are not automatically bui
 For `pip` you'll need to set your PYTHONPATH to `/opt/python` to override the existing pip inside the lambda environment.
 
 For `spacy`, this is version 2.2 and above (without the language files). You'll need to bring your own language files/model.
-
-# To DO
-* ~~Cleanup script to delete all lamba layers that are not the latest version (and more than x days old)~~ Done using TTL on DynamoDB
-* ~~Schedule this to run everyday for production~~ Currently runs once a week on Monday
-* Package openssl v1.1.x for better encryption of KEK
-* Blog post and architecture review (WIP: [here](https://www.keithrozario.com/2019/08/klayers-part-0-introduction.html))
 
 # Architecture Diagram
 
