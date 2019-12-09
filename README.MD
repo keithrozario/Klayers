@@ -1,6 +1,6 @@
 # Keith's Layers (Klayers)
 
-[![Python 3.7](https://img.shields.io/badge/python-3.7-green.svg)](https://www.python.org/downloads/release/python-375/)[![Python 3.8](https://img.shields.io/badge/python-3.8-green.svg)](https://www.python.org/downloads/release/python-380/)
+[![Python 3.7](https://img.shields.io/badge/python-3.7-green.svg)](https://www.python.org/downloads/release/python-375/)  [![Python 3.8](https://img.shields.io/badge/python-3.8-green.svg)](https://www.python.org/downloads/release/python-380/)
 
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/keithrozario/Klayers.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/keithrozario/Klayers/context:python)
 
@@ -93,34 +93,20 @@ Currently only the following regions have the layers deployed click the links fo
 * ap-southeast-1 [python3.7](deployments/python3.7/arns/ap-southeast-1.json)|[python3.8](deployments/python3.8/arns/ap-southeast-1.json)
 * ap-southeast-1 [python3.7](deployments/python3.7/arns/ap-southeast-2.json)|[python3.8](deployments/python3.8/arns/ap-southeast-2.json)
 * ca-central-1 [python3.7](deployments/python3.7/arns/ca-central-1.json)|[python3.8](deployments/python3.8/arns/ca-central-1.json)
-* eu-central-1 [python3.7](deployments/python3.7/arns/eu-central-1.json)|[python3.8]
-(deployments/python3.8/arns/eu-central-1.json)
-* eu-north-1 [python3.7](deployments/python3.7/arns/eu-north-1.json)|[python3.8]
-(deployments/python3.8/arns/eu-north-1.json)
-* eu-west-1 [python3.7](deployments/python3.7/arns/eu-west-1.json)|[python3.8]
-(deployments/python3.8/arns/eu-west-1.json)
-* eu-west-2 [python3.7](deployments/python3.7/arns/eu-west-2.json)|[python3.8]
-(deployments/python3.8/arns/eu-west-2.json)
-* eu-west-3 [python3.7](deployments/python3.7/arns/eu-west-3.json)|[python3.8]
-(deployments/python3.8/arns/eu-west-3.json)
-* sa-east-1 [python3.7](deployments/python3.7/arns/sa-east-1.json)|[python3.8]
-(deployments/python3.8/arns/sa-east-1.json)
-* us-east-1 [python3.7](deployments/python3.7/arns/us-east-1.json)|[python3.8]
-(deployments/python3.8/arns/us-east-1.json)
-* us-east-2 [python3.7](deployments/python3.7/arns/us-east-2.json)|[python3.8]
-(deployments/python3.8/arns/us-east-2.json)
-* us-east-2 [python3.7](deployments/python3.7/arns/us-east-2.json)|[python3.8]
-(deployments/python3.8/arns/us-east-2.json)
-* us-east-2 [python3.7](deployments/python3.7/arns/us-east-2.json)|[python3.8]
-(deployments/python3.8/arns/us-east-2.json)
-* us-west-1 [python3.7](deployments/python3.7/arns/us-west-1.json)|[python3.8]
-(deployments/python3.8/arns/us-west-1.json)
-* us-west-2 [python3.7](deployments/python3.7/arns/us-west-2.json)|[python3.8]
-(deployments/python3.8/arns/us-west-2.json)
-* ap-east-1 [python3.7](deployments/python3.7/arns/ap-east-1.json)|[python3.8]
-(deployments/python3.8/arns/ap-east-1.json)
-* me-south-1 [python3.7](deployments/python3.7/arns/me-south-1.json)|[python3.8]
-(deployments/python3.8/arns/me-south-1.json)
+* eu-central-1 [python3.7](deployments/python3.7/arns/eu-central-1.json)|[python3.8](deployments/python3.8/arns/eu-central-1.json)
+* eu-north-1 [python3.7](deployments/python3.7/arns/eu-north-1.json)|[python3.8](deployments/python3.8/arns/eu-north-1.json)
+* eu-west-1 [python3.7](deployments/python3.7/arns/eu-west-1.json)|[python3.8](deployments/python3.8/arns/eu-west-1.json)
+* eu-west-2 [python3.7](deployments/python3.7/arns/eu-west-2.json)|[python3.8](deployments/python3.8/arns/eu-west-2.json)
+* eu-west-3 [python3.7](deployments/python3.7/arns/eu-west-3.json)|[python3.8](deployments/python3.8/arns/eu-west-3.json)
+* sa-east-1 [python3.7](deployments/python3.7/arns/sa-east-1.json)|[python3.8](deployments/python3.8/arns/sa-east-1.json)
+* us-east-1 [python3.7](deployments/python3.7/arns/us-east-1.json)|[python3.8](deployments/python3.8/arns/us-east-1.json)
+* us-east-2 [python3.7](deployments/python3.7/arns/us-east-2.json)|[python3.8](deployments/python3.8/arns/us-east-2.json)
+* us-east-2 [python3.7](deployments/python3.7/arns/us-east-2.json)|[python3.8](deployments/python3.8/arns/us-east-2.json)
+* us-east-2 [python3.7](deployments/python3.7/arns/us-east-2.json)|[python3.8](deployments/python3.8/arns/us-east-2.json)
+* us-west-1 [python3.7](deployments/python3.7/arns/us-west-1.json)|[python3.8](deployments/python3.8/arns/us-west-1.json)
+* us-west-2 [python3.7](deployments/python3.7/arns/us-west-2.json)|[python3.8](deployments/python3.8/arns/us-west-2.json)
+* ap-east-1 [python3.7](deployments/python3.7/arns/ap-east-1.json)|[python3.8](deployments/python3.8/arns/ap-east-1.json)
+* me-south-1 [python3.7](deployments/python3.7/arns/me-south-1.json)|[python3.8](deployments/python3.8/arns/me-south-1.json)
 
 ## Layer expiry
 
