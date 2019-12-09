@@ -21,7 +21,7 @@ All layers are publicly available with the following ARN pattern:
 
 arn:aws:lambda:\<**region**>:113088814899:layer:\<**Layer Name**>:\<**version**>
 
-Full list of publicly available layers by region are [here](arns/).
+Full list of publicly available layers by region are [here](deployments/).
 
 # Python Packages
 
