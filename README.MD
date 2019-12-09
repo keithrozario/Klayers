@@ -13,7 +13,7 @@ A collection of AWS Lambda Layers for Python3.7 & Python3.8
 
 Click on badge above to see the specific package version of the latest builds. 
 
-Layers are built with the latest package version (available on PyPI) every Monday at 1:00am (UTC)
+Layers are built with the latest package version (available on PyPI) every Monday at 1am (python 3.7) and 2am (python3.8) UTC.
 
 # Layer List
 
@@ -27,57 +27,61 @@ Full list of publicly available layers by region are [here](deployments/).
 
 All packages below were built with the Python 3.7 runtime. May (or may not) work with Python 3.6. View [here](https://pyup.io/repos/github/keithrozario/Klayers/) for detail list of package versions.
 
-| Package        | Layer Name              |         
-| :------------- |:----------------------- |
-aiobotocore| Klayers-python37-aiobotocore
-aiohttp|Klayers-python37-aiohttp
-ansible|Klayers-python37-ansible
-arrow|Klayers-python37-arrow
-aws-xray-sdk|Klayers-python37-aws-xray-sdk
-bcrypt|Klayers-python37-bcrypt
-beautifulsoup4|Klayers-python37-beautifulsoup4
-boltons|Klayers-python37-boltons
-boto3|Klayers-python37-boto3
-construct|Klayers-python37-construct
-elasticsearch|Klayers-python37-elasticsearch
-envelopes|Klayers-python37-envelopes
-ffmpeg-python|Klayers-python37-ffmpeg-python
-flashtext|Klayers-python37-flashtext
-google-auth|Klayers-python37-google-auth
-google-auth-oauthlib|Klayers-python37-google-auth-oauthlib
-grpcio|Klayers-python37-grpcio
-gspread|Klayers-python37-gspread
-idna|Klayers-python37-idna
-itsdangerous|Klayers-python37-itsdangerous
-kafka-python|Klayers-python37-kafka-python
-nltk|Klayers-python37-nltk
-numpy|Klayers-python37-numpy
-opencv-python-headless|Klayers-python37-opencv-python-headless
-openpyxl|Klayers-python37-openpyxl
-pandas|Klayers-python37-pandas
-Pillow|Klayers-python37-Pillow
-pulp|Klayers-python37-pulp
-PyJWT|Klayers-python37-PyJWT
-pymongo|Klayers-python37-pymongo
-PyMUPDF|Klayers-python37-PyMUPDF
-PyMySQL|Klayers-python37-PyMySQL
-PyNaCl|Klayers-python37-PyNaCl
-pyOpenSSL|Klayers-python37-pyOpenSSL
-pyparsing|Klayers-python37-pyparsing
-pyqldb|Klayers-python37-pyqldb
-pytesseract|Klayers-python37-pytesseract
-python-docx|Klayers-python37-python-docx
-python-Levenshtein|Klayers-python37-python-Levenshtein-wheels
-pytz|Klayers-python37-pytz
-PyYAML|Klayers-python37-PyYAML
-requests|Klayers-python37-requests
-scipy|Klayers-python37-scipy
-simplejson|Klayers-python37-simplejson
-spacy|Klayers-python37-spacy
-SQLAlchemy|Klayers-python37-SQLAlchemy
-textdistance|Klayers-python37-textdistance
-tinydb|Klayers-python37-tinydb
-tldextract|Klayers-python37-tldextract
+| Package        | Python3.7               | Python3.8               |
+| :------------- |:----------------------- |:----------------------- |
+aiobotocore|✅|✅
+aiodns|✅|
+aiohttp|✅|✅
+ansible|✅|✅
+aws-lambda-powertools||✅
+arrow|✅|✅
+aws-xray-sdk|✅|✅
+bcrypt|✅|✅
+beautifulsoup4|✅|✅
+boltons|✅|✅
+boto3|✅|✅
+construct|✅|✅
+elasticsearch|✅|✅
+envelopes|✅|✅
+ffmpeg-python|✅|✅
+flashtext|✅|✅
+google-auth|✅|✅
+google-auth-oauthlib|✅|✅
+graphene|✅|✅
+grequests|✅|
+grpcio|✅|✅
+gspread|✅|✅
+idna|✅|✅
+itsdangerous|✅|✅
+kafka-python|✅|✅
+nltk|✅|✅
+numpy|✅|✅
+opencv-python-headless|✅|✅
+openpyxl|✅|✅
+pandas|✅|✅
+Pillow|✅|✅
+pulp|✅|✅
+PyJWT|✅|✅
+pymongo|✅|✅
+PyMUPDF|✅|✅
+PyMySQL|✅|✅
+PyNaCl|✅|✅
+pyOpenSSL|✅|✅
+pyparsing|✅|✅
+pyqldb|✅|✅
+pytesseract|✅|✅
+python-docx|✅|✅
+python-Levenshtein|✅|✅
+pytz|✅|✅
+PyYAML|✅|✅
+requests|✅|✅
+scipy|✅|✅
+simplejson|✅|✅
+spacy|✅|✅
+SQLAlchemy|✅|✅
+textdistance|✅|✅
+tinydb|✅|✅
+tldextract|✅|✅
 
 # Using the Layers
 
@@ -87,26 +91,28 @@ You can either:
 
 Currently only the following regions have the layers deployed click the links for the full list of layer arns:
 
-* ap-northeast-1 [python3.7](deployments/python3.7/arns/ap-northeast-1.json) | [python3.8](deployments/python3.8/arns/ap-northeast-1.json)
-* ap-northeast-2 [python3.7](deployments/python3.7/arns/ap-northeast-2.json) | [python3.8](deployments/python3.8/arns/ap-northeast-2.json)
-* ap-south-1 [python3.7](deployments/python3.7/arns/ap-south-1.json) | [python3.8](deployments/python3.8/arns/ap-south-1.json)
-* ap-southeast-1 [python3.7](deployments/python3.7/arns/ap-southeast-1.json) | [python3.8](deployments/python3.8/arns/ap-southeast-1.json)
-* ap-southeast-1 [python3.7](deployments/python3.7/arns/ap-southeast-2.json) | [python3.8](deployments/python3.8/arns/ap-southeast-2.json)
-* ca-central-1 [python3.7](deployments/python3.7/arns/ca-central-1.json) | [python3.8](deployments/python3.8/arns/ca-central-1.json)
-* eu-central-1 [python3.7](deployments/python3.7/arns/eu-central-1.json) | [python3.8](deployments/python3.8/arns/eu-central-1.json)
-* eu-north-1 [python3.7](deployments/python3.7/arns/eu-north-1.json) | [python3.8](deployments/python3.8/arns/eu-north-1.json)
-* eu-west-1 [python3.7](deployments/python3.7/arns/eu-west-1.json) | [python3.8](deployments/python3.8/arns/eu-west-1.json)
-* eu-west-2 [python3.7](deployments/python3.7/arns/eu-west-2.json) | [python3.8](deployments/python3.8/arns/eu-west-2.json)
-* eu-west-3 [python3.7](deployments/python3.7/arns/eu-west-3.json) | [python3.8](deployments/python3.8/arns/eu-west-3.json)
-* sa-east-1 [python3.7](deployments/python3.7/arns/sa-east-1.json) | [python3.8](deployments/python3.8/arns/sa-east-1.json)
-* us-east-1 [python3.7](deployments/python3.7/arns/us-east-1.json) | [python3.8](deployments/python3.8/arns/us-east-1.json)
-* us-east-2 [python3.7](deployments/python3.7/arns/us-east-2.json) | [python3.8](deployments/python3.8/arns/us-east-2.json)
-* us-east-2 [python3.7](deployments/python3.7/arns/us-east-2.json) | [python3.8](deployments/python3.8/arns/us-east-2.json)
-* us-east-2 [python3.7](deployments/python3.7/arns/us-east-2.json) | [python3.8](deployments/python3.8/arns/us-east-2.json)
-* us-west-1 [python3.7](deployments/python3.7/arns/us-west-1.json) | [python3.8](deployments/python3.8/arns/us-west-1.json)
-* us-west-2 [python3.7](deployments/python3.7/arns/us-west-2.json) | [python3.8](deployments/python3.8/arns/us-west-2.json)
-* ap-east-1 [python3.7](deployments/python3.7/arns/ap-east-1.json) | [python3.8](deployments/python3.8/arns/ap-east-1.json)
-* me-south-1 [python3.7](deployments/python3.7/arns/me-south-1.json) | [python3.8](deployments/python3.8/arns/me-south-1.json)
+| Region         |                         |                         |
+| :------------- |:----------------------- |:----------------------- |
+ap-northeast-1|[python3.7](deployments/python3.7/arns/ap-northeast-1.json)|[python3.8](deployments/python3.8/arns/ap-northeast-1.json)
+ap-northeast-2|[python3.7](deployments/python3.7/arns/ap-northeast-2.json)|[python3.8](deployments/python3.8/arns/ap-northeast-2.json)
+ap-south-1|[python3.7](deployments/python3.7/arns/ap-south-1.json)|[python3.8](deployments/python3.8/arns/ap-south-1.json)
+ap-southeast-1|[python3.7](deployments/python3.7/arns/ap-southeast-1.json)|[python3.8](deployments/python3.8/arns/ap-southeast-1.json)
+ap-southeast-1|[python3.7](deployments/python3.7/arns/ap-southeast-2.json)|[python3.8](deployments/python3.8/arns/ap-southeast-2.json)
+ca-central-1|[python3.7](deployments/python3.7/arns/ca-central-1.json)|[python3.8](deployments/python3.8/arns/ca-central-1.json)
+eu-central-1|[python3.7](deployments/python3.7/arns/eu-central-1.json)|[python3.8](deployments/python3.8/arns/eu-central-1.json)
+eu-north-1|[python3.7](deployments/python3.7/arns/eu-north-1.json)|[python3.8](deployments/python3.8/arns/eu-north-1.json)
+eu-west-1|[python3.7](deployments/python3.7/arns/eu-west-1.json)|[python3.8](deployments/python3.8/arns/eu-west-1.json)
+eu-west-2|[python3.7](deployments/python3.7/arns/eu-west-2.json)|[python3.8](deployments/python3.8/arns/eu-west-2.json)
+eu-west-3|[python3.7](deployments/python3.7/arns/eu-west-3.json)|[python3.8](deployments/python3.8/arns/eu-west-3.json)
+sa-east-1|[python3.7](deployments/python3.7/arns/sa-east-1.json)|[python3.8](deployments/python3.8/arns/sa-east-1.json)
+us-east-1|[python3.7](deployments/python3.7/arns/us-east-1.json)|[python3.8](deployments/python3.8/arns/us-east-1.json)
+us-east-2|[python3.7](deployments/python3.7/arns/us-east-2.json)|[python3.8](deployments/python3.8/arns/us-east-2.json)
+us-east-2|[python3.7](deployments/python3.7/arns/us-east-2.json)|[python3.8](deployments/python3.8/arns/us-east-2.json)
+us-east-2|[python3.7](deployments/python3.7/arns/us-east-2.json)|[python3.8](deployments/python3.8/arns/us-east-2.json)
+us-west-1|[python3.7](deployments/python3.7/arns/us-west-1.json)|[python3.8](deployments/python3.8/arns/us-west-1.json)
+us-west-2|[python3.7](deployments/python3.7/arns/us-west-2.json)|[python3.8](deployments/python3.8/arns/us-west-2.json)
+ap-east-1|[python3.7](deployments/python3.7/arns/ap-east-1.json)|[python3.8](deployments/python3.8/arns/ap-east-1.json)
+me-south-1|[python3.7](deployments/python3.7/arns/me-south-1.json)|[python3.8](deployments/python3.8/arns/me-south-1.json)
 
 ## Layer expiry
 
@@ -125,19 +131,6 @@ Special hand-crafted binaries for layers. These layers are not automatically bui
 <sup>1</sup> Includes leptonica-1.76.0, libjpeg 6b (libjpeg-turbo 1.2.90) : libpng 1.2.49 : libtiff 4.0.3 : zlib 1.2.8 : libwebp 0.3.0
 
 <sup>2</sup> netcat-traditional with the -e option -- compiled for 64-bit to run on AWS Lambda
-
-
-# Layer specific notes
-
-For `pip` you'll need to set your PYTHONPATH to `/opt/python` to override the existing pip inside the lambda environment.
-
-For `spacy`, this is version 2.2 and above (without the language files). You'll need to bring your own language files/model.
-
-# To DO
-* ~~Cleanup script to delete all lamba layers that are not the latest version (and more than x days old)~~ Done using TTL on DynamoDB
-* ~~Schedule this to run everyday for production~~ Currently runs once a week on Monday
-* Package openssl v1.1.x for better encryption of KEK
-* Blog post and architecture review (WIP: [here](https://www.keithrozario.com/2019/08/klayers-part-0-introduction.html))
 
 # Architecture Diagram
 
