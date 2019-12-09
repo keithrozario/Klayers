@@ -91,26 +91,28 @@ You can either:
 
 Currently only the following regions have the layers deployed click the links for the full list of layer arns:
 
-* ap-northeast-1 [python3.7](deployments/python3.7/arns/ap-northeast-1.json) | [python3.8](deployments/python3.8/arns/ap-northeast-1.json)
-* ap-northeast-2 [python3.7](deployments/python3.7/arns/ap-northeast-2.json) | [python3.8](deployments/python3.8/arns/ap-northeast-2.json)
-* ap-south-1 [python3.7](deployments/python3.7/arns/ap-south-1.json) | [python3.8](deployments/python3.8/arns/ap-south-1.json)
-* ap-southeast-1 [python3.7](deployments/python3.7/arns/ap-southeast-1.json) | [python3.8](deployments/python3.8/arns/ap-southeast-1.json)
-* ap-southeast-1 [python3.7](deployments/python3.7/arns/ap-southeast-2.json) | [python3.8](deployments/python3.8/arns/ap-southeast-2.json)
-* ca-central-1 [python3.7](deployments/python3.7/arns/ca-central-1.json) | [python3.8](deployments/python3.8/arns/ca-central-1.json)
-* eu-central-1 [python3.7](deployments/python3.7/arns/eu-central-1.json) | [python3.8](deployments/python3.8/arns/eu-central-1.json)
-* eu-north-1 [python3.7](deployments/python3.7/arns/eu-north-1.json) | [python3.8](deployments/python3.8/arns/eu-north-1.json)
-* eu-west-1 [python3.7](deployments/python3.7/arns/eu-west-1.json) | [python3.8](deployments/python3.8/arns/eu-west-1.json)
-* eu-west-2 [python3.7](deployments/python3.7/arns/eu-west-2.json) | [python3.8](deployments/python3.8/arns/eu-west-2.json)
-* eu-west-3 [python3.7](deployments/python3.7/arns/eu-west-3.json) | [python3.8](deployments/python3.8/arns/eu-west-3.json)
-* sa-east-1 [python3.7](deployments/python3.7/arns/sa-east-1.json) | [python3.8](deployments/python3.8/arns/sa-east-1.json)
-* us-east-1 [python3.7](deployments/python3.7/arns/us-east-1.json) | [python3.8](deployments/python3.8/arns/us-east-1.json)
-* us-east-2 [python3.7](deployments/python3.7/arns/us-east-2.json) | [python3.8](deployments/python3.8/arns/us-east-2.json)
-* us-east-2 [python3.7](deployments/python3.7/arns/us-east-2.json) | [python3.8](deployments/python3.8/arns/us-east-2.json)
-* us-east-2 [python3.7](deployments/python3.7/arns/us-east-2.json) | [python3.8](deployments/python3.8/arns/us-east-2.json)
-* us-west-1 [python3.7](deployments/python3.7/arns/us-west-1.json) | [python3.8](deployments/python3.8/arns/us-west-1.json)
-* us-west-2 [python3.7](deployments/python3.7/arns/us-west-2.json) | [python3.8](deployments/python3.8/arns/us-west-2.json)
-* ap-east-1 [python3.7](deployments/python3.7/arns/ap-east-1.json) | [python3.8](deployments/python3.8/arns/ap-east-1.json)
-* me-south-1 [python3.7](deployments/python3.7/arns/me-south-1.json) | [python3.8](deployments/python3.8/arns/me-south-1.json)
+| Region         | Python3.7               | Python3.8               |
+| :------------- |:----------------------- |:----------------------- |
+ap-northeast-1|[python3.7](deployments/python3.7/arns/ap-northeast-1.json)|[python3.8](deployments/python3.8/arns/ap-northeast-1.json)
+ap-northeast-2|[python3.7](deployments/python3.7/arns/ap-northeast-2.json)|[python3.8](deployments/python3.8/arns/ap-northeast-2.json)
+ap-south-1|[python3.7](deployments/python3.7/arns/ap-south-1.json)|[python3.8](deployments/python3.8/arns/ap-south-1.json)
+ap-southeast-1|[python3.7](deployments/python3.7/arns/ap-southeast-1.json)|[python3.8](deployments/python3.8/arns/ap-southeast-1.json)
+ap-southeast-1|[python3.7](deployments/python3.7/arns/ap-southeast-2.json)|[python3.8](deployments/python3.8/arns/ap-southeast-2.json)
+ca-central-1|[python3.7](deployments/python3.7/arns/ca-central-1.json)|[python3.8](deployments/python3.8/arns/ca-central-1.json)
+eu-central-1|[python3.7](deployments/python3.7/arns/eu-central-1.json)|[python3.8](deployments/python3.8/arns/eu-central-1.json)
+eu-north-1|[python3.7](deployments/python3.7/arns/eu-north-1.json)|[python3.8](deployments/python3.8/arns/eu-north-1.json)
+eu-west-1|[python3.7](deployments/python3.7/arns/eu-west-1.json)|[python3.8](deployments/python3.8/arns/eu-west-1.json)
+eu-west-2|[python3.7](deployments/python3.7/arns/eu-west-2.json)|[python3.8](deployments/python3.8/arns/eu-west-2.json)
+eu-west-3|[python3.7](deployments/python3.7/arns/eu-west-3.json)|[python3.8](deployments/python3.8/arns/eu-west-3.json)
+sa-east-1|[python3.7](deployments/python3.7/arns/sa-east-1.json)|[python3.8](deployments/python3.8/arns/sa-east-1.json)
+us-east-1|[python3.7](deployments/python3.7/arns/us-east-1.json)|[python3.8](deployments/python3.8/arns/us-east-1.json)
+us-east-2|[python3.7](deployments/python3.7/arns/us-east-2.json)|[python3.8](deployments/python3.8/arns/us-east-2.json)
+us-east-2|[python3.7](deployments/python3.7/arns/us-east-2.json)|[python3.8](deployments/python3.8/arns/us-east-2.json)
+us-east-2|[python3.7](deployments/python3.7/arns/us-east-2.json)|[python3.8](deployments/python3.8/arns/us-east-2.json)
+us-west-1|[python3.7](deployments/python3.7/arns/us-west-1.json)|[python3.8](deployments/python3.8/arns/us-west-1.json)
+us-west-2|[python3.7](deployments/python3.7/arns/us-west-2.json)|[python3.8](deployments/python3.8/arns/us-west-2.json)
+ap-east-1|[python3.7](deployments/python3.7/arns/ap-east-1.json)|[python3.8](deployments/python3.8/arns/ap-east-1.json)
+me-south-1|[python3.7](deployments/python3.7/arns/me-south-1.json)|[python3.8](deployments/python3.8/arns/me-south-1.json)
 
 ## Layer expiry
 
@@ -129,13 +131,6 @@ Special hand-crafted binaries for layers. These layers are not automatically bui
 <sup>1</sup> Includes leptonica-1.76.0, libjpeg 6b (libjpeg-turbo 1.2.90) : libpng 1.2.49 : libtiff 4.0.3 : zlib 1.2.8 : libwebp 0.3.0
 
 <sup>2</sup> netcat-traditional with the -e option -- compiled for 64-bit to run on AWS Lambda
-
-
-# Layer specific notes
-
-For `pip` you'll need to set your PYTHONPATH to `/opt/python` to override the existing pip inside the lambda environment.
-
-For `spacy`, this is version 2.2 and above (without the language files). You'll need to bring your own language files/model.
 
 # Architecture Diagram
 
