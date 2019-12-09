@@ -1,0 +1,8 @@
+ansible==2.9.2
+cffi==1.13.2
+cryptography==2.8
+Jinja2==2.10.3
+MarkupSafe==1.1.1
+pycparser==2.19
+PyYAML==5.2
+six==1.13.0
