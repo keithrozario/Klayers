@@ -8,7 +8,7 @@ chardet==3.0.4
 docutils==0.15.2
 idna==2.8
 jmespath==0.9.4
-multidict==4.6.1
+multidict==4.7.1
 python-dateutil==2.8.0
 six==1.13.0
 urllib3==1.25.7
