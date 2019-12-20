@@ -107,8 +107,6 @@ eu-west-3|[python3.7](deployments/python3.7/arns/eu-west-3.json)|[python3.8](dep
 sa-east-1|[python3.7](deployments/python3.7/arns/sa-east-1.json)|[python3.8](deployments/python3.8/arns/sa-east-1.json)
 us-east-1|[python3.7](deployments/python3.7/arns/us-east-1.json)|[python3.8](deployments/python3.8/arns/us-east-1.json)
 us-east-2|[python3.7](deployments/python3.7/arns/us-east-2.json)|[python3.8](deployments/python3.8/arns/us-east-2.json)
-us-east-2|[python3.7](deployments/python3.7/arns/us-east-2.json)|[python3.8](deployments/python3.8/arns/us-east-2.json)
-us-east-2|[python3.7](deployments/python3.7/arns/us-east-2.json)|[python3.8](deployments/python3.8/arns/us-east-2.json)
 us-west-1|[python3.7](deployments/python3.7/arns/us-west-1.json)|[python3.8](deployments/python3.8/arns/us-west-1.json)
 us-west-2|[python3.7](deployments/python3.7/arns/us-west-2.json)|[python3.8](deployments/python3.8/arns/us-west-2.json)
 ap-east-1|[python3.7](deployments/python3.7/arns/ap-east-1.json)|[python3.8](deployments/python3.8/arns/ap-east-1.json)
