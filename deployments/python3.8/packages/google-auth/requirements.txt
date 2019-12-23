@@ -1,5 +1,5 @@
-cachetools==3.1.1
-google-auth==1.8.2
+cachetools==4.0.0
+google-auth==1.10.0
 pyasn1==0.4.8
 pyasn1-modules==0.2.7
 rsa==4.0
