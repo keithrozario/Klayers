@@ -62,12 +62,14 @@
     },
     {
         "package_version": "4.8.1",
+        "time_to_live": 1580263296,
         "package": "beautifulsoup4",
         "layer_version_arn": "arn:aws:lambda:ap-south-1:770693421928:layer:Klayers-python38-beautifulsoup4:1",
         "deployed_region": "ap-south-1"
     },
     {
         "package_version": "2.4.5",
+        "time_to_live": 1580263300,
         "package": "pyparsing",
         "layer_version_arn": "arn:aws:lambda:ap-south-1:770693421928:layer:Klayers-python38-pyparsing:1",
         "deployed_region": "ap-south-1"
@@ -317,6 +319,7 @@
     },
     {
         "package_version": "2.0",
+        "time_to_live": 1580263569,
         "package": "pulp",
         "layer_version_arn": "arn:aws:lambda:ap-south-1:770693421928:layer:Klayers-python38-pulp:1",
         "deployed_region": "ap-south-1"
@@ -485,24 +488,28 @@
     },
     {
         "package_version": "1.10.44",
+        "time_to_live": 1580263377,
         "package": "boto3",
         "layer_version_arn": "arn:aws:lambda:ap-south-1:770693421928:layer:Klayers-python38-boto3:3",
         "deployed_region": "ap-south-1"
     },
     {
         "package_version": "0.3.0",
+        "time_to_live": 1580263399,
         "package": "aws-lambda-powertools",
         "layer_version_arn": "arn:aws:lambda:ap-south-1:770693421928:layer:Klayers-python38-aws-lambda-powertools:3",
         "deployed_region": "ap-south-1"
     },
     {
         "package_version": "1.0.0rc2",
+        "time_to_live": 1580263395,
         "package": "pyqldb",
         "layer_version_arn": "arn:aws:lambda:ap-south-1:770693421928:layer:Klayers-python38-pyqldb:3",
         "deployed_region": "ap-south-1"
     },
     {
         "package_version": "2.4.3",
+        "time_to_live": 1580263393,
         "package": "aws-xray-sdk",
         "layer_version_arn": "arn:aws:lambda:ap-south-1:770693421928:layer:Klayers-python38-aws-xray-sdk:3",
         "deployed_region": "ap-south-1"
@@ -527,8 +534,57 @@
     },
     {
         "package_version": "2.2.3",
+        "time_to_live": 1580263658,
         "package": "spacy",
         "layer_version_arn": "arn:aws:lambda:ap-south-1:770693421928:layer:Klayers-python38-spacy:3",
+        "deployed_region": "ap-south-1"
+    },
+    {
+        "package_version": "4.8.2",
+        "package": "beautifulsoup4",
+        "layer_version_arn": "arn:aws:lambda:ap-south-1:770693421928:layer:Klayers-python38-beautifulsoup4:2",
+        "deployed_region": "ap-south-1"
+    },
+    {
+        "package_version": "2.4.6",
+        "package": "pyparsing",
+        "layer_version_arn": "arn:aws:lambda:ap-south-1:770693421928:layer:Klayers-python38-pyparsing:2",
+        "deployed_region": "ap-south-1"
+    },
+    {
+        "package_version": "1.10.45",
+        "package": "boto3",
+        "layer_version_arn": "arn:aws:lambda:ap-south-1:770693421928:layer:Klayers-python38-boto3:4",
+        "deployed_region": "ap-south-1"
+    },
+    {
+        "package_version": "2.4.3",
+        "package": "aws-xray-sdk",
+        "layer_version_arn": "arn:aws:lambda:ap-south-1:770693421928:layer:Klayers-python38-aws-xray-sdk:4",
+        "deployed_region": "ap-south-1"
+    },
+    {
+        "package_version": "1.0.0rc2",
+        "package": "pyqldb",
+        "layer_version_arn": "arn:aws:lambda:ap-south-1:770693421928:layer:Klayers-python38-pyqldb:4",
+        "deployed_region": "ap-south-1"
+    },
+    {
+        "package_version": "0.3.0",
+        "package": "aws-lambda-powertools",
+        "layer_version_arn": "arn:aws:lambda:ap-south-1:770693421928:layer:Klayers-python38-aws-lambda-powertools:4",
+        "deployed_region": "ap-south-1"
+    },
+    {
+        "package_version": "2.0",
+        "package": "pulp",
+        "layer_version_arn": "arn:aws:lambda:ap-south-1:770693421928:layer:Klayers-python38-pulp:2",
+        "deployed_region": "ap-south-1"
+    },
+    {
+        "package_version": "2.2.3",
+        "package": "spacy",
+        "layer_version_arn": "arn:aws:lambda:ap-south-1:770693421928:layer:Klayers-python38-spacy:4",
         "deployed_region": "ap-south-1"
     }
 ]

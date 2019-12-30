@@ -13,6 +13,7 @@
     },
     {
         "package_version": "4.8.1",
+        "time_to_live": 1580263222,
         "package": "beautifulsoup4",
         "layer_version_arn": "arn:aws:lambda:us-east-1:770693421928:layer:Klayers-python38-beautifulsoup4:1",
         "deployed_region": "us-east-1"
@@ -142,6 +143,7 @@
     },
     {
         "package_version": "2.4.5",
+        "time_to_live": 1580263223,
         "package": "pyparsing",
         "layer_version_arn": "arn:aws:lambda:us-east-1:770693421928:layer:Klayers-python38-pyparsing:1",
         "deployed_region": "us-east-1"
@@ -317,6 +319,7 @@
     },
     {
         "package_version": "2.0",
+        "time_to_live": 1580263249,
         "package": "pulp",
         "layer_version_arn": "arn:aws:lambda:us-east-1:770693421928:layer:Klayers-python38-pulp:1",
         "deployed_region": "us-east-1"
@@ -473,6 +476,7 @@
     },
     {
         "package_version": "0.3.0",
+        "time_to_live": 1580263235,
         "package": "aws-lambda-powertools",
         "layer_version_arn": "arn:aws:lambda:us-east-1:770693421928:layer:Klayers-python38-aws-lambda-powertools:3",
         "deployed_region": "us-east-1"
@@ -491,18 +495,21 @@
     },
     {
         "package_version": "1.10.44",
+        "time_to_live": 1580263232,
         "package": "boto3",
         "layer_version_arn": "arn:aws:lambda:us-east-1:770693421928:layer:Klayers-python38-boto3:3",
         "deployed_region": "us-east-1"
     },
     {
         "package_version": "2.4.3",
+        "time_to_live": 1580263234,
         "package": "aws-xray-sdk",
         "layer_version_arn": "arn:aws:lambda:us-east-1:770693421928:layer:Klayers-python38-aws-xray-sdk:3",
         "deployed_region": "us-east-1"
     },
     {
         "package_version": "1.0.0rc2",
+        "time_to_live": 1580263238,
         "package": "pyqldb",
         "layer_version_arn": "arn:aws:lambda:us-east-1:770693421928:layer:Klayers-python38-pyqldb:3",
         "deployed_region": "us-east-1"
@@ -527,8 +534,57 @@
     },
     {
         "package_version": "2.2.3",
+        "time_to_live": 1580263277,
         "package": "spacy",
         "layer_version_arn": "arn:aws:lambda:us-east-1:770693421928:layer:Klayers-python38-spacy:3",
+        "deployed_region": "us-east-1"
+    },
+    {
+        "package_version": "4.8.2",
+        "package": "beautifulsoup4",
+        "layer_version_arn": "arn:aws:lambda:us-east-1:770693421928:layer:Klayers-python38-beautifulsoup4:2",
+        "deployed_region": "us-east-1"
+    },
+    {
+        "package_version": "2.4.6",
+        "package": "pyparsing",
+        "layer_version_arn": "arn:aws:lambda:us-east-1:770693421928:layer:Klayers-python38-pyparsing:2",
+        "deployed_region": "us-east-1"
+    },
+    {
+        "package_version": "1.10.45",
+        "package": "boto3",
+        "layer_version_arn": "arn:aws:lambda:us-east-1:770693421928:layer:Klayers-python38-boto3:4",
+        "deployed_region": "us-east-1"
+    },
+    {
+        "package_version": "2.4.3",
+        "package": "aws-xray-sdk",
+        "layer_version_arn": "arn:aws:lambda:us-east-1:770693421928:layer:Klayers-python38-aws-xray-sdk:4",
+        "deployed_region": "us-east-1"
+    },
+    {
+        "package_version": "0.3.0",
+        "package": "aws-lambda-powertools",
+        "layer_version_arn": "arn:aws:lambda:us-east-1:770693421928:layer:Klayers-python38-aws-lambda-powertools:4",
+        "deployed_region": "us-east-1"
+    },
+    {
+        "package_version": "1.0.0rc2",
+        "package": "pyqldb",
+        "layer_version_arn": "arn:aws:lambda:us-east-1:770693421928:layer:Klayers-python38-pyqldb:4",
+        "deployed_region": "us-east-1"
+    },
+    {
+        "package_version": "2.0",
+        "package": "pulp",
+        "layer_version_arn": "arn:aws:lambda:us-east-1:770693421928:layer:Klayers-python38-pulp:2",
+        "deployed_region": "us-east-1"
+    },
+    {
+        "package_version": "2.2.3",
+        "package": "spacy",
+        "layer_version_arn": "arn:aws:lambda:us-east-1:770693421928:layer:Klayers-python38-spacy:4",
         "deployed_region": "us-east-1"
     }
 ]
