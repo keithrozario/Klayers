@@ -1,5 +1,5 @@
 blis==0.4.1
-catalogue==0.0.8
+catalogue==0.2.0
 certifi==2019.11.28
 chardet==3.0.4
 cymem==2.0.3
@@ -16,5 +16,5 @@ srsly==0.2.0
 thinc==7.3.1
 tqdm==4.41.0
 urllib3==1.25.7
-wasabi==0.4.2
+wasabi==0.5.0
 zipp==0.6.0
