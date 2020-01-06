@@ -130,6 +130,7 @@
     },
     {
         "package_version": "0.15.4",
+        "time_to_live": 1580868048,
         "package": "arrow",
         "layer_version_arn": "arn:aws:lambda:eu-west-1:770693421928:layer:Klayers-python38-arrow:1",
         "deployed_region": "eu-west-1"
@@ -186,6 +187,7 @@
     },
     {
         "package_version": "6.2.1",
+        "time_to_live": 1580868066,
         "package": "Pillow",
         "layer_version_arn": "arn:aws:lambda:eu-west-1:770693421928:layer:Klayers-python38-Pillow:1",
         "deployed_region": "eu-west-1"
@@ -434,6 +436,7 @@
     },
     {
         "package_version": "3.6.2",
+        "time_to_live": 1580868062,
         "package": "aiohttp",
         "layer_version_arn": "arn:aws:lambda:eu-west-1:770693421928:layer:Klayers-python38-aiohttp:3",
         "deployed_region": "eu-west-1"
@@ -464,6 +467,7 @@
     },
     {
         "package_version": "0.3.1",
+        "time_to_live": 1580868066,
         "package": "pytesseract",
         "layer_version_arn": "arn:aws:lambda:eu-west-1:770693421928:layer:Klayers-python38-pytesseract:2",
         "deployed_region": "eu-west-1"
@@ -489,6 +493,7 @@
     },
     {
         "package_version": "0.11.0",
+        "time_to_live": 1580868096,
         "package": "aiobotocore",
         "layer_version_arn": "arn:aws:lambda:eu-west-1:770693421928:layer:Klayers-python38-aiobotocore:3",
         "deployed_region": "eu-west-1"
@@ -553,24 +558,28 @@
     },
     {
         "package_version": "1.10.45",
+        "time_to_live": 1580868093,
         "package": "boto3",
         "layer_version_arn": "arn:aws:lambda:eu-west-1:770693421928:layer:Klayers-python38-boto3:4",
         "deployed_region": "eu-west-1"
     },
     {
         "package_version": "2.4.3",
+        "time_to_live": 1580868096,
         "package": "aws-xray-sdk",
         "layer_version_arn": "arn:aws:lambda:eu-west-1:770693421928:layer:Klayers-python38-aws-xray-sdk:4",
         "deployed_region": "eu-west-1"
     },
     {
         "package_version": "0.3.0",
+        "time_to_live": 1580868096,
         "package": "aws-lambda-powertools",
         "layer_version_arn": "arn:aws:lambda:eu-west-1:770693421928:layer:Klayers-python38-aws-lambda-powertools:4",
         "deployed_region": "eu-west-1"
     },
     {
         "package_version": "1.0.0rc2",
+        "time_to_live": 1580868098,
         "package": "pyqldb",
         "layer_version_arn": "arn:aws:lambda:eu-west-1:770693421928:layer:Klayers-python38-pyqldb:4",
         "deployed_region": "eu-west-1"
@@ -583,8 +592,69 @@
     },
     {
         "package_version": "2.2.3",
+        "time_to_live": 1580868237,
         "package": "spacy",
         "layer_version_arn": "arn:aws:lambda:eu-west-1:770693421928:layer:Klayers-python38-spacy:4",
+        "deployed_region": "eu-west-1"
+    },
+    {
+        "package_version": "0.15.5",
+        "package": "arrow",
+        "layer_version_arn": "arn:aws:lambda:eu-west-1:770693421928:layer:Klayers-python38-arrow:2",
+        "deployed_region": "eu-west-1"
+    },
+    {
+        "package_version": "3.6.2",
+        "package": "aiohttp",
+        "layer_version_arn": "arn:aws:lambda:eu-west-1:770693421928:layer:Klayers-python38-aiohttp:4",
+        "deployed_region": "eu-west-1"
+    },
+    {
+        "package_version": "7.0.0",
+        "package": "Pillow",
+        "layer_version_arn": "arn:aws:lambda:eu-west-1:770693421928:layer:Klayers-python38-Pillow:2",
+        "deployed_region": "eu-west-1"
+    },
+    {
+        "package_version": "0.3.1",
+        "package": "pytesseract",
+        "layer_version_arn": "arn:aws:lambda:eu-west-1:770693421928:layer:Klayers-python38-pytesseract:3",
+        "deployed_region": "eu-west-1"
+    },
+    {
+        "package_version": "1.10.46",
+        "package": "boto3",
+        "layer_version_arn": "arn:aws:lambda:eu-west-1:770693421928:layer:Klayers-python38-boto3:5",
+        "deployed_region": "eu-west-1"
+    },
+    {
+        "package_version": "2.4.3",
+        "package": "aws-xray-sdk",
+        "layer_version_arn": "arn:aws:lambda:eu-west-1:770693421928:layer:Klayers-python38-aws-xray-sdk:5",
+        "deployed_region": "eu-west-1"
+    },
+    {
+        "package_version": "0.11.1",
+        "package": "aiobotocore",
+        "layer_version_arn": "arn:aws:lambda:eu-west-1:770693421928:layer:Klayers-python38-aiobotocore:4",
+        "deployed_region": "eu-west-1"
+    },
+    {
+        "package_version": "0.3.0",
+        "package": "aws-lambda-powertools",
+        "layer_version_arn": "arn:aws:lambda:eu-west-1:770693421928:layer:Klayers-python38-aws-lambda-powertools:5",
+        "deployed_region": "eu-west-1"
+    },
+    {
+        "package_version": "1.0.0rc2",
+        "package": "pyqldb",
+        "layer_version_arn": "arn:aws:lambda:eu-west-1:770693421928:layer:Klayers-python38-pyqldb:5",
+        "deployed_region": "eu-west-1"
+    },
+    {
+        "package_version": "2.2.3",
+        "package": "spacy",
+        "layer_version_arn": "arn:aws:lambda:eu-west-1:770693421928:layer:Klayers-python38-spacy:5",
         "deployed_region": "eu-west-1"
     }
 ]
