@@ -1,4 +1,4 @@
-aiobotocore==0.11.0
+aiobotocore==0.11.1
 aiohttp==3.6.2
 async-generator==1.10
 async-timeout==3.0.1
@@ -8,7 +8,7 @@ chardet==3.0.4
 docutils==0.15.2
 idna==2.8
 jmespath==0.9.4
-multidict==4.7.2
+multidict==4.7.3
 python-dateutil==2.8.0
 six==1.13.0
 urllib3==1.25.7
