@@ -10,8 +10,8 @@ plac==1.1.3
 preshed==3.0.2
 requests==2.22.0
 spacy==2.2.3
-srsly==0.2.0
+srsly==1.0.0
 thinc==7.3.1
-tqdm==4.41.0
+tqdm==4.41.1
 urllib3==1.25.7
-wasabi==0.5.0
+wasabi==0.6.0
