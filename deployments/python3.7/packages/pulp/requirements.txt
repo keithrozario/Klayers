@@ -1,2 +1,2 @@
 PuLP==2.0
-pyparsing==2.4.5
+pyparsing==2.4.6
