@@ -50,6 +50,7 @@ python-Levenshtein-wheels,GPLv2+,Antti Haapala <antti@haapala.name>
 pytz,MIT,Stuart Bishop <stuart@stuartbishop.net>
 PyYAML,MIT,Kirril Simonov <xi@resolvent.net>
 requests,Apache-2.0,Kenneth Reitz <me@kennethreitz.org>
+reportlab,BSD,<reportlab-users@lists2.reportlab.com>
 simplejson,MIT,Bob Ippolito <bob@redivi.com>
 spacy,MIT,contact@explosion.ai
 SQLAlchemy,MIT,Mike Bayer <mike_mp@zzzcomputing.com>
