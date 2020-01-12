@@ -95,7 +95,7 @@ You can either set one of the ARNs below as a layer in your function. Or downloa
 
 Currently only the following regions have the layers deployed click the links for the full list of layer arns:
 
-| Region         |                         |                         |
+| Region         | ARNs                    | ARNs                    |
 | :------------- |:----------------------- |:----------------------- |
 ap-northeast-1|[python3.7](deployments/python3.7/arns/ap-northeast-1.json)|[python3.8](deployments/python3.8/arns/ap-northeast-1.json)
 ap-northeast-2|[python3.7](deployments/python3.7/arns/ap-northeast-2.json)|[python3.8](deployments/python3.8/arns/ap-northeast-2.json)
