@@ -3,11 +3,11 @@
   "description": "This directory contains the Serverless repository of lambda functions.",
   "version": "0.1.0",
   "dependencies": {
-    "serverless": "^1.49.0"
+    "serverless": "^1.60.5"
   },
   "devDependencies": {
-    "serverless-iam-roles-per-function": "^2.0.1",
-    "serverless-step-functions": "^2.3.0"
+    "serverless-iam-roles-per-function": "^2.0.2",
+    "serverless-step-functions": "^2.17.0"
   },
   "main": "index.js",
   "scripts": {
