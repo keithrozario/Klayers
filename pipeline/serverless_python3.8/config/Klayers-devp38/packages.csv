@@ -18,7 +18,6 @@ ffmpeg-python,Apache-2.0,Karl Kroening <karlk@kralnet.us>
 flashtext,MIT,Vikash Singh <vikash.duliajan@gmail.com>
 google-auth-oauthlib,Apache-2.0,Jon Wayne <jonwayne+google-auth@google.com>
 google-auth,MIT,Jon Wayne <jonwayne+google-auth@google.com>
-graphene, MIT, Syrus Akbary <me@syrusakbary.com>
 grpcio,Apache-2.0,GRPC Authors <grpc-io@googlegroups.com>
 gspread,MIT,Anton Burnashev <fuss.here@gmail.com>
 idna,https://github.com/kjd/idna/blob/master/LICENSE.rst,Kim Davis kim@cynosure.com.au
@@ -49,6 +48,7 @@ python-docx,MIT,Steve Canny <python-docx@googlegroups.com>
 python-Levenshtein-wheels,GPLv2+,Antti Haapala <antti@haapala.name>
 pytz,MIT,Stuart Bishop <stuart@stuartbishop.net>
 PyYAML,MIT,Kirril Simonov <xi@resolvent.net>
+records,ISC,<me@kennethreitz.org>
 requests,Apache-2.0,Kenneth Reitz <me@kennethreitz.org>
 reportlab,BSD,<reportlab-users@lists2.reportlab.com>
 simplejson,MIT,Bob Ippolito <bob@redivi.com>
