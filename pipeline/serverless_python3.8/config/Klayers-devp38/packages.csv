@@ -11,13 +11,13 @@ boltons,BSD,Mahmoud Hashemi <mahmoud@hatnote.com>
 boto3,Apache-2.0,AWS
 Cerberus, ISC, Frank Sachsenheim <funkyfuture@riseup.net>
 construct,MIT,Arkadiusz Bulski<arek.bulski@gmail.com>; Tomer Filiba <tomerfiliba@gmail.com>; Corbin Simpson <MostAwesomeDude@gmail.com>
+dynamodb-encryption-sdk,Apache-2.0,<aws-cryptools@amazon.com>
 elasticsearch,Apache-2.0,Honza Kral <honza.kral@gmail.com>; Nick Lang <nick@nicklang.com>
 envelopes,MIT,tomekwojcik <tomek@bthlabs.pl>
 ffmpeg-python,Apache-2.0,Karl Kroening <karlk@kralnet.us>
 flashtext,MIT,Vikash Singh <vikash.duliajan@gmail.com>
 google-auth-oauthlib,Apache-2.0,Jon Wayne <jonwayne+google-auth@google.com>
 google-auth,MIT,Jon Wayne <jonwayne+google-auth@google.com>
-graphene, MIT, Syrus Akbary <me@syrusakbary.com>
 grpcio,Apache-2.0,GRPC Authors <grpc-io@googlegroups.com>
 gspread,MIT,Anton Burnashev <fuss.here@gmail.com>
 idna,https://github.com/kjd/idna/blob/master/LICENSE.rst,Kim Davis kim@cynosure.com.au
@@ -30,9 +30,11 @@ nltk,Apache-2.0,Steven Bird <stevenbird1@gmail.com>
 numpy,https://www.numpy.org/license.html,numpy-discussion@python.org
 opencv-python-headless,MIT, Unknown
 openpyxl,MIT,Charlie Clark <charlie.clark@clark-consulting.eu>
+parliament,https://github.com/duo-labs/parliament/blob/master/LICENSE,<scott@summitroute.com>
 pandas,BSD,<pydata@googlegroups.com>
 Pillow,https://github.com/python-pillow/Pillow/blob/master/LICENSE,Alex Clark <aclark@aclark.net>
 pulp,https://github.com/coin-or/pulp/blob/master/LICENSE,<pulp@stuartmitchell.com>
+pycryptodome,Apache-2.0,<helderijs@gmail.com>
 PyJWT,MIT,Jose Padilla <hello@jpadilla.com>
 pymongo,Apache-2.0,Bernie Hackett <bernie@mongodb.com>
 PyMUPDF,AGPLv3+,Jorj Mckir <jorj.x.mckie@outlook.de>
@@ -46,8 +48,9 @@ python-docx,MIT,Steve Canny <python-docx@googlegroups.com>
 python-Levenshtein-wheels,GPLv2+,Antti Haapala <antti@haapala.name>
 pytz,MIT,Stuart Bishop <stuart@stuartbishop.net>
 PyYAML,MIT,Kirril Simonov <xi@resolvent.net>
+records,ISC,<me@kennethreitz.org>
 requests,Apache-2.0,Kenneth Reitz <me@kennethreitz.org>
-scipy,BSD,<scipy-dev@python.org>
+reportlab,BSD,<reportlab-users@lists2.reportlab.com>
 simplejson,MIT,Bob Ippolito <bob@redivi.com>
 spacy,MIT,contact@explosion.ai
 SQLAlchemy,MIT,Mike Bayer <mike_mp@zzzcomputing.com>

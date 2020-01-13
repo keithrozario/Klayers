@@ -2,10 +2,13 @@
 
 This directory contains the terraform scripts for deployment, and the corresponding variables.
 
-There are currently 3 workspaces:
+There are currently 6 workspaces:
 * Klayers-default
 * Klayers-dev
 * Klayers-prod
+* Klayers-defaultp38
+* Klayers-devp38
+* Klayers-prodp38
 
 All workspaces are configured for remote backends, hence all state files are stored on Terraform Cloud.
 
