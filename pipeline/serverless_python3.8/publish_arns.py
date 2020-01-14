@@ -3,6 +3,7 @@ import json
 import logging
 import decimal
 import csv
+import time
 
 from boto3.dynamodb.conditions import Key
 import boto3
@@ -32,14 +33,22 @@ def convert_to_csv(items):
       csv_body: body of the csv file to write out
     """
 
-    fieldnames = ['package', 'package_version', 'layer_version_arn']
+    fieldnames = ['package', 'package_version', 'layer_version_arn', 'time_to_live']
 
-    with open('tmp/packages.csv', 'w', newline='') as csvfile:
+    with open('/tmp/packages.csv', 'w', newline='') as csvfile:
 
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
 
         for item in items:
+
+            # convert datetime to human readable
+            try:
+                if item['time_to_live']:
+                    item['time_to_live'] = time.strftime('%d-%m-%Y', time.localtime(item['time_to_live']))
+            except KeyError:
+                pass
+
             writer.writerow(item)
 
     with open('/tmp/packages.csv', 'r') as csvfile:
@@ -60,7 +69,7 @@ def query_versions_table(region, table):
     kwargs = {
         "IndexName": "LayersPerRegion",
         "Select": "SPECIFIC_ATTRIBUTES",
-        "ProjectionExpression": "deployed_region, layer_version_arn, package, package_version, time_to_live",
+        "ProjectionExpression": "layer_version_arn, package, package_version, time_to_live",
         "KeyConditionExpression": Key('deployed_region').eq(region)
     }
     items = []
