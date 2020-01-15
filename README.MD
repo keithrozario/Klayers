@@ -17,11 +17,9 @@ Layers are built with the latest package version (available on PyPI) every Monda
 
 # Layer List
 
-All layers are publicly available with the following ARN pattern:
-
-arn:aws:lambda:\<**region**>:113088814899:layer:\<**Layer Name**>:\<**version**>
-
-Full list of publicly available layers by region are [here](deployments/).
+Layer list available for all regions here:
+ * [Python3.7](deployments/python3.7/arns)
+ * [Python3.8](deployments/python3.8/arns)
 
 # Python Packages
 
