@@ -2,8 +2,10 @@ import os
 import json
 import logging
 import decimal
-from boto3.dynamodb.conditions import Key
+import csv
+import time
 
+from boto3.dynamodb.conditions import Key
 import boto3
 
 import get_config
@@ -23,6 +25,40 @@ class DecimalEncoder(json.JSONEncoder):
         return super(DecimalEncoder, self).default(o)
 
 
+def convert_to_csv(items):
+    """
+    Args:
+      items: all arns in a region from the DynamoDB query as a list
+    returns:
+      csv_body: body of the csv file to write out
+    """
+
+    fieldnames = ['package', 'package_version', 'layer_version_arn', 'time_to_live']
+
+    sorted_items = sorted(items, key=lambda i: (i['package'].lower(), i['layer_version_arn']))
+
+    with open('/tmp/packages.csv', 'w', newline='') as csvfile:
+
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+
+        for item in sorted_items:
+
+            # convert datetime to human readable
+            try:
+                if item['time_to_live']:
+                    item['time_to_live'] = time.strftime('%d-%m-%Y', time.localtime(item['time_to_live']))
+            except KeyError:
+                pass
+
+            writer.writerow(item)
+
+    with open('/tmp/packages.csv', 'r') as csvfile:
+        csv_text = csvfile.read()
+
+    return csv_text
+
+
 def query_versions_table(region, table):
     """
     Args:
@@ -35,7 +71,7 @@ def query_versions_table(region, table):
     kwargs = {
         "IndexName": "LayersPerRegion",
         "Select": "SPECIFIC_ATTRIBUTES",
-        "ProjectionExpression": "deployed_region, layer_version_arn, package, package_version, time_to_live",
+        "ProjectionExpression": "layer_version_arn, package, package_version, time_to_live",
         "KeyConditionExpression": Key('deployed_region').eq(region)
     }
     items = []
@@ -69,12 +105,12 @@ def main(event, context):
 
         items = query_versions_table(table=table,
                                      region=region)
-        arns = json.dumps(items, cls=DecimalEncoder, indent=4)
+        arns = convert_to_csv(items)
 
         logger.info(f"Uploading to S3 Bucket")
         client = boto3.client('s3')
         client.put_object(Body=arns.encode('utf-8'),
                           Bucket=bucket,
-                          Key=f'arns/{region}.json')
+                          Key=f'arns/{region}.csv')
 
     return {"status": "Done"}
