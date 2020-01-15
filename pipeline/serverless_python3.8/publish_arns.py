@@ -35,12 +35,14 @@ def convert_to_csv(items):
 
     fieldnames = ['package', 'package_version', 'layer_version_arn', 'time_to_live']
 
+    sorted_items = sorted(items, key=lambda i: (i['package'].lower(), i['layer_version_arn']))
+
     with open('/tmp/packages.csv', 'w', newline='') as csvfile:
 
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
 
-        for item in items:
+        for item in sorted_items:
 
             # convert datetime to human readable
             try:
