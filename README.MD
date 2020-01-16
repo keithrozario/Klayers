@@ -11,19 +11,17 @@ A collection of AWS Lambda Layers for Python3.7 & Python3.8
 
 [![Updates](https://pyup.io/repos/github/keithrozario/Klayers/shield.svg)](https://pyup.io/repos/github/keithrozario/Klayers/)
 
-Click on badge above to see the specific package version of the latest builds. 
+Click on badge above to see the specific package version of the latest builds.
 
-Layers are built with the latest package version (available on PyPI) every Monday at 1am (python 3.7) and 2am (python3.8) UTC.
+Layers are built with the latest package version (available on PyPI) every Monday by 2am UTC.
 
 # Layer List
 
-Layer list available for all regions here:
+List of all layer version are available by region here:
  * [Python3.7](deployments/python3.7/arns)
  * [Python3.8](deployments/python3.8/arns)
 
 # Python Packages
-
-All packages below were built with the Python 3.7 runtime. May (or may not) work with Python 3.6. View [here](https://pyup.io/repos/github/keithrozario/Klayers/) for detail list of package versions.
 
 | Package        | Python3.7               | Python3.8               |
 | :------------- |:----------------------- |:----------------------- |
@@ -93,26 +91,26 @@ You can either set one of the ARNs below as a layer in your function. Or downloa
 
 Currently only the following regions have the layers deployed click the links for the full list of layer arns:
 
-| Region         | ARNs                    | ARNs                    |
+| Region         | Python3.7                   | Python3.8                    |
 | :------------- |:----------------------- |:----------------------- |
-ap-northeast-1|[python3.7](deployments/python3.7/arns/ap-northeast-1.csv)|[python3.8](deployments/python3.8/arns/ap-northeast-1.csv)
-ap-northeast-2|[python3.7](deployments/python3.7/arns/ap-northeast-2.csv)|[python3.8](deployments/python3.8/arns/ap-northeast-2.csv)
-ap-south-1|[python3.7](deployments/python3.7/arns/ap-south-1.csv)|[python3.8](deployments/python3.8/arns/ap-south-1.csv)
-ap-southeast-1|[python3.7](deployments/python3.7/arns/ap-southeast-1.csv)|[python3.8](deployments/python3.8/arns/ap-southeast-1.csv)
-ap-southeast-1|[python3.7](deployments/python3.7/arns/ap-southeast-2.csv)|[python3.8](deployments/python3.8/arns/ap-southeast-2.csv)
-ca-central-1|[python3.7](deployments/python3.7/arns/ca-central-1.csv)|[python3.8](deployments/python3.8/arns/ca-central-1.csv)
-eu-central-1|[python3.7](deployments/python3.7/arns/eu-central-1.csv)|[python3.8](deployments/python3.8/arns/eu-central-1.csv)
-eu-north-1|[python3.7](deployments/python3.7/arns/eu-north-1.csv)|[python3.8](deployments/python3.8/arns/eu-north-1.csv)
-eu-west-1|[python3.7](deployments/python3.7/arns/eu-west-1.csv)|[python3.8](deployments/python3.8/arns/eu-west-1.csv)
-eu-west-2|[python3.7](deployments/python3.7/arns/eu-west-2.csv)|[python3.8](deployments/python3.8/arns/eu-west-2.csv)
-eu-west-3|[python3.7](deployments/python3.7/arns/eu-west-3.csv)|[python3.8](deployments/python3.8/arns/eu-west-3.csv)
-sa-east-1|[python3.7](deployments/python3.7/arns/sa-east-1.csv)|[python3.8](deployments/python3.8/arns/sa-east-1.csv)
-us-east-1|[python3.7](deployments/python3.7/arns/us-east-1.csv)|[python3.8](deployments/python3.8/arns/us-east-1.csv)
-us-east-2|[python3.7](deployments/python3.7/arns/us-east-2.csv)|[python3.8](deployments/python3.8/arns/us-east-2.csv)
-us-west-1|[python3.7](deployments/python3.7/arns/us-west-1.csv)|[python3.8](deployments/python3.8/arns/us-west-1.csv)
-us-west-2|[python3.7](deployments/python3.7/arns/us-west-2.csv)|[python3.8](deployments/python3.8/arns/us-west-2.csv)
-ap-east-1|[python3.7](deployments/python3.7/arns/ap-east-1.csv)|[python3.8](deployments/python3.8/arns/ap-east-1.csv)
-me-south-1|[python3.7](deployments/python3.7/arns/me-south-1.csv)|[python3.8](deployments/python3.8/arns/me-south-1.csv)
+ap-northeast-1|[arns](deployments/python3.7/arns/ap-northeast-1.csv)|[arns](deployments/python3.8/arns/ap-northeast-1.csv)
+ap-northeast-2|[arns](deployments/python3.7/arns/ap-northeast-2.csv)|[arns](deployments/python3.8/arns/ap-northeast-2.csv)
+ap-south-1|[arns](deployments/python3.7/arns/ap-south-1.csv)|[arns](deployments/python3.8/arns/ap-south-1.csv)
+ap-southeast-1|[arns](deployments/python3.7/arns/ap-southeast-1.csv)|[arns](deployments/python3.8/arns/ap-southeast-1.csv)
+ap-southeast-1|[arns](deployments/python3.7/arns/ap-southeast-2.csv)|[arns](deployments/python3.8/arns/ap-southeast-2.csv)
+ca-central-1|[arns](deployments/python3.7/arns/ca-central-1.csv)|[arns](deployments/python3.8/arns/ca-central-1.csv)
+eu-central-1|[arns](deployments/python3.7/arns/eu-central-1.csv)|[arns](deployments/python3.8/arns/eu-central-1.csv)
+eu-north-1|[arns](deployments/python3.7/arns/eu-north-1.csv)|[arns](deployments/python3.8/arns/eu-north-1.csv)
+eu-west-1|[arns](deployments/python3.7/arns/eu-west-1.csv)|[arns](deployments/python3.8/arns/eu-west-1.csv)
+eu-west-2|[arns](deployments/python3.7/arns/eu-west-2.csv)|[arns](deployments/python3.8/arns/eu-west-2.csv)
+eu-west-3|[arns](deployments/python3.7/arns/eu-west-3.csv)|[arns](deployments/python3.8/arns/eu-west-3.csv)
+sa-east-1|[arns](deployments/python3.7/arns/sa-east-1.csv)|[arns](deployments/python3.8/arns/sa-east-1.csv)
+us-east-1|[arns](deployments/python3.7/arns/us-east-1.csv)|[arns](deployments/python3.8/arns/us-east-1.csv)
+us-east-2|[arns](deployments/python3.7/arns/us-east-2.csv)|[arns](deployments/python3.8/arns/us-east-2.csv)
+us-west-1|[arns](deployments/python3.7/arns/us-west-1.csv)|[arns](deployments/python3.8/arns/us-west-1.csv)
+us-west-2|[arns](deployments/python3.7/arns/us-west-2.csv)|[arns](deployments/python3.8/arns/us-west-2.csv)
+ap-east-1|[arns](deployments/python3.7/arns/ap-east-1.csv)|[arns](deployments/python3.8/arns/ap-east-1.csv)
+me-south-1|[arns](deployments/python3.7/arns/me-south-1.csv)|[arns](deployments/python3.8/arns/me-south-1.csv)
 
 ## Download copy of layer
 
@@ -120,20 +118,21 @@ me-south-1|[python3.7](deployments/python3.7/arns/me-south-1.csv)|[python3.8](de
 
 ## Layer expiry
 
-Some layers will have a `time_to_live` field. This is the UNIX epoch time for when that layer will be deleted, typically this will be 30 days after a new version is deployed. If you use the latest version of a package, it'll be up for at least 30 days before deletion.
+Some layer versions will have a `time_to_live` field. This is the date for when the layers will be deleted.
+
+All functions deployed with a layer will still work indefinitely, but you won't be able to deploy new functions referencing a deleted layer version.
 
 ## Binaries
 
-Special hand-crafted binaries for layers. These layers are not automatically built, and hence slower update cycles.
+Special hand-crafted binaries for layers. These layers are not automatically built, and hence slower update cycles, and will only work with python3.7 functions as the underlying OS is Amazon Linux 1.
 
 | Package        | ARN                                                                             | Version    |         
 | :------------- |:------------------------------------------------------------------------------- | ---------- | 
-| tesseract      | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-tesseract:1            | 4.1.0-rc1<sup>1</sup>|
+| tesseract      | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-tesseract:1      | 4.1.0-rc1<sup>1</sup>|
 | pip            | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pip:2            | 19.2.1     |
 | netcat         | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-netcat:2         | 0.7.1<sup>2</sup>|
 
 <sup>1</sup> Includes leptonica-1.76.0, libjpeg 6b (libjpeg-turbo 1.2.90) : libpng 1.2.49 : libtiff 4.0.3 : zlib 1.2.8 : libwebp 0.3.0
-
 <sup>2</sup> netcat-traditional with the -e option -- compiled for 64-bit to run on AWS Lambda
 
 # Architecture Diagram
