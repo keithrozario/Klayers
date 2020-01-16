@@ -7,81 +7,81 @@
 
 A collection of AWS Lambda Layers for Python3.7 & Python3.8
 
+# Python Packages
+
+The following PyPi packages are available for both Python3.7 & Python3.8 unless otherwise stated:
+
+* aiobotocore
+* aiodns (Python3.7 only)
+* aiohttp
+* ansible
+* aws-lambda-powertools (Python3.8 only)
+* arrow
+* aws-xray-sdk
+* bcrypt
+* beautifulsoup4
+* boltons
+* boto3
+* construct
+* dynamodb-encryption-sdk (Python3.8 only)
+* elasticsearch
+* envelopes
+* ffmpeg-python
+* flashtext
+* google-auth
+* google-auth-oauthlib
+* graphene (Python3.7 only)
+* grequests (Python3.7 only)
+* grpcio
+* gspread
+* idna
+* itsdangerous
+* kafka-python
+* nltk
+* numpy
+* opencv-python-headless
+* openpyxl
+* pandas
+* parliament (Python3.8 only)
+* Pillow
+* pulp
+* pycryptodome (Python3.8 only)
+* PyJWT
+* pymongo
+* PyMUPDF
+* PyMySQL
+* PyNaCl
+* pyOpenSSL
+* pyparsing
+* pyqldb
+* pytesseract
+* python-docx
+* python-Levenshtein
+* pytz
+* PyYAML
+* reportlab (Python3.8 only)
+* requests
+* scipy (Python3.7 only)
+* simplejson
+* spacy
+* SQLAlchemy
+* textdistance
+* tinydb
+* tldextract
+
+# Layer List
+
+List of all layer version arns are available by region here:
+ * [Python3.7](deployments/python3.7/arns)
+ * [Python3.8](deployments/python3.8/arns)
+
 # Status of layers
 
 [![Updates](https://pyup.io/repos/github/keithrozario/Klayers/shield.svg)](https://pyup.io/repos/github/keithrozario/Klayers/)
 
 Click on badge above to see the specific package version of the latest builds.
 
-Layers are built with the latest package version (available on PyPI) every Monday by 2am UTC.
-
-# Layer List
-
-List of all layer version are available by region here:
- * [Python3.7](deployments/python3.7/arns)
- * [Python3.8](deployments/python3.8/arns)
-
-# Python Packages
-
-| Package        | Python3.7               | Python3.8               |
-| :------------- |:----------------------- |:----------------------- |
-aiobotocore|✅|✅
-aiodns|✅|
-aiohttp|✅|✅
-ansible|✅|✅
-aws-lambda-powertools||✅
-arrow|✅|✅
-aws-xray-sdk|✅|✅
-bcrypt|✅|✅
-beautifulsoup4|✅|✅
-boltons|✅|✅
-boto3|✅|✅
-construct|✅|✅
-dynamodb-encryption-sdk||✅
-elasticsearch|✅|✅
-envelopes|✅|✅
-ffmpeg-python|✅|✅
-flashtext|✅|✅
-google-auth|✅|✅
-google-auth-oauthlib|✅|✅
-graphene|✅|
-grequests|✅|
-grpcio|✅|✅
-gspread|✅|✅
-idna|✅|✅
-itsdangerous|✅|✅
-kafka-python|✅|✅
-nltk|✅|✅
-numpy|✅|✅
-opencv-python-headless|✅|✅
-openpyxl|✅|✅
-pandas|✅|✅
-parliament||✅
-Pillow|✅|✅
-pulp|✅|✅
-pycryptodome||✅
-PyJWT|✅|✅
-pymongo|✅|✅
-PyMUPDF|✅|✅
-PyMySQL|✅|✅
-PyNaCl|✅|✅
-pyOpenSSL|✅|✅
-pyparsing|✅|✅
-pyqldb|✅|✅
-pytesseract|✅|✅
-python-docx|✅|✅
-python-Levenshtein|✅|✅
-pytz|✅|✅
-PyYAML|✅|✅
-reportlab||✅
-requests|✅|✅
-scipy|✅|
-simplejson|✅|✅
-spacy|✅|✅
-SQLAlchemy|✅|✅
-textdistance|✅|✅
-tinydb|✅|✅
-tldextract|✅|✅
+Layers are built with the latest package version (available on PyPI) every Monday 2am UTC.
 
 # Using the Layers
 
@@ -89,28 +89,26 @@ You can either set one of the ARNs below as a layer in your function. Or downloa
 
 ## Set ARN as layer
 
-Currently only the following regions have the layers deployed click the links for the full list of layer arns:
+Currently only the following regions have the layers deployed, use the arn to include layer into your lambda function.
 
-| Region         | Python3.7                   | Python3.8                    |
-| :------------- |:----------------------- |:----------------------- |
-ap-northeast-1|[arns](deployments/python3.7/arns/ap-northeast-1.csv)|[arns](deployments/python3.8/arns/ap-northeast-1.csv)
-ap-northeast-2|[arns](deployments/python3.7/arns/ap-northeast-2.csv)|[arns](deployments/python3.8/arns/ap-northeast-2.csv)
-ap-south-1|[arns](deployments/python3.7/arns/ap-south-1.csv)|[arns](deployments/python3.8/arns/ap-south-1.csv)
-ap-southeast-1|[arns](deployments/python3.7/arns/ap-southeast-1.csv)|[arns](deployments/python3.8/arns/ap-southeast-1.csv)
-ap-southeast-1|[arns](deployments/python3.7/arns/ap-southeast-2.csv)|[arns](deployments/python3.8/arns/ap-southeast-2.csv)
-ca-central-1|[arns](deployments/python3.7/arns/ca-central-1.csv)|[arns](deployments/python3.8/arns/ca-central-1.csv)
-eu-central-1|[arns](deployments/python3.7/arns/eu-central-1.csv)|[arns](deployments/python3.8/arns/eu-central-1.csv)
-eu-north-1|[arns](deployments/python3.7/arns/eu-north-1.csv)|[arns](deployments/python3.8/arns/eu-north-1.csv)
-eu-west-1|[arns](deployments/python3.7/arns/eu-west-1.csv)|[arns](deployments/python3.8/arns/eu-west-1.csv)
-eu-west-2|[arns](deployments/python3.7/arns/eu-west-2.csv)|[arns](deployments/python3.8/arns/eu-west-2.csv)
-eu-west-3|[arns](deployments/python3.7/arns/eu-west-3.csv)|[arns](deployments/python3.8/arns/eu-west-3.csv)
-sa-east-1|[arns](deployments/python3.7/arns/sa-east-1.csv)|[arns](deployments/python3.8/arns/sa-east-1.csv)
-us-east-1|[arns](deployments/python3.7/arns/us-east-1.csv)|[arns](deployments/python3.8/arns/us-east-1.csv)
-us-east-2|[arns](deployments/python3.7/arns/us-east-2.csv)|[arns](deployments/python3.8/arns/us-east-2.csv)
-us-west-1|[arns](deployments/python3.7/arns/us-west-1.csv)|[arns](deployments/python3.8/arns/us-west-1.csv)
-us-west-2|[arns](deployments/python3.7/arns/us-west-2.csv)|[arns](deployments/python3.8/arns/us-west-2.csv)
-ap-east-1|[arns](deployments/python3.7/arns/ap-east-1.csv)|[arns](deployments/python3.8/arns/ap-east-1.csv)
-me-south-1|[arns](deployments/python3.7/arns/me-south-1.csv)|[arns](deployments/python3.8/arns/me-south-1.csv)
+* us-east-1,US East (N. Virginia)
+* us-east-2,US East (Ohio)
+* us-west-1,US West (N. California)
+* us-west-2,US West (Oregon)
+* ca-central-1,Canada (Central)
+* eu-central-1,EU (Frankfurt)
+* eu-west-1,EU (Ireland)
+* eu-west-2,EU (London)
+* eu-west-3,EU (Paris)
+* eu-north-1,EU (Stockholm)
+* ap-northeast-1,Asia Pacific (Tokyo)
+* ap-northeast-2,Asia Pacific (Seoul)
+* ap-southeast-1,Asia Pacific (Singapore)
+* ap-southeast-2,Asia Pacific (Sydney)
+* ap-south-1,Asia Pacific (Mumbai)
+* sa-east-1,South America (São Paulo)
+* ap-east-1, Asia Pacific (Hong Kong)
+* me-south-1, Middle East (Bahrain)
 
 ## Download copy of layer
 
