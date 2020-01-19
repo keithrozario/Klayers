@@ -1,3 +1,4 @@
+#@IgnoreInspection BashAddShebang
 handler () {
     set -e
 
