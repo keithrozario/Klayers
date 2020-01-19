@@ -29,11 +29,9 @@ custom:
   lambdaPrefix: ${ssm:/${self:service.name}/${self:provider.stage}/lambda_prefix}
   pipelineName: ${self:service.name}-${self:provider.stage}-pipeline
 
-  # Parameter **name** for the KEK used for Github SSH Key
-  kekParameter: /${self:service.name}/${self:provider.stage}/ssh_kek
+  # Github
+  githubSSHKeyParameter: /${self:service.name}/${self:provider.stage}/github_ssh_key
   githubRepo: ${ssm:/${self:service.name}/${self:provider.stage}/github_repo}
-  s3KeysName: ${ssm:/${self:service.name}/${self:provider.stage}/s3bucket_keys}
-  s3KeysArn: ${ssm:/${self:service.name}/${self:provider.stage}/s3bucket_keys_arn}
 
 functions:
 
@@ -172,8 +170,7 @@ functions:
     timeout: 600
     environment:
       GITHUB_REPO: ${self:custom.githubRepo}
-      KEK_PARAMETER: ${self:custom.kekParameter}
-      S3_KEYS: ${self:custom.s3KeysName}
+      GITHUB_KEY: ${self:custom.githubSSHKeyParameter}
       BUCKET_NAME: ${self:custom.s3LayersName}
     iamRoleStatementsName: ${self:provider.stage}-publish_github
     iamRoleStatements:
@@ -195,11 +192,7 @@ functions:
             - - arn:aws:ssm
               - ${self:provider.region}
               - Ref: AWS::AccountId
-              - parameter${self:custom.kekParameter}
-      - Effect: Allow
-        Action:
-        - s3:GetObject
-        Resource: ${self:custom.s3KeysArn}/*
+              - parameter${self:custom.githubSSHKeyParameter}
     layers:
       - arn:aws:lambda:${self:provider.region}:744348701589:layer:bash:8
 
