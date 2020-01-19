@@ -3,7 +3,11 @@ handler () {
     set -e
 
     SSH_KEY_DIR=/tmp/.ssh
+    SSH_KEY_FILE=/tmp/.ssh/id_ecdsa
     KNOWN_HOSTS_FILE=/tmp/.ssh/known_hosts
+
+    PACKAGE_DIR=deployments/python3.8/packages
+    ARNS_DIR=deployments/python3.8/arns
 
     if [ ! -d $SSH_KEY_DIR ];
     then
@@ -13,21 +17,16 @@ handler () {
         mkdir $SSH_KEY_DIR
     fi
 
-    # Get encrypted key file
-    aws s3 cp s3://$S3_KEYS/github_id_rsa.enc /tmp/.ssh/github_id_rsa.enc
-
-    # get key encrypting key
-    KEK_SSM_RESPONSE=$(aws ssm get-parameter --name $KEK_PARAMETER)
-    KEK=$(jq -r '.Parameter.Value' <<< "${KEK_SSM_RESPONSE}")
-    openssl aes-256-cbc -d -in /tmp/.ssh/github_id_rsa.enc -out /tmp/.ssh/github_id_rsa -k $KEK -md sha256
-    chmod 400 /tmp/.ssh/github_id_rsa
+    # Get keyfile
+    aws ssm get-parameter --name $GITHUB_KEY --with-decryption  --output text --query Parameter.Value >> $SSH_KEY_FILE
+    chmod 400 $SSH_KEY_FILE
 
     # Add github to known host file
     ssh-keyscan github.com >> /tmp/.ssh/known_hosts 2>&1
 
     # Setup ssh-agent
     eval `ssh-agent -s`
-    ssh-add /tmp/.ssh/github_id_rsa 2>&1
+    ssh-add $SSH_KEY_FILE 2>&1
 
     # Point git to known hosts and key files
     export GIT_SSH="/tmp"
@@ -59,8 +58,13 @@ handler () {
 
 	# Checkout and push
 	cd /tmp/$REPO_NAME
-	aws s3 cp s3://$BUCKET_NAME/arns deployments/python3.8/arns --recursive
-	aws s3 cp s3://$BUCKET_NAME/packages deployments/python3.8/packages --recursive
+
+	rm -rf $ARNS_DIR && mkdir $ARNS_DIR
+	aws s3 cp s3://$BUCKET_NAME/arns $ARNS_DIR --recursive
+
+    rm -rf $PACKAGE_DIR && mkdir $PACKAGE_DIR
+	aws s3 cp s3://$BUCKET_NAME/packages $PACKAGE_DIR --recursive
+
 	git add -A
 
 	if [ -n "$(git status --porcelain)" ];
@@ -73,6 +77,6 @@ handler () {
     fi
 
 	# delete ssh key from execution context!!
-	rm -rf /tmp/.ssh/
-    echo "Done" >&2
+	rm -rf $SSH_KEY_DIR
+    echo "{\"status\":\"done\"}" >&2
 }
