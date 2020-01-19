@@ -52,9 +52,11 @@ records,ISC,<me@kennethreitz.org>
 requests,Apache-2.0,Kenneth Reitz <me@kennethreitz.org>
 reportlab,BSD,<reportlab-users@lists2.reportlab.com>
 simplejson,MIT,Bob Ippolito <bob@redivi.com>
+slackclient,MIT,slack <opensource@slack.com>
 spacy,MIT,contact@explosion.ai
 SQLAlchemy,MIT,Mike Bayer <mike_mp@zzzcomputing.com>
 tablib, MIT, Kenneth Reitz <me@kennethreitz.org>
 textdistance,MIT, orsinium <master_fess@mail.ru>
 tinydb,MIT,Markus Siemens <markus@m-siemens.de>
 tldextract,BSD,John Kurkowski <john.kurkowski@gmail.com>
+twilio,MIT,twilio <help@twilio.com>
