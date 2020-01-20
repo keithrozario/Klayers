@@ -1,6 +1,6 @@
 attrs==19.3.0
-boto3==1.11.0
-botocore==1.14.0
+boto3==1.11.5
+botocore==1.14.5
 cffi==1.13.2
 cryptography==2.8
 docutils==0.15.2
@@ -8,6 +8,6 @@ dynamodb-encryption-sdk==1.2.0
 jmespath==0.9.4
 pycparser==2.19
 python-dateutil==2.8.1
-s3transfer==0.3.0
-six==1.13.0
+s3transfer==0.3.1
+six==1.14.0
 urllib3==1.25.7
