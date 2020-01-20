@@ -1,2 +1,2 @@
-elasticsearch==7.1.0
+elasticsearch==7.5.1
 urllib3==1.25.7

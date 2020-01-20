@@ -1,8 +1,9 @@
 certifi==2019.11.28
 chardet==3.0.4
 idna==2.8
+PyJWT==1.7.1
+pytz==2019.3
 requests==2.22.0
-requests-file==1.4.3
 six==1.14.0
-tldextract==2.2.2
+twilio==6.35.2
 urllib3==1.25.7
