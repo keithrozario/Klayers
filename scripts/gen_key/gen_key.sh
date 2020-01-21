@@ -4,8 +4,8 @@ ssh-keygen -t ecdsa -a 500 -b 521 -C keith+klayersbot@keithrozario.com -f "id_ec
 
 REGION=us-east-2
 PARAMETER_NAME=github_ssh_key
-STAGE=Klayers-prodp38
-PROFILE=KlayersProdP38
+STAGE=Klayers-prod
+PROFILE=KlayersAccount
 
 aws ssm put-parameter \
         --region $REGION \
