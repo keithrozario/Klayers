@@ -91,22 +91,22 @@ You can either set one of the ARNs below as a layer in your function. Or downloa
 
 Currently only the following regions have the layers deployed, use the arn to include layer into your lambda function.
 
-* us-east-1,US East (N. Virginia)
-* us-east-2,US East (Ohio)
-* us-west-1,US West (N. California)
-* us-west-2,US West (Oregon)
-* ca-central-1,Canada (Central)
-* eu-central-1,EU (Frankfurt)
-* eu-west-1,EU (Ireland)
-* eu-west-2,EU (London)
-* eu-west-3,EU (Paris)
-* eu-north-1,EU (Stockholm)
-* ap-northeast-1,Asia Pacific (Tokyo)
-* ap-northeast-2,Asia Pacific (Seoul)
-* ap-southeast-1,Asia Pacific (Singapore)
-* ap-southeast-2,Asia Pacific (Sydney)
-* ap-south-1,Asia Pacific (Mumbai)
-* sa-east-1,South America (São Paulo)
+* us-east-1, US East (N. Virginia)
+* us-east-2, US East (Ohio)
+* us-west-1, US West (N. California)
+* us-west-2, US West (Oregon)
+* ca-central-1, Canada (Central)
+* eu-central-1, EU (Frankfurt)
+* eu-west-1, EU (Ireland)
+* eu-west-2, EU (London)
+* eu-west-3, EU (Paris)
+* eu-north-1, EU (Stockholm)
+* ap-northeast-1, Asia Pacific (Tokyo)
+* ap-northeast-2, Asia Pacific (Seoul)
+* ap-southeast-1, Asia Pacific (Singapore)
+* ap-southeast-2, Asia Pacific (Sydney)
+* ap-south-1, Asia Pacific (Mumbai)
+* sa-east-1, South America (São Paulo)
 * ap-east-1, Asia Pacific (Hong Kong)
 * me-south-1, Middle East (Bahrain)
 
@@ -131,6 +131,7 @@ Special hand-crafted binaries for layers. These layers are not automatically bui
 | netcat         | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-netcat:2         | 0.7.1<sup>2</sup>|
 
 <sup>1</sup> Includes leptonica-1.76.0, libjpeg 6b (libjpeg-turbo 1.2.90) : libpng 1.2.49 : libtiff 4.0.3 : zlib 1.2.8 : libwebp 0.3.0
+
 <sup>2</sup> netcat-traditional with the -e option -- compiled for 64-bit to run on AWS Lambda
 
 # Architecture Diagram
