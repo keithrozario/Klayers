@@ -1,4 +1,4 @@
-ansible==2.9.3
+ansible==2.9.4
 cffi==1.13.2
 cryptography==2.8
 Jinja2==2.10.3

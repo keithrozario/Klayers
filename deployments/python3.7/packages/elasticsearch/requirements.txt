@@ -1,2 +1,2 @@
 elasticsearch==7.5.1
-urllib3==1.25.7
+urllib3==1.25.8
