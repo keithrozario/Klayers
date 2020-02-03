@@ -252,8 +252,8 @@ functions:
           arn: ${self:custom.dbLayersStreamArn}
           batchSize: 10
 
-  slack_notification:
-    handler: slack_notification.slack_notification
+  slack_pipeline:
+    handler: slack_notification.slack_notification_pipeline
     runtime: python3.8
     timeout: 20
     memorySize: 256
@@ -261,7 +261,7 @@ functions:
       SLACK_TOKEN_PARAMETER: ${self:custom.slackTokenParameter}
       POWERTOOLS_SERVICE_NAME: "Slack"
       LOG_LEVEL: "INFO"
-    iamRoleStatementsName: ${self:provider.stage}-slack_notifications
+    iamRoleStatementsName: ${self:provider.stage}-slack_pipeline
     iamRoleStatements:
       - Effect: Allow
         Action:
@@ -379,6 +379,17 @@ stepFunctions:
             Type: Fail
             Error: DeployFailure
             Cause: Unknown
+      notifications:
+        ABORTED:
+          - lambda:
+              Fn::GetAtt: [SlackUnderscorepipelineLambdaFunction, Arn]
+        FAILED:
+          - lambda:
+              Fn::GetAtt: [SlackUnderscorepipelineLambdaFunction, Arn]
+        TIMED_OUT:
+          - lambda:
+              Fn::GetAtt: [SlackUnderscorepipelineLambdaFunction, Arn]
+
 
     publish:
       name: ${self:custom.pipelineName}-publish
