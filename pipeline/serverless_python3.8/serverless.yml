@@ -32,6 +32,10 @@ custom:
   # Github
   githubSSHKeyParameter: /${self:service.name}/${self:provider.stage}/github_ssh_key
   githubRepo: ${ssm:/${self:service.name}/${self:provider.stage}/github_repo}
+  
+  # Slack
+  slackTokenParameter: /${self:service.name}/${self:provider.stage}/slack_token
+  
 
 functions:
 
@@ -247,6 +251,31 @@ functions:
           type: dynamodb
           arn: ${self:custom.dbLayersStreamArn}
           batchSize: 10
+
+  slack_notification:
+    handler: slack_notification.slack_notification
+    runtime: python3.8
+    timeout: 20
+    memorySize: 256
+    environment:
+      SLACK_TOKEN_PARAMETER: ${self:custom.slackTokenParameter}
+      POWERTOOLS_SERVICE_NAME: "Slack"
+      LOG_LEVEL: "INFO"
+    iamRoleStatementsName: ${self:provider.stage}-slack_notifications
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - ssm:GetParameter
+        Resource:
+          Fn::Join:
+            - ":"
+            - - arn:aws:ssm
+              - ${self:provider.region}
+              - Ref: AWS::AccountId
+              - parameter${self:custom.slackTokenParameter}
+    layers:
+      - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-slackclient:1
+      - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:8
 
 stepFunctions:
   stateMachines:
