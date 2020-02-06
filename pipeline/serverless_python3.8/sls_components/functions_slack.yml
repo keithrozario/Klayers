@@ -34,7 +34,7 @@ slack_publish:
     SLACK_TOKEN_PARAMETER: ${self:custom.slackTokenParameter}
     POWERTOOLS_SERVICE_NAME: "Slack"
     LOG_LEVEL: "INFO"
-  iamRoleStatementsName: ${self:provider.stage}-slack_pipeline
+  iamRoleStatementsName: ${self:provider.stage}-slack_publish
   iamRoleStatements:
     - Effect: Allow
       Action:
