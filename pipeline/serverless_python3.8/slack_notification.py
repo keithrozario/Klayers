@@ -22,25 +22,7 @@ client = slack.WebClient(token=slack_token)
 
 
 @logger_inject_lambda_context
-def slack_notification_test(event, context):
-
-    message = event['message']
-
-    status = post_to_slack(message=message,
-                           channel=channel)
-
-    if status:
-        logger.info(f"Successfully posted {message} to {channel}")
-        status = "Success"
-    else:
-        logger.error(f"Failed to post Message:{message} to Channel:#{channel}")
-        status = "Failed"
-
-    return json.dumps({"status": status})
-
-
-@logger_inject_lambda_context
-def slack_notification_pipeline(event, context):
+def slack_notification_pipeline_error(event, context):
 
     """
     Post error messages for various failed statuses of Pipeline step function to slack
@@ -50,31 +32,46 @@ def slack_notification_pipeline(event, context):
     status = event.get('detail', {}).get('status')
     package = json.loads(event.get('detail', {}).get('input')).get('package')
 
+    status = post_to_slack(message=f"ERROR: Building {package} status: {status}",
+                           channel=channel)
+
+    return json.dumps({"status": status})
+
+
+@logger_inject_lambda_context
+def slack_notification_publish(event, context):
+
+    """
+    Post status of publish state machine to Slack
+    event: see https://docs.aws.amazon.com/step-functions/latest/dg/cw-events.html
+    """
+
+    status = event.get('detail', {}).get('status')
+
     if status in ['TIMED_OUT', 'ABORTED', 'FAILED']:
-        message = f"ERROR: Building {package} status: {status}"
+        message = f"ERROR: Publishing to Github failed"
     elif status == 'SUCCEEDED':
-        message = f"GOOD: Building {package} status: {status}"
-    elif status == 'RUNNING':
-        message = f"INFO: Building {package} status: {status}"
+        message = f"GOOD: Build Complete, Published to Github complete"
     else:
-        message = f"Unknown Status {status}"
+        message = f"Publish Complete, but unknown state"
 
     status = post_to_slack(message=message,
                            channel=channel)
 
-    if status:
+    return json.dumps({"status": status})
+
+
+@logger_inject_lambda_context
+def post_to_slack(message, channel):
+
+    response = client.chat_postMessage(channel=channel,
+                                       text=message)
+
+    if response['ok']:
         logger.info(f"Successfully posted {message} to {channel}")
         status = "Success"
     else:
         logger.error(f"Failed to post Message:{message} to Channel:#{channel}")
         status = "Failed"
 
-    return json.dumps({"status": status})
-
-
-def post_to_slack(message, channel):
-
-    response = client.chat_postMessage(channel=channel,
-                                       text=message)
-
-    return response['ok']
+    return status
