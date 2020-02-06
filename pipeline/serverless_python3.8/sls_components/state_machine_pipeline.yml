@@ -1,0 +1,74 @@
+name: ${self:custom.pipelineName}
+definition:
+  Comment: "Check, Build, and Deploy Lambda Layer"
+  StartAt: Check
+  States:
+    Check:
+      Type: Task
+      Resource:
+        Fn::GetAtt: [CheckLambdaFunction, Arn]
+      Next: Build
+      Retry:
+        - ErrorEquals:
+          - States.Timeout
+          MaxAttempts: 2
+          BackoffRate: 30
+          IntervalSeconds: 60
+      Catch:
+        - ErrorEquals:
+          - States.ALL
+          Next: CheckFail
+    Build:
+      Type: Task
+      Resource:
+        Fn::GetAtt: [BuildLambdaFunction, Arn]
+      Next: Deploy
+      Retry:
+        - ErrorEquals:
+          - States.Timeout
+          MaxAttempts: 2
+          BackoffRate: 30
+          IntervalSeconds: 60
+      Catch:
+        - ErrorEquals:
+          - States.ALL
+          Next: BuildFail
+    Deploy:
+      Type: Task
+      Resource:
+        Fn::GetAtt: [DeployLambdaFunction, Arn]
+      Next: Done
+      Retry:
+        - ErrorEquals:
+          - States.Timeout
+          MaxAttempts: 2
+          BackoffRate: 30
+          IntervalSeconds: 60
+      Catch:
+        - ErrorEquals:
+          - States.ALL
+          Next: DeployFail
+    Done:
+      Type: Succeed
+    CheckFail:
+      Type: Fail
+      Error: CheckFailure
+      Cause: Unknown
+    BuildFail:
+      Type: Fail
+      Error: BuildFailure
+      Cause: Unknown
+    DeployFail:
+      Type: Fail
+      Error: DeployFailure
+      Cause: Unknown
+notifications:
+  ABORTED:
+    - lambda:
+        Fn::GetAtt: [SlackUnderscorepipelineLambdaFunction, Arn]
+  FAILED:
+    - lambda:
+        Fn::GetAtt: [SlackUnderscorepipelineLambdaFunction, Arn]
+  TIMED_OUT:
+    - lambda:
+        Fn::GetAtt: [SlackUnderscorepipelineLambdaFunction, Arn]
