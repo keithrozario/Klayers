@@ -46,29 +46,41 @@ def slack_notification_publish(event, context):
     event: see https://docs.aws.amazon.com/step-functions/latest/dg/cw-events.html
     """
 
-    status = event.get('detail', {}).get('status')
+    status = event.get('detail', {}).get('status', False)
 
     if status in ['TIMED_OUT', 'ABORTED', 'FAILED']:
-        message = f"ERROR: Publishing to Github failed"
+        message = f"ERROR: Publishing to Github failed with Status:{status}"
     elif status == 'SUCCEEDED':
-        message = f"GOOD: Build Complete, Published to Github complete"
+        message = f"GOOD: Completed this week's build, posted to Github: https://github.com/keithrozario/Klayers"
     else:
-        message = f"Publish Complete, but unknown state"
+        message = f"ERROR: Unknown State of Publish"
 
-    status = post_to_slack(message=message,
-                           channel=channel)
+    status = post_to_slack(message, channel)
 
     return json.dumps({"status": status})
 
 
 @logger_inject_lambda_context
+def slack_notification_generic(event, context):
+
+    """
+    Generic publishing of slack message
+    """
+
+    message = event['message']
+
+    status = post_to_slack(message)
+
+    return json.dumps({"status": status})
+
+
 def post_to_slack(message, channel):
 
     response = client.chat_postMessage(channel=channel,
                                        text=message)
 
     if response['ok']:
-        logger.info(f"Successfully posted {message} to {channel}")
+        logger.info(f"Successfully posted Message:{message} to Channel:#{channel}")
         status = "Success"
     else:
         logger.error(f"Failed to post Message:{message} to Channel:#{channel}")

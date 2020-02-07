@@ -25,6 +25,7 @@ custom:
   dbReqs: ${ssm:/${self:service.name}/${self:provider.stage}/dynamodb_requirements_table}
   dbReqsArn: ${ssm:/${self:service.name}/${self:provider.stage}/dynamodb_requirements_table_arn}
   lambdaPrefix: ${ssm:/${self:service.name}/${self:provider.stage}/lambda_prefix}
+  lambdaErrorSNSArn: ${ssm:/${self:service.name}/${self:provider.stage}/lambda_error_notification_arn}
   pipelineName: ${self:service.name}-${self:provider.stage}-pipeline
 
   # Github
