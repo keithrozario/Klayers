@@ -24,12 +24,13 @@ All variables are stored in `terraform.tfvars.json`
 
 # Note
 
-The Key-Encrypting-Key for the GitHub SSH credentials is the only thing missing from terraform, this is added manually by:
+The Key-Encrypting-Key for the GitHub SSH credentials and slack token are the only things missing from terraform, this is added manually by:
 
 * Uploading an aes-256-cbc encrypted SSH key named `github_id_rsa.enc` to the S3 keys bucket (note the name of the bucket is `s3bucket_keys`)
-* Uploading the openssl password to /<app_name>/<workspace>/ssh_kek paramter in parameter store
-
+* Uploading the openssl password to /<app_name>/<workspace>/ssh_kek parameter in parameter store
 This key is a deploy key for the repo in GitHub, and allows for both read/write access.
+
+* adding the slack_token to the /<app_name>/<workspace>/slack_token parameter in parameter store
 
 # Remote backend & workspaces
 
