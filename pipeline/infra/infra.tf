@@ -139,18 +139,6 @@ resource "aws_s3_bucket" "s3bucket_layers" {
 
 }
 
-resource "aws_s3_bucket" "s3bucket_keys" {
-  bucket = "${lookup(var.s3bucket_keys, terraform.workspace)}"
-  acl    = "private"
-  force_destroy = true
-  region     = "${lookup(var.aws_region, terraform.workspace)}"
-
-  versioning {
-    enabled = false
-  }
-
-}
-
 ### Outputs for serverless to consume
 resource "aws_ssm_parameter" "dynamodb_layers_table" {
   type  = "String"
@@ -204,6 +192,7 @@ resource "aws_ssm_parameter" "dynamodb_requirements_table_arn" {
 
 resource "aws_ssm_parameter" "s3bucket_layers" {
   type  = "String"
+  description = "Name of s3 bucket to hold layer artifacts"
   name  = "/${lookup(var.app_name, terraform.workspace)}/${terraform.workspace}/s3bucket_layers"
   value = "${aws_s3_bucket.s3bucket_layers.bucket}"
   overwrite = true
@@ -211,22 +200,9 @@ resource "aws_ssm_parameter" "s3bucket_layers" {
 
 resource "aws_ssm_parameter" "s3bucket_layers_arn" {
   type  = "String"
+  description = "ARN of layer bucket"
   name  = "/${lookup(var.app_name, terraform.workspace)}/${terraform.workspace}/s3bucket_layers_arn"
   value = "${aws_s3_bucket.s3bucket_layers.arn}"
-  overwrite = true
-}
-
-resource "aws_ssm_parameter" "s3bucket_keys" {
-  type  = "String"
-  name  = "/${lookup(var.app_name, terraform.workspace)}/${terraform.workspace}/s3bucket_keys"
-  value = "${aws_s3_bucket.s3bucket_keys.bucket}"
-  overwrite = true
-}
-
-resource "aws_ssm_parameter" "s3bucket_keys_arn" {
-  type  = "String"
-  name  = "/${lookup(var.app_name, terraform.workspace)}/${terraform.workspace}/s3bucket_keys_arn"
-  value = "${aws_s3_bucket.s3bucket_keys.arn}"
   overwrite = true
 }
 
