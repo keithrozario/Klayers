@@ -118,7 +118,7 @@ Special hand-crafted binaries for layers. These layers are not automatically bui
 
 # Architecture Diagram
 
-Diagram is still pretty draft will add more details later!
+No self-respecting architect would have a repo like this without a diagram -- so here it is:
 
 ![Screenshot](documentation/Klayers-Architecture.png)
 
