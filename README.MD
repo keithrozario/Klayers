@@ -65,11 +65,13 @@ The following PyPi packages are available for both Python3.7 & Python3.8 unless 
 * reportlab (Python3.8 only)
 * requests
 * simplejson
+* slackclient
 * spacy
 * SQLAlchemy
 * textdistance
 * tinydb
 * tldextract
+* twilio
 
 # Status of layers
 
