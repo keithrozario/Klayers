@@ -12,6 +12,11 @@ A collection of AWS Lambda Layers for Python3.7 & Python3.8
 List of all layer version arns are available by region here:
  * [Python3.8](deployments/python3.8/arns)
  * [Python3.7](deployments/python3.7/arns)
+ 
+ There might be multiple versions for a single package, this is because the project publishes a new layer if there is a new version of the package, or the packages dependencies. Older packages are deleted 30 days after they've been updated, i.e. if you use the latest version of each layer, you're guaranteed at least 30 days before the layer is deleted.
+ 
+ Refer to [Layer expiry](#Layer-expiry) for more data.
+
 
 # Python Packages
 
