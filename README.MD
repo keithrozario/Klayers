@@ -13,7 +13,7 @@ List of all layer version arns are available by region here:
  * [Python3.8](deployments/python3.8/arns)
  * [Python3.7](deployments/python3.7/arns)
  
- There might be multiple versions for a single package, this is because the project publishes a new layer if there is a new version of the package, or the packages dependencies. Older packages are deleted 30 days after they've been updated, i.e. if you use the latest version of each layer, you're guaranteed at least 30 days before the layer is deleted.
+ There might be multiple versions for a single package, this is because we publish a new layer version for every new version of the package or if the package dependencies (`requirements.txt`) has been updated.
  
  Refer to [Layer expiry](#Layer-expiry) for more data.
 
@@ -106,6 +106,8 @@ Use the `Get Layer Version by ARN` in [python](https://boto3.amazonaws.com/v1/do
 ## Layer expiry
 
 Some layer versions will have a `time_to_live` field. This is the date for when the layers will be deleted.
+
+In general, layers are scheduled for deletion 30 days after a new layer version has been published for that package. If you use that latest version of a layer, you're guaranteed at least 30 days before the layer is deleted.
 
 All functions deployed with a layer will still work indefinitely, but you won't be able to deploy new functions referencing a deleted layer version.
 
