@@ -1,0 +1,24 @@
+invoke_pipeline:
+  handler: invoke_pipeline.main
+  runtime: python3.7
+  timeout: 120
+  memorySize: 256
+  environment:
+    PIPELINE_ARN:
+      Fn::Join:
+        - ":"
+        - - arn:aws:states
+          - ${self:provider.region}
+          - Ref: AWS::AccountId
+          - stateMachine:${self:custom.pipelineName}
+  iamRoleStatementsName: ${self:provider.stage}-invoke_pipeline
+  iamRoleStatements:
+    - Effect: Allow
+      Action: states:StartExecution
+      Resource:
+        Fn::Join:
+          - ":"
+          - - arn:aws:states
+            - ${self:provider.region}
+            - Ref: AWS::AccountId
+            - stateMachine:${self:custom.pipelineName}
