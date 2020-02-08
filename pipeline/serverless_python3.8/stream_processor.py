@@ -9,6 +9,7 @@ from botocore.exceptions import ClientError
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
+
 def main(event, context):
 
     records = event.get('Records', [])
@@ -26,6 +27,10 @@ def main(event, context):
 
 
 def remove(record):
+    """
+    Deletes lambda_layer_arn from account.
+    record: record from DynamoDB Table
+    """
 
     try:
 

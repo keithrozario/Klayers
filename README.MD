@@ -7,12 +7,17 @@
 
 A collection of AWS Lambda Layers for Python3.7 & Python3.8
 
+# Layer List
+
+List of all layer version arns are available by region here:
+ * [Python3.8](deployments/python3.8/arns)
+ * [Python3.7](deployments/python3.7/arns)
+
 # Python Packages
 
 The following PyPi packages are available for both Python3.7 & Python3.8 unless otherwise stated:
 
 * aiobotocore
-* aiodns (Python3.7 only)
 * aiohttp
 * ansible
 * aws-lambda-powertools (Python3.8 only)
@@ -30,8 +35,6 @@ The following PyPi packages are available for both Python3.7 & Python3.8 unless 
 * flashtext
 * google-auth
 * google-auth-oauthlib
-* graphene (Python3.7 only)
-* grequests (Python3.7 only)
 * grpcio
 * gspread
 * idna
@@ -61,19 +64,14 @@ The following PyPi packages are available for both Python3.7 & Python3.8 unless 
 * PyYAML
 * reportlab (Python3.8 only)
 * requests
-* scipy (Python3.7 only)
 * simplejson
+* slackclient
 * spacy
 * SQLAlchemy
 * textdistance
 * tinydb
 * tldextract
-
-# Layer List
-
-List of all layer version arns are available by region here:
- * [Python3.7](deployments/python3.7/arns)
- * [Python3.8](deployments/python3.8/arns)
+* twilio
 
 # Status of layers
 
@@ -89,30 +87,16 @@ You can either set one of the ARNs below as a layer in your function. Or downloa
 
 ## Set ARN as layer
 
-Currently only the following regions have the layers deployed, use the arn to include layer into your lambda function.
+Click links below for your preferred version of python, and then select your region of choice, you will see a full list of layer version ARNs to use.
 
-* us-east-1, US East (N. Virginia)
-* us-east-2, US East (Ohio)
-* us-west-1, US West (N. California)
-* us-west-2, US West (Oregon)
-* ca-central-1, Canada (Central)
-* eu-central-1, EU (Frankfurt)
-* eu-west-1, EU (Ireland)
-* eu-west-2, EU (London)
-* eu-west-3, EU (Paris)
-* eu-north-1, EU (Stockholm)
-* ap-northeast-1, Asia Pacific (Tokyo)
-* ap-northeast-2, Asia Pacific (Seoul)
-* ap-southeast-1, Asia Pacific (Singapore)
-* ap-southeast-2, Asia Pacific (Sydney)
-* ap-south-1, Asia Pacific (Mumbai)
-* sa-east-1, South America (São Paulo)
-* ap-east-1, Asia Pacific (Hong Kong)
-* me-south-1, Middle East (Bahrain)
+ * [Python3.8](deployments/python3.8/arns)
+ * [Python3.7](deployments/python3.7/arns)
 
 ## Download copy of layer
 
-* Use the `Get Layer Version by ARN` in [python](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/lambda.html#Lambda.Client.get_layer_version_by_arn) or [bash](https://docs.aws.amazon.com/cli/latest/reference/lambda/get-layer-version-by-arn.html) command which will provide an S3 location to download the layer as a zip. *Note: You can only get layers from the specific region your awscli is configured for, otherwise you'll get a `AccessDeniedException` error. In python, setup the boto3 client for the same region as the arn you're getting.*
+Use the `Get Layer Version by ARN` in [python](https://boto3.amazonaws.com/v1/documentatio/api/latest/reference/services/lambda.html#Lambda.Client.get_layer_version_by_arn) or [bash](https://docs.aws.amazon.com/cli/latest/reference/lambda/get-layer-version-by-arn.html) command which will provide an S3 location to download the layer as a zip. 
+
+*Note: You can only get layers from the specific region your awscli is configured for, otherwise you'll get a `AccessDeniedException` error.*
 
 ## Layer expiry
 
@@ -136,7 +120,7 @@ Special hand-crafted binaries for layers. These layers are not automatically bui
 
 # Architecture Diagram
 
-Diagram is still pretty draft will add more details later!
+No self-respecting architect would have a repo like this without a diagram -- so here it is:
 
 ![Screenshot](documentation/Klayers-Architecture.png)
 
