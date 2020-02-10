@@ -1,5 +1,6 @@
 publish_arns:
     handler: publish_arns.main
+    description: publishes Arns to S3 Bucket
     runtime: python3.7
     timeout: 240
     memorySize: 256
@@ -22,6 +23,7 @@ publish_arns:
 
 publish_reqs:
   handler: publish_reqs.main
+  description: Publish requirements.txt to S3 bucket
   runtime: python3.7
   timeout: 120
   memorySize: 256
@@ -43,6 +45,7 @@ publish_reqs:
 
 publish_github:
   handler: publish_to_github.handler
+  description: published arns and requirements.txt to github
   runtime: provided
   memorySize: 2048
   timeout: 600

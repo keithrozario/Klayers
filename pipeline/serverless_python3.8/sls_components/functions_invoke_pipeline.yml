@@ -1,5 +1,6 @@
 invoke_pipeline:
   handler: invoke_pipeline.main
+  description: Invoke multiple pipelines, one for each package
   runtime: python3.7
   timeout: 120
   memorySize: 256
