@@ -1,10 +1,10 @@
-boto3==1.11.9
-botocore==1.14.9
+boto3==1.11.13
+botocore==1.14.13
 docutils==0.15.2
 jmespath==0.9.4
 parliament==0.4.6
 python-dateutil==2.8.1
 PyYAML==5.3
-s3transfer==0.3.2
+s3transfer==0.3.3
 six==1.14.0
 urllib3==1.25.8
