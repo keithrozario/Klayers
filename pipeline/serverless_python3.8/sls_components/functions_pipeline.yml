@@ -1,5 +1,6 @@
 check:
   handler: check.main
+  description: Checks for package on PyPi via the API
   runtime: python3.7
   layers:
     - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-packaging:1
@@ -18,6 +19,7 @@ check:
 
 build:
   handler: build.main
+  description: Builds the package inside the lambda using pip
   runtime: python3.8
   timeout: 180
   memorySize: 1024
@@ -48,6 +50,7 @@ build:
 
 deploy:
   handler: deploy.main
+  description: Deploys functions to multiple regions
   runtime: python3.7
   layers:
     - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-boto3:2
