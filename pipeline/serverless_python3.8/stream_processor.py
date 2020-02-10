@@ -19,7 +19,7 @@ def main(event, context):
         logger.info(f"Removal of f{json.dumps(record.get('dynamodb').get('Keys'))}")
         if record['eventName'] == 'REMOVE':
             layer_version_arn = remove(record)
-
+            logger.info(f"Successfully deleted {layer_version_arn}")
         else:
             logger.info(f"No processing required for event type: {record['eventName']}")
 
@@ -52,7 +52,6 @@ def remove(record):
             LayerName=layer_name,
             VersionNumber=layer_version
         )
-        logger.info(f"Successfully deleted {layer_version_arn}")
     except AttributeError:
         logger.error(f"Unable to delete layer {layer_version_arn}")
     except ClientError as e:
