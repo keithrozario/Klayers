@@ -60,20 +60,6 @@ def slack_notification_publish(event, context):
     return json.dumps({"status": status})
 
 
-@logger_inject_lambda_context
-def slack_notification_generic(event, context):
-
-    """
-    Generic publishing of slack message
-    """
-
-    message = event['message']
-
-    status = post_to_slack(message)
-
-    return json.dumps({"status": status})
-
-
 def post_to_slack(message, channel):
 
     response = client.chat_postMessage(channel=channel,
