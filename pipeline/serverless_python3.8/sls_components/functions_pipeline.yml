@@ -46,6 +46,8 @@ build:
     - dynamodb:PutItem
     - dynamodb:Query
     Resource: ${self:custom.dbReqsArn}
+  layers:
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:8
 
 
 deploy:
