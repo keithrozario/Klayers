@@ -1,6 +1,5 @@
 import os
 import shutil
-import logging
 import hashlib
 from datetime import datetime
 
@@ -8,8 +7,8 @@ import boto3
 from botocore.exceptions import ClientError
 from boto3.dynamodb.conditions import Key
 
-logger = logging.getLogger()
-logger.setLevel(logging.INFO)
+from aws_lambda_powertools.logging import logger_setup, logger_inject_lambda_context
+logger = logger_setup()
 
 
 def put_requirements_hash(package, version, requirements_txt, requirements_hash):
@@ -22,10 +21,10 @@ def put_requirements_hash(package, version, requirements_txt, requirements_hash)
             'created_date': {'S': datetime.now().isoformat()}}
     try:
         response = dynamodb.put_item(TableName=os.environ['REQS_DB'],
-                                     Item=item)
+                                     Item=item,
+                                     ReturnValues='NONE')
         logger.info(f"Successfully written {package}:{version} status to DB with hash: {requirements_hash}")
-        logger.debug(f"Size of DB now between {response['SizeEstimateRangeGB'][0]} and "
-                     f"{response['SizeEstimateRangeGB'][1]} GB")
+        logger.debug(f"DynamoDB response: {response}")
     except ClientError as e:
         logger.error(f"{e.response['Error']['Code']}: {e.response['Error']['Message']} for item {item}")
         exit(1)
@@ -158,7 +157,7 @@ def install(package, package_dir):
 
     return package_dir
 
-
+@logger_inject_lambda_context
 def main(event,context):
 
     package = event['package']
