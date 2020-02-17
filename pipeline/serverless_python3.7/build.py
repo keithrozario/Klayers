@@ -22,10 +22,10 @@ def put_requirements_hash(package, version, requirements_txt, requirements_hash)
             'created_date': {'S': datetime.now().isoformat()}}
     try:
         response = dynamodb.put_item(TableName=os.environ['REQS_DB'],
-                                     Item=item)
+                                     Item=item,
+                                     ReturnValues='NONE')
         logger.info(f"Successfully written {package}:{version} status to DB with hash: {requirements_hash}")
-        logger.debug(f"Size of DB now between {response['SizeEstimateRangeGB'][0]} and "
-                     f"{response['SizeEstimateRangeGB'][1]} GB")
+        logger.debug(f"DynamoDB response: {response}")
     except ClientError as e:
         logger.error(f"{e.response['Error']['Code']}: {e.response['Error']['Message']} for item {item}")
         exit(1)
