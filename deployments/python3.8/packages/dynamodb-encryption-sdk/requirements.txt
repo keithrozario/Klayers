@@ -1,11 +1,11 @@
 attrs==19.3.0
-boto3==1.12.5
-botocore==1.15.5
+boto3==1.12.11
+botocore==1.15.11
 cffi==1.14.0
 cryptography==2.8
 docutils==0.15.2
 dynamodb-encryption-sdk==1.2.0
-jmespath==0.9.4
+jmespath==0.9.5
 pycparser==2.19
 python-dateutil==2.8.1
 s3transfer==0.3.3

@@ -3,11 +3,11 @@ aiohttp==3.6.2
 aioitertools==0.5.1
 async-timeout==3.0.1
 attrs==19.3.0
-botocore==1.15.5
+botocore==1.15.11
 chardet==3.0.4
 docutils==0.15.2
 idna==2.9
-jmespath==0.9.4
+jmespath==0.9.5
 multidict==4.7.5
 python-dateutil==2.8.1
 six==1.14.0
