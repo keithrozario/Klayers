@@ -14,7 +14,7 @@ provider:
   logRetentionInDays: 90
   environment:
     STAGE: ${self:provider.stage}
-    LOGLEVEL:
+    LOGLEVEL: "INFO"
 
 custom:
   awsRegion: ${self:provider.region}
