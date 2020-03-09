@@ -3,7 +3,7 @@ aiohttp==3.6.2
 aioitertools==0.5.1
 async-timeout==3.0.1
 attrs==19.3.0
-botocore==1.15.11
+botocore==1.15.15
 chardet==3.0.4
 docutils==0.15.2
 idna==2.9
