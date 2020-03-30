@@ -116,15 +116,17 @@ Special hand-crafted binaries for layers. These layers are not automatically bui
 | Package        | ARN                                                                             | Version    |         
 | :------------- |:------------------------------------------------------------------------------- | ---------- | 
 | tesseract      | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-tesseract:1      | 4.1.0-rc1<sup>1</sup>|
-| pip            | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pip:2            | 19.2.1     |
-| netcat         | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-netcat:2         | 0.7.1<sup>2</sup>|
-| en_core_web_sm | arn:aws:lambda:us-east-1:770693421928:layer:Klayers-python38-spacy_model_en_small:1 | 2.2.5<sup>3</sup>|
+| pip            | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pip:2            | 19.2.1<sup>2</sup>|     |
+| netcat         | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-netcat:2         | 0.7.1<sup>3</sup>|
+| en_core_web_sm | arn:aws:lambda:\<*region*>:770693421928:layer:Klayers-python38-spacy_model_en_small:1 | 2.2.5<sup>4</sup>|
 
 <sup>1</sup> Includes leptonica-1.76.0, libjpeg 6b (libjpeg-turbo 1.2.90) : libpng 1.2.49 : libtiff 4.0.3 : zlib 1.2.8 : libwebp 0.3.0
 
-<sup>2</sup> netcat-traditional with the -e option -- compiled for 64-bit to run on AWS Lambda
+<sup>2</sup> Python3.8 layers already have new version of pip, use only if on Python3.7
 
-<sup>3</sup> Spacy [en_core_web_sm](https://spacy.io/models/en) model, for use with the spacy layer refer [here](https://github.com/keithrozario/Klayers/issues/97) for more info.
+<sup>3</sup> netcat-traditional with the -e option -- compiled for 64-bit to run on AWS Lambda
+
+<sup>4</sup> Spacy [en_core_web_sm](https://spacy.io/models/en) model, for use with the spacy layer refer [here](https://github.com/keithrozario/Klayers/issues/97) for more info.
 
 # Architecture Diagram
 
