@@ -23,3 +23,4 @@ infra/override.tf.json
 
 scripts/key_gen/*
 scripts/gen_key/id_*
+.vscode

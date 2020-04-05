@@ -78,7 +78,7 @@ def freeze_requirements(package, path):
             break
 
     if version is None:
-        logger.error("Unable to determine version fo package....refer to logs for requirements.txt")
+        logger.error("Unable to determine version of package....refer to logs for requirements.txt")
         exit(1)
 
     return requirements_txt, requirements_hash, version
