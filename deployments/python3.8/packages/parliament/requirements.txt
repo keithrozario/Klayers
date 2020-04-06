@@ -1,5 +1,5 @@
-boto3==1.12.31
-botocore==1.15.31
+boto3==1.12.36
+botocore==1.15.36
 docutils==0.15.2
 jmespath==0.9.5
 parliament==0.4.10

@@ -1,6 +1,6 @@
 ansible==2.9.6
 cffi==1.14.0
-cryptography==2.8
+cryptography==2.9
 Jinja2==2.11.1
 MarkupSafe==1.1.1
 pycparser==2.20
