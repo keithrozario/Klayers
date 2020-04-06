@@ -1,8 +1,8 @@
-certifi==2019.11.28
+certifi==2020.4.5.1
 chardet==3.0.4
 gevent==1.4.0
 greenlet==0.4.15
-grequests==0.4.0
+grequests==0.6.0
 idna==2.9
 requests==2.23.0
 urllib3==1.25.8
