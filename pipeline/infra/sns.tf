@@ -23,9 +23,9 @@ EOF
 }
 
 resource "aws_ssm_parameter" "lambda_error_notification_arn" {
-  type  = "String"
+  type        = "String"
   description = "ARN of SNS Topic for Lambda Notification"
-  name  = "/${lookup(var.app_name, terraform.workspace)}/${terraform.workspace}/lambda_error_notification_arn"
-  value = "${aws_sns_topic.lambda_error_notification.arn}"
-  overwrite = true
+  name        = "/${lookup(var.app_name, terraform.workspace)}/${terraform.workspace}/lambda_error_notification_arn"
+  value       = aws_sns_topic.lambda_error_notification.arn
+  overwrite   = true
 }
