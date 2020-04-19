@@ -3,7 +3,7 @@
   "description": "This directory contains the Serverless repository of lambda functions.",
   "version": "0.1.0",
   "dependencies": {
-    "serverless": "^1.60.5"
+    "serverless": "^1.67.3"
   },
   "devDependencies": {
     "serverless-iam-roles-per-function": "^2.0.2",

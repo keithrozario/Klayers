@@ -1,0 +1,87 @@
+webhook_github:
+  handler: github_webhook_authorizer.handler
+  description: Receive update on Github, and update configuration file
+  runtime: python3.8
+  memorySize: 512
+  timeout: 20
+  environment:
+    GITHUB_REPO: ${self:custom.githubRepo}
+    GITHUB_SECRET_PARAM: ${self:custom.githubWebhookSecret}
+  iamRoleStatementsName: ${self:provider.stage}-github_webhook
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - s3:ListBucket
+      Resource: ${self:custom.s3LayersArn}
+    - Effect: Allow
+      Action:
+        - ssm:GetParameters
+        - ssm:GetParameter
+      Resource:
+        - Fn::Join:
+            - ":"
+            - - arn:aws:ssm
+              - ${self:provider.region}
+              - Ref: AWS::AccountId
+              - parameter${self:custom.githubWebhookSecret}
+  layers:
+    - arn:aws:lambda:ap-southeast-1:908645878701:layer:pylayers-python38-defaultlambda-cache:2
+    - arn:aws:lambda:ap-southeast-1:770693421928:layer:Klayers-python38-aws-lambda-powertools:18
+  events:
+    - httpApi: 'POST /api/v1/github_webhook'
+
+webhook_push_master:
+  handler: github_webhook.push_master
+  description: Updates config file on push to master
+  runtime: python3.8
+  memorySize: 256
+  timeout: 60
+  environment:
+    BUCKET_NAME: ${self:custom.s3LayersName}
+  iamRoleStatementsName: ${self:provider.stage}-push_master
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - s3:GetObject
+        - s3:PutObject
+      Resource: ${self:custom.s3LayersArn}/config/*
+    - Effect: Allow
+      Action:
+        - s3:ListBucket
+      Resource: ${self:custom.s3LayersArn}
+  events:
+    # Execute on push to master
+    - eventBridge:
+        pattern:
+          source:
+            - "github.webhook"
+          detail:
+            ref:
+            - "refs/heads/master"
+          detail-type:
+            - "push"
+  layers:
+    - arn:aws:lambda:ap-southeast-1:908645878701:layer:pylayers-python38-defaultlambda-cache:2
+    - arn:aws:lambda:ap-southeast-1:770693421928:layer:Klayers-python38-aws-lambda-powertools:18
+
+test_event:
+  handler: github_webhook.test_event
+  description: Test putting an event onto EventBridge
+  runtime: python3.8
+  memorySize: 256
+  timeout: 60
+  iamRoleStatementsName: ${self:provider.stage}-github_test_event
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - events:PutEvents
+      Resource:
+        - Fn::Join:
+            - ":"
+            - - arn:aws:events
+              - ${self:provider.region}
+              - Ref: AWS::AccountId
+              - event-bus/default
+  layers:
+    - arn:aws:lambda:ap-southeast-1:908645878701:layer:pylayers-python38-defaultlambda-cache:2
+    - arn:aws:lambda:ap-southeast-1:770693421928:layer:Klayers-python38-aws-lambda-powertools:18

@@ -1,7 +1,7 @@
 invoke_pipeline:
   handler: invoke_pipeline.main
   description: Invoke multiple pipelines, one for each package
-  runtime: python3.7
+  runtime: python3.8
   timeout: 120
   memorySize: 256
   environment:
@@ -12,6 +12,7 @@ invoke_pipeline:
           - ${self:provider.region}
           - Ref: AWS::AccountId
           - stateMachine:${self:custom.pipelineName}
+    BUCKET_NAME: ${self:custom.s3LayersName}
   iamRoleStatementsName: ${self:provider.stage}-invoke_pipeline
   iamRoleStatements:
     - Effect: Allow
@@ -23,3 +24,6 @@ invoke_pipeline:
             - ${self:provider.region}
             - Ref: AWS::AccountId
             - stateMachine:${self:custom.pipelineName}
+    - Effect: Allow
+      Action: s3:GetObject
+      Resource: ${self:custom.s3LayersArn}/*

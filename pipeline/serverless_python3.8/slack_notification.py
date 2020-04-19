@@ -9,7 +9,7 @@ import boto3
 Cold start code
 """
 logger = logger_setup()
-channel = f"#buildstatus-{os.environ['STAGE'][8:][:-3]}"
+default_channel = f"#buildstatus-{os.environ['STAGE'][8:][:-3]}"
 
 # Get Slack Token
 ssm_client = boto3.client('ssm')
@@ -33,7 +33,7 @@ def slack_notification_pipeline_error(event, context):
     package = json.loads(event.get('detail', {}).get('input')).get('package')
 
     status = post_to_slack(message=f"ERROR: Building {package} status: {status}",
-                           channel=channel)
+                           channel=default_channel)
 
     return json.dumps({"status": status})
 
@@ -55,12 +55,12 @@ def slack_notification_publish(event, context):
     else:
         message = f"ERROR: Unknown State of Publish"
 
-    status = post_to_slack(message, channel)
+    status = post_to_slack(message, default_channel)
 
     return json.dumps({"status": status})
 
 
-def post_to_slack(message, channel):
+def post_to_slack(message, channel=default_channel):
 
     response = client.chat_postMessage(channel=channel,
                                        text=message)

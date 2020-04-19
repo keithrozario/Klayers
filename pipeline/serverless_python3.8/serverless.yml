@@ -15,6 +15,10 @@ provider:
   environment:
     STAGE: ${self:provider.stage}
     LOGLEVEL: "INFO"
+  logs:
+    httpApi: true
+  httpApi:
+    cors: true
 
 custom:
   awsRegion: ${self:provider.region}
@@ -32,6 +36,7 @@ custom:
   # Github
   githubSSHKeyParameter: /${self:service.name}/${self:provider.stage}/github_ssh_key
   githubRepo: ${ssm:/${self:service.name}/${self:provider.stage}/github_repo}
+  githubWebhookSecret: /${self:service.name}/${self:provider.stage}/github_webhook_secret
   
   # Slack
   slackTokenParameter: /${self:service.name}/${self:provider.stage}/slack_token
@@ -42,6 +47,8 @@ functions:
   - ${file(sls_components/functions_invoke_pipeline.yml)}
   - ${file(sls_components/functions_slack.yml)}
   - ${file(sls_components/functions_streams.yml)}
+  - ${file(sls_components/functions_webhook.yml)}
+
 
 stepFunctions:
   stateMachines:
@@ -60,8 +67,7 @@ package:
     - serverless.yml
     - .gitignore
     - .serverless/**
-    - config/**
     - sls_components/**
     - README.MD
-  include:
-    - config/${self:provider.stage}/**
+    - .pytest_cache/**
+

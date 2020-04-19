@@ -14,6 +14,7 @@ publish_arns:
       - Effect: Allow
         Action:
         - s3:PutObject
+        - s3:GetObject
         Resource: ${self:custom.s3LayersArn}/*
       - Effect: Allow
         Action:
@@ -37,6 +38,7 @@ publish_reqs:
     - Effect: Allow
       Action:
       - s3:PutObject
+      - s3:GetObject
       Resource: ${self:custom.s3LayersArn}/*
     - Effect: Allow
       Action:
