@@ -2,8 +2,6 @@ import os
 import hmac
 import hashlib
 
-from slack_notification import post_to_slack
-
 from lambda_cache import ssm
 
 import boto3
@@ -58,12 +56,10 @@ def handler(event, context):
                     'headers': headers}
         else:
             logger.error(f"Unable to process {github_event}")
-            post_to_slack(f"ERROR: {github_event} from Github failed to be placed onto EventBridge")
             return {'statusCode': 500,
                     'headers': headers}
     else:
         logger.error(f"Verification of {github_event} from Github failed!")
-        post_to_slack(f"ERROR: {github_event} from Github failed verification")
         return {'statusCode': 403,
                 'headers': headers}
 

@@ -11,10 +11,6 @@ webhook_github:
   iamRoleStatements:
     - Effect: Allow
       Action:
-        - s3:ListBucket
-      Resource: ${self:custom.s3LayersArn}
-    - Effect: Allow
-      Action:
         - ssm:GetParameters
         - ssm:GetParameter
       Resource:
@@ -24,9 +20,19 @@ webhook_github:
               - ${self:provider.region}
               - Ref: AWS::AccountId
               - parameter${self:custom.githubWebhookSecret}
+    - Effect: Allow
+      Action:
+        - events:PutEvents
+      Resource:
+        - Fn::Join:
+            - ":"
+            - - arn:aws:events
+              - ${self:provider.region}
+              - Ref: AWS::AccountId
+              - event-bus/default
   layers:
-    - arn:aws:lambda:ap-southeast-1:908645878701:layer:pylayers-python38-defaultlambda-cache:2
-    - arn:aws:lambda:ap-southeast-1:770693421928:layer:Klayers-python38-aws-lambda-powertools:18
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-lambda-cache:1
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:18
   events:
     - httpApi: 'POST /api/v1/github_webhook'
 
@@ -44,11 +50,8 @@ webhook_push_master:
       Action:
         - s3:GetObject
         - s3:PutObject
-      Resource: ${self:custom.s3LayersArn}/config/*
-    - Effect: Allow
-      Action:
-        - s3:ListBucket
-      Resource: ${self:custom.s3LayersArn}
+      Resource:
+        - ${self:custom.s3LayersArn}/config/*
   events:
     # Execute on push to master
     - eventBridge:
@@ -61,27 +64,6 @@ webhook_push_master:
           detail-type:
             - "push"
   layers:
-    - arn:aws:lambda:ap-southeast-1:908645878701:layer:pylayers-python38-defaultlambda-cache:2
-    - arn:aws:lambda:ap-southeast-1:770693421928:layer:Klayers-python38-aws-lambda-powertools:18
-
-test_event:
-  handler: github_webhook.test_event
-  description: Test putting an event onto EventBridge
-  runtime: python3.8
-  memorySize: 256
-  timeout: 60
-  iamRoleStatementsName: ${self:provider.stage}-github_test_event
-  iamRoleStatements:
-    - Effect: Allow
-      Action:
-        - events:PutEvents
-      Resource:
-        - Fn::Join:
-            - ":"
-            - - arn:aws:events
-              - ${self:provider.region}
-              - Ref: AWS::AccountId
-              - event-bus/default
-  layers:
-    - arn:aws:lambda:ap-southeast-1:908645878701:layer:pylayers-python38-defaultlambda-cache:2
-    - arn:aws:lambda:ap-southeast-1:770693421928:layer:Klayers-python38-aws-lambda-powertools:18
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-lambda-cache:1
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:18
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-requests:4
