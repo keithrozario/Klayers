@@ -43,6 +43,7 @@ The following PyPi packages are available for both Python3.7 & Python3.8 unless 
 * idna
 * itsdangerous
 * kafka-python
+* lambda-cache
 * nltk
 * numpy
 * opencv-python-headless

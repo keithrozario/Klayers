@@ -182,6 +182,6 @@ resource "aws_ssm_parameter" "github_repo" {
 resource "aws_ssm_parameter" "github_webhook_secret" {
   type      = "SecureString"
   name      = "/${lookup(var.app_name, terraform.workspace)}/${terraform.workspace}/github_webhook_secret"
-  value     = ""
+  value     = "<blank>"
   overwrite = false
 }
