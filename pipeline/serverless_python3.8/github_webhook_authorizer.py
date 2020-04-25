@@ -6,7 +6,8 @@ from lambda_cache import ssm
 
 import boto3
 from aws_lambda_powertools.logging import logger_setup, logger_inject_lambda_context
-logger = logger_setup()
+
+logger = logger_setup(service="github_webhook_authorizer")
 
 
 def check_sig(payload, sig, secret):

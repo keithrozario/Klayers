@@ -30,40 +30,11 @@ webhook_github:
               - ${self:provider.region}
               - Ref: AWS::AccountId
               - event-bus/default
+      Condition:
+        StringEquals:
+          events:source: "github.webhook"
   layers:
     - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-lambda-cache:1
     - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:18
   events:
     - httpApi: 'POST /api/v1/github_webhook'
-
-webhook_push_master:
-  handler: github_webhook.push_master
-  description: Updates config file on push to master
-  runtime: python3.8
-  memorySize: 256
-  timeout: 60
-  environment:
-    BUCKET_NAME: ${self:custom.s3LayersName}
-  iamRoleStatementsName: ${self:provider.stage}-push_master
-  iamRoleStatements:
-    - Effect: Allow
-      Action:
-        - s3:GetObject
-        - s3:PutObject
-      Resource:
-        - ${self:custom.s3LayersArn}/config/*
-  events:
-    # Execute on push to master
-    - eventBridge:
-        pattern:
-          source:
-            - "github.webhook"
-          detail:
-            ref:
-            - "refs/heads/master"
-          detail-type:
-            - "push"
-  layers:
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-lambda-cache:1
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:18
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-requests:4

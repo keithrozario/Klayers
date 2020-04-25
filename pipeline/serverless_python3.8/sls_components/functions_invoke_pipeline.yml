@@ -5,25 +5,48 @@ invoke_pipeline:
   timeout: 120
   memorySize: 256
   environment:
-    PIPELINE_ARN:
-      Fn::Join:
-        - ":"
-        - - arn:aws:states
-          - ${self:provider.region}
-          - Ref: AWS::AccountId
-          - stateMachine:${self:custom.pipelineName}
     BUCKET_NAME: ${self:custom.s3LayersName}
   iamRoleStatementsName: ${self:provider.stage}-invoke_pipeline
   iamRoleStatements:
     - Effect: Allow
-      Action: states:StartExecution
+      Action:
+        - events:PutEvents
       Resource:
-        Fn::Join:
-          - ":"
-          - - arn:aws:states
-            - ${self:provider.region}
-            - Ref: AWS::AccountId
-            - stateMachine:${self:custom.pipelineName}
+        - Fn::Join:
+            - ":"
+            - - arn:aws:events
+              - ${self:provider.region}
+              - Ref: AWS::AccountId
+              - event-bus/default
+      Condition:
+        ForAllValues:StringEquals:
+          events:detail-type:
+          - "invoke_pipeline"
+          - "post_to_slack"
     - Effect: Allow
       Action: s3:GetObject
       Resource: ${self:custom.s3LayersArn}/*
+  layers:
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:18
+      
+
+download_config:
+  handler: download_config.download_config_from_github
+  description: Updates config before launch by downloading CSV from Github
+  runtime: python3.8
+  memorySize: 256
+  timeout: 60
+  environment:
+    BUCKET_NAME: ${self:custom.s3LayersName}
+  iamRoleStatementsName: ${self:provider.stage}-download_config
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - s3:GetObject
+        - s3:PutObject
+      Resource:
+        - ${self:custom.s3LayersArn}/config/*
+  layers:
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-lambda-cache:1
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:18
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-requests:4

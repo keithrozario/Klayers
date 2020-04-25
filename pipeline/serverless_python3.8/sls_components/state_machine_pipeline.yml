@@ -72,3 +72,10 @@ notifications:
   TIMED_OUT:
     - lambda:
         Fn::GetAtt: [SlackUnderscorepipelineLambdaFunction, Arn]
+events:
+- eventBridge:
+    event:
+      source:
+        - Klayers.invoke.${self:provider.stage}
+      detail-type:
+        - "invoke_pipeline"

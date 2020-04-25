@@ -25,6 +25,7 @@ idna,https://github.com/kjd/idna/blob/master/LICENSE.rst,Kim Davis kim@cynosure.
 itsdangerous,BSD-3-Clause,Armin Ronache <armin.ronacher@active-4.com>; Pallets <contact@palletsprojects.com>
 jellyfish, BSD, James Turk
 kafka-python,Apache-2.0,Dana Powers <dana.powers@gmail.com>
+lambda-cache, MIT, Keith Rozario <keith@keithrozario.com>
 ldap3, LGPLv3, Giovanni Cannata <cannatag@gmail.com>
 loguru, MIT, Delgan <delgan.py@gmail.com>
 nltk,Apache-2.0,Steven Bird <stevenbird1@gmail.com>

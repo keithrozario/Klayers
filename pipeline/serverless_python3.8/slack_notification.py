@@ -73,3 +73,20 @@ def post_to_slack(message, channel=default_channel):
         status = "Failed"
 
     return status
+
+
+@logger_inject_lambda_context
+def post_message_to_slack(event,context):
+
+    """
+    Post status of publish state machine to Slack
+    event: see https://docs.aws.amazon.com/step-functions/latest/dg/cw-events.html
+    """
+
+    message = event.get('detail', {}).get('message', False)
+
+    if message:
+        response = post_to_slack(message, default_channel)
+        logger.debug({"message": message, "channel": default_channel, "response": response})
+
+    return None

@@ -1,11 +1,10 @@
 import json
-import logging
 
 import requests
 from packaging.version import parse
 
-logger = logging.getLogger()
-logger.setLevel(logging.INFO)
+from aws_lambda_powertools.logging import logger_setup, logger_inject_lambda_context
+logger = logger_setup(service='check_Pypi')
 
 
 def get_latest_release(package):
@@ -48,7 +47,10 @@ def main(event, context):
       license_info: License as per PyPI
     """
 
-    package = event['package']
+    logger.debug(event)
+    package = event.get('detail').get('package')
+
+    logger.debug(f"Checking {package}")
 
     latest_version, license_info = get_latest_release(package)
     logger.info(f"Latest version of package:{package} on pypi is {latest_version}")
