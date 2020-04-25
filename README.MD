@@ -18,64 +18,34 @@ List of all layer version arns are available by region here:
 
 # Python Packages
 
-The following PyPi packages are available for both Python3.7 & Python3.8 unless otherwise stated:
+For the full list of packages available click [here](pipeline/config/Klayers-prodp38/packages.csv), here are just some examples of the 60+ packages we build every week:
 
-* aiobotocore
-* aiohttp
-* ansible
-* aws-lambda-powertools (Python3.8 only)
-* arrow
+* aws-lambda-powertools
 * aws-xray-sdk
 * bcrypt
 * beautifulsoup4
-* boltons
 * boto3
-* construct
-* dynamodb-encryption-sdk (Python3.8 only)
-* elasticsearch
-* envelopes
-* ffmpeg-python
-* flashtext
-* google-auth
-* google-auth-oauthlib
-* grpcio
-* gspread
+* dynamodb-encryption-sdk
 * idna
-* itsdangerous
-* kafka-python
 * lambda-cache
 * nltk
 * numpy
 * opencv-python-headless
 * openpyxl
 * pandas
-* parliament (Python3.8 only)
+* parliament
 * Pillow
 * pulp
-* pycryptodome (Python3.8 only)
+* pycryptodome
 * PyJWT
-* pymongo
 * PyMUPDF
-* PyMySQL
-* PyNaCl
-* pyOpenSSL
-* pyparsing
 * pyqldb
 * pytesseract
-* python-docx
-* python-Levenshtein
 * pytz
 * PyYAML
-* reportlab (Python3.8 only)
 * requests
-* simplejson
 * slackclient
 * spacy
-* SQLAlchemy
-* textdistance
-* tinydb
-* tldextract
-* twilio
 
 # Status of layers
 
@@ -137,4 +107,5 @@ No self-respecting architect would have a repo like this without a diagram -- so
 
 # Special Thanks
 
-[Chahna107](https://github.com/chahna107) for adding tesseract config files into the tesseract layer.
+* [Chahna107](https://github.com/chahna107) for adding tesseract config files into the tesseract layer.
+* [ ~ Dependencies scanned by PyUp.io ~ ](https://pyup.io/)

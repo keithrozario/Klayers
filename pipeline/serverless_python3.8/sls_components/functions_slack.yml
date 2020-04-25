@@ -21,8 +21,8 @@ slack_pipeline:
             - Ref: AWS::AccountId
             - parameter${self:custom.slackTokenParameter}
   layers:
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-slackclient:1
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:8
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-slackclient:3
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:18
 
 slack_publish:
   handler: slack_notification.slack_notification_publish
@@ -47,5 +47,36 @@ slack_publish:
             - Ref: AWS::AccountId
             - parameter${self:custom.slackTokenParameter}
   layers:
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-slackclient:1
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:8
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-slackclient:3
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:18
+
+post_message_to_slack:
+  handler: slack_notification.post_message_to_slack
+  description: Generic Slack notifications via EventBridge
+  runtime: python3.8
+  timeout: 20
+  memorySize: 256
+  environment:
+    SLACK_TOKEN_PARAMETER: ${self:custom.slackTokenParameter}
+    POWERTOOLS_SERVICE_NAME: "post_to_slack"
+    LOG_LEVEL: "INFO"
+  iamRoleStatementsName: ${self:provider.stage}-post_message_to_slack
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - ssm:GetParameter
+      Resource:
+        Fn::Join:
+          - ":"
+          - - arn:aws:ssm
+            - ${self:provider.region}
+            - Ref: AWS::AccountId
+            - parameter${self:custom.slackTokenParameter}
+  layers:
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-slackclient:3
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:18
+  events:
+    - eventBridge:
+        pattern:
+          detail-type:
+            - "post_to_slack"

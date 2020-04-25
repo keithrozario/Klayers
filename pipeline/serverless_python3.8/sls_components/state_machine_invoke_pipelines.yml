@@ -2,9 +2,14 @@ events:
   - schedule: cron(0 2 ? * MON *)  # runs at 2am UTC on Monday
 name: ${self:custom.pipelineName}-invoke
 definition:
-  Comment: "Invoke the Check, Build and Deploy pipeline for all packages"
-  StartAt: Invoke
+  Comment: "Invoke the pipeline for all packages"
+  StartAt: DownloadConfig
   States:
+    DownloadConfig:
+      Type: Task
+      Resource:
+        Fn::GetAtt: [DownloadUnderscoreconfigLambdaFunction, Arn]
+      Next: Invoke
     Invoke:
       Type: Task
       Resource:
