@@ -97,7 +97,7 @@ def main(event, context):
             response = lambda_client.publish_layer_version(LayerName=layer_name,
                                                            Description=f"{package}=={version} | {requirements_hash}",
                                                            Content={'ZipFile': zip_binary},
-                                                           CompatibleRuntimes=['python3.6', 'python3.7'],
+                                                           CompatibleRuntimes=['python3.6', 'python3.7', 'python3.8'],
                                                            LicenseInfo=license_info)
 
             layer_version_arn = response['LayerVersionArn']
