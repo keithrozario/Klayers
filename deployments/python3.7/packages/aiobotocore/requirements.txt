@@ -1,6 +1,6 @@
 aiobotocore==1.0.4
 aiohttp==3.6.2
-aioitertools==0.6.0
+aioitertools==0.6.1
 async-timeout==3.0.1
 attrs==19.3.0
 botocore==1.15.32
