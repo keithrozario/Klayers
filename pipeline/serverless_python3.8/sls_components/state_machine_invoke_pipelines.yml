@@ -34,3 +34,13 @@ definition:
       Next: Done
     Done:
       Type: Succeed
+notifications:
+  ABORTED:
+    - lambda:
+        Fn::GetAtt: [SlackUnderscoreinvokepipelineLambdaFunction, Arn]
+  FAILED:
+    - lambda:
+        Fn::GetAtt: [SlackUnderscoreinvokepipelineLambdaFunction, Arn]
+  TIMED_OUT:
+    - lambda:
+        Fn::GetAtt: [SlackUnderscoreinvokepipelineLambdaFunction, Arn]

@@ -5,7 +5,7 @@ import boto3
 
 import get_config
 from aws_lambda_powertools.logging import logger_setup, logger_inject_lambda_context
-logger = logger_setup(service_name="Invoke Pipelines")
+logger = logger_setup()
 
 
 def log_eventbridge_errors(response, function_logger):
@@ -20,8 +20,9 @@ def log_eventbridge_errors(response, function_logger):
     if response['FailedEntryCount'] > 0:
         for entry in response['Entries']:
             if entry.get('ErrorCode', False):
-                logger.error(entry)
-    return
+                function_logger.error(entry)
+
+    return response['FailedEntryCount']
 
 
 @logger_inject_lambda_context
@@ -52,11 +53,15 @@ def main(event, context):
             'EventBusName': 'default'
         }
         entries.append(entry)
-    response = client.put_events(Entries=entries)
-    log_eventbridge_errors(response, logger)
+    # maximum 10 entries per put_events API call
+    chunk_10 = [entries[i:i + 10] for i in range(0, len(entries), 10)]
+    eventbridge_errors = 0
+    for chunk in chunk_10:
+        response = client.put_events(Entries=chunk)
+        eventbridge_errors += log_eventbridge_errors(response, logger)
 
     # Post Status to Slack
-    message = f"Started build on {len(packages)} packages, with {response['FailedEntryCount']} errors"
+    message = f"Started build on {len(packages)} packages, with {eventbridge_errors} eventbridge errors"
     entry = {
         'Source': f"Klayers.invoke.{stage}",
         'Resources': [],
@@ -67,4 +72,4 @@ def main(event, context):
     slack_response = client.put_events(Entries=[entry])
     log_eventbridge_errors(slack_response, logger)
 
-    return response
+    return None
