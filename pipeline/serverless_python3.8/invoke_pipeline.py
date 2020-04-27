@@ -72,4 +72,5 @@ def main(event, context):
     slack_response = client.put_events(Entries=[entry])
     log_eventbridge_errors(slack_response, logger)
 
-    return None
+    return {"num_packages": len(packages),
+            "eventbridge_errors" : eventbridge_errors}
