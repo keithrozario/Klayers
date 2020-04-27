@@ -7,8 +7,7 @@ import hashlib
 import requests
 import boto3
 from aws_lambda_powertools.logging import logger_setup, logger_inject_lambda_context
-
-logger = logger_setup(service='download_config')
+logger = logger_setup()
 
 
 @logger_inject_lambda_context
