@@ -30,7 +30,7 @@ def slack_notification_pipeline_error(event, context):
     """
 
     status = event.get('detail', {}).get('status')
-    package = json.loads(event.get('detail', {}).get('input')).get('package')
+    package = json.loads(event.get('detail', {}).get('input')).get('detail', {}).get('package')
 
     status = post_to_slack(message=f"ERROR: Building {package} status: {status}",
                            channel=default_channel)
