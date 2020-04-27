@@ -3,3 +3,11 @@ requests, Apache-2.0, Kenneth Reitz <me@kennethreitz.org>
 idna, https://github.com/kjd/idna/blob/master/LICENSE.rst, Kim Davis kim@cynosure.com.au
 PyYAML, MIT, Kirril Simonov <xi@resolvent.net>
 lambda-cache, MIT, Keith Rozario <keith@keithrozario.com>
+pyqldb,Apache-2.0,AWS
+awswrangler,Apache License 2.0,Igor Borgest <https://pypi.org/user/igorborgest/>
+aws-lambda-powertools,https://github.com/awslabs/aws-lambda-powertools/blob/develop/LICENSE,AWS
+aws-xray-sdk,Apache-2.0,AWS
+aws_kinesis_agg,Amazon Software License,<brenash@amazon.com>
+bcrypt,Apache-2.0,cryptography-dev@python.org
+records,ISC,<me@kennethreitz.org>
+spacy,MIT,contact@explosion.ai

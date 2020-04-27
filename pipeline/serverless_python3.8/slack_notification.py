@@ -39,6 +39,27 @@ def slack_notification_pipeline_error(event, context):
 
 
 @logger_inject_lambda_context
+def slack_notification_invoke_pipeline_error(event, context):
+
+    """
+    Post error messages for various failed statuses of Pipeline step function to slack
+    event: see https://docs.aws.amazon.com/step-functions/latest/dg/cw-events.html
+    """
+
+    status = event.get('detail', {}).get('status')
+    package = json.loads(event.get('detail', {}).get('input'))
+
+    if status in ['TIMED_OUT', 'ABORTED', 'FAILED']:
+        message = f"ERROR: Invoking Pipelines"
+    else:
+        message = f"ERROR: Unknown State of Publish"
+
+    status = post_to_slack(message, default_channel)
+
+    return json.dumps({"status": status})
+
+
+@logger_inject_lambda_context
 def slack_notification_publish(event, context):
 
     """

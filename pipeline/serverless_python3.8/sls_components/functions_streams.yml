@@ -1,11 +1,13 @@
 stream_processor:
   handler: stream_processor.main
   runtime: python3.7
+  description: Triggered everytime an Item is deleted from the DynamoDB Table
   timeout: 20
   memorySize: 256
   layers:
     - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-boto3:2
   iamRoleStatementsName: ${self:provider.stage}-stream_processor
+  # IAM role might look really permissive, but it has good reason.
   iamRoleStatements:
     - Effect: Allow
       Action:
