@@ -20,11 +20,6 @@ invoke_pipeline:
               - ${self:provider.region}
               - Ref: AWS::AccountId
               - event-bus/default
-      Condition:
-        ForAllValues:StringEquals:
-          events:detail-type:
-          - "invoke_pipeline"
-          - "post_to_slack"
     - Effect: Allow
       Action: s3:GetObject
       Resource: ${self:custom.s3LayersArn}/*
