@@ -7,9 +7,11 @@ aws-xray-sdk,Apache-2.0,AWS
 arrow,Apache-2.0,Chris Smith <crsmithdev@gmail.com>
 bcrypt,Apache-2.0,cryptography-dev@python.org
 beautifulsoup4,MIT,Leonard Richardson <leonardr@segfault.org>
+black,MIT,Lukasz Langa <lukasz@langa.pl>
 boltons,BSD,Mahmoud Hashemi <mahmoud@hatnote.com>
 boto3,Apache-2.0,AWS
 Cerberus, ISC, Frank Sachsenheim <funkyfuture@riseup.net>
+cloudsplaining, MIT, Kinnaird McQuade <kinnairdm@gmail.com>
 construct,MIT,Arkadiusz Bulski<arek.bulski@gmail.com>; Tomer Filiba <tomerfiliba@gmail.com>; Corbin Simpson <MostAwesomeDude@gmail.com>
 crhelper,Apache-2.0,Jay McConnell <jmmccon@amazon.com>
 dynamodb-encryption-sdk,Apache-2.0,<aws-cryptools@amazon.com>
@@ -26,8 +28,10 @@ itsdangerous,BSD-3-Clause,Armin Ronache <armin.ronacher@active-4.com>; Pallets <
 jellyfish, BSD, James Turk
 kafka-python,Apache-2.0,Dana Powers <dana.powers@gmail.com>
 lambda-cache, MIT, Keith Rozario <keith@keithrozario.com>
+lambda-decorators, MIT, Daniel Schep <dschep@gmail.com>
 ldap3, LGPLv3, Giovanni Cannata <cannatag@gmail.com>
 loguru, MIT, Delgan <delgan.py@gmail.com>
+lxml, BSD, <lxml-dev@lxml.de>
 matplotlib,PSF,matplotlib-users@python.org
 nltk,Apache-2.0,Steven Bird <stevenbird1@gmail.com>
 numpy,https://www.numpy.org/license.html,numpy-discussion@python.org
@@ -51,9 +55,10 @@ python-docx,MIT,Steve Canny <python-docx@googlegroups.com>
 python-Levenshtein-wheels,GPLv2+,Antti Haapala <antti@haapala.name>
 pytz,MIT,Stuart Bishop <stuart@stuartbishop.net>
 PyYAML,MIT,Kirril Simonov <xi@resolvent.net>
-rdklib,Apache License Version 2.0,Michael Borchet <mborch@amazon.com>, <https://pypi.org/user/rickychau2780/>
+rdklib,Apache License Version 2.0,Michael Borchet <mborch@amazon.com> <https://pypi.org/user/rickychau2780/>
 records,ISC,<me@kennethreitz.org>
 requests,Apache-2.0,Kenneth Reitz <me@kennethreitz.org>
+requests-html,MIT,<me@kennethreitz.org>
 reportlab,BSD,<reportlab-users@lists2.reportlab.com>
 simplejson,MIT,Bob Ippolito <bob@redivi.com>
 slackclient,MIT,slack <opensource@slack.com>
