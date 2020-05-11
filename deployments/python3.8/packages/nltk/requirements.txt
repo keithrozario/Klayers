@@ -1,5 +1,5 @@
 click==7.1.2
 joblib==0.14.1
 nltk==3.5
-regex==2020.4.4
+regex==2020.5.7
 tqdm==4.46.0
