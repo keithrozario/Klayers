@@ -7,8 +7,8 @@ botocore==1.15.32
 chardet==3.0.4
 docutils==0.15.2
 idna==2.9
-jmespath==0.9.5
-multidict==4.7.5
+jmespath==0.10.0
+multidict==4.7.6
 python-dateutil==2.8.1
 six==1.14.0
 typing-extensions==3.7.4.2
