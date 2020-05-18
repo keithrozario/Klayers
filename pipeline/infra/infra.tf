@@ -1,5 +1,5 @@
 variable "app_name" {}
-variable "aws_region" { type = map }
+variable "aws_region" {type = map}
 variable "dynamodb_layers" { type = map }
 variable "dynamodb_requirements" { type = map }
 variable "aws_profile" { type = map }
@@ -179,9 +179,9 @@ resource "aws_ssm_parameter" "github_repo" {
   overwrite = true
 }
 
-resource "aws_ssm_parameter" "github_webhook_secret" {
-  type      = "SecureString"
-  name      = "/${lookup(var.app_name, terraform.workspace)}/${terraform.workspace}/github_webhook_secret"
-  value     = "<blank>"
-  overwrite = false
-}
+# resource "aws_ssm_parameter" "github_webhook_secret" {
+#   type      = "SecureString"
+#   name      = "/${lookup(var.app_name, terraform.workspace)}/${terraform.workspace}/github_webhook_secret"
+#   value = "to be modified"
+#   overwrite = false
+# }

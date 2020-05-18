@@ -32,6 +32,10 @@ custom:
   lambdaPrefix: ${ssm:/${self:service.name}/${self:provider.stage}/lambda_prefix}
   lambdaErrorSNSArn: ${ssm:/${self:service.name}/${self:provider.stage}/lambda_error_notification_arn}
   pipelineName: ${self:service.name}-${self:provider.stage}-pipeline
+  dbName: ${ssm:/${self:service.name}/${self:provider.stage}/db/name}
+  dbArn: ${ssm:/${self:service.name}/${self:provider.stage}/db/arn}
+  dbStreamArn: ${ssm:/${self:service.name}/${self:provider.stage}/db/stream/arn}
+  dbStreamLabel: ${ssm:/${self:service.name}/${self:provider.stage}/db/stream/label}
 
   # Github
   githubSSHKeyParameter: /${self:service.name}/${self:provider.stage}/github_ssh_key

@@ -22,10 +22,10 @@ build:
   description: Builds the package inside the lambda using pip
   runtime: python3.8
   timeout: 180
-  memorySize: 1024
+  memorySize: 1792
   environment:
     BUCKET_NAME: ${self:custom.s3LayersName}
-    REQS_DB: ${self:custom.dbReqs}
+    DB_NAME: ${self:custom.dbName}
   iamRoleStatementsName: ${self:provider.stage}-build
   iamRoleStatements:
   - Effect: Allow
@@ -45,7 +45,9 @@ build:
     Action:
     - dynamodb:PutItem
     - dynamodb:Query
-    Resource: ${self:custom.dbReqsArn}
+    - dynamodb:UpdateItem
+    - dynamodb:GetItem
+    Resource: ${self:custom.dbArn}
   layers:
     - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:18
 

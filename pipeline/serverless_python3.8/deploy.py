@@ -53,7 +53,7 @@ def check_latest_deploy(package, region, requirements_hash):
         Boolean: False if requirements hash matches latest deployhed version (doesn't need deploying)
                  True if requirements hash does not match latest deployed version (needs deploying)
     """
-    last_deployed_version, last_deployed_requirements_hash = get_latest_deployed_version(region=region,
+    last_deployed_version,   = get_latest_deployed_version(region=region,
                                                                                          package=package)
 
     if requirements_hash == last_deployed_requirements_hash:

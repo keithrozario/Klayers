@@ -1,0 +1,665 @@
+{
+  "ModelName": "Klayers",
+  "ModelMetadata": {
+    "Author": "Keith Rozario",
+    "DateCreated": "May 15, 2020, 7:22 PM",
+    "DateLastModified": "May 17, 2020, 12:33 PM",
+    "Description": "Data Model for Klayers\n"
+  },
+  "DataModel": [
+    {
+      "TableName": "Klayers",
+      "KeyAttributes": {
+        "PartitionKey": {
+          "AttributeName": "pk",
+          "AttributeType": "S"
+        },
+        "SortKey": {
+          "AttributeName": "sk",
+          "AttributeType": "S"
+        }
+      },
+      "NonKeyAttributes": [
+        {
+          "AttributeName": "rgnPckg",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "pckg",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "rqrmntsTxt",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "arn",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "lyrVrsn",
+          "AttributeType": "N"
+        },
+        {
+          "AttributeName": "pckgVrsn",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "rqrmntsHsh",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "rgn",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "dplySts",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "bltVrsn",
+          "AttributeType": "S"
+        }
+      ],
+      "TableFacets": [
+        {
+          "FacetName": "latest_arn_for_package_in_region",
+          "KeyAttributeAlias": {
+            "PartitionKeyAlias": "deployed_region-package",
+            "SortKeyAlias": "layer_version"
+          },
+          "TableData": [],
+          "NonKeyAttributes": [
+            "rqrmntsTxt",
+            "arn",
+            "rqrmntsHsh"
+          ],
+          "DataAccess": {
+            "MySql": {}
+          }
+        },
+        {
+          "FacetName": "all_layers_in_region",
+          "KeyAttributeAlias": {
+            "PartitionKeyAlias": "deployed_region",
+            "SortKeyAlias": "package"
+          },
+          "TableData": [],
+          "NonKeyAttributes": [
+            "pckg",
+            "pckgVrsn",
+            "rgn"
+          ],
+          "DataAccess": {
+            "MySql": {}
+          }
+        },
+        {
+          "FacetName": "package_requirements.txt",
+          "KeyAttributeAlias": {
+            "PartitionKeyAlias": "build_version",
+            "SortKeyAlias": "package"
+          },
+          "TableData": [],
+          "NonKeyAttributes": [
+            "rqrmntsTxt"
+          ],
+          "DataAccess": {
+            "MySql": {}
+          }
+        },
+        {
+          "FacetName": "build_requirement_hash",
+          "KeyAttributeAlias": {
+            "PartitionKeyAlias": "build_version",
+            "SortKeyAlias": "package"
+          },
+          "TableData": [],
+          "NonKeyAttributes": [
+            "rqrmntsHsh"
+          ],
+          "DataAccess": {
+            "MySql": {}
+          }
+        }
+      ],
+      "GlobalSecondaryIndexes": [
+        {
+          "IndexName": "GSI1",
+          "KeyAttributes": {
+            "PartitionKey": {
+              "AttributeName": "rgn",
+              "AttributeType": "S"
+            },
+            "SortKey": {
+              "AttributeName": "dplySts",
+              "AttributeType": "S"
+            }
+          },
+          "Projection": {
+            "ProjectionType": "ALL"
+          }
+        },
+        {
+          "IndexName": "Stats",
+          "KeyAttributes": {
+            "PartitionKey": {
+              "AttributeName": "pckg",
+              "AttributeType": "S"
+            },
+            "SortKey": {
+              "AttributeName": "dplySts",
+              "AttributeType": "S"
+            }
+          },
+          "Projection": {
+            "ProjectionType": "ALL"
+          }
+        }
+      ],
+      "TableData": [
+        {
+          "pk": {
+            "S": "ap-southeast-1.requests"
+          },
+          "sk": {
+            "S": "1"
+          },
+          "rgnPckg": {
+            "S": "ap-southeast-1.requests"
+          },
+          "pckg": {
+            "S": "requests"
+          },
+          "rqrmntsTxt": {
+            "S": "..."
+          },
+          "arn": {
+            "S": "..."
+          },
+          "lyrVrsn": {
+            "N": "1"
+          },
+          "pckgVrsn": {
+            "S": "2.2.0"
+          },
+          "rqrmntsHsh": {
+            "S": "...."
+          },
+          "rgn": {
+            "S": "ap-southeast-1"
+          },
+          "dplySts": {
+            "S": "deprecated"
+          }
+        },
+        {
+          "pk": {
+            "S": "ap-southeast-1.requests"
+          },
+          "sk": {
+            "S": "2"
+          },
+          "rgnPckg": {
+            "S": "ap-southeast-1.requests"
+          },
+          "pckg": {
+            "S": "requests"
+          },
+          "rqrmntsTxt": {
+            "S": "..."
+          },
+          "arn": {
+            "S": "..."
+          },
+          "lyrVrsn": {
+            "N": "2"
+          },
+          "pckgVrsn": {
+            "S": "2.2.1"
+          },
+          "rqrmntsHsh": {
+            "S": "...."
+          },
+          "rgn": {
+            "S": "ap-southeast-1"
+          },
+          "dplySts": {
+            "S": "deprecated"
+          }
+        },
+        {
+          "pk": {
+            "S": "v0"
+          },
+          "sk": {
+            "S": "requests"
+          },
+          "rqrmntsTxt": {
+            "S": "..."
+          },
+          "pckgVrsn": {
+            "S": "2.2.1"
+          },
+          "rqrmntsHsh": {
+            "S": "...."
+          },
+          "bltVrsn": {
+            "S": "v2"
+          }
+        },
+        {
+          "pk": {
+            "S": "v1"
+          },
+          "sk": {
+            "S": "requests"
+          },
+          "rqrmntsTxt": {
+            "S": "..."
+          },
+          "pckgVrsn": {
+            "S": "2.2.0"
+          },
+          "rqrmntsHsh": {
+            "S": "...."
+          },
+          "bltVrsn": {
+            "S": "v1"
+          }
+        },
+        {
+          "pk": {
+            "S": "v2"
+          },
+          "sk": {
+            "S": "requests"
+          },
+          "rqrmntsTxt": {
+            "S": "..."
+          },
+          "pckgVrsn": {
+            "S": "2.2.1"
+          },
+          "rqrmntsHsh": {
+            "S": "...."
+          },
+          "bltVrsn": {
+            "S": "v2"
+          }
+        },
+        {
+          "pk": {
+            "S": "ap-southeast-1.idna"
+          },
+          "sk": {
+            "S": "1"
+          },
+          "rgnPckg": {
+            "S": "ap-southeast-1.idna"
+          },
+          "pckg": {
+            "S": "idna"
+          },
+          "rqrmntsTxt": {
+            "S": "..."
+          },
+          "arn": {
+            "S": "..."
+          },
+          "lyrVrsn": {
+            "N": "1"
+          },
+          "pckgVrsn": {
+            "S": "1.0"
+          },
+          "rqrmntsHsh": {
+            "S": "...."
+          },
+          "rgn": {
+            "S": "ap-southeast-1"
+          },
+          "dplySts": {
+            "S": "latest"
+          }
+        },
+        {
+          "pk": {
+            "S": "v0"
+          },
+          "sk": {
+            "S": "idna"
+          },
+          "rqrmntsTxt": {
+            "S": "..."
+          },
+          "pckgVrsn": {
+            "S": "1.0"
+          },
+          "rqrmntsHsh": {
+            "S": "...."
+          },
+          "bltVrsn": {
+            "S": "v1"
+          }
+        },
+        {
+          "pk": {
+            "S": "v1"
+          },
+          "sk": {
+            "S": "idna"
+          },
+          "rqrmntsTxt": {
+            "S": "..."
+          },
+          "pckgVrsn": {
+            "S": "1.0"
+          },
+          "rqrmntsHsh": {
+            "S": "...."
+          },
+          "bltVrsn": {
+            "S": "v1"
+          }
+        },
+        {
+          "pk": {
+            "S": "ap-southeast-1.example"
+          },
+          "sk": {
+            "S": "1"
+          },
+          "rgnPckg": {
+            "S": "ap-southeast-1.example"
+          },
+          "pckg": {
+            "S": "example"
+          },
+          "rqrmntsTxt": {
+            "S": ",,,"
+          },
+          "arn": {
+            "S": "..."
+          },
+          "lyrVrsn": {
+            "N": "1"
+          },
+          "pckgVrsn": {
+            "S": "0.1"
+          },
+          "rqrmntsHsh": {
+            "S": "...."
+          },
+          "rgn": {
+            "S": "ap-southeast-1"
+          }
+        },
+        {
+          "pk": {
+            "S": "ap-southeast-1.example"
+          },
+          "sk": {
+            "S": "2"
+          },
+          "rgnPckg": {
+            "S": "ap-southeast-1.example"
+          },
+          "pckg": {
+            "S": "example"
+          },
+          "rqrmntsTxt": {
+            "S": "..."
+          },
+          "arn": {
+            "S": "..."
+          },
+          "lyrVrsn": {
+            "N": "2"
+          },
+          "pckgVrsn": {
+            "S": "0.2"
+          },
+          "rqrmntsHsh": {
+            "S": "...."
+          },
+          "rgn": {
+            "S": "ap-southeast-1"
+          },
+          "dplySts": {
+            "S": "latest"
+          }
+        },
+        {
+          "pk": {
+            "S": "v0"
+          },
+          "sk": {
+            "S": "example"
+          },
+          "rqrmntsTxt": {
+            "S": "..."
+          },
+          "pckgVrsn": {
+            "S": "0.2"
+          },
+          "rqrmntsHsh": {
+            "S": "...."
+          },
+          "bltVrsn": {
+            "S": "v2"
+          }
+        },
+        {
+          "pk": {
+            "S": "v1"
+          },
+          "sk": {
+            "S": "example"
+          },
+          "rqrmntsTxt": {
+            "S": "..."
+          },
+          "pckgVrsn": {
+            "S": "0.1"
+          },
+          "rqrmntsHsh": {
+            "S": "...."
+          },
+          "bltVrsn": {
+            "S": "v1"
+          }
+        },
+        {
+          "pk": {
+            "S": "v2"
+          },
+          "sk": {
+            "S": "example"
+          },
+          "rqrmntsTxt": {
+            "S": "..."
+          },
+          "pckgVrsn": {
+            "S": "0.2"
+          },
+          "rqrmntsHsh": {
+            "S": "...."
+          },
+          "bltVrsn": {
+            "S": "v2"
+          }
+        },
+        {
+          "pk": {
+            "S": "ap-southeast-1.requests"
+          },
+          "sk": {
+            "S": "3"
+          },
+          "rgnPckg": {
+            "S": "ap-southeast-1.requests"
+          },
+          "pckg": {
+            "S": "requests"
+          },
+          "rqrmntsTxt": {
+            "S": "..."
+          },
+          "arn": {
+            "S": "..."
+          },
+          "lyrVrsn": {
+            "N": "3"
+          },
+          "pckgVrsn": {
+            "S": "2.2.3"
+          },
+          "rqrmntsHsh": {
+            "S": "...."
+          },
+          "rgn": {
+            "S": "ap-southeast-1"
+          },
+          "dplySts": {
+            "S": "latest"
+          }
+        },
+        {
+          "pk": {
+            "S": "ap-southeast-1.requests"
+          },
+          "sk": {
+            "S": "v0.request"
+          },
+          "rgnPckg": {
+            "S": "ap-southeast-1"
+          },
+          "pckg": {
+            "S": "requests"
+          },
+          "rqrmntsTxt": {
+            "S": "..."
+          },
+          "arn": {
+            "S": "..."
+          },
+          "lyrVrsn": {
+            "N": "0"
+          },
+          "pckgVrsn": {
+            "S": "2.2.3"
+          },
+          "rqrmntsHsh": {
+            "S": "...."
+          },
+          "rgn": {
+            "S": "ap-southeast-1"
+          }
+        },
+        {
+          "pk": {
+            "S": "us-east-1.requests"
+          },
+          "sk": {
+            "S": "v0.request"
+          },
+          "rgnPckg": {
+            "S": "us-east-1.requests"
+          },
+          "pckg": {
+            "S": "requests"
+          },
+          "rqrmntsTxt": {
+            "S": "..."
+          },
+          "arn": {
+            "S": "..."
+          },
+          "lyrVrsn": {
+            "N": "0"
+          },
+          "pckgVrsn": {
+            "S": "2,2,3"
+          },
+          "rqrmntsHsh": {
+            "S": "...."
+          },
+          "rgn": {
+            "S": "us-east-1"
+          }
+        },
+        {
+          "pk": {
+            "S": "us-east-1.requests"
+          },
+          "sk": {
+            "S": "1"
+          },
+          "rgnPckg": {
+            "S": "us-east-1.requests"
+          },
+          "pckg": {
+            "S": "requests"
+          },
+          "rqrmntsTxt": {
+            "S": "..."
+          },
+          "arn": {
+            "S": "..."
+          },
+          "lyrVrsn": {
+            "N": "3"
+          },
+          "pckgVrsn": {
+            "S": "2.2.3"
+          },
+          "rqrmntsHsh": {
+            "S": "...."
+          },
+          "rgn": {
+            "S": "us-east-1"
+          },
+          "dplySts": {
+            "S": "latest"
+          }
+        },
+        {
+          "pk": {
+            "S": "ap-southeast-1.example"
+          },
+          "sk": {
+            "S": "v0.example"
+          },
+          "rgnPckg": {
+            "S": "ap-southeast-1.example"
+          },
+          "pckg": {
+            "S": "example"
+          },
+          "rqrmntsTxt": {
+            "S": "..."
+          },
+          "arn": {
+            "S": ",,,"
+          },
+          "lyrVrsn": {
+            "N": "0"
+          },
+          "pckgVrsn": {
+            "S": "0.1"
+          },
+          "rqrmntsHsh": {
+            "S": ",,,"
+          },
+          "rgn": {
+            "S": "ap-southeast-1"
+          }
+        }
+      ],
+      "DataAccess": {
+        "MySql": {}
+      }
+    }
+  ]
+}

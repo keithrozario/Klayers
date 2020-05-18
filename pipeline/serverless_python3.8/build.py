@@ -12,25 +12,94 @@ logger = logger_setup()
 
 
 def put_requirements_hash(package, version, requirements_txt, requirements_hash):
+    """
+    Args:
+      package: Package name
+      version: Package version
+      requirements_hash: SHA256 hash of the requirements.txt file
+      requirements_txt: requirements txt of the entire build
+    returns:
+      None
+    """
+    client = boto3.client('dynamodb')
+    table_name = os.environ['DB_NAME']
 
-    dynamodb = boto3.client('dynamodb')
-    item = {'package': {'S': package},
-            'version': {'S': str(version)},
-            'requirements': {'S': requirements_txt},
-            'requirements_hash': {'S': requirements_hash},
-            'created_date': {'S': datetime.now().isoformat()}}
+    # Get latest build version for package
+    response = client.get_item(
+        TableName=table_name,
+        Key={'pk': {'S': 'v0'}, 'sk': {'S': package}},
+        ProjectionExpression="bltVrsn",
+    )
     try:
-        response = dynamodb.put_item(TableName=os.environ['REQS_DB'],
-                                     Item=item,
-                                     ReturnValues='NONE')
-        logger.info(f"Successfully written {package}:{version} status to DB with hash: {requirements_hash}")
+        latest_version = response['Item']['bltVrsn']['S']
+        new_version = f"{latest_version[0]}{int(latest_version[1:])+1}"
+    except KeyError:
+        # Version wasn't deployed before, start with v1
+        new_version = "v1"
+
+    Item = {
+        'pk': {'S': new_version},
+        'sk': {'S': package},
+        'pckgVrsn': {'S': str(version)},
+        'rqrmntsTxt': {'S': requirements_txt},
+        'rqrmntsHsh': {'S': requirements_hash},
+        'bltVrsn': {'S': new_version},
+        'created_date': {'S': datetime.now().isoformat()},
+    }
+
+    # Insert new record
+    try:
+        response = client.transact_write_items(
+            TransactItems=[
+                {
+                    'Update': {
+                        'TableName': table_name,
+                        'Key': {
+                            'pk': {'S': 'v0'},
+                            'sk': {'S': package},
+                        },
+                        'UpdateExpression':
+                            "set "
+                            "rqrmntsTxt = :rqrmntsTxt, "
+                            "pckgVrsn = :pckgVrsn, "
+                            "rqrmntsHsh = :rqrmntsHsh,"
+                            "bltVrsn = :bltVrsn",
+                        "ExpressionAttributeValues": {
+                            ':rqrmntsTxt': {'S': requirements_txt},
+                            ':pckgVrsn': {'S': str(version)},
+                            ':rqrmntsHsh': {'S': requirements_hash},
+                            ':bltVrsn': {'S': new_version},
+                        },
+                        'ConditionExpression': "bltVrsn <> :bltVrsn",
+                    }
+                },
+                {
+                    'Put': {
+                        'TableName': table_name,
+                        'Item': {
+                            'pk': {'S': new_version},
+                            'sk': {'S': package},
+                            'pckgVrsn': {'S': str(version)},
+                            'rqrmntsTxt': {'S': requirements_txt},
+                            'rqrmntsHsh': {'S': requirements_hash},
+                            'bltVrsn': {'S': new_version},
+                            'created_date': {'S': datetime.now().isoformat()},
+                        }
+                    }
+                }
+            ])
+        logger.info({"message": "Successfully written",
+                     "item": Item})
         logger.debug(f"DynamoDB response: {response}")
     except ClientError as e:
-        logger.error(f"{e.response['Error']['Code']}: {e.response['Error']['Message']} for item {item}")
+        logger.error({
+            "error_code": e.response['Error']['Code'],
+            "error_message": e.response['Error']['Message'],
+            "item": Item,
+            "message": "Failed to Update record for Build Version"})
         exit(1)
 
     return
-
 
 def check_requirement_hash(package, requirements_hash):
     """
@@ -41,14 +110,16 @@ def check_requirement_hash(package, requirements_hash):
       exists: Boolean value of if the requirements_hash exists in the DB (package was built already)
     """
 
-    dynamodb = boto3.resource('dynamodb')
-    table = dynamodb.Table(os.environ['REQS_DB'])
+    client = boto3.client('dynamodb')
+    table_name = os.environ['DB_NAME']
 
-    response = table.query(
-        KeyConditionExpression=Key("package").eq(package) & Key("requirements_hash").eq(requirements_hash)
+    response = client.get_item(
+        TableName=table_name,
+        Key={'pk': {'S': 'v0'}, 'sk': {'S': package}},
+        ProjectionExpression="rqrmntsHsh",
     )
 
-    if len(response['Items']) > 0:
+    if requirements_hash == response.get('Item', {}).get('rqrmntsHsh', {}).get('S', False):
         hash_found = True
     else:
         hash_found = False
@@ -104,10 +175,11 @@ def upload_to_s3(zip_file, package, uploaded_file_name):
         Prefix=package
     )
 
-    logger.info(f"Uploaded {package}.zip with "
-                f"size {response['Contents'][0]['Size']} "
-                f"at {response['Contents'][0]['LastModified']} "
-                f"to {bucket_name}")
+    logger.info({
+        "message": f"Uploaded {package}.zip", 
+        "size": response['Contents'][0]['Size'],
+        "time": response['Contents'][0]['LastModified'],
+        "bucket": bucket_name})
 
     return uploaded_file_name
 
@@ -125,9 +197,9 @@ def zip_dir(dir_path, package):
 def delete_dir(dir):
     try:
         shutil.rmtree(dir)
-        logger.info("Deleted previous version of package directory")
+        logger.debug("Deleted previous version of package directory")
     except FileNotFoundError:
-        logger.info("No previous installation detected")
+        logger.debug("No previous installation detected")
     return True
 
 
@@ -169,22 +241,21 @@ def main(event,context):
 
     package_dir = install(package, package_dir=package_dir)
     package_size = dir_size(package_dir)
-    logger.info(f"Installed {package} into {package_dir} with size: {package_size}")
+    logger.info({"package": package, "size": package_size})
 
     requirements_txt, requirements_hash, version = freeze_requirements(package=package,
                                                                        path=package_dir)
-
+    logger.info({"message": "Built Package", "requirements_txt": requirements_txt})
+    
     with open(f"{package_dir}/requirements.txt", 'w') as requirements_file:
         requirements_file.write(requirements_txt)
-
     zip_file = zip_dir(dir_path=package_dir,
                        package=package)
-    logger.info(f"Zipped package info {zip_file}")
 
     if not check_requirement_hash(package=package,
                                   requirements_hash=requirements_hash):
-        logger.info(f"Requirements hash {requirements_hash} "
-                    f" for {package}=={version} not previously built, proceeding to upload to S3")
+        logger.info({"requirements_hash": requirements_hash, "package": package, "version": version, 
+        "message": "Uploading to S3"})
 
         upload_to_s3(zip_file=zip_file,
                      package=package,
@@ -194,9 +265,12 @@ def main(event,context):
                               requirements_hash=requirements_hash,
                               version=version)
 
-        logger.info(f"Built package: {package}=={version} into s3://{os.environ['BUCKET_NAME']}"
-                    f"file size {os.path.getsize(zip_file)} "
-                    f"with requirements hash: {requirements_hash}")
+        logger.info({
+            "package": package,
+            "version": version,
+            "location": f"s3://{os.environ['BUCKET_NAME']}",
+            "size": os.path.getsize(zip_file),
+            "requirements_hash" : requirements_hash})
         build_flag = True
 
     else:
