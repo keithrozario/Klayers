@@ -49,12 +49,15 @@ resource "aws_dynamodb_table" "t" {
     enabled        = true
   }
 
+
+  # for GSI in Terraform order of non_key_attributes need to match console
+  # https://github.com/terraform-providers/terraform-provider-aws/issues/3828#issuecomment-522197376
   global_secondary_index {
     name            = "deployed_in_region"
     hash_key        = "rgn"
     range_key       = "dplySts"
     projection_type = "INCLUDE"
-    non_key_attributes = ["pckg", "pckgVrsn", "arn",]
+    non_key_attributes = ["pckgVrsn", "arn","pckg"]
   }
 
   global_secondary_index {
@@ -62,14 +65,14 @@ resource "aws_dynamodb_table" "t" {
     hash_key        = "pckg"
     range_key       = "dplySts"
     projection_type = "INCLUDE"
-    non_key_attributes = ["pk", "sk", "rqrmntsHsh"]
+    non_key_attributes = ["rgn", "rqrmntsHsh"]
   }
 
   global_secondary_index {
     name            = "requirements_hash"
     hash_key        = "rqrmntsHsh"
     projection_type = "INCLUDE"
-    non_key_attributes = ["pk", "sk", "rqrmntsHsh", "rqrmntsTxt"]
+    non_key_attributes = ["rqrmntsTxt"]
   }
 
 

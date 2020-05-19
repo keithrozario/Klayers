@@ -7,7 +7,7 @@ check:
     - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-requests:4
     - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:18
   timeout: 30
-  memorySize: 128
+  memorySize: 256
   environment:
     LAYERS_DB: ${self:custom.dbLayers}
   iamRoleStatementsName: ${self:provider.stage}-check
@@ -26,6 +26,8 @@ build:
   environment:
     BUCKET_NAME: ${self:custom.s3LayersName}
     DB_NAME: ${self:custom.dbName}
+    POWERTOOLS_SERVICE_NAME: Klayers.Build
+    LOG_LEVEL: INFO
   iamRoleStatementsName: ${self:provider.stage}-build
   iamRoleStatements:
   - Effect: Allow
@@ -56,16 +58,15 @@ deploy:
   handler: deploy.main
   description: Deploys functions to multiple regions
   runtime: python3.7
-  layers:
-    - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-boto3:2
-    - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-packaging:1
   timeout: 600
-  memorySize: 384
+  memorySize: 512
   environment:
     BUCKET_NAME: ${self:custom.s3LayersName}
-    REQS_DB: ${self:custom.dbReqs}
-    LAYERS_DB: ${self:custom.dbLayers}
+    DB_NAME:  ${self:custom.dbName}
     LAMBDA_PREFIX: ${self:custom.lambdaPrefix}
+    POWERTOOLS_SERVICE_NAME: Klayers.Deploy
+    EXPIRY_DAYS: 60
+    LOG_LEVEL: INFO
   iamRoleStatementsName: ${self:provider.stage}-deploy
   iamRoleStatements:
     - Effect: Allow
@@ -74,7 +75,9 @@ deploy:
       - dynamodb:PutItem
       - dynamodb:Query
       - dynamodb:UpdateItem
-      Resource: ${self:custom.dbLayersArn}
+      Resource: 
+      - ${self:custom.dbArn}
+      - ${self:custom.dbArn}/index/package_global
     - Effect: Allow
       Action:
       - lambda:AddLayerVersionPermission
@@ -88,3 +91,7 @@ deploy:
       Action:
       - s3:GetObject
       Resource: ${self:custom.s3LayersArn}/*
+  layers:
+    - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-boto3:2
+    - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-packaging:1
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:23
