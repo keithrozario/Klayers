@@ -7,7 +7,6 @@ slack_pipeline:
   environment:
     SLACK_TOKEN_PARAMETER: ${self:custom.slackTokenParameter}
     POWERTOOLS_SERVICE_NAME: "slack_pipeline"
-    LOG_LEVEL: "INFO"
   iamRoleStatementsName: ${self:provider.stage}-slack_pipeline
   iamRoleStatements:
     - Effect: Allow
@@ -33,7 +32,6 @@ slack_publish:
   environment:
     SLACK_TOKEN_PARAMETER: ${self:custom.slackTokenParameter}
     POWERTOOLS_SERVICE_NAME: "slack_publish"
-    LOG_LEVEL: "INFO"
   iamRoleStatementsName: ${self:provider.stage}-slack_publish
   iamRoleStatements:
     - Effect: Allow
@@ -59,7 +57,6 @@ post_message_to_slack:
   environment:
     SLACK_TOKEN_PARAMETER: ${self:custom.slackTokenParameter}
     POWERTOOLS_SERVICE_NAME: "post_to_slack"
-    LOG_LEVEL: "INFO"
   iamRoleStatementsName: ${self:provider.stage}-post_message_to_slack
   iamRoleStatements:
     - Effect: Allow
@@ -90,7 +87,6 @@ slack_invokepipeline:
   environment:
     SLACK_TOKEN_PARAMETER: ${self:custom.slackTokenParameter}
     POWERTOOLS_SERVICE_NAME: "slack_invoke_pipeline"
-    LOG_LEVEL: "INFO"
   iamRoleStatementsName: ${self:provider.stage}-slack_notification_invoke_pipeline_error
   iamRoleStatements:
     - Effect: Allow

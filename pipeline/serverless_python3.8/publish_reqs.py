@@ -7,9 +7,8 @@ from boto3.dynamodb.conditions import Key
 import boto3
 
 import get_config
-
-logger = logging.getLogger()
-logger.setLevel(logging.INFO)
+from aws_lambda_powertools.logging import Logger
+logger = Logger()
 
 
 # Helper class to convert a DynamoDB item to JSON.
@@ -22,39 +21,60 @@ class DecimalEncoder(json.JSONEncoder):
                 return int(o)
         return super(DecimalEncoder, self).default(o)
 
+def query_requirements():
+    """
+    Args:
+    returns:
+      items: All the requriements_txt of the latest packages
+    """
+    
+    dynamodb = boto3.resource('dynamodb')
+    table = dynamodb.Table(os.environ['DB_NAME'])
+    kwargs = {
+        "KeyConditionExpression": Key('pk').eq('v0.reqs'),
+    }
+    items = []
 
+    while True:
+        response = table.query(**kwargs)
+        items.extend(response['Items'])
+
+        try:
+            kwargs['ExclusiveStartKey'] = response['ExclusiveStartKey']
+        except KeyError:
+            logger.info(f"Reached end of query for returning {len(items)} items")
+            break
+
+    return items
+
+@logger.inject_lambda_context
 def main(event, context):
 
     """
-    Gets layer arns for each region and publish to S3
+    Gets requirements_txt to publish to packages dir
     """
 
-    packages = get_config.get_packages()
-
-    dynamodb = boto3.resource('dynamodb')
-    table = dynamodb.Table(os.environ['REQS_DB'])
     bucket = os.environ['BUCKET_NAME']
+    items = query_requirements()
 
-    for package in packages:
+    for item in items:
 
-        response = table.query(IndexName="packageHistory",
-                               Select="SPECIFIC_ATTRIBUTES",
-                               ProjectionExpression="package, requirements",
-                               KeyConditionExpression=Key('package').eq(package),
-                               Limit=1,
-                               ScanIndexForward=False)  # takes the package with the latest created date
+        package_name = item['sk']
+        requirements_txt = item['rqrmntsTxt']
+        key = f'packages/{package_name}/requirements.txt'
 
-        logger.info(f"Found {len(response['Items'])} entries for {package}")
+        logger.info({
+            "message": "Uploading to bucket",
+            "package": package_name,
+            "requirements_txt": requirements_txt,
+            "bucket": bucket,
+        })
+        client = boto3.client('s3')
+        client.put_object(Body=requirements_txt.encode('utf-8'),
+                        Bucket=bucket,
+                        Key=key,)
 
-        try:
-            requirements_txt = response['Items'][0]['requirements']
-            logger.info(f"Requirements.txt for {package} is {requirements_txt}")
-            logger.info(f"Uploading to S3 Bucket")
-            client = boto3.client('s3')
-            client.put_object(Body=requirements_txt.encode('utf-8'),
-                          Bucket=bucket,
-                          Key=f'packages/{package}/requirements.txt')
-        except IndexError:
-            logger.error(f"No records found for {package}")
-
-    return {"status": "Done"}
+    return {
+        "status": "Done",
+        "num_packages": len(items),
+    }   

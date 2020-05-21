@@ -1,3 +1,5 @@
+# Work in Progress
+
 webhook_github:
   handler: github_webhook_authorizer.handler
   description: Receive update on Github, and update configuration file

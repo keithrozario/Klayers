@@ -44,7 +44,7 @@ def put_requirements_hash(package, version, requirements_txt, requirements_hash)
         'rqrmntsTxt': {'S': requirements_txt},
         'rqrmntsHsh': {'S': requirements_hash},
         'bltVrsn': {'S': new_version},
-        'created_date': {'S': datetime.now().isoformat()},
+        'created_date': {'S': datetime.utcnow().isoformat()},
     }
 
     # Insert new record
@@ -55,7 +55,7 @@ def put_requirements_hash(package, version, requirements_txt, requirements_hash)
                     'Update': {
                         'TableName': table_name,
                         'Key': {
-                            'pk': {'S': 'v0'},
+                            'pk': {'S': 'v0.reqs'},
                             'sk': {'S': package},
                         },
                         'UpdateExpression':
@@ -76,15 +76,7 @@ def put_requirements_hash(package, version, requirements_txt, requirements_hash)
                 {
                     'Put': {
                         'TableName': table_name,
-                        'Item': {
-                            'pk': {'S': new_version},
-                            'sk': {'S': package},
-                            'pckgVrsn': {'S': str(version)},
-                            'rqrmntsTxt': {'S': requirements_txt},
-                            'rqrmntsHsh': {'S': requirements_hash},
-                            'bltVrsn': {'S': new_version},
-                            'created_date': {'S': datetime.now().isoformat()},
-                        }
+                        'Item': Item,
                     }
                 }
             ])

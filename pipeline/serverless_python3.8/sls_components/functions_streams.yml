@@ -1,11 +1,11 @@
 stream_processor:
   handler: stream_processor.main
-  runtime: python3.7
+  runtime: python3.8
   description: Triggered everytime an Item is deleted from the DynamoDB Table
   timeout: 20
   memorySize: 256
-  layers:
-    - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-boto3:2
+  environment:
+    POWERTOOLS_SERVICE_NAME: Klayers.StreamProcessor
   iamRoleStatementsName: ${self:provider.stage}-stream_processor
   # IAM role might look really permissive, but it has good reason.
   iamRoleStatements:
@@ -21,8 +21,15 @@ stream_processor:
             - layer
             - ${self:custom.lambdaPrefix}*  # prefix is different for different stages
             - "*" # ability to delete any version
+    - Effect: Allow
+      Action:
+        - dynamodb:PutItem
+      Resource: ${self:custom.dbArn}
   events:
     - stream:
         type: dynamodb
-        arn: ${self:custom.dbLayersStreamArn}
+        arn: ${self:custom.dbStreamArn}
         batchSize: 10
+  layers:
+    - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-boto3:2
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:23

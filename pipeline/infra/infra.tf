@@ -84,35 +84,6 @@ resource "aws_dynamodb_table" "dynamodb_layers" {
 
 }
 
-resource "aws_dynamodb_table" "dynamodb_requirements" {
-
-  name         = lookup(var.dynamodb_requirements, terraform.workspace)
-  billing_mode = "PAY_PER_REQUEST"
-  hash_key     = "package"
-  range_key    = "requirements_hash"
-
-  attribute {
-    name = "package"
-    type = "S"
-  }
-
-  attribute {
-    name = "created_date"
-    type = "S"
-  }
-
-  attribute {
-    name = "requirements_hash"
-    type = "S"
-  }
-
-  local_secondary_index {
-    name            = "packageHistory"
-    projection_type = "ALL"
-    range_key       = "created_date"
-  }
-
-}
 
 ### Outputs for serverless to consume
 resource "aws_ssm_parameter" "dynamodb_layers_table" {
@@ -146,24 +117,6 @@ resource "aws_ssm_parameter" "dynamodb_layers_stream_lable" {
   value       = aws_dynamodb_table.dynamodb_layers.stream_label
   overwrite   = true
 }
-
-
-resource "aws_ssm_parameter" "dynamodb_requirements_table" {
-  type        = "String"
-  description = "Name of DynamoDB Temp Table"
-  name        = "/${lookup(var.app_name, terraform.workspace)}/${terraform.workspace}/dynamodb_requirements_table"
-  value       = aws_dynamodb_table.dynamodb_requirements.name
-  overwrite   = true
-}
-
-resource "aws_ssm_parameter" "dynamodb_requirements_table_arn" {
-  type        = "String"
-  description = "ARN of DynamoDB Temp Table"
-  name        = "/${lookup(var.app_name, terraform.workspace)}/${terraform.workspace}/dynamodb_requirements_table_arn"
-  value       = aws_dynamodb_table.dynamodb_requirements.arn
-  overwrite   = true
-}
-
 
 resource "aws_ssm_parameter" "lambda_prefix" {
   type      = "String"

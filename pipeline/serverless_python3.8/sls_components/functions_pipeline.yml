@@ -8,14 +8,6 @@ check:
     - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:18
   timeout: 30
   memorySize: 256
-  environment:
-    LAYERS_DB: ${self:custom.dbLayers}
-  iamRoleStatementsName: ${self:provider.stage}-check
-  iamRoleStatements:
-    - Effect: Allow
-      Action:
-      - dynamodb:Query
-      Resource: ${self:custom.dbLayersArn}
 
 build:
   handler: build.main
@@ -24,10 +16,7 @@ build:
   timeout: 180
   memorySize: 1792
   environment:
-    BUCKET_NAME: ${self:custom.s3LayersName}
-    DB_NAME: ${self:custom.dbName}
     POWERTOOLS_SERVICE_NAME: Klayers.Build
-    LOG_LEVEL: INFO
   iamRoleStatementsName: ${self:provider.stage}-build
   iamRoleStatements:
   - Effect: Allow
@@ -57,16 +46,13 @@ build:
 deploy:
   handler: deploy.main
   description: Deploys functions to multiple regions
-  runtime: python3.7
+  runtime: python3.8
   timeout: 600
   memorySize: 512
   environment:
-    BUCKET_NAME: ${self:custom.s3LayersName}
-    DB_NAME:  ${self:custom.dbName}
     LAMBDA_PREFIX: ${self:custom.lambdaPrefix}
     POWERTOOLS_SERVICE_NAME: Klayers.Deploy
     EXPIRY_DAYS: 60
-    LOG_LEVEL: INFO
   iamRoleStatementsName: ${self:provider.stage}-deploy
   iamRoleStatements:
     - Effect: Allow

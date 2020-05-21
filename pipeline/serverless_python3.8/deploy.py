@@ -1,6 +1,7 @@
 import os
 import logging
 import time
+from datetime import datetime
 
 import boto3
 from botocore.exceptions import ClientError
@@ -124,11 +125,11 @@ def main(event, context):
             LicenseInfo=license_info
         )
         layer_version_arn = response['LayerVersionArn']
-        layer_version_created_date = response['CreatedDate']
+        layer_version_created_date = datetime.utcnow().isoformat()
         layer_version = int(layer_version_arn.split(":")[-1])
 
         # Make Layer Publicly accessible
-        logger.info({"message": "Making Public", "region": region, "package": package, "arn": layer_version_arn})
+        logger.info({"message": "Making Public", "region": region, "package": package, "arn": layer_version_arn, "created_date": layer_version_created_date})
         response = lambda_client.add_layer_version_permission(
             LayerName=layer_name,
             VersionNumber=layer_version,

@@ -5,9 +5,7 @@ invoke_pipeline:
   timeout: 120
   memorySize: 256
   environment:
-    BUCKET_NAME: ${self:custom.s3LayersName}
-    POWERTOOLS_SERVICE_NAME: "invoke_pipeline"
-    LOG_LEVEL: "INFO"
+    POWERTOOLS_SERVICE_NAME: Klayers.invoke_pipeline
   iamRoleStatementsName: ${self:provider.stage}-invoke_pipeline
   iamRoleStatements:
     - Effect: Allow
@@ -34,9 +32,7 @@ download_config:
   memorySize: 256
   timeout: 60
   environment:
-    BUCKET_NAME: ${self:custom.s3LayersName}
-    POWERTOOLS_SERVICE_NAME: "download_config"
-    LOG_LEVEL: "INFO"
+    POWERTOOLS_SERVICE_NAME: Klayers.download_config
   iamRoleStatementsName: ${self:provider.stage}-download_config
   iamRoleStatements:
     - Effect: Allow

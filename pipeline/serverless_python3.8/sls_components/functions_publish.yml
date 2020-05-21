@@ -1,14 +1,9 @@
 publish_arns:
     handler: publish_arns.main
     description: publishes Arns to S3 Bucket
-    runtime: python3.7
+    runtime: python3.8
     timeout: 240
     memorySize: 256
-    environment:
-      BUCKET_NAME: ${self:custom.s3LayersName}
-      LAYERS_DB: ${self:custom.dbLayers}
-    layers:
-      - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-boto3:2
     iamRoleStatementsName: ${self:provider.stage}-publish_arns
     iamRoleStatements:
       - Effect: Allow
@@ -19,20 +14,17 @@ publish_arns:
       - Effect: Allow
         Action:
         - dynamodb:Query
-        Resource: ${self:custom.dbLayersArn}/index/*
+        Resource: ${self:custom.dbArn}/index/deployed_in_region
+    layers:
+      - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-boto3:2
 
 
 publish_reqs:
   handler: publish_reqs.main
   description: Publish requirements.txt to S3 bucket
-  runtime: python3.7
+  runtime: python3.8
   timeout: 120
   memorySize: 256
-  environment:
-    BUCKET_NAME: ${self:custom.s3LayersName}
-    REQS_DB: ${self:custom.dbReqs}
-  layers:
-    - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-boto3:2
   iamRoleStatementsName: ${self:provider.stage}-publish_reqs
   iamRoleStatements:
     - Effect: Allow
@@ -43,7 +35,10 @@ publish_reqs:
     - Effect: Allow
       Action:
       - dynamodb:Query
-      Resource: ${self:custom.dbReqsArn}/index/*
+      Resource: ${self:custom.dbArn}
+  layers:
+    - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-boto3:2
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:23
 
 publish_github:
   handler: publish_to_github.handler
@@ -54,7 +49,6 @@ publish_github:
   environment:
     GITHUB_REPO: ${self:custom.githubRepo}
     GITHUB_KEY: ${self:custom.githubSSHKeyParameter}
-    BUCKET_NAME: ${self:custom.s3LayersName}
   iamRoleStatementsName: ${self:provider.stage}-publish_github
   iamRoleStatements:
     - Effect: Allow

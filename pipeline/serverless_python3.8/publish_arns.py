@@ -4,6 +4,7 @@ import logging
 import decimal
 import csv
 import time
+from datetime import datetime
 
 from boto3.dynamodb.conditions import Key
 import boto3
@@ -33,25 +34,31 @@ def convert_to_csv(items):
       csv_body: body of the csv file to write out
     """
 
-    fieldnames = ['package', 'package_version', 'layer_version_arn', 'time_to_live']
+    fieldnames = ['Package', 'Package Version', 'Arn', 'Status', 'Expiry Date']
 
-    sorted_items = sorted(items, key=lambda i: (i['package'].lower(), i['layer_version_arn']))
+    sorted_items = sorted(items, key=lambda i: (i['pckg'].lower(), i['arn']))
 
     with open('/tmp/packages.csv', 'w', newline='') as csvfile:
 
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
-
         for item in sorted_items:
 
             # convert datetime to human readable
             try:
-                if item['time_to_live']:
-                    item['time_to_live'] = time.strftime('%d-%m-%Y', time.localtime(item['time_to_live']))
+                if item['exDt']:
+                    item['exDt'] = datetime.utcfromtimestamp(item['exDt']).isoformat()
             except KeyError:
-                pass
-
-            writer.writerow(item)
+                item['exDt'] = ""
+            
+            csv_item = {
+                "Package": item['pckg'],
+                "Package Version": item['pckgVrsn'],
+                "Arn": item['arn'],
+                "Status": item['dplySts'],
+                "Expiry Date": item['exDt'],
+            }
+            writer.writerow(csv_item)
 
     with open('/tmp/packages.csv', 'r') as csvfile:
         csv_text = csvfile.read()
@@ -69,10 +76,8 @@ def query_versions_table(region, table):
     """
 
     kwargs = {
-        "IndexName": "LayersPerRegion",
-        "Select": "SPECIFIC_ATTRIBUTES",
-        "ProjectionExpression": "layer_version_arn, package, package_version, time_to_live",
-        "KeyConditionExpression": Key('deployed_region').eq(region)
+        "IndexName": "deployed_in_region",
+        "KeyConditionExpression": Key('rgn').eq(region),
     }
     items = []
 
@@ -98,7 +103,7 @@ def main(event, context):
     regions = get_config.get_aws_regions()
 
     dynamodb = boto3.resource('dynamodb')
-    table = dynamodb.Table(os.environ['LAYERS_DB'])
+    table = dynamodb.Table(os.environ['DB_NAME'])
     bucket = os.environ['BUCKET_NAME']
 
     for region in regions:
