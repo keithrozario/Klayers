@@ -2,10 +2,8 @@
 
 This directory contains the terraform scripts for deployment, and the corresponding variables.
 
-There are currently 6 workspaces:
-* Klayers-default
-* Klayers-dev
-* Klayers-prod
+There are currently 3 workspaces:
+
 * Klayers-defaultp38
 * Klayers-devp38
 * Klayers-prodp38
@@ -14,25 +12,25 @@ All workspaces are configured for remote backends, hence all state files are sto
 
 To switch to a new workspace:
 
-    $ terraform workspace new Klayers-dev
-    
+    $terraform workspace new Klayers-dev
+
 The `new` is counterintuitive, but regardless of whether the workspace exists or not, the new keyword is required. Terraform will then load the state from Terraform cloud and all will be synced.
 
-# Variables
+## Variables
 
 All variables are stored in `terraform.tfvars.json`
 
-# Note
+## Note
 
 The Key-Encrypting-Key for the GitHub SSH credentials and slack token are the only things missing from terraform, this is added manually by:
 
 * Uploading an aes-256-cbc encrypted SSH key named `github_id_rsa.enc` to the S3 keys bucket (note the name of the bucket is `s3bucket_keys`)
-* Uploading the openssl password to /<app_name>/<workspace>/ssh_kek parameter in parameter store
+* Uploading the openssl password to */app_name/workspace/ssh_kek* parameter in parameter store
 This key is a deploy key for the repo in GitHub, and allows for both read/write access.
 
-* adding the slack_token to the /<app_name>/<workspace>/slack_token parameter in parameter store
+* adding the slack_token to the */app_name/workspace/slack_token* parameter in parameter store
 
-# Remote backend & workspaces
+## Remote backend & workspaces
 
 There is a known issue with remote backends and workspaces. To overcome this issue for free-tier users, you'll need to set the deployment type of the remote backend to `local` in order for the script to work. By default, all deployments on terraforms backend default to `remote` deployments which default all workspaces to `default`.
 
