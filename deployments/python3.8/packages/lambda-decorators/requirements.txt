@@ -1,9 +1,9 @@
-boto3==1.13.11
-botocore==1.16.11
+boto3==1.13.16
+botocore==1.16.16
 docutils==0.15.2
 jmespath==0.10.0
 lambda-decorators==0.6.0
 python-dateutil==2.8.1
 s3transfer==0.3.3
-six==1.14.0
+six==1.15.0
 urllib3==1.25.9
