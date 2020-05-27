@@ -7,8 +7,11 @@ import boto3
 from botocore.exceptions import ClientError
 from boto3.dynamodb.conditions import Key
 
-from aws_lambda_powertools.logging import logger_setup, logger_inject_lambda_context
-logger = logger_setup()
+from aws_lambda_powertools.logging import Logger
+logger = Logger()
+
+build_v0 = '#bld.v0'
+build_version_prefix = '#bld.v'
 
 
 def put_requirements_hash(package, version, requirements_txt, requirements_hash):
@@ -27,16 +30,17 @@ def put_requirements_hash(package, version, requirements_txt, requirements_hash)
     # Get latest build version for package
     response = client.get_item(
         TableName=table_name,
-        Key={'pk': {'S': 'v0'}, 'sk': {'S': package}},
+        Key={'pk': {'S': build_v0}, 'sk': {'S': package}},
         ProjectionExpression="bltVrsn",
     )
     try:
         latest_version = response['Item']['bltVrsn']['S']
-        new_version = f"{latest_version[0]}{int(latest_version[1:])+1}"
+        new_version = f"{build_version_prefix}{int(latest_version[len(build_version_prefix):])+1}"
     except KeyError:
         # Version wasn't deployed before, start with v1
-        new_version = "v1"
+        new_version = f"{build_version_prefix}1"
 
+    created_date = datetime.utcnow().isoformat()
     Item = {
         'pk': {'S': new_version},
         'sk': {'S': package},
@@ -44,7 +48,7 @@ def put_requirements_hash(package, version, requirements_txt, requirements_hash)
         'rqrmntsTxt': {'S': requirements_txt},
         'rqrmntsHsh': {'S': requirements_hash},
         'bltVrsn': {'S': new_version},
-        'created_date': {'S': datetime.utcnow().isoformat()},
+        'crtdDt': {'S': created_date},
     }
 
     # Insert new record
@@ -55,7 +59,7 @@ def put_requirements_hash(package, version, requirements_txt, requirements_hash)
                     'Update': {
                         'TableName': table_name,
                         'Key': {
-                            'pk': {'S': 'v0.reqs'},
+                            'pk': {'S': build_v0},
                             'sk': {'S': package},
                         },
                         'UpdateExpression':
@@ -63,12 +67,14 @@ def put_requirements_hash(package, version, requirements_txt, requirements_hash)
                             "rqrmntsTxt = :rqrmntsTxt, "
                             "pckgVrsn = :pckgVrsn, "
                             "rqrmntsHsh = :rqrmntsHsh,"
-                            "bltVrsn = :bltVrsn",
+                            "bltVrsn = :bltVrsn,"
+                            "crtdDt = :crtdDt",
                         "ExpressionAttributeValues": {
                             ':rqrmntsTxt': {'S': requirements_txt},
                             ':pckgVrsn': {'S': str(version)},
                             ':rqrmntsHsh': {'S': requirements_hash},
                             ':bltVrsn': {'S': new_version},
+                            ':crtdDt': {'S': created_date},
                         },
                         'ConditionExpression': "bltVrsn <> :bltVrsn",
                     }
@@ -107,7 +113,7 @@ def check_requirement_hash(package, requirements_hash):
 
     response = client.get_item(
         TableName=table_name,
-        Key={'pk': {'S': 'v0'}, 'sk': {'S': package}},
+        Key={'pk': {'S': build_v0}, 'sk': {'S': package}},
         ProjectionExpression="rqrmntsHsh",
     )
 
@@ -221,7 +227,7 @@ def install(package, package_dir):
 
     return package_dir
 
-@logger_inject_lambda_context
+@logger.inject_lambda_context
 def main(event,context):
 
     package = event['package']

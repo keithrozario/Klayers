@@ -57,7 +57,7 @@ resource "aws_dynamodb_table" "t" {
     hash_key        = "rgn"
     range_key       = "dplySts"
     projection_type = "INCLUDE"
-    non_key_attributes = ["pckgVrsn", "arn","pckg"]
+    non_key_attributes = ["exDt","crtdDt", "pckg", "pckgVrsn", "arn"]
   }
 
   global_secondary_index {

@@ -33,12 +33,20 @@ def check_regions_to_deploy(package, requirements_hash, regions):
     # check if there are any region in regions that aren't deployed
     regions_deployed = [item['rgn'] for item in response['Items']]
     regions_to_deploy = [region for region in regions if region not in regions_deployed]
+    logger.info({
+        "message": f"Deploying to {len(regions_to_deploy)} new regions",
+        "new_regions": regions_to_deploy,
+    })
 
     # for all deployed regions, check if it has the latest version
     for item in response['Items']:
         if item['rqrmntsHsh'] != requirements_hash:
             regions_to_deploy.append(item['rgn'])
     
+    logger.info({
+        "regions_to_deploy": regions_to_deploy
+    })
+
     return regions_to_deploy
 
 
@@ -70,7 +78,7 @@ def get_requirements_txt(package):
     table_name = os.environ['DB_NAME']
     response = client.get_item(
         TableName=table_name,
-        Key={'pk': {'S': 'v0'}, 'sk': {'S': package}},
+        Key={'pk': {'S': '#bld.v0'}, 'sk': {'S': package}},
         ProjectionExpression="rqrmntsTxt",
     )
     requirements_txt = response.get('Item', {}).get('rqrmntsTxt', {}).get('S', "null")
@@ -141,7 +149,9 @@ def main(event, context):
         # Insert new entry into DynamoDB
         logger.info({"message": "Inserting to table", "region": region, "package": package, "arn": layer_version_arn})
         pk = f"{region}.{package}"
-        sk_v0 = f"v0.{package}"
+        sk_v0 = "#layer.v0"
+        sk = f"#layer.v{layer_version}"
+        sk_previous = f"#layer.v{layer_version-1}"
         response = dynamo_client.transact_write_items(
         TransactItems=[
             {
@@ -178,7 +188,7 @@ def main(event, context):
                     'TableName': table_name,
                     'Item': {
                         'pk': {'S': pk},
-                        'sk': {'S': str(layer_version)},
+                        'sk': {'S': sk},
                         'pckgVrsn': {'S': version},
                         'crtdDt': {'S': layer_version_created_date},
                         'rqrmntsTxt': {'S': requirements_txt},
@@ -195,20 +205,25 @@ def main(event, context):
         )
         if layer_version > 1:
             logger.info({"message": "Updating Previous Version", "region": region, "package": package, "arn": layer_version_arn})
-            response = dynamo_client.update_item(
-                TableName=table_name,
-                Key={
-                    'pk': {'S': pk},
-                    'sk': {'S': str(layer_version-1)}
-                },
-                UpdateExpression="set "
-                "dplySts = :dplySts, "
-                "exDt = :exDt",
-                ExpressionAttributeValues={
-                    ":dplySts": {'S': "deprecated"},
-                    ":exDt": {'N': str(int(time.time() + 24*3600*expiry_days))},
-                },
-            )
+            try:
+                response = dynamo_client.update_item(
+                    TableName=table_name,
+                    Key={
+                        'pk': {'S': pk},
+                        'sk': {'S': sk_previous}
+                    },
+                    UpdateExpression="set "
+                    "dplySts = :dplySts, "
+                    "exDt = :exDt",
+                    ExpressionAttributeValues={
+                        ":dplySts": {'S': "deprecated"},
+                        ":exDt": {'N': str(int(time.time() + 24*3600*expiry_days))},
+                    },
+                    ConditionExpression="attribute_exists(sk)"
+                )
+            except ClientError as e:  
+                if e.response['Error']['Code']=='ConditionalCheckFailedException':
+                    logger.info("Conditional Check Failed Previous Layer version doesn't exists")
         deployed_flag = True
 
     return {"deployed_flag": deployed_flag,

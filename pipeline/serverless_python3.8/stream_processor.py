@@ -53,6 +53,9 @@ def remove(record):
     except KeyError:
         logger.error({"message": "Not a arn element"})
         return 
+    except IndexError:
+        logger.error("Unexpected Error")
+        return
 
     client = boto3.client('lambda', region_name=region)
 
@@ -67,15 +70,21 @@ def remove(record):
     except ClientError as e:
         logger.error(f"{e.response['Error']['Code'] : {e.response['Error']['Message']}}")
 
-    return layer_version_arn
+    return
 
 def insert_expired_record(old_image):
     """
     Inserts a expired record back to DB, removing the dplySts, and entering a deleted date
     """
 
-    del old_image['dplySts']
+    if 'dplySts' in old_image.keys():
+        del old_image['dplySts']
+    else:
+        logger.error("No Deploy status found in entry...")
+        return
+
     old_image['dltdDt'] = {'S': datetime.utcnow().isoformat()}
+    del old_image['exDt']
 
     client = boto3.client('dynamodb')
     table_name = os.environ['DB_NAME']

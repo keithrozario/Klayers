@@ -23,18 +23,20 @@ provider:
     cors: true
 
 custom:
+  # Env
   awsRegion: ${self:provider.region} 
+  lambdaPrefix: ${ssm:/${self:service.name}/${self:provider.stage}/lambda_prefix}
+  pipelineName: ${self:service.name}-${self:provider.stage}-pipeline
+
+  # S3
   s3LayersName: ${ssm:/${self:service.name}/${self:provider.stage}/layers_bucket/name}
   s3LayersArn: ${ssm:/${self:service.name}/${self:provider.stage}/layers_bucket/arn}
-  dbLayers: ${ssm:/${self:service.name}/${self:provider.stage}/dynamodb_layers_table}
-  dbLayersArn: ${ssm:/${self:service.name}/${self:provider.stage}/dynamodb_layers_table_arn}
-  lambdaPrefix: ${ssm:/${self:service.name}/${self:provider.stage}/lambda_prefix}
-  lambdaErrorSNSArn: ${ssm:/${self:service.name}/${self:provider.stage}/lambda_error_notification_arn}
-  pipelineName: ${self:service.name}-${self:provider.stage}-pipeline
+
+  # DynamoDB
   dbName: ${ssm:/${self:service.name}/${self:provider.stage}/db/name}
   dbArn: ${ssm:/${self:service.name}/${self:provider.stage}/db/arn}
-  dbStreamArn: ${ssm:/${self:service.name}/${self:provider.stage}/db/stream/arn}
   dbStreamLabel: ${ssm:/${self:service.name}/${self:provider.stage}/db/stream/label}
+  dbStreamArn: ${ssm:/${self:service.name}/${self:provider.stage}/db/stream/arn}
 
   # Github
   githubSSHKeyParameter: /${self:service.name}/${self:provider.stage}/github_ssh_key

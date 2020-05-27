@@ -34,9 +34,10 @@ def convert_to_csv(items):
       csv_body: body of the csv file to write out
     """
 
-    fieldnames = ['Package', 'Package Version', 'Arn', 'Status', 'Expiry Date']
+    fieldnames = ['Package','Package Version','Status','Expiry Date','Arn']
 
-    sorted_items = sorted(items, key=lambda i: (i['pckg'].lower(), i['arn']))
+    # sort by package, and then created date (oldest to newest)
+    sorted_items = sorted(items, key=lambda i: (i['pckg'].lower(), i['crtdDt']))
 
     with open('/tmp/packages.csv', 'w', newline='') as csvfile:
 
@@ -66,7 +67,7 @@ def convert_to_csv(items):
     return csv_text
 
 
-def query_versions_table(region, table):
+def query_table(region, table):
     """
     Args:
       table: DynamoDB table object to query
@@ -105,12 +106,14 @@ def main(event, context):
     dynamodb = boto3.resource('dynamodb')
     table = dynamodb.Table(os.environ['DB_NAME'])
     bucket = os.environ['BUCKET_NAME']
+    region_deploy = dict()
 
     for region in regions:
 
-        items = query_versions_table(table=table,
+        items = query_table(table=table,
                                      region=region)
         arns = convert_to_csv(items)
+        region_deploy[region] = len(items)
 
         logger.info(f"Uploading to S3 Bucket")
         client = boto3.client('s3')
@@ -118,4 +121,4 @@ def main(event, context):
                           Bucket=bucket,
                           Key=f'arns/{region}.csv')
 
-    return {"status": "Done"}
+    return {"arn_count": region_deploy}

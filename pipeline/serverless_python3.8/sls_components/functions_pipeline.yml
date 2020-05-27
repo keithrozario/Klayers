@@ -40,7 +40,7 @@ build:
     - dynamodb:GetItem
     Resource: ${self:custom.dbArn}
   layers:
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:18
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:23
 
 
 deploy:

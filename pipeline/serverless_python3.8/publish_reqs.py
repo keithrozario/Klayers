@@ -31,7 +31,7 @@ def query_requirements():
     dynamodb = boto3.resource('dynamodb')
     table = dynamodb.Table(os.environ['DB_NAME'])
     kwargs = {
-        "KeyConditionExpression": Key('pk').eq('v0.reqs'),
+        "KeyConditionExpression": Key('pk').eq('#bld.v0'),
     }
     items = []
 

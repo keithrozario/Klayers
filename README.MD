@@ -4,17 +4,17 @@
 
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/keithrozario/Klayers.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/keithrozario/Klayers/context:python)
 
-
-A collection of AWS Lambda Layers for Python3.7 & Python3.8
+A collection of AWS Lambda Layers for Python
 
 # Layer List
 
 List of all layer version arns are available by region here:
- * [Python3.8](deployments/python3.8/arns)
- * [Python3.7](deployments/python3.7/arns)
- 
- There might be multiple versions for a single package, this is because we publish a new layer version for every new version of the package or if the package dependencies (`requirements.txt`) has been updated. Refer to [Layer expiry](#Layer-expiry) for more data.
 
+* [Arns](deployments/python3.8/arns)
+
+There might be multiple versions for a single package, this is because we publish a new layer version for every new version of the package or if the package dependencies (`requirements.txt`) has been updated. Refer to [Layer expiry](#Layer-expiry) for more data.
+
+We have deprecated layers for python3.6 and python 3.7, please use these newer versions instead.
 
 # Python Packages
 
@@ -63,8 +63,7 @@ You can either set one of the ARNs below as a layer in your function. Or downloa
 
 Click links below for your preferred version of python, and then select your region of choice, you will see a full list of layer version ARNs to use.
 
- * [Python3.8](deployments/python3.8/arns)
- * [Python3.7](deployments/python3.7/arns)
+ * [Arns](deployments/python3.8/arns)
 
 ## Download copy of layer
 
@@ -74,7 +73,7 @@ Use the `Get Layer Version by ARN` in [python](https://boto3.amazonaws.com/v1/do
 
 ## Layer expiry
 
-Some layer versions will have a `time_to_live` field. This is the date for when the layers will be deleted.
+Some layer versions will have a `expiry_date` field. This is the date for when the layers will be deleted.
 
 In general, layers are scheduled for deletion 30 days after a new layer version has been published for that package. If you use that latest version of a layer, you're guaranteed at least 30 days before the layer is deleted.
 
@@ -100,8 +99,6 @@ Special hand-crafted binaries for layers. These layers are not automatically bui
 <sup>4</sup> Spacy [en_core_web_sm](https://spacy.io/models/en) model, for use with the spacy layer refer [here](https://github.com/keithrozario/Klayers/issues/97) for more info.
 
 # Architecture Diagram
-
-No self-respecting architect would have a repo like this without a diagram -- so here it is:
 
 ![Screenshot](documentation/Klayers-Architecture.png)
 
