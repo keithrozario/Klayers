@@ -1,6 +1,6 @@
 # Get Latest arn in region for package
-* Update #layer.V0 for every new Insert as sk
-* Query rgnPckg and #layer.V0 to get latest version in region
+* Update #lyr.V0 for every new Insert as sk
+* Query rgnPckg and #lyr.V0 to get latest version in region
 
 ## Sparse Index 1
 
@@ -23,10 +23,10 @@ When deleting:
 + Re-insert into DB
 
 When inserting:
-+ update #layer.V0
++ update #lyr.V0
 + Insert row for currrent version
 * Update previous layer dplySts='deprecated' & set TTL
 
 Get latest requirements.txt / requirementsHsh
-* #build.V0
+* #bld.v0
 * package=package

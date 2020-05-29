@@ -1,8 +1,9 @@
-import boto3
 import tempfile
 import os
 import csv
 import io
+
+import boto3
 
 
 def get_aws_regions():

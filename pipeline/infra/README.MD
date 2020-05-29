@@ -20,15 +20,13 @@ The `new` is counterintuitive, but regardless of whether the workspace exists or
 
 All variables are stored in `terraform.tfvars.json`
 
-## Note
+## Secrets
 
-The Key-Encrypting-Key for the GitHub SSH credentials and slack token are the only things missing from terraform, this is added manually by:
+Due to the way Terraform manages the SSM Parameters, we've manually created and populated the secrets for Slack, Github (SSH Key) and Github Webhook secret into their own parameters:
 
-* Uploading an aes-256-cbc encrypted SSH key named `github_id_rsa.enc` to the S3 keys bucket (note the name of the bucket is `s3bucket_keys`)
-* Uploading the openssl password to */app_name/workspace/ssh_kek* parameter in parameter store
-This key is a deploy key for the repo in GitHub, and allows for both read/write access.
-
-* adding the slack_token to the */app_name/workspace/slack_token* parameter in parameter store
+* /kl/\<stage>/github_ssh_key
+* /kl/\<stage>/github_webhook_secret
+* /kl/\<stage>/slack_token
 
 ## Remote backend & workspaces
 

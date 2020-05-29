@@ -17,6 +17,7 @@ provider:
     LOG_LEVEL: INFO
     DB_NAME: ${self:custom.dbName}
     BUCKET_NAME: ${self:custom.s3LayersName}
+    POWERTOOLS_SERVICE_NAME: ${self:provider.stage}
   logs:
     httpApi: true
   httpApi:
@@ -47,22 +48,21 @@ custom:
   slackTokenParameter: /${self:service.name}/${self:provider.stage}/slack_token
   
 functions:
-  - ${file(sls_components/functions_pipeline.yml)}
-  - ${file(sls_components/functions_publish.yml)}
-  - ${file(sls_components/functions_invoke_pipeline.yml)}
-  - ${file(sls_components/functions_slack.yml)}
-  - ${file(sls_components/functions_streams.yml)}
-  - ${file(sls_components/functions_webhook.yml)}
-
+  - ${file(01_invoke_pipelines/invoke_pipelines.yml)}
+  - ${file(02_pipeline/pipeline.yml)}
+  - ${file(03_publish/publish.yml)}
+  - ${file(04_stream_processor/streams.yml)}
+  - ${file(05_slack_notification/slack.yml)}
+  - ${file(06_webhook/webhook.yml)}
 
 stepFunctions:
   stateMachines:
     invoke_pipelines:
-      ${file(sls_components/state_machine_invoke_pipelines.yml)}
+      ${file(state_machines/01_invoke_pipelines.yml)}
     pipeline:
-      ${file(sls_components/state_machine_pipeline.yml)}
+      ${file(state_machines/02_pipeline.yml)}
     publish:
-      ${file(sls_components/state_machine_publish.yml)}
+      ${file(state_machines/03_publish.yml)}
 
 package:
   exclude:
@@ -74,5 +74,4 @@ package:
     - .serverless/**
     - sls_components/**
     - README.MD
-    - .pytest_cache/**
 
