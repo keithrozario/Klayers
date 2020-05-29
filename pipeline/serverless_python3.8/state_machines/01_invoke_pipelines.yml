@@ -1,0 +1,46 @@
+events:
+  - schedule: cron(0 2 ? * MON *)  # runs at 2am UTC on Monday
+name: ${self:custom.pipelineName}-invoke
+definition:
+  Comment: "Invoke the pipeline for all packages"
+  StartAt: DownloadConfig
+  States:
+    DownloadConfig:
+      Type: Task
+      Resource:
+        Fn::GetAtt: [DownloadUnderscoreconfigLambdaFunction, Arn]
+      Next: Invoke
+    Invoke:
+      Type: Task
+      Resource:
+        Fn::GetAtt: [InvokeUnderscorepipelineLambdaFunction, Arn]
+      Next: WaitForCompletion
+    WaitForCompletion:
+      Type: Wait
+      Seconds: 600
+      Next: StartPublish
+    StartPublish:
+      Type: Task
+      Resource: arn:aws:states:::states:startExecution.sync
+      Parameters:
+        StateMachineArn:
+          Fn::Join:
+            - ":"
+            - - arn:aws:states
+              - ${self:provider.region}
+              - Ref: AWS::AccountId
+              - stateMachine
+              - ${self:custom.pipelineName}-publish
+      Next: Done
+    Done:
+      Type: Succeed
+notifications:
+  ABORTED:
+    - lambda:
+        Fn::GetAtt: [SlackUnderscoreinvokepipelineLambdaFunction, Arn]
+  FAILED:
+    - lambda:
+        Fn::GetAtt: [SlackUnderscoreinvokepipelineLambdaFunction, Arn]
+  TIMED_OUT:
+    - lambda:
+        Fn::GetAtt: [SlackUnderscoreinvokepipelineLambdaFunction, Arn]
