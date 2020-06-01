@@ -1,8 +1,10 @@
 certifi==2020.4.5.1
 chardet==3.0.4
-gevent==20.5.0
+gevent==20.5.2
 greenlet==0.4.15
 grequests==0.6.0
 idna==2.9
 requests==2.23.0
 urllib3==1.25.9
+zope.event==4.4
+zope.interface==5.1.0
