@@ -1,6 +1,6 @@
 attrs==19.3.0
-boto3==1.13.16
-botocore==1.16.16
+boto3==1.13.19
+botocore==1.16.19
 cffi==1.14.0
 cryptography==2.9.2
 docutils==0.15.2
