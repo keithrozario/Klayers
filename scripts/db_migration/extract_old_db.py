@@ -3,8 +3,8 @@ import json
 import copy
 
 
-# config = {'table_name': 'klayers-versions-dev', 'region': 'us-west-2'}
-config = {'table_name': 'klayers-versions', 'region': 'ap-southeast-1'}
+config = {'table_name': 'klayers-versions-dev', 'region': 'us-west-2'}
+# config = {'table_name': 'klayers-versions', 'region': 'ap-southeast-1'}
 profile = 'KlayersDev'
 
 

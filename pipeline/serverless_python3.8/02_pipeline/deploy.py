@@ -37,6 +37,7 @@ def check_regions_to_deploy(package, requirements_hash, regions):
     logger.info({
         "message": f"Deploying to {len(regions_to_deploy)} new regions",
         "new_regions": regions_to_deploy,
+        "regions_deployed": regions_deployed,
     })
 
     # for all deployed regions, check if it has the latest version
@@ -81,13 +82,13 @@ def get_requirements_txt(package):
     """
 
     build_v0 = 'bldVrsn0#'
+    sk = f"pckg#{package}"
 
     client = boto3.client('dynamodb')
     table_name = os.environ['DB_NAME']
     response = client.get_item(
         TableName=table_name,
-        Key={'pk': {'S': build_v0}, 'sk': {'S': package}},
-        ProjectionExpression="rqrmntsTxt",
+        Key={'pk': {'S': build_v0}, 'sk': {'S': sk}},
     )
     logger.info({
         "query_requirements": response 

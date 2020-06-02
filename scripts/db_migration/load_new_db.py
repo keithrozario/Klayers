@@ -2,8 +2,8 @@ import boto3
 import json
 
 profile = 'KlayersDev'
-# config = {'table_name': 'kl.Klayers-devp38.db', 'region': 'us-west-2'}
-config = {'table_name': 'kl.Klayers-defaultp38.db', 'region': 'ap-southeast-1'}
+config = {'table_name': 'kl.Klayers-devp38.db', 'region': 'us-west-2'}
+# config = {'table_name': 'kl.Klayers-defaultp38.db', 'region': 'ap-southeast-1'}
 
 session = boto3.session.Session(profile_name="KlayersDev", region_name=config['region'])
 dynamodb = session.resource('dynamodb')
