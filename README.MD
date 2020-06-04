@@ -14,7 +14,7 @@ List of all layer version arns are available by region here:
 
 There might be multiple versions for a single package, this is because we publish a new layer version for every new version of the package or if the package dependencies (`requirements.txt`) has been updated. Refer to [Layer expiry](#Layer-expiry) for more data.
 
-We have deprecated layers for python3.6 and python 3.7, please use these newer versions instead.
+We have deprecated layers for python3.6 and python 3.7, please use these newer versions that are built for python 3.8 instead.
 
 # Python Packages
 
@@ -49,11 +49,9 @@ For the full list of packages available click [here](pipeline/config/Klayers-pro
 
 # Status of layers
 
-[![Updates](https://pyup.io/repos/github/keithrozario/Klayers/shield.svg)](https://pyup.io/repos/github/keithrozario/Klayers/)
+Click [here](https://pyup.io/account/repos/github/keithrozario/Klayers/settings/) to see specific dependencies of the latest builds.
 
-Click on badge above to see the specific package version of the latest builds.
-
-Layers are built with the latest package version (available on PyPI) every Monday 2am UTC.
+Layers are built with the latest package version at 2am UTC every M
 
 # Using the Layers
 
@@ -85,18 +83,12 @@ Special hand-crafted binaries for layers. These layers are not automatically bui
 
 | Package        | ARN                                                                             | Version    |         
 | :------------- |:------------------------------------------------------------------------------- | ---------- | 
-| tesseract      | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-tesseract:1      | 4.1.0-rc1<sup>1</sup>|
-| pip            | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pip:2            | 19.2.1<sup>2</sup>|     |
-| netcat         | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-netcat:2         | 0.7.1<sup>3</sup>|
-| en_core_web_sm | arn:aws:lambda:\<*region*>:770693421928:layer:Klayers-python38-spacy_model_en_small:1 | 2.2.5<sup>4</sup>|
+| pip            | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pip:2            | 19.2.1<sup>1</sup>|     |
+| en_core_web_sm | arn:aws:lambda:\<*region*>:770693421928:layer:Klayers-python38-spacy_model_en_small:1 | 2.2.5<sup>2</sup>|
 
-<sup>1</sup> Includes leptonica-1.76.0, libjpeg 6b (libjpeg-turbo 1.2.90) : libpng 1.2.49 : libtiff 4.0.3 : zlib 1.2.8 : libwebp 0.3.0
+<sup>1</sup> Python3.8 layers already have new version of pip, use only if on Python3.7
 
-<sup>2</sup> Python3.8 layers already have new version of pip, use only if on Python3.7
-
-<sup>3</sup> netcat-traditional with the -e option -- compiled for 64-bit to run on AWS Lambda
-
-<sup>4</sup> Spacy [en_core_web_sm](https://spacy.io/models/en) model, for use with the spacy layer refer [here](https://github.com/keithrozario/Klayers/issues/97) for more info.
+<sup>2</sup> Spacy [en_core_web_sm](https://spacy.io/models/en) model, for use with the spacy layer refer [here](https://github.com/keithrozario/Klayers/issues/97) for more info.
 
 # Architecture Diagram
 
