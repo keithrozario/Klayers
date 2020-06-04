@@ -3,9 +3,10 @@ import json
 import copy
 
 
-config = {'table_name': 'klayers-versions-dev', 'region': 'us-west-2'}
+# config = {'table_name': 'klayers-versions-dev', 'region': 'us-west-2'}
 # config = {'table_name': 'klayers-versions', 'region': 'ap-southeast-1'}
-profile = 'KlayersDev'
+config = {'table_name': 'klayers-versions-prod', 'region': 'us-east-2'}
+profile = 'KlayersProdP38'
 
 
 def scan_table(table_name, client):
@@ -52,7 +53,7 @@ for k, item in enumerate(version_items):
         'pckgVrsn': item['package_version']['S'],
         'rqrmntsHsh': item['requirements_hash']['S'],
         'rgn': item['deployed_region']['S'],
-        'crtdDt': item['created_date']['S'],
+        'crtdDt': f"{item['created_date']['S'][:-5]}000",
     }
 
     try:
@@ -63,6 +64,7 @@ for k, item in enumerate(version_items):
     # Is this the latest version?
     if 'time_to_live' in item.keys():
         new_item['dplySts'] = "deprecated"
+        new_item['exDt'] = int(item['time_to_live']['N'])
     else:
         v0_item = copy.deepcopy(new_item)
         v0_item['sk'] = "lyrVrsn0#"
