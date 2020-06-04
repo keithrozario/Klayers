@@ -56,8 +56,6 @@ resource "aws_dynamodb_table" "dynamodb_layers" {
   billing_mode     = "PAY_PER_REQUEST"
   hash_key         = "deployed_region-package" # use . as separator e.g. us-east-1.requests
   range_key        = "layer_version"
-  stream_enabled   = true
-  stream_view_type = "NEW_AND_OLD_IMAGES"
 
   attribute {
     name = "deployed_region-package"
