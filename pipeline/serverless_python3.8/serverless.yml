@@ -14,24 +14,30 @@ provider:
   logRetentionInDays: 90
   environment:
     STAGE: ${self:provider.stage}
-    LOGLEVEL: "INFO"
+    LOG_LEVEL: INFO
+    DB_NAME: ${self:custom.dbName}
+    BUCKET_NAME: ${self:custom.s3LayersName}
+    POWERTOOLS_SERVICE_NAME: ${self:provider.stage}
   logs:
     httpApi: true
   httpApi:
     cors: true
 
 custom:
-  awsRegion: ${self:provider.region}
-  s3LayersName: ${ssm:/${self:service.name}/${self:provider.stage}/s3bucket_layers}
-  s3LayersArn: ${ssm:/${self:service.name}/${self:provider.stage}/s3bucket_layers_arn}
-  dbLayers: ${ssm:/${self:service.name}/${self:provider.stage}/dynamodb_layers_table}
-  dbLayersArn: ${ssm:/${self:service.name}/${self:provider.stage}/dynamodb_layers_table_arn}
-  dbLayersStreamArn: ${ssm:/${self:service.name}/${self:provider.stage}/dynamodb_layers_stream_arn}
-  dbReqs: ${ssm:/${self:service.name}/${self:provider.stage}/dynamodb_requirements_table}
-  dbReqsArn: ${ssm:/${self:service.name}/${self:provider.stage}/dynamodb_requirements_table_arn}
+  # Env
+  awsRegion: ${self:provider.region} 
   lambdaPrefix: ${ssm:/${self:service.name}/${self:provider.stage}/lambda_prefix}
-  lambdaErrorSNSArn: ${ssm:/${self:service.name}/${self:provider.stage}/lambda_error_notification_arn}
   pipelineName: ${self:service.name}-${self:provider.stage}-pipeline
+
+  # S3
+  s3LayersName: ${ssm:/${self:service.name}/${self:provider.stage}/layers_bucket/name}
+  s3LayersArn: ${ssm:/${self:service.name}/${self:provider.stage}/layers_bucket/arn}
+
+  # DynamoDB
+  dbName: ${ssm:/${self:service.name}/${self:provider.stage}/db/name}
+  dbArn: ${ssm:/${self:service.name}/${self:provider.stage}/db/arn}
+  dbStreamLabel: ${ssm:/${self:service.name}/${self:provider.stage}/db/stream/label}
+  dbStreamArn: ${ssm:/${self:service.name}/${self:provider.stage}/db/stream/arn}
 
   # Github
   githubSSHKeyParameter: /${self:service.name}/${self:provider.stage}/github_ssh_key
@@ -42,22 +48,21 @@ custom:
   slackTokenParameter: /${self:service.name}/${self:provider.stage}/slack_token
   
 functions:
-  - ${file(sls_components/functions_pipeline.yml)}
-  - ${file(sls_components/functions_publish.yml)}
-  - ${file(sls_components/functions_invoke_pipeline.yml)}
-  - ${file(sls_components/functions_slack.yml)}
-  - ${file(sls_components/functions_streams.yml)}
-  - ${file(sls_components/functions_webhook.yml)}
-
+  - ${file(01_invoke_pipelines/invoke_pipelines.yml)}
+  - ${file(02_pipeline/pipeline.yml)}
+  - ${file(03_publish/publish.yml)}
+  - ${file(04_stream_processor/streams.yml)}
+  - ${file(05_slack_notification/slack.yml)}
+  - ${file(06_webhook/webhook.yml)}
 
 stepFunctions:
   stateMachines:
     invoke_pipelines:
-      ${file(sls_components/state_machine_invoke_pipelines.yml)}
+      ${file(state_machines/01_invoke_pipelines.yml)}
     pipeline:
-      ${file(sls_components/state_machine_pipeline.yml)}
+      ${file(state_machines/02_pipeline.yml)}
     publish:
-      ${file(sls_components/state_machine_publish.yml)}
+      ${file(state_machines/03_publish.yml)}
 
 package:
   exclude:
@@ -69,5 +74,4 @@ package:
     - .serverless/**
     - sls_components/**
     - README.MD
-    - .pytest_cache/**
 
