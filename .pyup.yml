@@ -1,8 +1,4 @@
-update: insecure
+update: False
 
 search: True
 schedule: "every day"
-
-requirements:
-- packages/aiobotocore/requirements.txt:
-    update: insecure
