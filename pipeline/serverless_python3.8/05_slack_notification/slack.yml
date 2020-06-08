@@ -1,0 +1,104 @@
+slack_pipeline:
+  handler: 05_slack_notification/slack_notification.slack_notification_pipeline_error
+  description: Notify Slack when there's an error on the pipeline state machine
+  runtime: python3.8
+  timeout: 20
+  memorySize: 256
+  environment:
+    SLACK_TOKEN_PARAMETER: ${self:custom.slackTokenParameter}
+    POWERTOOLS_SERVICE_NAME: "slack_pipeline"
+  iamRoleStatementsName: ${self:provider.stage}-slack_pipeline
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - ssm:GetParameter
+      Resource:
+        Fn::Join:
+          - ":"
+          - - arn:aws:ssm
+            - ${self:provider.region}
+            - Ref: AWS::AccountId
+            - parameter${self:custom.slackTokenParameter}
+  layers:
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-slackclient:3
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:23
+
+slack_publish:
+  handler: 05_slack_notification/slack_notification.slack_notification_publish
+  description: Notify Slack when a publish is successful or failed
+  runtime: python3.8
+  timeout: 20
+  memorySize: 256
+  environment:
+    SLACK_TOKEN_PARAMETER: ${self:custom.slackTokenParameter}
+    POWERTOOLS_SERVICE_NAME: "slack_publish"
+  iamRoleStatementsName: ${self:provider.stage}-slack_publish
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - ssm:GetParameter
+      Resource:
+        Fn::Join:
+          - ":"
+          - - arn:aws:ssm
+            - ${self:provider.region}
+            - Ref: AWS::AccountId
+            - parameter${self:custom.slackTokenParameter}
+  layers:
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-slackclient:3
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:23
+
+post_message_to_slack:
+  handler: 05_slack_notification/slack_notification.post_message_to_slack
+  description: Generic Slack notifications via EventBridge
+  runtime: python3.8
+  timeout: 20
+  memorySize: 256
+  environment:
+    SLACK_TOKEN_PARAMETER: ${self:custom.slackTokenParameter}
+    POWERTOOLS_SERVICE_NAME: "post_to_slack"
+  iamRoleStatementsName: ${self:provider.stage}-post_message_to_slack
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - ssm:GetParameter
+      Resource:
+        Fn::Join:
+          - ":"
+          - - arn:aws:ssm
+            - ${self:provider.region}
+            - Ref: AWS::AccountId
+            - parameter${self:custom.slackTokenParameter}
+  layers:
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-slackclient:3
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:23
+  events:
+    - eventBridge:
+        pattern:
+          detail-type:
+            - "post_to_slack"
+
+slack_invokepipeline:
+  handler: 05_slack_notification/slack_notification.slack_notification_invoke_pipeline_error
+  description: Notify Slack when there's an error on the pipeline state machine
+  runtime: python3.8
+  timeout: 20
+  memorySize: 256
+  environment:
+    SLACK_TOKEN_PARAMETER: ${self:custom.slackTokenParameter}
+    POWERTOOLS_SERVICE_NAME: "slack_invoke_pipeline"
+  iamRoleStatementsName: ${self:provider.stage}-slack_notification_invoke_pipeline_error
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - ssm:GetParameter
+      Resource:
+        Fn::Join:
+          - ":"
+          - - arn:aws:ssm
+            - ${self:provider.region}
+            - Ref: AWS::AccountId
+            - parameter${self:custom.slackTokenParameter}
+  layers:
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-slackclient:3
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:23

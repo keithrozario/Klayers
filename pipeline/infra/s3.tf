@@ -23,22 +23,21 @@ resource "aws_s3_bucket" "s3bucket_layers" {
 
 }
 
-resource "aws_ssm_parameter" "s3bucket_layers" {
+resource "aws_ssm_parameter" "layers_bucket_name" {
   type        = "String"
   description = "Name of s3 bucket to hold layer artifacts"
-  name        = "/${lookup(var.app_name, terraform.workspace)}/${terraform.workspace}/s3bucket_layers"
+  name        = "/${lookup(var.app_name, terraform.workspace)}/${terraform.workspace}/layers_bucket/name"
   value       = aws_s3_bucket.s3bucket_layers.bucket
   overwrite   = true
 }
 
-resource "aws_ssm_parameter" "s3bucket_layers_arn" {
+resource "aws_ssm_parameter" "layers_bucket_arn" {
   type        = "String"
   description = "ARN of layer bucket"
-  name        = "/${lookup(var.app_name, terraform.workspace)}/${terraform.workspace}/s3bucket_layers_arn"
+  name        = "/${lookup(var.app_name, terraform.workspace)}/${terraform.workspace}/layers_bucket/arn"
   value       = aws_s3_bucket.s3bucket_layers.arn
   overwrite   = true
 }
-
 
 ## Configuration Files
 resource "aws_s3_bucket_object" "packages_config" {

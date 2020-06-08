@@ -1,0 +1,68 @@
+stream_handler:
+  handler: 04_stream_processor/stream_processor.main
+  runtime: python3.8
+  description: Triggered on every change to db
+  timeout: 20
+  memorySize: 256
+  environment:
+    POWERTOOLS_SERVICE_NAME: Klayers.StreamEvent
+    STREAM_LABEL: ${self:custom.dbStreamLabel}
+  iamRoleStatementsName: ${self:provider.stage}-stream_handler
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - events:PutEvents
+      Resource:
+        - Fn::Join:
+            - ":"
+            - - arn:aws:events
+              - ${self:provider.region}
+              - Ref: AWS::AccountId
+              - event-bus/default
+  events:
+    - stream:
+        type: dynamodb
+        arn: ${self:custom.dbStreamArn}
+        batchSize: 10
+  layers:
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:23
+
+layer_delete:
+  handler: 04_stream_processor/layer_delete.main
+  runtime: python3.8
+  description: Delete Layers from regions
+  timeout: 20
+  memorySize: 256
+  environment:
+    POWERTOOLS_SERVICE_NAME: Klayers.DeleteEvent
+    LOG_LEVEL: DEBUG
+  # IAM role might look really permissive, but it has good reason.
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - lambda:DeleteLayerVersion
+      Resource:
+        Fn::Join:
+          - ":"
+          - - arn:aws:lambda
+            - "*"  # need permissions to delete layers in other regions
+            - Ref: AWS::AccountId
+            - layer
+            - ${self:custom.lambdaPrefix}*  # prefix is different for different stages
+            - "*" # ability to delete any version
+    - Effect: Allow
+      Action:
+        - dynamodb:PutItem
+      Resource: ${self:custom.dbArn}
+  events:
+    - eventBridge:
+        pattern:
+          source:
+            - ${self:custom.dbStreamLabel}
+          detail-type:
+            - REMOVE
+          detail:
+            pk_type:
+              - "lyr"
+  layers:
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:23
