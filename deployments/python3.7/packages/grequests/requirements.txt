@@ -1,7 +1,7 @@
-certifi==2020.4.5.1
+certifi==2020.4.5.2
 chardet==3.0.4
-gevent==20.5.2
-greenlet==0.4.15
+gevent==20.6.0
+greenlet==0.4.16
 grequests==0.6.0
 idna==2.9
 requests==2.23.0
