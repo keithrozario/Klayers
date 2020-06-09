@@ -1,12 +1,10 @@
 import os
-import logging
 import time
 from datetime import datetime
 
 import boto3
 from botocore.exceptions import ClientError
 from boto3.dynamodb.conditions import Key
-from packaging.version import parse
 
 from aws_lambda_powertools.logging import Logger
 logger = Logger()
@@ -150,7 +148,7 @@ def main(event, context):
 
         # Make Layer Publicly accessible
         logger.info({"message": "Making Public", "region": region, "package": package, "arn": layer_version_arn, "created_date": layer_version_created_date})
-        response = lambda_client.add_layer_version_permission(
+        lambda_client.add_layer_version_permission(
             LayerName=layer_name,
             VersionNumber=layer_version,
             StatementId='make_public',
@@ -166,7 +164,7 @@ def main(event, context):
         sk = f"lyrVrsn#v{layer_version}"
         sk_previous = f"lyrVrsn#v{layer_version-1}"
 
-        response = dynamo_client.transact_write_items(
+        dynamo_client.transact_write_items(
         TransactItems=[
             {
                 'Update': {

@@ -29,7 +29,6 @@ session = boto3.session.Session(profile_name=profile, region_name=config['region
 client = session.client('dynamodb')
 items = scan_table(config['table_name'], client)
 
-hashes = dict()
 with open('hashes.json', 'r') as hash_file:
     hashes = json.loads(hash_file.read())
 

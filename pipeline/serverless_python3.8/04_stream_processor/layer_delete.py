@@ -61,7 +61,6 @@ def insert_expired_record(old_image):
         del old_image['exDt']
     except KeyError:
         logger.warning("Image doesn't have exDt entry")
-        pass
 
     client = boto3.client('dynamodb')
     table_name = os.environ['DB_NAME']
