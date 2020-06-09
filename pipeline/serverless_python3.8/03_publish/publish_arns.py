@@ -3,7 +3,6 @@ import json
 import logging
 import decimal
 import csv
-import time
 from datetime import datetime
 
 from boto3.dynamodb.conditions import Key

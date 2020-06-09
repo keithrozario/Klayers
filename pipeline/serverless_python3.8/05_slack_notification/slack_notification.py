@@ -49,16 +49,15 @@ def slack_notification_invoke_pipeline_error(event, context):
     """
 
     status = event.get('detail', {}).get('status')
-    package = json.loads(event.get('detail', {}).get('input'))
 
     if status in ['TIMED_OUT', 'ABORTED', 'FAILED']:
         message = f"ERROR: Invoking Pipelines"
     else:
         message = f"ERROR: Unknown State of Publish"
 
-    status = post_to_slack(message, default_channel)
+    slack_status = post_to_slack(message, default_channel)
 
-    return json.dumps({"status": status})
+    return json.dumps({"status": slack_status})
 
 
 @logger.inject_lambda_context

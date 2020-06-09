@@ -1,12 +1,10 @@
 import os
 import json
-import logging
 import decimal
 from boto3.dynamodb.conditions import Key
 
 import boto3
 
-import get_config
 from aws_lambda_powertools.logging import Logger
 logger = Logger()
 
