@@ -2,7 +2,6 @@ import os
 from datetime import datetime
 
 import boto3
-from botocore.exceptions import ClientError
 from aws_lambda_powertools.logging import Logger
 logger = Logger()
 

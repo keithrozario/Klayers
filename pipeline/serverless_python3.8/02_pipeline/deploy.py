@@ -218,7 +218,7 @@ def main(event, context):
         if layer_version > 1:
             logger.info({"message": "Updating Previous Version", "region": region, "package": package, "arn": layer_version_arn})
             try:
-                response = dynamo_client.update_item(
+                dynamo_client.update_item(
                     TableName=table_name,
                     Key={
                         'pk': {'S': pk},
