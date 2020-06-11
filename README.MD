@@ -1,20 +1,18 @@
 # Keith's Layers (Klayers)
 
+🐍 A collection of AWS Lambda Layers for Python 🐍
+
 [![Python 3.7](https://img.shields.io/badge/python-3.7-green.svg)](https://www.python.org/downloads/release/python-375/)  [![Python 3.8](https://img.shields.io/badge/python-3.8-green.svg)](https://www.python.org/downloads/release/python-380/)
 
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/keithrozario/Klayers.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/keithrozario/Klayers/context:python)
 
-A collection of AWS Lambda Layers for Python
-
 ## Layer List
 
-List of all layer version arns are available by region here:
+List of all layer version arns are available by region [here](deployments/python3.8/arns)
 
-* [Arns](deployments/python3.8/arns)
+There might be multiple versions for a single package, as we publish a new layer version if the package dependencies (`requirements.txt`) has been updated. Refer to [Layer expiry](#Layer-expiry) for more data.
 
-There might be multiple versions for a single package, this is because we publish a new layer version for every new version of the package or if the package dependencies (`requirements.txt`) has been updated. Refer to [Layer expiry](#Layer-expiry) for more data.
-
-*Note: We have deprecated layers for python3.6 and python 3.7, please use these newer versions that are built for python 3.8 instead.*
+*Note: We have deprecated layers for python3.6 and python 3.7, please use these newer versions that are built for python 3.8 going forward.*
 
 ## Python Packages
 
