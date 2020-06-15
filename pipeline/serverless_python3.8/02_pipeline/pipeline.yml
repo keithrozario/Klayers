@@ -22,11 +22,7 @@ build:
   - Effect: Allow
     Action:
     - s3:PutObject
-    - s3:GetObject
-    - s3:DeleteObject
     - s3:PutObjectAcl
-    - s3:GetObjectAcl
-    - s3:AbortMultipartUpload
     Resource: ${self:custom.s3LayersArn}/*
   - Effect: Allow
     Action:
@@ -35,7 +31,6 @@ build:
   - Effect: Allow
     Action:
     - dynamodb:PutItem
-    - dynamodb:Query
     - dynamodb:UpdateItem
     - dynamodb:GetItem
     Resource: ${self:custom.dbArn}
