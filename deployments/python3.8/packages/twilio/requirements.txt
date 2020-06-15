@@ -5,5 +5,5 @@ PyJWT==1.7.1
 pytz==2020.1
 requests==2.23.0
 six==1.15.0
-twilio==6.41.0
+twilio==6.42.0
 urllib3==1.25.9
