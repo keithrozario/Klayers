@@ -8,8 +8,8 @@ provider:
   name: aws
   runtime: python3.8
   stage: ${opt:stage, 'Klayers-defaultp38'}
-  region: ${file(../infra/terraform.tfvars.json):aws_region.${self:provider.stage}}
-  profile: ${file(../infra/terraform.tfvars.json):aws_profile.${self:provider.stage}}
+  region: ${file(../Terraform/terraform.tfvars.json):aws_region.${self:provider.stage}}
+  profile: ${file(../Terraform/terraform.tfvars.json):aws_profile.${self:provider.stage}}
   versionFunctions: false
   logRetentionInDays: 90
   environment:

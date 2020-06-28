@@ -16,11 +16,10 @@ resource "aws_s3_bucket" "s3bucket_layers" {
     enabled = true
 
     noncurrent_version_transition {
-      days          = 7
+      days          = 2
       storage_class = "DEEP_ARCHIVE"
     }
   }
-
 }
 
 resource "aws_ssm_parameter" "layers_bucket_name" {

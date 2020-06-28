@@ -33,12 +33,12 @@ def convert_to_csv(items):
       csv_body: body of the csv file to write out
     """
 
-    fieldnames = ['Package','Package Version','Status','Expiry Date','Arn']
+    fieldnames = ["Package", "Package Version", "Status", "Expiry Date", "Arn"]
 
     # sort by package, and then created date (oldest to newest)
-    sorted_items = sorted(items, key=lambda i: (i['pckg'].lower(), i['crtdDt']))
+    sorted_items = sorted(items, key=lambda i: (i["pckg"].lower(), i["crtdDt"]))
 
-    with open('/tmp/packages.csv', 'w', newline='') as csvfile:
+    with open("/tmp/packages.csv", "w", newline="") as csvfile:
 
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
@@ -46,21 +46,21 @@ def convert_to_csv(items):
 
             # convert datetime to human readable
             try:
-                if item['exDt']:
-                    item['exDt'] = datetime.utcfromtimestamp(item['exDt']).isoformat()
+                if item["exDt"]:
+                    item["exDt"] = datetime.utcfromtimestamp(item["exDt"]).isoformat()
             except KeyError:
-                item['exDt'] = ""
-            
+                item["exDt"] = ""
+
             csv_item = {
-                "Package": item['pckg'],
-                "Package Version": item['pckgVrsn'],
-                "Arn": item['arn'],
-                "Status": item['dplySts'],
-                "Expiry Date": item['exDt'],
+                "Package": item["pckg"],
+                "Package Version": item["pckgVrsn"],
+                "Arn": item["arn"],
+                "Status": item["dplySts"],
+                "Expiry Date": item["exDt"],
             }
             writer.writerow(csv_item)
 
-    with open('/tmp/packages.csv', 'r') as csvfile:
+    with open("/tmp/packages.csv", "r") as csvfile:
         csv_text = csvfile.read()
 
     return csv_text
@@ -77,18 +77,20 @@ def query_table(region, table):
 
     kwargs = {
         "IndexName": "deployed_in_region",
-        "KeyConditionExpression": Key('rgn').eq(region),
+        "KeyConditionExpression": Key("rgn").eq(region),
     }
     items = []
 
     while True:
         response = table.query(**kwargs)
-        items.extend(response['Items'])
+        items.extend(response["Items"])
 
         try:
-            kwargs['ExclusiveStartKey'] = response['ExclusiveStartKey']
+            kwargs["ExclusiveStartKey"] = response["ExclusiveStartKey"]
         except KeyError:
-            logger.info(f"Reached end of query for {region}, Returning {len(items)} items")
+            logger.info(
+                f"Reached end of query for {region}, Returning {len(items)} items"
+            )
             break
 
     return items
@@ -102,22 +104,21 @@ def main(event, context):
 
     regions = get_config.get_aws_regions()
 
-    dynamodb = boto3.resource('dynamodb')
-    table = dynamodb.Table(os.environ['DB_NAME'])
-    bucket = os.environ['BUCKET_NAME']
+    dynamodb = boto3.resource("dynamodb")
+    table = dynamodb.Table(os.environ["DB_NAME"])
+    bucket = os.environ["BUCKET_NAME"]
     region_deploy = dict()
 
     for region in regions:
 
-        items = query_table(table=table,
-                            region=region)
+        items = query_table(table=table, region=region)
         arns = convert_to_csv(items)
         region_deploy[region] = len(items)
 
         logger.info(f"Uploading to S3 Bucket")
-        client = boto3.client('s3')
-        client.put_object(Body=arns.encode('utf-8'),
-                          Bucket=bucket,
-                          Key=f'arns/{region}.csv')
+        client = boto3.client("s3")
+        client.put_object(
+            Body=arns.encode("utf-8"), Bucket=bucket, Key=f"arns/{region}.csv"
+        )
 
     return {"arn_count": region_deploy}
