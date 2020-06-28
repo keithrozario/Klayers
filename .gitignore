@@ -5,18 +5,7 @@ logs/
 venv/
 .DS_Store
 *.DS_store
-pipeline/serverless_python3.8/node_modules/
-pipeline/serverless_python3.8/.serverless/
-pipeline/infra/terraform.tfstate
-pipeline/infra/terraform.tfstate.backup
-pipeline/infra/.terraform
 
-**/.terraform/*
-*.tfstate.*
-infra/override.tf
-infra/override.tf.json
-*_override.tf
-*_override.tf.json
 **/node_modules/
 **/.serverless/
 
@@ -25,3 +14,4 @@ scripts/gen_key/id_*
 .vscode
 
 *.pyc
+.pytest_cache

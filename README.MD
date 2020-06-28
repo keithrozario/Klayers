@@ -65,6 +65,22 @@ Use the `Get Layer Version by ARN` in [python](https://boto3.amazonaws.com/v1/do
 
 *Note: You can only get layers from the specific region your client is configured for, otherwise you'll get a `AccessDeniedException` error.*
 
+### Option 3: Using Serverless Framework
+
+You can include layers in your deployments, by utilizing the `layers` property at the function level:
+
+```yaml
+check:
+  handler: 02_pipeline/check.main
+  description: Checks for package on PyPi via the API
+  runtime: python3.8
+  timeout: 30
+  memorySize: 256
+  layers:
+  - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-packaging:1
+  - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python38-aws-lambda-powertools:23
+```
+
 ## Layer expiry
 
 Some layer versions will have a `expiry_date` field. This is the date for when the layers will be deleted.
