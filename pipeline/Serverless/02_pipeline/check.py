@@ -4,6 +4,7 @@ import requests
 from packaging.version import parse
 
 from aws_lambda_powertools.logging import Logger
+
 logger = Logger()
 
 
@@ -15,20 +16,20 @@ def get_latest_release(package):
       version: Version number of latest release that is **not** a pre-release as packaging.version
     """
     req = requests.get(f"https://pypi.python.org/pypi/{package}/json")
-    version = parse('0')
+    version = parse("0")
     license_info = None
 
     if req.status_code == requests.codes.ok:
         j = json.loads(req.text)
-        releases = j.get('releases', [])
+        releases = j.get("releases", [])
         for release in releases:
             ver = parse(release)
             if not ver.is_prerelease:
                 version = max(version, ver)
 
-        license_info = j.get('info', {}).get('license', None)
+        license_info = j.get("info", {}).get("license", None)
         if license_info is None:
-            license_info = 'No-License-In-PyPI'
+            license_info = "No-License-In-PyPI"
 
     else:
         logger.info("Unable to determine latest version, exiting")
@@ -48,7 +49,7 @@ def main(event, context):
     """
 
     logger.debug(event)
-    package = event.get('detail').get('package')
+    package = event.get("detail").get("package")
 
     logger.debug(f"Checking {package}")
 
@@ -59,6 +60,8 @@ def main(event, context):
     if len(license_info) > 512:
         license_info = license_info[:500] + "..."
 
-    return {"version": str(latest_version),
-            "package": package,
-            "license_info": license_info}
+    return {
+        "version": str(latest_version),
+        "package": package,
+        "license_info": license_info,
+    }

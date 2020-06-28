@@ -3,7 +3,7 @@ import boto3
 
 def get_config(stage='Klayers-defaultp38'):
 
-    with open('pipeline/infra/terraform.tfvars.json', 'r') as config_file:
+    with open('pipeline/Terraform/terraform.tfvars.json', 'r') as config_file:
         full_config = json.loads(config_file.read())
 
     config = dict()

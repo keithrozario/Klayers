@@ -4,7 +4,7 @@
 
 [![Python 3.7](https://img.shields.io/badge/python-3.7-green.svg)](https://www.python.org/downloads/release/python-375/)  [![Python 3.8](https://img.shields.io/badge/python-3.8-green.svg)](https://www.python.org/downloads/release/python-380/)
 
-[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/keithrozario/Klayers.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/keithrozario/Klayers/context:python)
+[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/keithrozario/Klayers.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/keithrozario/Klayers/context:python) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) 
 
 ## Layer List
 
@@ -16,7 +16,7 @@ There might be multiple versions for a single package, as we publish a new layer
 
 ## Python Packages
 
-For the full list of packages available click [here](pipeline/config/Klayers-prodp38/packages.csv), here are just some examples of the ~70 packages we build every week:
+Just some examples of the ~70 packages we build every week, for a full list click [here](pipeline/config/Klayers-prodp38/packages.csv):
 
 * aws-lambda-powertools
 * aws-xray-sdk
@@ -51,7 +51,7 @@ Click [here](https://pyup.io/repos/github/keithrozario/Klayers/) to see specific
 
 ## Using the Layers
 
-You can either set one of the ARNs below as a layer in your function. Or download the layer and deploy a copy into your account.
+You can use the layers anyway you see fit, here are 3 proposed options:
 
 ### Option 1: Set ARN as layer
 
@@ -64,6 +64,22 @@ Click links below for your preferred version of python, and then select your reg
 Use the `Get Layer Version by ARN` in [python](https://boto3.amazonaws.com/v1/documentatio/api/latest/reference/services/lambda.html#Lambda.Client.get_layer_version_by_arn) or [aws-cli](https://docs.aws.amazon.com/cli/latest/reference/lambda/get-layer-version-by-arn.html) command which will provide an S3 location to download the layer as a zip.
 
 *Note: You can only get layers from the specific region your client is configured for, otherwise you'll get a `AccessDeniedException` error.*
+
+### Option 3: Using Serverless Framework
+
+You can include layers in your deployments, by utilizing the `layers` property at the function level, and setting it to the arn of your choice. You must use layers from the same region as your function:
+
+```yaml
+check:
+  handler: 02_pipeline/check.main
+  description: Checks for package on PyPi via the API
+  runtime: python3.8
+  timeout: 30
+  memorySize: 256
+  layers:
+  - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-packaging:1
+  - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python38-aws-lambda-powertools:23
+```
 
 ## Layer expiry
 

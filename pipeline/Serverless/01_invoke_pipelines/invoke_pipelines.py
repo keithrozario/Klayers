@@ -3,9 +3,11 @@ import json
 
 import boto3
 from aws_lambda_powertools.logging import Logger
+
 logger = Logger()
 
 import get_config
+
 
 def log_eventbridge_errors(response, function_logger):
     """
@@ -16,12 +18,12 @@ def log_eventbridge_errors(response, function_logger):
         null
     """
 
-    if response['FailedEntryCount'] > 0:
-        for entry in response['Entries']:
-            if entry.get('ErrorCode', False):
+    if response["FailedEntryCount"] > 0:
+        for entry in response["Entries"]:
+            if entry.get("ErrorCode", False):
                 function_logger.error(entry)
 
-    return response['FailedEntryCount']
+    return response["FailedEntryCount"]
 
 
 @logger.inject_lambda_context
@@ -35,8 +37,8 @@ def main(event, context):
     """
 
     packages = get_config.get_packages()
-    client = boto3.client('events')
-    stage = os.environ['STAGE']
+    client = boto3.client("events")
+    stage = os.environ["STAGE"]
 
     entries = []
     logger.info(f"Preparing {len(packages)} packages")
@@ -45,15 +47,15 @@ def main(event, context):
     for package in packages:
 
         entry = {
-            'Source': f"Klayers.invoke.{stage}",
-            'Resources': [],
-            'DetailType': "invoke_pipeline",
-            'Detail': json.dumps({"package": package}),
-            'EventBusName': 'default'
+            "Source": f"Klayers.invoke.{stage}",
+            "Resources": [],
+            "DetailType": "invoke_pipeline",
+            "Detail": json.dumps({"package": package}),
+            "EventBusName": "default",
         }
         entries.append(entry)
     # maximum 10 entries per put_events API call
-    chunk_10 = [entries[i:i + 10] for i in range(0, len(entries), 10)]
+    chunk_10 = [entries[i : i + 10] for i in range(0, len(entries), 10)]
     eventbridge_errors = 0
     for chunk in chunk_10:
         response = client.put_events(Entries=chunk)
@@ -62,14 +64,13 @@ def main(event, context):
     # Post Status to Slack
     message = f"Started build on {len(packages)} packages, with {eventbridge_errors} eventbridge errors"
     entry = {
-        'Source': f"Klayers.invoke.{stage}",
-        'Resources': [],
-        'DetailType': "post_to_slack",
-        'Detail': json.dumps({"message": message}),
-        'EventBusName': 'default'
+        "Source": f"Klayers.invoke.{stage}",
+        "Resources": [],
+        "DetailType": "post_to_slack",
+        "Detail": json.dumps({"message": message}),
+        "EventBusName": "default",
     }
     slack_response = client.put_events(Entries=[entry])
     log_eventbridge_errors(slack_response, logger)
 
-    return {"num_packages": len(packages),
-            "eventbridge_errors" : eventbridge_errors}
+    return {"num_packages": len(packages), "eventbridge_errors": eventbridge_errors}

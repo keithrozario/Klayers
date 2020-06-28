@@ -25,7 +25,6 @@ module "dynamo_table" {
 }
 
 # High level parameters
-
 resource "aws_ssm_parameter" "lambda_prefix" {
   type      = "String"
   name      = "/${lookup(var.app_name, terraform.workspace)}/${terraform.workspace}/lambda_prefix"
@@ -39,10 +38,3 @@ resource "aws_ssm_parameter" "github_repo" {
   value     = lookup(var.github_repo, terraform.workspace)
   overwrite = true
 }
-
-# resource "aws_ssm_parameter" "github_webhook_secret" {
-#   type      = "SecureString"
-#   name      = "/${lookup(var.app_name, terraform.workspace)}/${terraform.workspace}/github_webhook_secret"
-#   value = "to be modified"
-#   overwrite = false
-# }
