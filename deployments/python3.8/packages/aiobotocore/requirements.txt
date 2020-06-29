@@ -6,7 +6,7 @@ attrs==19.3.0
 botocore==1.15.32
 chardet==3.0.4
 docutils==0.15.2
-idna==2.9
+idna==2.10
 jmespath==0.10.0
 multidict==4.7.6
 python-dateutil==2.8.1

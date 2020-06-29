@@ -5,7 +5,7 @@ certifi==2020.6.20
 chardet==3.0.4
 cssselect==1.1.0
 fake-useragent==0.1.11
-idna==2.9
+idna==2.10
 lxml==4.5.1
 parse==1.15.0
 pyee==7.0.2
@@ -15,7 +15,7 @@ requests==2.24.0
 requests-html==0.10.0
 six==1.15.0
 soupsieve==2.0.1
-tqdm==4.46.1
+tqdm==4.47.0
 urllib3==1.25.9
 w3lib==1.22.0
 websockets==8.1

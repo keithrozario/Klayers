@@ -1,12 +1,12 @@
-boto3==1.14.7
-botocore==1.17.7
+boto3==1.14.12
+botocore==1.17.12
 docutils==0.15.2
 future==0.18.2
 jmespath==0.10.0
 mock==3.0.5
 python-dateutil==2.8.1
 rdk==0.7.9
-rdklib==0.1.0
+rdklib==0.1.1
 s3transfer==0.3.3
 six==1.15.0
 urllib3==1.25.9
