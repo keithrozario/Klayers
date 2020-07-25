@@ -1,0 +1,40 @@
+cloudfrontdistribution:
+  Type: AWS::CloudFront::Distribution
+  Properties:
+    DistributionConfig:
+      Origins:
+      - Id: ${self:provider.stage}
+        DomainName:
+          Fn::Join:
+          - ''
+          - - Ref: HttpApi
+            - .execute-api.
+            - ${self:provider.region}
+            - .amazonaws.com
+        CustomOriginConfig:
+          HTTPPort: '80'
+          HTTPSPort: '443'
+          OriginProtocolPolicy: https-only
+          OriginSSLProtocols: 
+          - TLSv1.2
+      Enabled: 'true'
+      HttpVersion: http2
+      DefaultCacheBehavior:
+        AllowedMethods:
+        - GET
+        - HEAD
+        CachedMethods:
+        - GET
+        - HEAD
+        TargetOriginId: ${self:provider.stage}
+        ForwardedValues:
+          QueryString: 'true'
+          Cookies:
+            Forward: none
+        MinTTL: '3600'
+        ViewerProtocolPolicy: https-only
+        Compress: True
+      PriceClass: PriceClass_All
+      ViewerCertificate:
+        CloudFrontDefaultCertificate: True
+        MinimumProtocolVersion: TLSv1.2_2019
