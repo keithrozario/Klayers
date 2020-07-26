@@ -2,6 +2,15 @@ cloudfrontdistribution:
   Type: AWS::CloudFront::Distribution
   Properties:
     DistributionConfig:
+      Aliases:
+      - ${self:custom.apiDomainName}
+      Enabled: 'true'
+      HttpVersion: http2
+      PriceClass: PriceClass_All
+      ViewerCertificate:
+        AcmCertificateArn: ${self:custom.apiCertArn}
+        MinimumProtocolVersion: TLSv1.2_2019
+        SslSupportMethod: sni-only
       Origins:
       - Id: ${self:provider.stage}
         DomainName:
@@ -17,8 +26,6 @@ cloudfrontdistribution:
           OriginProtocolPolicy: https-only
           OriginSSLProtocols: 
           - TLSv1.2
-      Enabled: 'true'
-      HttpVersion: http2
       DefaultCacheBehavior:
         AllowedMethods:
         - GET
@@ -34,7 +41,3 @@ cloudfrontdistribution:
         MinTTL: '3600'
         ViewerProtocolPolicy: https-only
         Compress: True
-      PriceClass: PriceClass_All
-      ViewerCertificate:
-        CloudFrontDefaultCertificate: True
-        MinimumProtocolVersion: TLSv1.2_2019

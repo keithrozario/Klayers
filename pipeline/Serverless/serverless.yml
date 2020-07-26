@@ -46,6 +46,10 @@ custom:
   
   # Slack
   slackTokenParameter: /${self:service.name}/${self:provider.stage}/slack_token
+
+  # Cloudformation
+  apiCertArn: ${ssm:/${self:service.name}/${self:provider.stage}/api/cert/arn}
+  apiDomainName: ${ssm:/${self:service.name}/${self:provider.stage}/api/domain_name}
   
 functions:
   - ${file(01_invoke_pipelines/invoke_pipelines.yml)}
@@ -68,22 +72,6 @@ stepFunctions:
 resources:
   Resources:
     ${file(cloudformation/CloudFront.yml)}
-    # param1:
-    #   Type: AWS::SSM::Parameter
-    #   Properties: 
-    #     DataType: text
-    #     Description: test parameter
-    #     Name: /parameter1/test/final
-    #     Type: String
-    #     Value: 
-    #       Fn::Join:
-    #       - ''
-    #       - - https://
-    #         - Ref: HttpApi
-    #         - .execute-api.
-    #         - ${self:provider.region}
-    #         - .amazonaws.com
-
 
 package:
   exclude:

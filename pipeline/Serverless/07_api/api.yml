@@ -6,7 +6,7 @@ arn_by_regions:
   memorySize: 256
   environment:
     POWERTOOLS_SERVICE_NAME: Klayers.api
-  iamRoleStatementsName: api-arn-region
+  iamRoleStatementsName: ${self:provider.stage}-api-arn-rgn
   iamRoleStatements:
   - Effect: Allow
     Action:
@@ -25,7 +25,7 @@ arn_by_package_region:
   memorySize: 256
   environment:
     POWERTOOLS_SERVICE_NAME: Klayers.api
-  iamRoleStatementsName: api-arn-package-region
+  iamRoleStatementsName: ${self:provider.stage}-api-arn-pckgrgn
   iamRoleStatements:
   - Effect: Allow
     Action:
