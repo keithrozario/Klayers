@@ -8,22 +8,11 @@ from datetime import datetime
 from boto3.dynamodb.conditions import Key
 import boto3
 
-import get_config
+import common.get_config
+from common.dynamodb import DecimalEncoder
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
-
-
-# Helper class to convert a DynamoDB item to JSON.
-class DecimalEncoder(json.JSONEncoder):
-    def default(self, o):
-        if isinstance(o, decimal.Decimal):
-            if o % 1 > 0:
-                return float(o)
-            else:
-                return int(o)
-        return super(DecimalEncoder, self).default(o)
-
 
 def convert_to_csv(items):
     """

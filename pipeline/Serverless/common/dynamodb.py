@@ -37,7 +37,7 @@ def map_keys(items):
     for item in items:
         new_item = {}
         for k in item.keys():
-            if k == "rqrmntsHsh":
+            if k == "rqrmntsTxt":
                 new_item[map_table[k]] = item[k].split("\n")
             if k == "exDt":
                 new_item[map_table[k]] = datetime.fromtimestamp(item[k]).isoformat()
