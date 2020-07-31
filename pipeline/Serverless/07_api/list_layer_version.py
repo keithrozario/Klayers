@@ -51,10 +51,8 @@ def main(event, context):
 
     dynamodb = boto3.resource("dynamodb")
     table = dynamodb.Table(os.environ["DB_NAME"])
-    # region = event.get('pathParameters').get('region')
-    # package = event.get('pathParameters').get('package')
-    region = "ap-southeast-1"
-    package = "requests"
+    region = event.get('pathParameters').get('region')
+    package = event.get('pathParameters').get('package')
     pk = f"lyr#{region}.{package}"
     api_response = query_table(table=table, region=region, pk=pk)
 

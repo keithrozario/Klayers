@@ -49,7 +49,7 @@ list_layers:
   - Effect: Allow
     Action:
     - dynamodb:Query
-    Resource: ${self:custom.dbArn}sls /index/deployed_in_region
+    Resource: ${self:custom.dbArn}
   layers:
     - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:32
   events:

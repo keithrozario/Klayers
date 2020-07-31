@@ -53,6 +53,7 @@ def put_requirements_hash(package, version, requirements_txt, requirements_hash)
         "rqrmntsHsh": {"S": requirements_hash},
         "bltVrsn": {"S": new_version},
         "crtdDt": {"S": created_date},
+        "pckg": {'S': package},
     }
 
     # Insert new record

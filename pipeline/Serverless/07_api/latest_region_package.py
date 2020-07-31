@@ -3,7 +3,7 @@ import json
 import boto3
 from botocore.exceptions import ClientError
 from aws_lambda_powertools.logging import Logger
-
+from common.dynamodb import map_keys
 logger = Logger()
 
 
@@ -32,13 +32,8 @@ def main(event, context):
                 'rgn','pckg','arn','rqrmntsTxt','pckgVrsn'
             ],
         )
-        api_response = {
-            "region": response['Item']['rgn'],
-            "package": response['Item']['pckg'],
-            "arn": response['Item']['arn'],
-            "dependencies": response['Item']['rqrmntsTxt'].split('\n'),
-            "version": response['Item']['pckgVrsn'],
-        }
+        api_response = map_keys([response['Item']])[0]
+
     except ClientError as e:
         logger.error({
             "message": response['Error']['Message'],

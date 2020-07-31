@@ -7,20 +7,12 @@ import boto3
 
 from aws_lambda_powertools.logging import Logger
 
+from common.dynamodb import DecimalEncoder
+
 logger = Logger()
 
 build_v0 = "bldVrsn0#"
 package_prefix = "pckg#"
-
-# Helper class to convert a DynamoDB item to JSON.
-class DecimalEncoder(json.JSONEncoder):
-    def default(self, o):
-        if isinstance(o, decimal.Decimal):
-            if o % 1 > 0:
-                return float(o)
-            else:
-                return int(o)
-        return super(DecimalEncoder, self).default(o)
 
 
 def query_requirements():
