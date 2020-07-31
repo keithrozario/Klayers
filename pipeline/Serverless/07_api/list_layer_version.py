@@ -31,7 +31,7 @@ def query_table(region, table, pk):
         items.extend(response["Items"])
 
         try:
-            kwargs["ExclusiveStartKey"] = response["ExclusiveStartKey"]
+            kwargs["ExclusiveStartKey"] = response["LastEvaluatedKey"]
         except KeyError:
             logger.info({
                 "region": region,
