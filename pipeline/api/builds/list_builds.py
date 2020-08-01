@@ -8,6 +8,7 @@ from common.dynamodb import DecimalEncoder, map_keys, query_till_end
 
 logger = Logger()
 
+
 def query_table(table):
     """
     Args:
@@ -17,12 +18,13 @@ def query_table(table):
     """
 
     kwargs = {
-        "KeyConditionExpression": Key("pk").eq('bldVrsn0#'),
-        "ProjectionExpression": "crtdDt, pckg, pckgVrsn, rqrmntsTxt"
+        "KeyConditionExpression": Key("pk").eq("bldVrsn0#"),
+        "ProjectionExpression": "crtdDt, pckg, pckgVrsn, rqrmntsTxt",
     }
     items = query_till_end(table=table, kwargs=kwargs)
 
     return map_keys(items)
+
 
 @logger.inject_lambda_context
 def main(event, context):
@@ -38,4 +40,3 @@ def main(event, context):
         "statusCode": 200,
         "body": json.dumps(api_response, cls=DecimalEncoder),
     }
-

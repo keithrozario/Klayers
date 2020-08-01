@@ -8,6 +8,7 @@ from common.dynamodb import DecimalEncoder, map_keys, query_till_end
 
 logger = Logger()
 
+
 def query_table(region, table):
     """
     Args:
@@ -20,11 +21,12 @@ def query_table(region, table):
     kwargs = {
         "IndexName": "deployed_in_region",
         "KeyConditionExpression": Key("rgn").eq(region) & Key("dplySts").eq("latest"),
-        "ProjectionExpression": "pckg, arn, pckgVrsn"
+        "ProjectionExpression": "pckg, arn, pckgVrsn",
     }
     items = query_till_end(table=table, kwargs=kwargs)
-    
+
     return map_keys(items)
+
 
 @logger.inject_lambda_context
 def main(event, context):
@@ -34,7 +36,7 @@ def main(event, context):
 
     dynamodb = boto3.resource("dynamodb")
     table = dynamodb.Table(os.environ["DB_NAME"])
-    region = event.get('pathParameters').get('region')
+    region = event.get("pathParameters").get("region")
     api_response = query_table(table=table, region=region)
 
     return {

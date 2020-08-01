@@ -12,6 +12,7 @@ class DecimalEncoder(json.JSONEncoder):
                 return int(o)
         return super(DecimalEncoder, self).default(o)
 
+
 # Rename keys from old to new
 def map_keys(items):
     """
@@ -41,7 +42,7 @@ def map_keys(items):
                 new_item[map_table[k]] = item[k].split("\n")
             if k == "exDt":
                 new_item[map_table[k]] = datetime.fromtimestamp(item[k]).isoformat()
-            else:    
+            else:
                 new_item[map_table[k]] = item[k]
         new_items.append(new_item)
 

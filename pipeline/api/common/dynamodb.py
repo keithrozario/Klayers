@@ -12,6 +12,7 @@ class DecimalEncoder(json.JSONEncoder):
                 return int(o)
         return super(DecimalEncoder, self).default(o)
 
+
 # Rename keys from old to new
 def map_keys(items):
     """
@@ -31,7 +32,7 @@ def map_keys(items):
         "arn": "arn",
         "exDt": "expiryDate",
         "rqrmntsHsh": "requirementsHash",
-        "crtdDt": "createdDateTime"
+        "crtdDt": "createdDateTime",
     }
 
     new_items = []
@@ -44,11 +45,12 @@ def map_keys(items):
                 new_item[map_table[k]] = datetime.fromtimestamp(item[k]).isoformat()
             elif k == "crtdDt":
                 new_item[map_table[k]] = item[k][:19]
-            else:    
+            else:
                 new_item[map_table[k]] = item[k]
         new_items.append(new_item)
 
     return new_items
+
 
 def query_till_end(table, kwargs):
     """

@@ -14,6 +14,7 @@ from common.dynamodb import DecimalEncoder
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
+
 def convert_to_csv(items):
     """
     Args:

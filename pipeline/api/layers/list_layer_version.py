@@ -5,6 +5,7 @@ import boto3
 from boto3.dynamodb.conditions import Key, Attr
 
 from aws_lambda_powertools.logging import Logger
+
 logger = Logger()
 
 from common.dynamodb import DecimalEncoder, map_keys, query_till_end
@@ -22,11 +23,12 @@ def query_table(region, table, pk):
     kwargs = {
         "KeyConditionExpression": Key("pk").eq(pk),
         "ProjectionExpression": "arn, pckgVrsn, dplySts, rqrmntsTxt, exDt",
-        "FilterExpression": "attribute_exists(dplySts)"  # don't get latest version
+        "FilterExpression": "attribute_exists(dplySts)",  # don't get latest version
     }
     items = query_till_end(table=table, kwargs=kwargs)
 
     return map_keys(items)
+
 
 @logger.inject_lambda_context
 def main(event, context):
@@ -36,8 +38,8 @@ def main(event, context):
 
     dynamodb = boto3.resource("dynamodb")
     table = dynamodb.Table(os.environ["DB_NAME"])
-    region = event.get('pathParameters').get('region')
-    package = event.get('pathParameters').get('package')
+    region = event.get("pathParameters").get("region")
+    package = event.get("pathParameters").get("package")
     pk = f"lyr#{region}.{package}"
     api_response = query_table(table=table, region=region, pk=pk)
 
