@@ -58,7 +58,6 @@ functions:
   - ${file(04_stream_processor/streams.yml)}
   - ${file(05_slack_notification/slack.yml)}
   - ${file(06_webhook/webhook.yml)}
-  - ${file(07_api/api.yml)}
 
 stepFunctions:
   stateMachines:
@@ -68,10 +67,6 @@ stepFunctions:
       ${file(state_machines/02_pipeline.yml)}
     publish:
       ${file(state_machines/03_publish.yml)}
-
-resources:
-  Resources:
-    ${file(cloudformation/CloudFront.yml)}
 
 package:
   exclude:

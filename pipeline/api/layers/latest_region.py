@@ -4,6 +4,7 @@ import decimal
 import boto3
 from boto3.dynamodb.conditions import Key
 from aws_lambda_powertools.logging import Logger
+from common.dynamodb import DecimalEncoder, map_keys, query_till_end
 
 logger = Logger()
 
@@ -21,24 +22,9 @@ def query_table(region, table):
         "KeyConditionExpression": Key("rgn").eq(region) & Key("dplySts").eq("latest"),
         "ProjectionExpression": "pckg, arn, pckgVrsn"
     }
-    items = []
-
-    while True:
-        response = table.query(**kwargs)
-        items.extend(response["Items"])
-
-        try:
-            kwargs["ExclusiveStartKey"] = response["LastEvaluatedKey"]
-        except KeyError:
-            logger.info({
-                "region": region,
-                "num_items": len(items),
-                "message": "Completed Query for objects in region"
-            }
-            )
-            break
-
-    return items
+    items = query_till_end(table=table, kwargs=kwargs)
+    
+    return map_keys(items)
 
 @logger.inject_lambda_context
 def main(event, context):
