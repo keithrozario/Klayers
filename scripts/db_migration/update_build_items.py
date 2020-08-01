@@ -6,7 +6,7 @@ Derived from the sk field
 
 import boto3
 
-from boto3.dynamodb.conditions import Key, Attr
+from boto3.dynamodb.conditions import Key
 
 profile = "KlayersProdP38"
 # profile = 'KlayersDev'

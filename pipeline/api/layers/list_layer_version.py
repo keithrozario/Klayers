@@ -2,7 +2,7 @@ import os
 import json
 
 import boto3
-from boto3.dynamodb.conditions import Key, Attr
+from boto3.dynamodb.conditions import Key
 
 from aws_lambda_powertools.logging import Logger
 
