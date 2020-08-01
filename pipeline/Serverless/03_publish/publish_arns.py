@@ -1,15 +1,10 @@
 import os
-import json
 import logging
-import decimal
 import csv
 from datetime import datetime
 
 from boto3.dynamodb.conditions import Key
 import boto3
-
-import common.get_config
-from common.dynamodb import DecimalEncoder
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)

@@ -1,6 +1,5 @@
 import boto3
-import json
-from boto3.dynamodb.conditions import Key, Attr
+from boto3.dynamodb.conditions import Attr
 
 profile = "KlayersProdP38"
 # profile = 'KlayersDev'

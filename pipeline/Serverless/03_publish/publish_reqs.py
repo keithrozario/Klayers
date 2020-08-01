@@ -7,8 +7,6 @@ import boto3
 
 from aws_lambda_powertools.logging import Logger
 
-from common.dynamodb import DecimalEncoder
-
 logger = Logger()
 
 build_v0 = "bldVrsn0#"
