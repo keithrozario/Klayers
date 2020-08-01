@@ -7,7 +7,7 @@ check:
   layers:
     - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-packaging:1
     - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-requests:5
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:23
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:32
 
 build:
   handler: 02_pipeline/build.main
@@ -35,7 +35,7 @@ build:
     - dynamodb:GetItem
     Resource: ${self:custom.dbArn}
   layers:
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:23
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:32
 
 
 deploy:
@@ -75,4 +75,4 @@ deploy:
   layers:
     - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-boto3:2
     - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-packaging:1
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:23
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:32

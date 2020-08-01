@@ -1,6 +1,6 @@
 # Keith's Layers (Klayers)
 
-🐍 A collection of AWS Lambda Layers for Python 🐍
+🐍 A collection of AWS Lambda(λ) Layers for Python 🐍
 
 [![Python 3.7](https://img.shields.io/badge/python-3.7-green.svg)](https://www.python.org/downloads/release/python-375/)  [![Python 3.8](https://img.shields.io/badge/python-3.8-green.svg)](https://www.python.org/downloads/release/python-380/)
 
@@ -59,6 +59,10 @@ Click links below for your preferred version of python, and then select your reg
 
 * [Arns](deployments/python3.8/arns)
 
+Once selected, you can add the arn directly from the console, by selecting Layers->Add a Layer->Specify an Arn:
+
+![Screenshot](documentation/add_arn.png)
+
 ### Option 2: Download copy of layer
 
 Use the `Get Layer Version by ARN` in [python](https://boto3.amazonaws.com/v1/documentatio/api/latest/reference/services/lambda.html#Lambda.Client.get_layer_version_by_arn) or [aws-cli](https://docs.aws.amazon.com/cli/latest/reference/lambda/get-layer-version-by-arn.html) command which will provide an S3 location to download the layer as a zip.
@@ -105,6 +109,44 @@ Special hand-crafted binaries for layers. These layers are not automatically bui
 ## Architecture Diagram
 
 ![Screenshot](documentation/Klayers-Architecture.png)
+
+## API (beta)
+
+We've recently added an API under beta. All API calls are http-based, and work only with https (TLS1.2 and above). The API is heavily cached, so there could be minor delays in updates.
+
+### Get latest ARN for specific package in region
+
+Returns data on the latest layer for a specific *{package}* in a specific *{region}*
+
+*https://api.klayers.cloud/api/v1/layers/latest/{region}/{package}*
+
+example:
+
+  * https://api.klayers.cloud/api/v1/layers/latest/us-east-1/requests
+  * https://api.klayers.cloud/api/v1/layers/latest/ap-southeast-1/boto3
+
+
+### Get all ARNs for specific package in region
+
+Returns data on the all layers (latest and deprecated) for a specific *{package}* in a specific *{region}*
+
+*https://api.klayers.cloud/api/v1/layers/{region}/{package}*
+
+
+example:
+
+  * https://api.klayers.cloud/api/v1/layers/us-east-1/requests
+  * https://api.klayers.cloud/api/v1/layers/ap-southeast-1/boto3
+
+### Get list of all built packages
+
+Returns list of all packages currently being built, including dependencies and build date.
+
+*https://api.klayers.cloud/api/v1/builds/latest*
+
+example:
+  
+  * https://api.klayers.cloud/api/v1/builds/latest
 
 ## Special Thanks
 

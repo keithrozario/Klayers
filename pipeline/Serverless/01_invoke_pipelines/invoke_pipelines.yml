@@ -22,7 +22,7 @@ invoke_pipeline:
       Action: s3:GetObject
       Resource: ${self:custom.s3LayersArn}/*
   layers:
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:23
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:32
       
 
 download_config:
@@ -43,5 +43,5 @@ download_config:
         - ${self:custom.s3LayersArn}/config/*
   layers:
     - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-lambda-cache:1
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:23
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:32
     - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-requests:5

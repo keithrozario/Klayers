@@ -10,7 +10,7 @@ from aws_lambda_powertools.logging import Logger
 
 logger = Logger()
 
-import common.get_config
+import common.get_config as get_config
 
 
 def check_regions_to_deploy(package, requirements_hash, regions):

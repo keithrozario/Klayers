@@ -1,0 +1,58 @@
+service: api
+
+plugins:
+  - serverless-iam-roles-per-function
+
+provider:
+  name: aws
+  runtime: python3.8
+  stage: ${opt:stage, 'Klayers-defaultp38'}
+  region: ${file(../Terraform/terraform.tfvars.json):aws_region.${self:provider.stage}}
+  profile: ${file(../Terraform/terraform.tfvars.json):aws_profile.${self:provider.stage}}
+  versionFunctions: false
+  logRetentionInDays: 90
+  environment:
+    STAGE: ${self:provider.stage}
+    LOG_LEVEL: INFO
+    DB_NAME: ${self:custom.dbName}
+    BUCKET_NAME: ${self:custom.s3LayersName}
+    POWERTOOLS_SERVICE_NAME: ${self:provider.stage}
+  logs:
+    httpApi: true
+  httpApi:
+    cors: true
+
+custom:
+  appName: kl
+
+  # S3
+  s3LayersName: ${ssm:/${self:custom.appName}/${self:provider.stage}/layers_bucket/name}
+  s3LayersArn: ${ssm:/${self:custom.appName}/${self:provider.stage}/layers_bucket/arn}
+
+  # DynamoDB
+  dbName: ${ssm:/${self:custom.appName}/${self:provider.stage}/db/name}
+  dbArn: ${ssm:/${self:custom.appName}/${self:provider.stage}/db/arn}
+
+  # Cloudformation
+  apiCertArn: ${ssm:/${self:custom.appName}/${self:provider.stage}/api/cert/arn}
+  apiDomainName: ${ssm:/${self:custom.appName}/${self:provider.stage}/api/domain_name}
+  
+functions:
+  - ${file(layers/sls.yml)}
+  - ${file(builds/sls.yml)}
+
+resources:
+  Resources:
+    ${file(cloudformation/CloudFront.yml)}
+
+package:
+  exclude:
+    - package-lock.json
+    - package.json
+    - node_modules/**
+    - serverless.yml
+    - .gitignore
+    - .serverless/**
+    - sls_components/**
+    - README.MD
+

@@ -7,7 +7,7 @@ from boto3.dynamodb.conditions import Key, Attr
 from aws_lambda_powertools.logging import Logger
 logger = Logger()
 
-from common.dynamodb import DecimalEncoder, map_keys
+from common.dynamodb import DecimalEncoder, map_keys, query_till_end
 
 
 def query_table(region, table, pk):
@@ -24,22 +24,7 @@ def query_table(region, table, pk):
         "ProjectionExpression": "arn, pckgVrsn, dplySts, rqrmntsTxt, exDt",
         "FilterExpression": "attribute_exists(dplySts)"  # don't get latest version
     }
-    items = []
-
-    while True:
-        response = table.query(**kwargs)
-        items.extend(response["Items"])
-
-        try:
-            kwargs["ExclusiveStartKey"] = response["LastEvaluatedKey"]
-        except KeyError:
-            logger.info({
-                "region": region,
-                "num_items": len(items),
-                "message": "Completed Query for objects in region"
-            }
-            )
-            break
+    items = query_till_end(table=table, kwargs=kwargs)
 
     return map_keys(items)
 

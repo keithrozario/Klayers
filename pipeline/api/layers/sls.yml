@@ -1,6 +1,6 @@
 arn_by_regions:
-  handler: 07_api/latest_region.main
-  description: Get latest package per region
+  handler: layers/latest_region.main
+  description: Get latest packages per region
   runtime: python3.8
   timeout: 10
   memorySize: 256
@@ -18,8 +18,8 @@ arn_by_regions:
     - httpApi: 'GET /api/v1/layers/latest/{region}'
 
 arn_by_package_region:
-  handler: 07_api/latest_region_package.main
-  description: Get latest package per region
+  handler: layers/latest_region_package.main
+  description: Get latest layer per package per region
   runtime: python3.8
   timeout: 10
   memorySize: 256
@@ -37,8 +37,8 @@ arn_by_package_region:
     - httpApi: 'GET /api/v1/layers/latest/{region}/{package}'
 
 list_layers:
-  handler: 07_api/list_layer_version.main
-  description: List all layer versions in a region per package
+  handler: layers/list_layer_version.main
+  description: List all layer versions in a region per package (including deprecated ones)
   runtime: python3.8
   timeout: 10
   memorySize: 256
