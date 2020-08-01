@@ -2,33 +2,47 @@
 import boto3
 import json
 
-session = boto3.Session(profile_name='LayerUploader')
+session = boto3.Session(profile_name="LayerUploader")
 
-regions = ['ap-northeast-1', 'ap-northeast-2', 'ap-south-1',
-           'ap-southeast-1', 'ap-southeast-2', 'ca-central-1',
-           'eu-central-1', 'eu-north-1', 'eu-west-1',
-           'eu-west-2', 'eu-west-3', 'sa-east-1',
-           'us-east-1', 'us-east-2','us-west-1',
-           'us-west-2']
+regions = [
+    "ap-northeast-1",
+    "ap-northeast-2",
+    "ap-south-1",
+    "ap-southeast-1",
+    "ap-southeast-2",
+    "ca-central-1",
+    "eu-central-1",
+    "eu-north-1",
+    "eu-west-1",
+    "eu-west-2",
+    "eu-west-3",
+    "sa-east-1",
+    "us-east-1",
+    "us-east-2",
+    "us-west-1",
+    "us-west-2",
+]
 
 output = dict()
 
-layer_name_prefix = 'Klayers-python37'
+layer_name_prefix = "Klayers-python37"
 
 for region in regions:
-    client = session.client('lambda', region_name=region)
+    client = session.client("lambda", region_name=region)
     output[region] = dict()
 
     # every version of every layer
-    for layer in client.list_layers()['Layers']:
+    for layer in client.list_layers()["Layers"]:
 
-        if layer['LayerName'][:len(layer_name_prefix)] == layer_name_prefix:
-            output[region][layer['LayerName']] = []
-            for version in client.list_layer_versions(LayerName=layer['LayerName'])['LayerVersions']:
-                output[region][layer['LayerName']].append(version['LayerVersionArn'])
-                print("{}: {}".format(region, version['LayerVersionArn']))
+        if layer["LayerName"][: len(layer_name_prefix)] == layer_name_prefix:
+            output[region][layer["LayerName"]] = []
+            for version in client.list_layer_versions(LayerName=layer["LayerName"])[
+                "LayerVersions"
+            ]:
+                output[region][layer["LayerName"]].append(version["LayerVersionArn"])
+                print("{}: {}".format(region, version["LayerVersionArn"]))
         else:
             pass
 
-with open('arns.json', 'w') as f:
+with open("arns.json", "w") as f:
     f.write(json.dumps(output, indent=4, sort_keys=True))

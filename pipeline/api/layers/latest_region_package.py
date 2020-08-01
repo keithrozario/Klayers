@@ -4,6 +4,7 @@ import boto3
 from botocore.exceptions import ClientError
 from aws_lambda_powertools.logging import Logger
 from common.dynamodb import map_keys
+
 logger = Logger()
 
 
@@ -18,32 +19,28 @@ def main(event, context):
     """
 
     dynamodb = boto3.resource("dynamodb")
-    table = dynamodb.Table(os.environ['DB_NAME'])
-    region = event.get('pathParameters').get('region')
-    package = event.get('pathParameters').get('package')
+    table = dynamodb.Table(os.environ["DB_NAME"])
+    region = event.get("pathParameters").get("region")
+    package = event.get("pathParameters").get("package")
 
     pk = f"lyr#{region}.{package}"
     sk = "lyrVrsn0#"
 
     try:
         response = table.get_item(
-            Key={'pk': pk, 'sk': sk},
-            AttributesToGet=[
-                'rgn','pckg','arn','rqrmntsTxt','pckgVrsn'
-            ],
+            Key={"pk": pk, "sk": sk},
+            AttributesToGet=["rgn", "pckg", "arn", "rqrmntsTxt", "pckgVrsn"],
         )
-        api_response = map_keys([response['Item']])[0]
+        api_response = map_keys([response["Item"]])[0]
 
     except ClientError as e:
-        logger.error({
-            "message": response['Error']['Message'],
-            "pk": pk,
-            "sk": sk,
-        })
+        logger.error(
+            {"message": response["Error"]["Message"], "pk": pk, "sk": sk,}
+        )
         api_response = {}
     except KeyError as e:  # no item return
         api_response = {}
-    
+
     return {
         "statusCode": 200,
         "body": json.dumps(api_response),
