@@ -6,7 +6,7 @@ from aws_lambda_powertools.logging import Logger
 
 logger = Logger()
 
-from common.get_config import get_packages()
+from common.get_config import get_packages
 
 
 def log_eventbridge_errors(response, function_logger):
