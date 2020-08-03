@@ -41,3 +41,13 @@ cloudfrontdistribution:
         MinTTL: '3600'
         ViewerProtocolPolicy: https-only
         Compress: True
+
+distributionSSM:
+  Type: AWS::SSM::Parameter
+  Properties:
+    Description: Cloudfront Distribution ID for API
+    Name: /${self:custom.appName}/${self:provider.stage}/api/cfDistribution/id
+    Tier: Standard
+    Type: String
+    Value: 
+      Ref: cloudfrontdistribution
