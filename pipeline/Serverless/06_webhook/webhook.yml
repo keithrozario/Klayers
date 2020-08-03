@@ -37,6 +37,6 @@ webhook_github:
           events:source: "github.webhook"
   layers:
     - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-lambda-cache:1
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:23
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:32
   events:
     - httpApi: 'POST /api/v1/github_webhook'

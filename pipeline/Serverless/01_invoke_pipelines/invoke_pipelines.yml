@@ -22,7 +22,7 @@ invoke_pipeline:
       Action: s3:GetObject
       Resource: ${self:custom.s3LayersArn}/*
   layers:
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:23
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:32
       
 
 download_config:
@@ -43,5 +43,40 @@ download_config:
         - ${self:custom.s3LayersArn}/config/*
   layers:
     - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-lambda-cache:1
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:23
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:32
     - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-requests:5
+
+invalidate_cache:
+  handler: 01_invoke_pipelines/invalidate_cf_cache.main
+  description: Invalidated CF cache after deployment
+  runtime: python3.8
+  memorySize: 256
+  timeout: 30
+  environment:
+    POWERTOOLS_SERVICE_NAME: Klayers.invalidate_cf_cache
+    # this parameter deployed as part of api Cloudformation
+    DISTRIBUTION_NAME: /${self:service.name}/${self:provider.stage}/api/cfDistribution/id
+  iamRoleStatementsName: ${self:provider.stage}-invalidate_cache
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - ssm:GetParameter
+      Resource:
+      - Fn::Join:
+        - ":"
+        - - arn:aws:ssm
+          - ${self:provider.region}
+          - Ref: AWS::AccountId
+          - parameter/${self:service.name}/${self:provider.stage}/api/cfDistribution/id
+    - Effect: Allow
+      Action: 
+        - cloudfront:CreateInvalidation
+      Resource:
+      - Fn::Join:
+        - ":"
+        - - "arn:aws:cloudfront:"
+          - Ref: AWS::AccountId
+          - distribution/${ssm:/${self:service.name}/${self:provider.stage}/api/cfDistribution/id}
+  layers:
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-lambda-cache:1
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:32
