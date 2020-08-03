@@ -2,6 +2,7 @@ import os
 import logging
 import csv
 from datetime import datetime
+from common.get_config import get_aws_regions
 
 from boto3.dynamodb.conditions import Key
 import boto3
@@ -87,7 +88,7 @@ def main(event, context):
     Gets layer arns for each region and publish to S3
     """
 
-    regions = get_config.get_aws_regions()
+    regions = get_aws_regions()
 
     dynamodb = boto3.resource("dynamodb")
     table = dynamodb.Table(os.environ["DB_NAME"])
