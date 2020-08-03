@@ -2,11 +2,7 @@
 Add the package fields to build items.
 Derived from the sk field
 """
-
-
 import boto3
-
-from boto3.dynamodb.conditions import Key
 
 profile = "KlayersProdP38"
 # profile = 'KlayersDev'
