@@ -1,0 +1,56 @@
+arn_by_regions:
+  handler: layers/latest_region.main
+  description: Get latest packages per region
+  runtime: python3.8
+  timeout: 10
+  memorySize: 256
+  environment:
+    POWERTOOLS_SERVICE_NAME: Klayers.api
+  iamRoleStatementsName: ${self:provider.stage}-api-arn-rgn
+  iamRoleStatements:
+  - Effect: Allow
+    Action:
+    - dynamodb:Query
+    Resource: ${self:custom.dbArn}/index/deployed_in_region
+  layers:
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:32
+  events:
+    - httpApi: 'GET /api/v1/layers/latest/{region}'
+
+arn_by_package_region:
+  handler: layers/latest_region_package.main
+  description: Get latest layer per package per region
+  runtime: python3.8
+  timeout: 10
+  memorySize: 256
+  environment:
+    POWERTOOLS_SERVICE_NAME: Klayers.api
+  iamRoleStatementsName: ${self:provider.stage}-api-arn-pckgrgn
+  iamRoleStatements:
+  - Effect: Allow
+    Action:
+    - dynamodb:GetItem
+    Resource: ${self:custom.dbArn}
+  layers:
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:32
+  events:
+    - httpApi: 'GET /api/v1/layers/latest/{region}/{package}'
+
+list_layers:
+  handler: layers/list_layer_version.main
+  description: List all layer versions in a region per package (including deprecated ones)
+  runtime: python3.8
+  timeout: 10
+  memorySize: 256
+  environment:
+    POWERTOOLS_SERVICE_NAME: Klayers.api
+  iamRoleStatementsName: ${self:provider.stage}-api-list-layers
+  iamRoleStatements:
+  - Effect: Allow
+    Action:
+    - dynamodb:Query
+    Resource: ${self:custom.dbArn}
+  layers:
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:32
+  events:
+    - httpApi: 'GET /api/v1/layers/{region}/{package}'

@@ -6,7 +6,7 @@ from aws_lambda_powertools.logging import Logger
 
 logger = Logger()
 
-import get_config
+from common.get_config import get_packages
 
 
 def log_eventbridge_errors(response, function_logger):
@@ -36,7 +36,7 @@ def main(event, context):
       response: Entries in EventBridge for processing
     """
 
-    packages = get_config.get_packages()
+    packages = get_packages()
     client = boto3.client("events")
     stage = os.environ["STAGE"]
 

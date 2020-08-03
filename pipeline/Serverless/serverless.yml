@@ -46,6 +46,11 @@ custom:
   
   # Slack
   slackTokenParameter: /${self:service.name}/${self:provider.stage}/slack_token
+
+  # Cloudformation
+  apiCertArn: ${ssm:/${self:service.name}/${self:provider.stage}/api/cert/arn}
+  apiDomainName: ${ssm:/${self:service.name}/${self:provider.stage}/api/domain_name}
+  
   
 functions:
   - ${file(01_invoke_pipelines/invoke_pipelines.yml)}

@@ -1,28 +1,14 @@
 import os
-import json
 import logging
-import decimal
 import csv
 from datetime import datetime
+from common.get_config import get_aws_regions
 
 from boto3.dynamodb.conditions import Key
 import boto3
 
-import get_config
-
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
-
-
-# Helper class to convert a DynamoDB item to JSON.
-class DecimalEncoder(json.JSONEncoder):
-    def default(self, o):
-        if isinstance(o, decimal.Decimal):
-            if o % 1 > 0:
-                return float(o)
-            else:
-                return int(o)
-        return super(DecimalEncoder, self).default(o)
 
 
 def convert_to_csv(items):
@@ -102,7 +88,7 @@ def main(event, context):
     Gets layer arns for each region and publish to S3
     """
 
-    regions = get_config.get_aws_regions()
+    regions = get_aws_regions()
 
     dynamodb = boto3.resource("dynamodb")
     table = dynamodb.Table(os.environ["DB_NAME"])
