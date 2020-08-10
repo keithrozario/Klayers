@@ -4,5 +4,5 @@ attrs==19.3.0
 chardet==3.0.4
 idna==2.10
 multidict==4.7.6
-slackclient==2.7.3
+slackclient==2.8.0
 yarl==1.5.1
