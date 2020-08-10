@@ -1,6 +1,6 @@
 amazon.ion==0.5.0
-boto3==1.14.33
-botocore==1.17.33
+boto3==1.14.38
+botocore==1.17.38
 docutils==0.15.2
 ionhash==1.1.0
 jmespath==0.10.0
