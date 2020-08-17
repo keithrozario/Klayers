@@ -12,6 +12,7 @@ black,MIT,Lukasz Langa <lukasz@langa.pl>
 boltons,BSD,Mahmoud Hashemi <mahmoud@hatnote.com>
 boto3,Apache-2.0,AWS
 Cerberus, ISC, Frank Sachsenheim <funkyfuture@riseup.net>
+chevron, MIT, Noah Morrison <noah@morrison.ph>
 cloudsplaining, MIT, Kinnaird McQuade <kinnairdm@gmail.com>
 construct,MIT,Arkadiusz Bulski<arek.bulski@gmail.com>; Tomer Filiba <tomerfiliba@gmail.com>; Corbin Simpson <MostAwesomeDude@gmail.com>
 crhelper,Apache-2.0,Jay McConnell <jmmccon@amazon.com>
