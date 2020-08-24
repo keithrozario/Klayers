@@ -1,6 +1,6 @@
 aiohttp==3.6.2
 async-timeout==3.0.1
-attrs==19.3.0
+attrs==20.1.0
 chardet==3.0.4
 idna==2.10
 multidict==4.7.6
