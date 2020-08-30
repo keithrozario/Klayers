@@ -100,13 +100,12 @@ Special hand-crafted binaries for layers. These layers are not automatically bui
 | :------------- |:------------------------------------------------------------------------------- | ---------- |
 | pip            | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pip:2            | 19.2.1 <sup>1</sup>|     |
 | en_core_web_sm | arn:aws:lambda:\<*region*>:770693421928:layer:Klayers-python38-spacy_model_en_small:1 | 2.2.5 <sup>2</sup>|
-| es_core_news_sm | arn:aws:lambda:\<*region*>:770693421928:layer:Klayers-python38-spacy_model_es_small:1 | 2.2.5 <sup>3</sup>|
+| es_core_news_sm | arn:aws:lambda:\<*region*>:770693421928:layer:Klayers-python38-spacy_model_es_small:1 | 2.3.1 <sup>2</sup>|
 
 <sup>1</sup> Python3.8 layers already have new version of pip, use only if on Python3.7
 
 <sup>2</sup> Spacy [en_core_web_sm](https://spacy.io/models/en) model, for use with the spacy layer refer [here](https://github.com/keithrozario/Klayers/issues/97) for more info.
 
-<sup>3</sup> Spacy [es_core_news_sm](https://spacy.io/models/en) model, for use with the spacy layer refer [here](https://github.com/keithrozario/Klayers/issues/97) for more info.
 
 ## Architecture Diagram
 
