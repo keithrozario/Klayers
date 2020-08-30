@@ -1,10 +1,8 @@
 # Keith's Layers (Klayers)
 
-🐍 A collection of AWS Lambda(λ) Layers for Python 🐍
+🐍 A collection of Python Packages as AWS Lambda(λ) Layers 🐍
 
-[![Python 3.7](https://img.shields.io/badge/python-3.7-green.svg)](https://www.python.org/downloads/release/python-375/)  [![Python 3.8](https://img.shields.io/badge/python-3.8-green.svg)](https://www.python.org/downloads/release/python-380/)
-
-[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/keithrozario/Klayers.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/keithrozario/Klayers/context:python) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) 
+[![Python 3.8](https://img.shields.io/badge/python-3.8-green.svg)](https://www.python.org/downloads/release/python-380/) [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/keithrozario/Klayers.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/keithrozario/Klayers/context:python) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) 
 
 ## Layer List
 
@@ -44,6 +42,7 @@ Just some examples of the ~70 packages we build every week, for a full list clic
 * requests
 * slackclient
 * spacy
+* ...
 
 ## Status of layers
 
@@ -89,7 +88,7 @@ check:
 
 Some layer versions will have a `expiry_date` field. This is the date for when the layers will be deleted.
 
-In general, layers are scheduled for deletion 60 days after a new layer version has been published for that package. If you use that latest version of a layer, you're guaranteed at least 30 days before the layer is deleted.
+In general, layers are scheduled for deletion 60 days after a new layer version has been published for that package. If you use that latest version of a layer, you're guaranteed at least 60 days before the layer is deleted.
 
 All functions deployed with a layer will still work indefinitely, but you won't be able to deploy new functions referencing a deleted layer version.
 
@@ -101,10 +100,13 @@ Special hand-crafted binaries for layers. These layers are not automatically bui
 | :------------- |:------------------------------------------------------------------------------- | ---------- |
 | pip            | arn:aws:lambda:\<*region*>:113088814899:layer:Klayers-python37-pip:2            | 19.2.1 <sup>1</sup>|     |
 | en_core_web_sm | arn:aws:lambda:\<*region*>:770693421928:layer:Klayers-python38-spacy_model_en_small:1 | 2.2.5 <sup>2</sup>|
+| es_core_news_sm | arn:aws:lambda:\<*region*>:770693421928:layer:Klayers-python38-spacy_model_es_small:1 | 2.2.5 <sup>3</sup>|
 
 <sup>1</sup> Python3.8 layers already have new version of pip, use only if on Python3.7
 
 <sup>2</sup> Spacy [en_core_web_sm](https://spacy.io/models/en) model, for use with the spacy layer refer [here](https://github.com/keithrozario/Klayers/issues/97) for more info.
+
+<sup>3</sup> Spacy [es_core_news_sm](https://spacy.io/models/en) model, for use with the spacy layer refer [here](https://github.com/keithrozario/Klayers/issues/97) for more info.
 
 ## Architecture Diagram
 
