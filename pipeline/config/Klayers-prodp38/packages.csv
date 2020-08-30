@@ -19,6 +19,7 @@ crhelper,Apache-2.0,Jay McConnell <jmmccon@amazon.com>
 dynamodb-encryption-sdk,Apache-2.0,<aws-cryptools@amazon.com>
 elasticsearch,Apache-2.0,Honza Kral <honza.kral@gmail.com>; Nick Lang <nick@nicklang.com>
 envelopes,MIT,tomekwojcik <tomek@bthlabs.pl>
+exchangelib,BSD, Erik Cederstrand <erik@cederstrand.dk>
 ffmpeg-python,Apache-2.0,Karl Kroening <karlk@kralnet.us>
 flashtext,MIT,Vikash Singh <vikash.duliajan@gmail.com>
 google-auth-oauthlib,Apache-2.0,Jon Wayne <jonwayne+google-auth@google.com>
