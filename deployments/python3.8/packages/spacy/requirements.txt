@@ -14,4 +14,4 @@ srsly==1.0.2
 thinc==7.4.1
 tqdm==4.48.2
 urllib3==1.25.10
-wasabi==0.7.1
+wasabi==0.8.0

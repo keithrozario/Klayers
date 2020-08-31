@@ -1,11 +1,11 @@
 beautifulsoup4==4.9.1
-boto3==1.14.47
-botocore==1.17.47
+boto3==1.14.51
+botocore==1.17.51
 certifi==2020.6.20
 chardet==3.0.4
 click==7.1.2
 click-log==0.3.2
-cloudsplaining==0.1.7
+cloudsplaining==0.1.8
 contextlib2==0.6.0.post1
 docutils==0.15.2
 idna==2.10
