@@ -7,7 +7,7 @@ cssselect==1.1.0
 fake-useragent==0.1.11
 idna==2.10
 lxml==4.5.2
-parse==1.16.0
+parse==1.17.0
 pyee==7.0.2
 pyppeteer==0.2.2
 pyquery==1.4.1
