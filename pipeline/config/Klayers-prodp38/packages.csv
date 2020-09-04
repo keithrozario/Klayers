@@ -33,6 +33,7 @@ kafka-python,Apache-2.0,Dana Powers <dana.powers@gmail.com>
 lambda-cache, MIT, Keith Rozario <keith@keithrozario.com>
 lambda-decorators, MIT, Daniel Schep <dschep@gmail.com>
 ldap3, LGPLv3, Giovanni Cannata <cannatag@gmail.com>
+langdetect,Apache-2.0,Michal Mimino Danilak <michal.danilak@gmail.com>
 loguru, MIT, Delgan <delgan.py@gmail.com>
 lxml, BSD, <lxml-dev@lxml.de>
 matplotlib,PSF,matplotlib-users@python.org
@@ -71,4 +72,5 @@ tablib, MIT, Kenneth Reitz <me@kennethreitz.org>
 textdistance,MIT, orsinium <master_fess@mail.ru>
 tinydb,MIT,Markus Siemens <markus@m-siemens.de>
 tldextract,BSD,John Kurkowski <john.kurkowski@gmail.com>
+translate,MIT,Terry Yin <terry.yinze@gmail.com>
 twilio,MIT,twilio <help@twilio.com>
