@@ -1,10 +1,10 @@
-aws-lambda-powertools==1.5.0
+aws-lambda-powertools==1.6.1
 aws-xray-sdk==2.6.0
-boto3==1.15.1
-botocore==1.18.1
+boto3==1.15.6
+botocore==1.18.6
 fastjsonschema==2.14.5
 future==0.18.2
-importlib-metadata==1.7.0
+importlib-metadata==2.0.0
 jmespath==0.10.0
 jsonpickle==1.4.1
 python-dateutil==2.8.1
@@ -12,4 +12,4 @@ s3transfer==0.3.3
 six==1.15.0
 urllib3==1.25.10
 wrapt==1.12.1
-zipp==3.1.0
+zipp==3.2.0
