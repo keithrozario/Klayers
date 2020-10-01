@@ -64,6 +64,7 @@ records,ISC,<me@kennethreitz.org>
 requests,Apache-2.0,Kenneth Reitz <me@kennethreitz.org>
 requests-html,MIT,<me@kennethreitz.org>
 reportlab,BSD,<reportlab-users@lists2.reportlab.com>
+scikit-learn,BSD,Andres Mueller <amueller@ais.uni-bonn.de>
 simplejson,MIT,Bob Ippolito <bob@redivi.com>
 slackclient,MIT,slack <opensource@slack.com>
 spacy,MIT,contact@explosion.ai
