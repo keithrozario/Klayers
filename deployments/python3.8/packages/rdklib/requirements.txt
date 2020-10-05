@@ -1,5 +1,5 @@
-boto3==1.15.6
-botocore==1.18.6
+boto3==1.15.11
+botocore==1.18.11
 future==0.18.2
 jmespath==0.10.0
 mock==3.0.5
