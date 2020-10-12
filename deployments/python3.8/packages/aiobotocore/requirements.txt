@@ -1,4 +1,4 @@
-aiobotocore==1.1.1
+aiobotocore==1.1.2
 aiohttp==3.6.2
 aioitertools==0.7.0
 async-timeout==3.0.1
