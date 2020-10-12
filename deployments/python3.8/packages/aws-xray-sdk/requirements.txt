@@ -1,5 +1,5 @@
 aws-xray-sdk==2.6.0
-botocore==1.18.11
+botocore==1.18.16
 future==0.18.2
 importlib-metadata==2.0.0
 jmespath==0.10.0
