@@ -1,5 +1,5 @@
 aiobotocore==1.1.2
-aiohttp==3.6.2
+aiohttp==3.6.3
 aioitertools==0.7.0
 async-timeout==3.0.1
 attrs==20.2.0
@@ -14,4 +14,4 @@ six==1.15.0
 typing-extensions==3.7.4.3
 urllib3==1.25.10
 wrapt==1.12.1
-yarl==1.6.0
+yarl==1.5.1
