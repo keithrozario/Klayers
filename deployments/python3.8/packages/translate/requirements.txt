@@ -7,7 +7,7 @@ distlib==0.3.1
 filelock==3.0.12
 identify==1.5.6
 idna==2.10
-lxml==4.5.2
+lxml==4.6.1
 nodeenv==1.5.0
 packaging==20.4
 pluggy==0.13.1
@@ -21,4 +21,4 @@ toml==0.10.1
 tox==3.20.1
 translate==3.5.0
 urllib3==1.25.10
-virtualenv==20.0.33
+virtualenv==20.0.35
