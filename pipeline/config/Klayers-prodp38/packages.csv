@@ -28,13 +28,14 @@ grpcio,Apache-2.0,GRPC Authors <grpc-io@googlegroups.com>
 gspread,MIT,Anton Burnashev <fuss.here@gmail.com>
 idna,https://github.com/kjd/idna/blob/master/LICENSE.rst,Kim Davis kim@cynosure.com.au
 itsdangerous,BSD-3-Clause,Armin Ronache <armin.ronacher@active-4.com>; Pallets <contact@palletsprojects.com>
-jellyfish, BSD, James Turk
+jellyfish,BSD, James Turk
+jinja2,BSD,Armin Ronache <armin.ronacher@active-4.com>; Pallets <contact@palletsprojects.com> 
 kafka-python,Apache-2.0,Dana Powers <dana.powers@gmail.com>
 lambda-cache, MIT, Keith Rozario <keith@keithrozario.com>
 lambda-decorators, MIT, Daniel Schep <dschep@gmail.com>
-ldap3, LGPLv3, Giovanni Cannata <cannatag@gmail.com>
+ldap3,LGPLv3, Giovanni Cannata <cannatag@gmail.com>
 langdetect,Apache-2.0,Michal Mimino Danilak <michal.danilak@gmail.com>
-loguru, MIT, Delgan <delgan.py@gmail.com>
+loguru,MIT, Delgan <delgan.py@gmail.com>
 lxml, BSD, <lxml-dev@lxml.de>
 matplotlib,PSF,matplotlib-users@python.org
 nltk,Apache-2.0,Steven Bird <stevenbird1@gmail.com>
