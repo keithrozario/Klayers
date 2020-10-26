@@ -1,8 +1,9 @@
 certifi==2020.6.20
 chardet==3.0.4
+filelock==3.0.12
 idna==2.10
 requests==2.24.0
 requests-file==1.5.1
 six==1.15.0
-tldextract==2.2.3
-urllib3==1.25.10
+tldextract==3.0.2
+urllib3==1.25.11

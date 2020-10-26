@@ -1,7 +1,8 @@
-aiohttp==3.6.3
+aiohttp==3.7.1
 async-timeout==3.0.1
 attrs==20.2.0
 chardet==3.0.4
 idna==2.10
-multidict==4.7.6
-yarl==1.5.1
+multidict==5.0.0
+typing-extensions==3.7.4.3
+yarl==1.6.2
