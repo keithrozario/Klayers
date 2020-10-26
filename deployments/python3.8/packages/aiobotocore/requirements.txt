@@ -1,5 +1,5 @@
 aiobotocore==1.1.2
-aiohttp==3.6.3
+aiohttp==3.7.1
 aioitertools==0.7.0
 async-timeout==3.0.1
 attrs==20.2.0
@@ -8,10 +8,10 @@ chardet==3.0.4
 docutils==0.15.2
 idna==2.10
 jmespath==0.10.0
-multidict==4.7.6
+multidict==5.0.0
 python-dateutil==2.8.1
 six==1.15.0
 typing-extensions==3.7.4.3
-urllib3==1.25.10
+urllib3==1.25.11
 wrapt==1.12.1
-yarl==1.5.1
+yarl==1.6.2

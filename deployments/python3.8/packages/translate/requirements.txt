@@ -20,5 +20,5 @@ six==1.15.0
 toml==0.10.1
 tox==3.20.1
 translate==3.5.0
-urllib3==1.25.10
-virtualenv==20.0.35
+urllib3==1.25.11
+virtualenv==20.1.0

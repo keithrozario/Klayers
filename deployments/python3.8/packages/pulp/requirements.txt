@@ -1,4 +1,4 @@
 amply==0.1.4
 docutils==0.16
-PuLP==2.3
+PuLP==2.3.1
 pyparsing==2.4.7
