@@ -1,8 +1,8 @@
 attrs==20.2.0
-boto3==1.16.4
-botocore==1.19.4
+boto3==1.16.9
+botocore==1.19.9
 cffi==1.14.3
-cryptography==3.1.1
+cryptography==3.2.1
 dynamodb-encryption-sdk==1.2.0
 jmespath==0.10.0
 pycparser==2.20
