@@ -11,13 +11,13 @@ lxml==4.6.1
 nodeenv==1.5.0
 packaging==20.4
 pluggy==0.13.1
-pre-commit==2.7.1
+pre-commit==2.8.2
 py==1.9.0
 pyparsing==2.4.7
 PyYAML==5.3.1
 requests==2.24.0
 six==1.15.0
-toml==0.10.1
+toml==0.10.2
 tox==3.20.1
 translate==3.5.0
 urllib3==1.25.11

@@ -1,6 +1,6 @@
 beautifulsoup4==4.9.3
-boto3==1.16.4
-botocore==1.19.4
+boto3==1.16.9
+botocore==1.19.9
 certifi==2020.6.20
 chardet==3.0.4
 click==7.1.2
@@ -12,7 +12,7 @@ Jinja2==2.11.2
 jmespath==0.10.0
 Markdown==3.3.3
 MarkupSafe==1.1.1
-policy-sentry==0.9.0
+policy-sentry==0.9.1
 python-dateutil==2.8.1
 PyYAML==5.3.1
 requests==2.24.0

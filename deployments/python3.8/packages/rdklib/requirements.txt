@@ -1,10 +1,10 @@
-boto3==1.16.4
-botocore==1.19.4
+boto3==1.16.9
+botocore==1.19.9
 future==0.18.2
 jmespath==0.10.0
 mock==3.0.5
 python-dateutil==2.8.1
-rdk==0.7.11
+rdk==0.7.12
 rdklib==0.1.1
 s3transfer==0.3.3
 six==1.15.0
