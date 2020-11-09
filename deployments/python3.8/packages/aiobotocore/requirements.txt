@@ -2,7 +2,7 @@ aiobotocore==1.1.2
 aiohttp==3.7.2
 aioitertools==0.7.0
 async-timeout==3.0.1
-attrs==20.2.0
+attrs==20.3.0
 botocore==1.17.44
 chardet==3.0.4
 docutils==0.15.2

@@ -1,11 +1,11 @@
 appdirs==1.4.4
-certifi==2020.6.20
+certifi==2020.11.8
 cfgv==3.2.0
 chardet==3.0.4
 click==7.1.2
 distlib==0.3.1
 filelock==3.0.12
-identify==1.5.6
+identify==1.5.9
 idna==2.10
 lxml==4.6.1
 nodeenv==1.5.0
