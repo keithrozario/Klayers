@@ -22,6 +22,7 @@ envelopes,MIT,tomekwojcik <tomek@bthlabs.pl>
 exchangelib,BSD, Erik Cederstrand <erik@cederstrand.dk>
 ffmpeg-python,Apache-2.0,Karl Kroening <karlk@kralnet.us>
 flashtext,MIT,Vikash Singh <vikash.duliajan@gmail.com>
+geopy,MIT,Kostya Esmukov <kostya@esmukov.ru>
 google-auth-oauthlib,Apache-2.0,Jon Wayne <jonwayne+google-auth@google.com>
 google-auth,MIT,Jon Wayne <jonwayne+google-auth@google.com>
 grpcio,Apache-2.0,GRPC Authors <grpc-io@googlegroups.com>
@@ -67,6 +68,7 @@ records,ISC,<me@kennethreitz.org>
 requests,Apache-2.0,Kenneth Reitz <me@kennethreitz.org>
 requests-html,MIT,<me@kennethreitz.org>
 reportlab,BSD,<reportlab-users@lists2.reportlab.com>
+shapely,BSD,Sean Gillies <sean.gillies@gmail.com>
 simplejson,MIT,Bob Ippolito <bob@redivi.com>
 slackclient,MIT,slack <opensource@slack.com>
 spacy,MIT,contact@explosion.ai
