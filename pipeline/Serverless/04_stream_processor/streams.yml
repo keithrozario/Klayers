@@ -24,8 +24,6 @@ stream_handler:
         type: dynamodb
         arn: ${self:custom.dbStreamArn}
         batchSize: 10
-  layers:
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:32
 
 layer_delete:
   handler: 04_stream_processor/layer_delete.main
@@ -64,5 +62,3 @@ layer_delete:
           detail:
             pk_type:
               - "lyr"
-  layers:
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:32

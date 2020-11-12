@@ -21,7 +21,6 @@ slack_pipeline:
             - parameter${self:custom.slackTokenParameter}
   layers:
     - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-slackclient:9
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:32
 
 slack_publish:
   handler: 05_slack_notification/slack_notification.slack_notification_publish
@@ -46,7 +45,6 @@ slack_publish:
             - parameter${self:custom.slackTokenParameter}
   layers:
     - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-slackclient:9
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:32
 
 post_message_to_slack:
   handler: 05_slack_notification/slack_notification.post_message_to_slack
@@ -71,7 +69,6 @@ post_message_to_slack:
             - parameter${self:custom.slackTokenParameter}
   layers:
     - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-slackclient:9
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:32
   events:
     - eventBridge:
         pattern:
@@ -101,4 +98,4 @@ slack_invokepipeline:
             - parameter${self:custom.slackTokenParameter}
   layers:
     - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-slackclient:9
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:32
+
