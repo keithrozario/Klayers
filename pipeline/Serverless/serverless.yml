@@ -22,8 +22,6 @@ provider:
     httpApi: true
   httpApi:
     cors: true
-  layers:
-    - arn:aws:lambda:ap-southeast-1:770693421928:layer:Klayers-python38-aws-lambda-powertools:42
   
 custom:
   # Env
