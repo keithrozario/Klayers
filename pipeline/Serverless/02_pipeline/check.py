@@ -37,7 +37,7 @@ def get_latest_release(package):
 
     return version, license_info
 
-
+@logger.inject_lambda_context
 def main(event, context):
     """
     Args:
