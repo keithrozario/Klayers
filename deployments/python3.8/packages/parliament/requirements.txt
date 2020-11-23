@@ -1,9 +1,9 @@
-boto3==1.16.18
-botocore==1.19.18
+boto3==1.16.23
+botocore==1.19.23
 jmespath==0.10.0
 json-cfg==0.4.2
 kwonly-args==1.0.10
-parliament==1.2.1
+parliament==1.2.3
 python-dateutil==2.8.1
 PyYAML==5.3.1
 s3transfer==0.3.3

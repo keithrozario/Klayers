@@ -1,5 +1,5 @@
-boto3==1.16.18
-botocore==1.19.18
+boto3==1.16.23
+botocore==1.19.23
 jmespath==0.10.0
 python-dateutil==2.8.1
 s3transfer==0.3.3
