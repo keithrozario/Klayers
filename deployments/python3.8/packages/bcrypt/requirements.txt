@@ -1,4 +1,4 @@
 bcrypt==3.2.0
-cffi==1.14.3
+cffi==1.14.4
 pycparser==2.20
 six==1.15.0
