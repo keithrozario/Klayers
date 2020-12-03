@@ -153,3 +153,7 @@ example:
 
 * [Chahna107](https://github.com/chahna107) for adding tesseract config files into the tesseract layer.
 * [~ Dependencies scanned by PyUp.io ~](https://pyup.io/)
+
+## Asking for additional layers
+
+If you would like a new package to be made a layer, raise a `pull request` modifying the `pipeline/config/Klayers-prodp38` file. 

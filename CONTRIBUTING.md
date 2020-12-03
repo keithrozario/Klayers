@@ -8,8 +8,13 @@ I do not profit (monetarily!) from Klayers, and do not plan to. Hence, cannot of
 
 But credit will most definitely be given to whoever contributes.
 
-Keith
-
-# Reach out
+## Reach out
 
 keith+githubcontributing@keithrozario.com
+
+## For additional layers
+
+Contributing here refers to writing code to do something. 
+
+If you would like a new package to be made a layer, raise a `pull request` modifying the `pipeline/config/Klayers-prodp38` file.
+
