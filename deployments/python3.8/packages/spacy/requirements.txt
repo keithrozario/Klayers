@@ -1,6 +1,6 @@
 blis==0.7.3
 catalogue==1.0.0
-certifi==2020.11.8
+certifi==2020.12.5
 chardet==3.0.4
 cymem==2.0.4
 idna==2.10
@@ -12,6 +12,6 @@ requests==2.25.0
 spacy==2.3.4
 srsly==1.0.4
 thinc==7.4.3
-tqdm==4.54.0
+tqdm==4.54.1
 urllib3==1.26.2
 wasabi==0.8.0

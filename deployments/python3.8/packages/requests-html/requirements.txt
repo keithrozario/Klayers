@@ -1,7 +1,7 @@
 appdirs==1.4.4
 beautifulsoup4==4.9.3
 bs4==0.0.1
-certifi==2020.11.8
+certifi==2020.12.5
 chardet==3.0.4
 cssselect==1.1.0
 fake-useragent==0.1.11
@@ -15,7 +15,7 @@ requests==2.25.0
 requests-html==0.10.0
 six==1.15.0
 soupsieve==2.0.1
-tqdm==4.54.0
+tqdm==4.54.1
 urllib3==1.26.2
 w3lib==1.22.0
 websockets==8.1
