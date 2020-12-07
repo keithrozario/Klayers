@@ -1,5 +1,5 @@
 appdirs==1.4.4
-certifi==2020.11.8
+certifi==2020.12.5
 cfgv==3.2.0
 chardet==3.0.4
 click==7.1.2
