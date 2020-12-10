@@ -31,7 +31,8 @@ gspread,MIT,Anton Burnashev <fuss.here@gmail.com>
 idna,https://github.com/kjd/idna/blob/master/LICENSE.rst,Kim Davis kim@cynosure.com.au
 itsdangerous,BSD-3-Clause,Armin Ronache <armin.ronacher@active-4.com>; Pallets <contact@palletsprojects.com>
 jellyfish,BSD, James Turk
-jinja2,BSD,Armin Ronache <armin.ronacher@active-4.com>; Pallets <contact@palletsprojects.com> 
+jinja2,BSD,Armin Ronache <armin.ronacher@active-4.com>; Pallets <contact@palletsprojects.com>
+jsonschema,MIT,Julian Berman <Julian@GrayVines.com>
 kafka-python,Apache-2.0,Dana Powers <dana.powers@gmail.com>
 lambda-cache, MIT, Keith Rozario <keith@keithrozario.com>
 lambda-decorators, MIT, Daniel Schep <dschep@gmail.com>
