@@ -1,6 +1,6 @@
 bcrypt==3.2.0
 cffi==1.14.4
-cryptography==3.2.1
+cryptography==3.3.1
 paramiko==2.7.2
 pycparser==2.20
 PyNaCl==1.4.0

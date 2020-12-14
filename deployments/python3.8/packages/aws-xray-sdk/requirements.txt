@@ -1,5 +1,5 @@
 aws-xray-sdk==2.6.0
-botocore==1.19.30
+botocore==1.19.35
 future==0.18.2
 jmespath==0.10.0
 jsonpickle==1.4.2

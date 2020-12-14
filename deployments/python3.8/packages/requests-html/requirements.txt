@@ -14,7 +14,7 @@ pyquery==1.4.3
 requests==2.25.0
 requests-html==0.10.0
 six==1.15.0
-soupsieve==2.0.1
+soupsieve==2.1
 tqdm==4.54.1
 urllib3==1.26.2
 w3lib==1.22.0
