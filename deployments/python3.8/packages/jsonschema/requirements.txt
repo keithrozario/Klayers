@@ -1,0 +1,4 @@
+attrs==20.3.0
+jsonschema==3.2.0
+pyrsistent==0.17.3
+six==1.15.0
