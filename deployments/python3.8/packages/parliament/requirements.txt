@@ -1,5 +1,5 @@
-boto3==1.16.35
-botocore==1.19.35
+boto3==1.16.40
+botocore==1.19.40
 jmespath==0.10.0
 json-cfg==0.4.2
 kwonly-args==1.0.10

@@ -1,8 +1,8 @@
 beautifulsoup4==4.9.3
-boto3==1.16.35
-botocore==1.19.35
+boto3==1.16.40
+botocore==1.19.40
 certifi==2020.12.5
-chardet==3.0.4
+chardet==4.0.0
 click==7.1.2
 click-log==0.3.2
 cloudsplaining==0.2.4
@@ -15,7 +15,7 @@ MarkupSafe==1.1.1
 policy-sentry==0.11.0
 python-dateutil==2.8.1
 PyYAML==5.3.1
-requests==2.25.0
+requests==2.25.1
 s3transfer==0.3.3
 schema==0.7.2
 six==1.15.0
