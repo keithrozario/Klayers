@@ -12,6 +12,6 @@ requests==2.25.1
 spacy==2.3.5
 srsly==1.0.5
 thinc==7.4.5
-tqdm==4.54.1
+tqdm==4.55.0
 urllib3==1.26.2
 wasabi==0.8.0
