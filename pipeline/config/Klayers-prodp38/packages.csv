@@ -41,6 +41,7 @@ langdetect,Apache-2.0,Michal Mimino Danilak <michal.danilak@gmail.com>
 loguru,MIT, Delgan <delgan.py@gmail.com>
 lxml, BSD, <lxml-dev@lxml.de>
 matplotlib,PSF,matplotlib-users@python.org
+mpld3,BSD,<jakevdp@cs.washington.edu>
 nltk,Apache-2.0,Steven Bird <stevenbird1@gmail.com>
 numpy,https://www.numpy.org/license.html,numpy-discussion@python.org
 opencv-python-headless,MIT, Unknown
