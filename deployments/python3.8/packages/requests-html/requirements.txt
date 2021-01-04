@@ -9,13 +9,13 @@ idna==2.10
 lxml==4.6.2
 parse==1.18.0
 pyee==7.0.4
-pyppeteer==0.2.2
+pyppeteer==0.2.3
 pyquery==1.4.3
 requests==2.25.1
 requests-html==0.10.0
 six==1.15.0
 soupsieve==2.1
-tqdm==4.55.0
+tqdm==4.55.1
 urllib3==1.26.2
 w3lib==1.22.0
 websockets==8.1

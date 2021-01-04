@@ -5,5 +5,5 @@ mypy-extensions==0.4.3
 pathspec==0.8.1
 regex==2020.11.13
 toml==0.10.2
-typed-ast==1.4.1
+typed-ast==1.4.2
 typing-extensions==3.7.4.3
