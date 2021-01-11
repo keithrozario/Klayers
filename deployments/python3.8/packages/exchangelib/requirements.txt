@@ -5,7 +5,7 @@ cffi==1.14.4
 chardet==4.0.0
 cryptography==3.3.1
 defusedxml==0.6.0
-dnspython==2.0.0
+dnspython==2.1.0
 exchangelib==3.3.2
 idna==2.10
 isodate==0.6.0
