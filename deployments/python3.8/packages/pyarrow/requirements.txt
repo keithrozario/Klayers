@@ -1,2 +1,2 @@
-numpy==1.19.4
+numpy==1.19.5
 pyarrow==2.0.0
