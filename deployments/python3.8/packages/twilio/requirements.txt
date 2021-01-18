@@ -1,9 +1,9 @@
 certifi==2020.12.5
 chardet==4.0.0
 idna==2.10
-PyJWT==2.0.0
+PyJWT==1.7.1
 pytz==2020.5
 requests==2.25.1
 six==1.15.0
-twilio==6.50.1
+twilio==6.51.0
 urllib3==1.26.2
