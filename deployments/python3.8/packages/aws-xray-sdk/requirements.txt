@@ -1,9 +1,9 @@
 aws-xray-sdk==2.6.0
-botocore==1.19.59
+botocore==1.19.63
 future==0.18.2
 jmespath==0.10.0
-jsonpickle==1.5.0
+jsonpickle==1.5.1
 python-dateutil==2.8.1
 six==1.15.0
-urllib3==1.26.2
+urllib3==1.26.3
 wrapt==1.12.1

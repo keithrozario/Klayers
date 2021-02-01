@@ -11,6 +11,6 @@ multidict==5.1.0
 python-dateutil==2.8.1
 six==1.15.0
 typing-extensions==3.7.4.3
-urllib3==1.26.2
+urllib3==1.26.3
 wrapt==1.12.1
 yarl==1.6.3
