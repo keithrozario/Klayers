@@ -1,1 +1,1 @@
-python-Levenshtein-wheels==0.13.1
+python-Levenshtein-wheels==0.13.2
