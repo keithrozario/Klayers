@@ -76,6 +76,7 @@ shapely,BSD,Sean Gillies <sean.gillies@gmail.com>
 simplejson,MIT,Bob Ippolito <bob@redivi.com>
 slackclient,MIT,slack <opensource@slack.com>
 spacy,MIT,contact@explosion.ai
+spacy_syllables, MIT, Bright Effect <developer@brighteffect.io>
 SQLAlchemy,MIT,Mike Bayer <mike_mp@zzzcomputing.com>
 tablib, MIT, Kenneth Reitz <me@kennethreitz.org>
 textdistance,MIT, orsinium <master_fess@mail.ru>
