@@ -1,4 +1,4 @@
-cffi==1.14.4
+cffi==1.14.5
 pycparser==2.20
 PyNaCl==1.4.0
 six==1.15.0
