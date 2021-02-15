@@ -1,8 +1,5 @@
-cffi==1.14.4
-cryptography==3.4.1
+cffi==1.14.5
+cryptography==3.4.5
 pycparser==2.20
 pyOpenSSL==20.0.1
-semantic-version==2.8.5
-setuptools-rust==0.11.6
 six==1.15.0
-toml==0.10.2
