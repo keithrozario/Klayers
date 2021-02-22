@@ -10,7 +10,7 @@ MarkupSafe==1.1.1
 murmurhash==1.0.5
 numpy==1.20.1
 packaging==20.9
-pathy==0.3.6
+pathy==0.4.0
 preshed==3.0.5
 pydantic==1.7.3
 pyparsing==2.4.7
@@ -20,7 +20,7 @@ spacy==3.0.3
 spacy-legacy==3.0.1
 srsly==2.4.0
 thinc==8.0.1
-tqdm==4.56.2
+tqdm==4.57.0
 typer==0.3.2
 urllib3==1.26.3
 wasabi==0.8.2
