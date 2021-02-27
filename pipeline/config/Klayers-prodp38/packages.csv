@@ -3,6 +3,7 @@ aiobotocore,Apache-2.0,Nikolay Novik nickolainovik@gmail.com
 aiohttp,Apache-2.0,Nikolay Kim <fafhrd91@gmail.com>; Andrew Svetlov <andrew.svetlov@gmail.com>
 ansible,GPLv3+,Ansible Inc <info@ansible.com>
 aws-lambda-powertools,https://github.com/awslabs/aws-lambda-powertools/blob/develop/LICENSE,AWS
+aws-psycopg2,MIT,<manyu1994@hotmail.com>
 aws-xray-sdk,Apache-2.0,AWS
 aws-requests-auth,BSD,davehmuller@gmail.com
 arrow,Apache-2.0,Chris Smith <crsmithdev@gmail.com>
