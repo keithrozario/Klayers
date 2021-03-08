@@ -1,8 +1,8 @@
 cachetools==4.2.1
 certifi==2020.12.5
 chardet==4.0.0
-google-auth==1.27.0
-google-auth-oauthlib==0.4.2
+google-auth==1.27.1
+google-auth-oauthlib==0.4.3
 gspread==3.7.0
 idna==2.10
 oauthlib==3.1.0
