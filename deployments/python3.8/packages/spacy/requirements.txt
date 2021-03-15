@@ -16,10 +16,10 @@ pydantic==1.7.3
 pyparsing==2.4.7
 requests==2.25.1
 smart-open==3.0.0
-spacy==3.0.3
+spacy==3.0.5
 spacy-legacy==3.0.1
 srsly==2.4.0
-thinc==8.0.1
+thinc==8.0.2
 tqdm==4.59.0
 typer==0.3.2
 urllib3==1.26.3
