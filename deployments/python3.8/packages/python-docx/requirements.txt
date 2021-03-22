@@ -1,2 +1,2 @@
-lxml==4.6.2
+lxml==4.6.3
 python-docx==0.8.10
