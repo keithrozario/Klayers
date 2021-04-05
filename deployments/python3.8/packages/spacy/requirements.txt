@@ -17,7 +17,7 @@ pyparsing==2.4.7
 requests==2.25.1
 smart-open==3.0.0
 spacy==3.0.5
-spacy-legacy==3.0.1
+spacy-legacy==3.0.2
 srsly==2.4.0
 thinc==8.0.2
 tqdm==4.59.0
