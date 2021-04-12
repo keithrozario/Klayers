@@ -20,7 +20,7 @@ spacy==3.0.5
 spacy-legacy==3.0.2
 srsly==2.4.0
 thinc==8.0.2
-tqdm==4.59.0
+tqdm==4.60.0
 typer==0.3.2
 urllib3==1.26.4
 wasabi==0.8.2
