@@ -1,5 +1,5 @@
 blis==0.7.4
-catalogue==2.0.1
+catalogue==2.0.3
 certifi==2020.12.5
 chardet==4.0.0
 click==7.1.2
@@ -18,7 +18,7 @@ requests==2.25.1
 smart-open==3.0.0
 spacy==3.0.5
 spacy-legacy==3.0.2
-srsly==2.4.0
+srsly==2.4.1
 thinc==8.0.2
 tqdm==4.60.0
 typer==0.3.2
