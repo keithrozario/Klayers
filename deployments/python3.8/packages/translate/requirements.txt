@@ -5,7 +5,7 @@ chardet==4.0.0
 click==7.1.2
 distlib==0.3.1
 filelock==3.0.12
-identify==2.2.3
+identify==2.2.4
 idna==2.10
 lxml==4.6.3
 nodeenv==1.6.0
@@ -21,4 +21,4 @@ toml==0.10.2
 tox==3.23.0
 translate==3.5.0
 urllib3==1.26.4
-virtualenv==20.4.3
+virtualenv==20.4.4
