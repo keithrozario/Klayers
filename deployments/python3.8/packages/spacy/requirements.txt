@@ -1,5 +1,5 @@
 blis==0.7.4
-catalogue==2.0.3
+catalogue==2.0.4
 certifi==2020.12.5
 chardet==4.0.0
 click==7.1.2
