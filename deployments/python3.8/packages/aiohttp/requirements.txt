@@ -4,5 +4,5 @@ attrs==20.3.0
 chardet==4.0.0
 idna==3.1
 multidict==5.1.0
-typing-extensions==3.7.4.3
+typing-extensions==3.10.0.0
 yarl==1.6.3

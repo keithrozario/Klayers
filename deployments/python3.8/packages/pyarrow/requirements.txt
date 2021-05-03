@@ -1,2 +1,2 @@
 numpy==1.20.2
-pyarrow==3.0.0
+pyarrow==4.0.0
