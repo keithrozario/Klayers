@@ -1,1 +1,1 @@
-Cerberus==1.3.3
+Cerberus==1.3.4

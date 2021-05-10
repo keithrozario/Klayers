@@ -5,4 +5,4 @@ paramiko==2.7.2
 pycparser==2.20
 PyNaCl==1.4.0
 pysftp==0.2.9
-six==1.15.0
+six==1.16.0
