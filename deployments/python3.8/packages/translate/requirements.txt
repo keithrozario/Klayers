@@ -16,9 +16,9 @@ py==1.10.0
 pyparsing==2.4.7
 PyYAML==5.4.1
 requests==2.25.1
-six==1.15.0
+six==1.16.0
 toml==0.10.2
-tox==3.23.0
+tox==3.23.1
 translate==3.5.0
 urllib3==1.26.4
-virtualenv==20.4.4
+virtualenv==20.4.6

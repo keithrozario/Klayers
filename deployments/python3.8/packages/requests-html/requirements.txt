@@ -13,7 +13,7 @@ pyppeteer==0.2.5
 pyquery==1.4.3
 requests==2.25.1
 requests-html==0.10.0
-six==1.15.0
+six==1.16.0
 soupsieve==2.2.1
 tqdm==4.60.0
 urllib3==1.26.4
