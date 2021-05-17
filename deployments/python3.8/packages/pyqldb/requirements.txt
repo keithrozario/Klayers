@@ -1,9 +1,9 @@
 amazon.ion==0.7.0
-boto3==1.17.69
-botocore==1.20.69
+boto3==1.17.73
+botocore==1.20.73
 ionhash==1.1.0
 jmespath==0.10.0
-pyqldb==3.1.0
+pyqldb==3.2.0
 python-dateutil==2.8.1
 s3transfer==0.4.2
 six==1.16.0

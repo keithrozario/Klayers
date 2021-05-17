@@ -6,7 +6,7 @@ chardet==4.0.0
 cryptography==3.4.7
 defusedxml==0.7.1
 dnspython==2.1.0
-exchangelib==4.2.0
+exchangelib==4.3.0
 idna==2.10
 isodate==0.6.0
 lxml==4.6.3
