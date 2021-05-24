@@ -1,6 +1,6 @@
 appdirs==1.4.4
 black==21.5b1
-click==8.0.0
+click==8.0.1
 mypy-extensions==0.4.3
 pathspec==0.8.1
 regex==2021.4.4
