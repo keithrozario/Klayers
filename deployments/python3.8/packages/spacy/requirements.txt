@@ -1,6 +1,6 @@
 blis==0.7.4
 catalogue==2.0.4
-certifi==2020.12.5
+certifi==2021.5.30
 chardet==4.0.0
 click==7.1.2
 cymem==2.0.5
@@ -20,7 +20,7 @@ spacy==3.0.6
 spacy-legacy==3.0.5
 srsly==2.4.1
 thinc==8.0.3
-tqdm==4.60.0
+tqdm==4.61.0
 typer==0.3.2
-urllib3==1.26.4
+urllib3==1.26.5
 wasabi==0.8.2
