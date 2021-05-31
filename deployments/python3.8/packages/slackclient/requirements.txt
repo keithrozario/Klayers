@@ -2,7 +2,7 @@ aiohttp==3.7.4.post0
 async-timeout==3.0.1
 attrs==21.2.0
 chardet==4.0.0
-idna==3.1
+idna==3.2
 multidict==5.1.0
 slackclient==2.9.3
 typing-extensions==3.10.0.0

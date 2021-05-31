@@ -1,12 +1,12 @@
 beautifulsoup4==4.9.3
-boto3==1.17.78
-botocore==1.20.78
+boto3==1.17.84
+botocore==1.20.84
 cached-property==1.5.2
-certifi==2020.12.5
+certifi==2021.5.30
 chardet==4.0.0
 click==8.0.1
 click-option-group==0.5.3
-cloudsplaining==0.4.2
+cloudsplaining==0.4.3
 contextlib2==0.6.0.post1
 idna==2.10
 Jinja2==3.0.1
@@ -21,4 +21,4 @@ s3transfer==0.4.2
 schema==0.7.4
 six==1.16.0
 soupsieve==2.2.1
-urllib3==1.26.4
+urllib3==1.26.5
