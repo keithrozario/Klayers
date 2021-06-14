@@ -1,5 +1,5 @@
 appdirs==1.4.4
-black==21.5b2
+black==21.6b0
 click==8.0.1
 mypy-extensions==0.4.3
 pathspec==0.8.1
