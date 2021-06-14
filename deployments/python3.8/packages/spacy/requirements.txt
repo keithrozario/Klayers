@@ -19,8 +19,8 @@ smart-open==3.0.0
 spacy==3.0.6
 spacy-legacy==3.0.5
 srsly==2.4.1
-thinc==8.0.3
-tqdm==4.61.0
+thinc==8.0.4
+tqdm==4.61.1
 typer==0.3.2
 urllib3==1.26.5
 wasabi==0.8.2
