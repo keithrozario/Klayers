@@ -1,2 +1,2 @@
-geographiclib==1.50
+geographiclib==1.52
 geopy==2.1.0

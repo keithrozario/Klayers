@@ -6,4 +6,4 @@ pytz==2021.1
 requests==2.25.1
 six==1.16.0
 twilio==6.60.0
-urllib3==1.26.5
+urllib3==1.26.6
