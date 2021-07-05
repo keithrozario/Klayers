@@ -9,7 +9,7 @@ Jinja2==3.0.1
 MarkupSafe==2.0.1
 murmurhash==1.0.5
 numpy==1.21.0
-packaging==20.9
+packaging==21.0
 pathy==0.6.0
 preshed==3.0.5
 pydantic==1.7.4
@@ -19,7 +19,7 @@ smart-open==5.1.0
 spacy==3.0.6
 spacy-legacy==3.0.6
 srsly==2.4.1
-thinc==8.0.6
+thinc==8.0.7
 tqdm==4.61.1
 typer==0.3.2
 urllib3==1.26.6
