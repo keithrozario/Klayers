@@ -1,2 +1,2 @@
 geographiclib==1.52
-geopy==2.1.0
+geopy==2.2.0

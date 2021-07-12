@@ -1,7 +1,7 @@
 backports.zoneinfo==0.2.1
 cached-property==1.5.2
 certifi==2021.5.30
-cffi==1.14.5
+cffi==1.14.6
 chardet==4.0.0
 cryptography==3.4.7
 defusedxml==0.7.1
