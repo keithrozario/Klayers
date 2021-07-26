@@ -4,4 +4,4 @@ click==8.0.1
 mypy-extensions==0.4.3
 pathspec==0.9.0
 regex==2021.7.6
-tomli==1.0.4
+tomli==1.1.0

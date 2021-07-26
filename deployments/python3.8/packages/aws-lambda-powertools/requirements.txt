@@ -1,7 +1,7 @@
-aws-lambda-powertools==1.17.1
+aws-lambda-powertools==1.18.1
 aws-xray-sdk==2.8.0
-boto3==1.18.1
-botocore==1.21.1
+boto3==1.18.6
+botocore==1.21.6
 fastjsonschema==2.15.1
 future==0.18.2
 jmespath==0.10.0
