@@ -1,9 +1,9 @@
 beautifulsoup4==4.9.3
-boto3==1.18.6
-botocore==1.21.6
+boto3==1.18.11
+botocore==1.21.11
 cached-property==1.5.2
 certifi==2021.5.30
-charset-normalizer==2.0.3
+charset-normalizer==2.0.4
 click==8.0.1
 click-option-group==0.5.3
 cloudsplaining==0.4.4
