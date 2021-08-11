@@ -71,6 +71,7 @@ pytz,MIT,Stuart Bishop <stuart@stuartbishop.net>
 PyYAML,MIT,Kirril Simonov <xi@resolvent.net>
 rdklib,Apache License Version 2.0,Michael Borchet <mborch@amazon.com> <https://pypi.org/user/rickychau2780/>
 records,ISC,<me@kennethreitz.org>
+redshift-connector,Apache License Version 2.0,Amazon Web Services <redshift-drivers@amazon.com>
 requests,Apache-2.0,Kenneth Reitz <me@kennethreitz.org>
 requests-html,MIT,<me@kennethreitz.org>
 reportlab,BSD,<reportlab-users@lists2.reportlab.com>
