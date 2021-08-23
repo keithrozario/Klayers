@@ -1,6 +1,6 @@
 attrs==21.2.0
-boto3==1.18.21
-botocore==1.21.21
+boto3==1.18.26
+botocore==1.21.26
 cffi==1.14.6
 cryptography==3.4.7
 dynamodb-encryption-sdk==3.0.0
