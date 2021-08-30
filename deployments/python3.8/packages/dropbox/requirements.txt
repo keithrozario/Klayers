@@ -1,6 +1,6 @@
 certifi==2021.5.30
 charset-normalizer==2.0.4
-dropbox==11.17.0
+dropbox==11.18.0
 idna==3.2
 ply==3.11
 requests==2.26.0
