@@ -6,7 +6,7 @@ charset-normalizer==2.0.4
 cssselect==1.1.0
 fake-useragent==0.1.11
 idna==3.2
-importlib-metadata==4.6.4
+importlib-metadata==4.8.1
 lxml==4.6.3
 parse==1.19.0
 pyee==8.2.2
@@ -16,7 +16,7 @@ requests==2.26.0
 requests-html==0.10.0
 six==1.16.0
 soupsieve==2.2.1
-tqdm==4.62.1
+tqdm==4.62.2
 urllib3==1.26.6
 w3lib==1.22.0
 websockets==9.1

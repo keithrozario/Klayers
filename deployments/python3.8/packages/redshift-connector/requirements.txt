@@ -1,7 +1,7 @@
 asn1crypto==1.4.0
 beautifulsoup4==4.9.3
-boto3==1.18.26
-botocore==1.21.26
+boto3==1.18.31
+botocore==1.21.31
 certifi==2021.5.30
 chardet==4.0.0
 idna==2.10
@@ -14,7 +14,7 @@ pytz==2021.1
 redshift-connector==2.0.885
 requests==2.25.1
 s3transfer==0.5.0
-scramp==1.4.0
+scramp==1.4.1
 six==1.16.0
 soupsieve==2.2.1
 urllib3==1.26.6
