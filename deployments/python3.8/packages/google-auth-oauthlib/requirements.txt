@@ -1,8 +1,8 @@
 cachetools==4.2.2
 certifi==2021.5.30
 charset-normalizer==2.0.4
-google-auth==2.0.1
-google-auth-oauthlib==0.4.5
+google-auth==2.0.2
+google-auth-oauthlib==0.4.6
 idna==3.2
 oauthlib==3.1.1
 pyasn1==0.4.8

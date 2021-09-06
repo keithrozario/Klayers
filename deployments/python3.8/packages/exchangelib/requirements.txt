@@ -6,7 +6,7 @@ charset-normalizer==2.0.4
 cryptography==3.4.8
 defusedxml==0.7.1
 dnspython==2.1.0
-exchangelib==4.5.0
+exchangelib==4.5.1
 idna==3.2
 isodate==0.6.0
 lxml==4.6.3
