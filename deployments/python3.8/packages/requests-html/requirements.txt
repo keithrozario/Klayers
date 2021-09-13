@@ -1,5 +1,5 @@
 appdirs==1.4.4
-beautifulsoup4==4.9.3
+beautifulsoup4==4.10.0
 bs4==0.0.1
 certifi==2021.5.30
 charset-normalizer==2.0.4

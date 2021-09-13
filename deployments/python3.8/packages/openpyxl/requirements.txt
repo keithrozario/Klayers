@@ -1,2 +1,2 @@
 et-xmlfile==1.1.0
-openpyxl==3.0.7
+openpyxl==3.0.8
