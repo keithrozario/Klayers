@@ -1,5 +1,5 @@
 certifi==2021.5.30
-charset-normalizer==2.0.4
+charset-normalizer==2.0.6
 click==8.0.1
 idna==3.2
 libretranslatepy==2.1.1

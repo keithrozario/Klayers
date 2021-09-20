@@ -1,5 +1,5 @@
 certifi==2021.5.30
-charset-normalizer==2.0.4
+charset-normalizer==2.0.6
 idna==3.2
 PyJWT==1.7.1
 pytz==2021.1
