@@ -11,4 +11,4 @@ pyasn1-modules==0.2.8
 requests==2.26.0
 requests-oauthlib==1.3.0
 rsa==4.7.2
-urllib3==1.26.6
+urllib3==1.26.7
