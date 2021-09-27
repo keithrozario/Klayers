@@ -3,4 +3,4 @@ charset-normalizer==2.0.6
 datadog==0.42.0
 idna==3.2
 requests==2.26.0
-urllib3==1.26.6
+urllib3==1.26.7

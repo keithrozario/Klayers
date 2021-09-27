@@ -1,2 +1,2 @@
 greenlet==1.1.1
-SQLAlchemy==1.4.23
+SQLAlchemy==1.4.25
