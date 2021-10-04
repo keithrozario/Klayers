@@ -1,6 +1,6 @@
 beautifulsoup4==4.10.0
-boto3==1.18.48
-botocore==1.21.48
+boto3==1.18.53
+botocore==1.21.53
 cached-property==1.5.2
 certifi==2021.5.30
 charset-normalizer==2.0.6
@@ -13,7 +13,7 @@ Jinja2==3.0.1
 jmespath==0.10.0
 Markdown==3.3.4
 MarkupSafe==2.0.1
-policy-sentry==0.11.17
+policy-sentry==0.11.18
 python-dateutil==2.8.2
 PyYAML==5.4.1
 requests==2.26.0

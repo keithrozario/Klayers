@@ -20,4 +20,4 @@ tqdm==4.62.3
 urllib3==1.26.7
 w3lib==1.22.0
 websockets==9.1
-zipp==3.5.0
+zipp==3.6.0

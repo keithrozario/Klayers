@@ -1,5 +1,5 @@
-boto3==1.18.48
-botocore==1.21.48
+boto3==1.18.53
+botocore==1.21.53
 jmespath==0.10.0
 lambda-decorators==0.6.0
 python-dateutil==2.8.2

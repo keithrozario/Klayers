@@ -2,7 +2,7 @@ certifi==2021.5.30
 charset-normalizer==2.0.6
 idna==3.2
 PyJWT==2.1.0
-pytz==2021.1
+pytz==2021.3
 requests==2.26.0
 twilio==7.0.0
 urllib3==1.26.7
