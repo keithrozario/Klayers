@@ -33,6 +33,8 @@ grpcio,Apache-2.0,GRPC Authors <grpc-io@googlegroups.com>
 gspread,MIT,Anton Burnashev <fuss.here@gmail.com>
 idna,https://github.com/kjd/idna/blob/master/LICENSE.rst,Kim Davis kim@cynosure.com.au
 itsdangerous,BSD-3-Clause,Armin Ronache <armin.ronacher@active-4.com>; Pallets <contact@palletsprojects.com>
+flask,flask-2.0.2
+
 jellyfish,BSD, James Turk
 jinja2,BSD,Armin Ronache <armin.ronacher@active-4.com>; Pallets <contact@palletsprojects.com>
 jsonschema,MIT,Julian Berman <Julian@GrayVines.com>
