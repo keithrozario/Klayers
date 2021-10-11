@@ -1,5 +1,5 @@
 cycler==0.10.0
-Jinja2==3.0.1
+Jinja2==3.0.2
 kiwisolver==1.3.2
 MarkupSafe==2.0.1
 matplotlib==3.4.3
