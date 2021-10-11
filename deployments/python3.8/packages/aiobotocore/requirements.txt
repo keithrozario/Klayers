@@ -1,4 +1,4 @@
-aiobotocore==1.4.1
+aiobotocore==1.4.2
 aiohttp==3.7.4.post0
 aioitertools==0.8.0
 async-timeout==3.0.1
@@ -12,5 +12,5 @@ python-dateutil==2.8.2
 six==1.16.0
 typing-extensions==3.10.0.2
 urllib3==1.26.7
-wrapt==1.12.1
-yarl==1.6.3
+wrapt==1.13.1
+yarl==1.7.0
