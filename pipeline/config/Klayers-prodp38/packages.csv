@@ -84,6 +84,7 @@ spacy,MIT,contact@explosion.ai
 spacy_syllables, MIT, Bright Effect <developer@brighteffect.io>
 SQLAlchemy,MIT,Mike Bayer <mike_mp@zzzcomputing.com>
 tablib, MIT, Kenneth Reitz <me@kennethreitz.org>
+tensorflow,Apache-2.0,Yuan Tang <terrytangyuan@gmail.com>
 textdistance,MIT, orsinium <master_fess@mail.ru>
 tinydb,MIT,Markus Siemens <markus@m-siemens.de>
 tldextract,BSD,John Kurkowski <john.kurkowski@gmail.com>
