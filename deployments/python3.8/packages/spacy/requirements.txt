@@ -1,10 +1,10 @@
 blis==0.7.4
 catalogue==2.0.6
 certifi==2021.10.8
-charset-normalizer==2.0.6
+charset-normalizer==2.0.7
 click==8.0.3
 cymem==2.0.5
-idna==3.2
+idna==3.3
 Jinja2==3.0.2
 MarkupSafe==2.0.1
 murmurhash==1.0.5

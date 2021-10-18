@@ -1,10 +1,10 @@
 asn1crypto==1.4.0
 beautifulsoup4==4.10.0
-boto3==1.18.58
-botocore==1.21.58
+boto3==1.18.63
+botocore==1.21.63
 certifi==2021.10.8
-charset-normalizer==2.0.6
-idna==3.2
+charset-normalizer==2.0.7
+idna==3.3
 jmespath==0.10.0
 lxml==4.6.3
 packaging==21.0
