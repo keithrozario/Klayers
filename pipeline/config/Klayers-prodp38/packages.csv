@@ -92,3 +92,5 @@ twilio,MIT,twilio <help@twilio.com>
 dropbox,MIT,Dropbox <dev-platform@dropbox.com>
 praw,BSD,Bryce Boe <bbzbryce@gmail.com>
 opensearch-py,Apache-2.0,Aleksei Atavin <axeo@aiven.io>;Rushi Agrawal	<rushi.agr@gmail.com>; Shephali Mittal <shephali.mittal1995@gmail.com>
+xarray, Apache License V2.0, Xarray <xarray-core-team@googlegroups.com>
+gdal, MIT, Gdal <gdal-dev-owner@lists.osgeo.org>
