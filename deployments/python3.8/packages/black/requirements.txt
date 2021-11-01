@@ -1,8 +1,8 @@
-black==21.9b0
+black==21.10b0
 click==8.0.3
 mypy-extensions==0.4.3
 pathspec==0.9.0
 platformdirs==2.4.0
 regex==2021.10.23
-tomli==1.2.1
+tomli==1.2.2
 typing-extensions==3.10.0.2
