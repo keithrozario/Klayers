@@ -1,1 +1,1 @@
-textdistance==4.2.1
+textdistance==4.2.2
