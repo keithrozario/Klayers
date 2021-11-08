@@ -2,7 +2,7 @@ bcrypt==3.2.0
 cffi==1.15.0
 cryptography==35.0.0
 paramiko==2.8.0
-pycparser==2.20
+pycparser==2.21
 PyNaCl==1.4.0
 pysftp==0.2.9
 six==1.16.0
