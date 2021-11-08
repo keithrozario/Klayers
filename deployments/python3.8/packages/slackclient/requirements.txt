@@ -1,6 +1,6 @@
 aiohttp==3.8.0
 aiosignal==1.2.0
-async-timeout==4.0.0a3
+async-timeout==4.0.0
 attrs==21.2.0
 charset-normalizer==2.0.7
 frozenlist==1.2.0
@@ -8,4 +8,4 @@ idna==3.3
 multidict==5.2.0
 slackclient==2.9.3
 typing-extensions==3.10.0.2
-yarl==1.7.0
+yarl==1.7.2
