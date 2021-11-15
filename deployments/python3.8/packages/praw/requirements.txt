@@ -1,7 +1,7 @@
 certifi==2021.10.8
 charset-normalizer==2.0.7
 idna==3.3
-praw==7.4.0
+praw==7.5.0
 prawcore==2.3.0
 requests==2.26.0
 update-checker==0.18.0
