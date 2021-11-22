@@ -1,4 +1,4 @@
-black==21.10b0
+black==21.11b1
 click==8.0.3
 mypy-extensions==0.4.3
 pathspec==0.9.0
