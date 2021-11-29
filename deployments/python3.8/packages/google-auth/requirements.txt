@@ -2,5 +2,5 @@ cachetools==4.2.4
 google-auth==2.3.3
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
-rsa==4.7.2
+rsa==4.8
 six==1.16.0
