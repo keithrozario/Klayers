@@ -1,11 +1,11 @@
-aiobotocore==2.0.0
+aiobotocore==2.0.1
 aiohttp==3.8.1
 aioitertools==0.8.0
 aiosignal==1.2.0
 async-timeout==4.0.1
 attrs==21.2.0
 botocore==1.22.8
-charset-normalizer==2.0.7
+charset-normalizer==2.0.8
 frozenlist==1.2.0
 idna==3.3
 jmespath==0.10.0
