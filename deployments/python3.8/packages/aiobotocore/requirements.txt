@@ -5,14 +5,14 @@ aiosignal==1.2.0
 async-timeout==4.0.1
 attrs==21.2.0
 botocore==1.22.8
-charset-normalizer==2.0.8
+charset-normalizer==2.0.9
 frozenlist==1.2.0
 idna==3.3
 jmespath==0.10.0
 multidict==5.2.0
 python-dateutil==2.8.2
 six==1.16.0
-typing-extensions==4.0.0
+typing-extensions==4.0.1
 urllib3==1.26.7
 wrapt==1.13.3
 yarl==1.7.2

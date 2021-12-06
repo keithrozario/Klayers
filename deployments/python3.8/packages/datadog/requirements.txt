@@ -1,5 +1,5 @@
 certifi==2021.10.8
-charset-normalizer==2.0.8
+charset-normalizer==2.0.9
 datadog==0.42.0
 idna==3.3
 requests==2.26.0
