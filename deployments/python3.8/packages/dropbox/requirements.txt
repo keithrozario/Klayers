@@ -1,5 +1,5 @@
 certifi==2021.10.8
-charset-normalizer==2.0.8
+charset-normalizer==2.0.9
 dropbox==11.25.0
 idna==3.3
 ply==3.11
