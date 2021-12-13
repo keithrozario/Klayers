@@ -1,8 +1,9 @@
-amazon.ion==0.7.0
-boto3==1.20.20
-botocore==1.23.20
+amazon.ion==0.9.0
+boto3==1.20.23
+botocore==1.23.23
 ionhash==1.2.1
 jmespath==0.10.0
+jsonconversion==0.2.13
 pyqldb==3.2.2
 python-dateutil==2.8.2
 s3transfer==0.5.0
