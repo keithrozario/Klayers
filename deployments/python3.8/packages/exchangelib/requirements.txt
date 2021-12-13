@@ -6,10 +6,10 @@ charset-normalizer==2.0.9
 cryptography==36.0.0
 defusedxml==0.7.1
 dnspython==2.1.0
-exchangelib==4.6.1
+exchangelib==4.6.2
 idna==3.3
 isodate==0.6.0
-lxml==4.6.4
+lxml==4.6.5
 ntlm-auth==1.5.0
 oauthlib==3.1.1
 pycparser==2.21

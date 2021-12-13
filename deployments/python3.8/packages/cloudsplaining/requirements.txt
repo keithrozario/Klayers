@@ -1,12 +1,12 @@
 beautifulsoup4==4.10.0
-boto3==1.20.20
-botocore==1.23.20
+boto3==1.20.23
+botocore==1.23.23
 cached-property==1.5.2
 certifi==2021.10.8
 charset-normalizer==2.0.9
 click==8.0.3
 click-option-group==0.5.3
-cloudsplaining==0.4.8
+cloudsplaining==0.4.9
 contextlib2==21.6.0
 idna==3.3
 importlib-metadata==4.8.2
