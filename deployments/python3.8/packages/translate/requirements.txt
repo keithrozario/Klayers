@@ -3,7 +3,7 @@ charset-normalizer==2.0.9
 click==8.0.3
 idna==3.3
 libretranslatepy==2.1.1
-lxml==4.6.5
+lxml==4.7.1
 requests==2.26.0
 translate==3.6.1
 urllib3==1.26.7
