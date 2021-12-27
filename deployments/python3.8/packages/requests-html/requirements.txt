@@ -6,7 +6,7 @@ charset-normalizer==2.0.9
 cssselect==1.1.0
 fake-useragent==0.1.11
 idna==3.3
-importlib-metadata==4.9.0
+importlib-metadata==4.10.0
 lxml==4.7.1
 parse==1.19.0
 pyee==8.2.2
