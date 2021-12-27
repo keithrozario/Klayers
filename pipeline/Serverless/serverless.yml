@@ -26,6 +26,10 @@ provider:
     cors: true
   eventBridge:
     useCloudFormation: true
+  ecr:
+    images:
+      buildImage:
+        path: ../container_images/build_image
   
 custom:
   # Env
