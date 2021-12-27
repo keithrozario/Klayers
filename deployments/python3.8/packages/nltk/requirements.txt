@@ -1,5 +1,5 @@
 click==8.0.3
 joblib==1.1.0
-nltk==3.6.5
+nltk==3.6.6
 regex==2021.11.10
 tqdm==4.62.3
