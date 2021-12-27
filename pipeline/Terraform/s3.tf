@@ -1,4 +1,4 @@
-variable "s3bucket_layers" { type = map }
+variable "s3bucket_layers" { type = map(any) }
 
 ## S3 Bucket
 resource "aws_s3_bucket" "s3bucket_layers" {
