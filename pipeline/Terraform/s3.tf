@@ -2,10 +2,9 @@ variable "s3bucket_layers" { type = map }
 
 ## S3 Bucket
 resource "aws_s3_bucket" "s3bucket_layers" {
-  bucket        = lookup(var.s3bucket_layers, terraform.workspace)
+  bucket        = lookup(var.s3bucket_layers, local.workspace_full_name)
   acl           = "private"
   force_destroy = true
-  region        = lookup(var.aws_region, terraform.workspace)
 
   versioning {
     enabled = true
@@ -25,7 +24,7 @@ resource "aws_s3_bucket" "s3bucket_layers" {
 resource "aws_ssm_parameter" "layers_bucket_name" {
   type        = "String"
   description = "Name of s3 bucket to hold layer artifacts"
-  name        = "/${lookup(var.app_name, terraform.workspace)}/${terraform.workspace}/layers_bucket/name"
+  name        = "/${lookup(var.app_name, local.workspace_full_name)}/${local.workspace_full_name}/layers_bucket/name"
   value       = aws_s3_bucket.s3bucket_layers.bucket
   overwrite   = true
 }
@@ -33,7 +32,7 @@ resource "aws_ssm_parameter" "layers_bucket_name" {
 resource "aws_ssm_parameter" "layers_bucket_arn" {
   type        = "String"
   description = "ARN of layer bucket"
-  name        = "/${lookup(var.app_name, terraform.workspace)}/${terraform.workspace}/layers_bucket/arn"
+  name        = "/${lookup(var.app_name, local.workspace_full_name)}/${local.workspace_full_name}/layers_bucket/arn"
   value       = aws_s3_bucket.s3bucket_layers.arn
   overwrite   = true
 }
@@ -42,11 +41,11 @@ resource "aws_ssm_parameter" "layers_bucket_arn" {
 resource "aws_s3_bucket_object" "packages_config" {
   bucket = aws_s3_bucket.s3bucket_layers.bucket
   key    = "config/packages.csv"
-  source = "../config/${terraform.workspace}/packages.csv"
+  source = "../config/${local.workspace_full_name}/packages.csv"
 }
 
 resource "aws_s3_bucket_object" "regions_config" {
   bucket = aws_s3_bucket.s3bucket_layers.bucket
   key    = "config/regions.csv"
-  source = "../config/${terraform.workspace}/regions.csv"
+  source = "../config/${local.workspace_full_name}/regions.csv"
 }
