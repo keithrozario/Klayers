@@ -18,19 +18,6 @@ definition:
     WaitForCompletion:
       Type: Wait
       Seconds: 600
-      Next: StartPublish
-    StartPublish:
-      Type: Task
-      Resource: arn:aws:states:::states:startExecution.sync
-      Parameters:
-        StateMachineArn:
-          Fn::Join:
-            - ":"
-            - - arn:aws:states
-              - ${self:provider.region}
-              - Ref: AWS::AccountId
-              - stateMachine
-              - ${self:custom.pipelineName}-publish
       Next: InvalidateCache
     InvalidateCache:
       Type: Task

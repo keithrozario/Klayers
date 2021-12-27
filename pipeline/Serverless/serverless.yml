@@ -1,5 +1,7 @@
 service: kl
 
+projectDir: ../
+variablesResolutionMode: 20210326
 plugins:
   - serverless-iam-roles-per-function
   - serverless-step-functions
@@ -22,40 +24,42 @@ provider:
     httpApi: true
   httpApi:
     cors: true
+  eventBridge:
+    useCloudFormation: true
   
 custom:
   # Env
   awsRegion: ${self:provider.region} 
-  lambdaPrefix: ${ssm:/${self:service.name}/${self:provider.stage}/lambda_prefix}
-  pipelineName: ${self:service.name}-${self:provider.stage}-pipeline
+  lambdaPrefix: ${ssm:/${self:service}/${self:provider.stage}/lambda_prefix}
+  pipelineName: ${self:service}-${self:provider.stage}-pipeline
 
   # S3
-  s3LayersName: ${ssm:/${self:service.name}/${self:provider.stage}/layers_bucket/name}
-  s3LayersArn: ${ssm:/${self:service.name}/${self:provider.stage}/layers_bucket/arn}
+  s3LayersName: ${ssm:/${self:service}/${self:provider.stage}/layers_bucket/name}
+  s3LayersArn: ${ssm:/${self:service}/${self:provider.stage}/layers_bucket/arn}
 
   # DynamoDB
-  dbName: ${ssm:/${self:service.name}/${self:provider.stage}/db/name}
-  dbArn: ${ssm:/${self:service.name}/${self:provider.stage}/db/arn}
-  dbStreamLabel: ${ssm:/${self:service.name}/${self:provider.stage}/db/stream/label}
-  dbStreamArn: ${ssm:/${self:service.name}/${self:provider.stage}/db/stream/arn}
+  dbName: ${ssm:/${self:service}/${self:provider.stage}/db/name}
+  dbArn: ${ssm:/${self:service}/${self:provider.stage}/db/arn}
+  dbStreamLabel: ${ssm:/${self:service}/${self:provider.stage}/db/stream/label}
+  dbStreamArn: ${ssm:/${self:service}/${self:provider.stage}/db/stream/arn}
 
   # Github
-  githubSSHKeyParameter: /${self:service.name}/${self:provider.stage}/github_ssh_key
-  githubRepo: ${ssm:/${self:service.name}/${self:provider.stage}/github_repo}
-  githubWebhookSecret: /${self:service.name}/${self:provider.stage}/github_webhook_secret
+  githubSSHKeyParameter: /${self:service}/${self:provider.stage}/github_ssh_key
+  githubRepo: ${ssm:/${self:service}/${self:provider.stage}/github_repo}
+  githubWebhookSecret: /${self:service}/${self:provider.stage}/github_webhook_secret
   
   # Slack
-  slackTokenParameter: /${self:service.name}/${self:provider.stage}/slack_token
+  slackTokenParameter: /${self:service}}/${self:provider.stage}/slack_token
 
   # Cloudformation
-  apiCertArn: ${ssm:/${self:service.name}/${self:provider.stage}/api/cert/arn}
-  apiDomainName: ${ssm:/${self:service.name}/${self:provider.stage}/api/domain_name}
+  apiCertArn: ${ssm:/${self:service}/${self:provider.stage}/api/cert/arn}
+  apiDomainName: ${ssm:/${self:service}/${self:provider.stage}/api/domain_name}
   
   
 functions:
   - ${file(01_invoke_pipelines/invoke_pipelines.yml)}
   - ${file(02_pipeline/pipeline.yml)}
-  - ${file(03_publish/publish.yml)}
+# 03_publish has been deprecated and removed.
   - ${file(04_stream_processor/streams.yml)}
   - ${file(05_slack_notification/slack.yml)}
   - ${file(06_webhook/webhook.yml)}
@@ -66,8 +70,6 @@ stepFunctions:
       ${file(state_machines/01_invoke_pipelines.yml)}
     pipeline:
       ${file(state_machines/02_pipeline.yml)}
-    publish:
-      ${file(state_machines/03_publish.yml)}
 
 package:
   exclude:

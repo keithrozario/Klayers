@@ -22,7 +22,7 @@ invoke_pipeline:
       Action: s3:GetObject
       Resource: ${self:custom.s3LayersArn}/*
   layers:
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:48
+    - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPython:6
 
 download_config:
   handler: 01_invoke_pipelines/download_config.download_config_from_github
@@ -42,8 +42,9 @@ download_config:
         - ${self:custom.s3LayersArn}/config/*
   layers:
     - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-lambda-cache:1
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-requests:9
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:48
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-requests:26
+    - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPython:6 
+
 
 invalidate_cache:
   handler: 01_invoke_pipelines/invalidate_cf_cache.main
@@ -54,7 +55,7 @@ invalidate_cache:
   environment:
     POWERTOOLS_SERVICE_NAME: Klayers.invalidate_cf_cache
     # this parameter deployed as part of api Cloudformation
-    DISTRIBUTION_NAME: /${self:service.name}/${self:provider.stage}/api/cfDistribution/id
+    DISTRIBUTION_NAME: /${self:service}/${self:provider.stage}/api/cfDistribution/id
   iamRoleStatementsName: ${self:provider.stage}-invalidate_cache
   iamRoleStatements:
     - Effect: Allow
@@ -66,7 +67,7 @@ invalidate_cache:
         - - arn:aws:ssm
           - ${self:provider.region}
           - Ref: AWS::AccountId
-          - parameter/${self:service.name}/${self:provider.stage}/api/cfDistribution/id
+          - parameter/${self:service}/${self:provider.stage}/api/cfDistribution/id
     - Effect: Allow
       Action: 
         - cloudfront:CreateInvalidation
@@ -75,7 +76,7 @@ invalidate_cache:
         - ":"
         - - "arn:aws:cloudfront:"
           - Ref: AWS::AccountId
-          - distribution/${ssm:/${self:service.name}/${self:provider.stage}/api/cfDistribution/id}
+          - distribution/${ssm:/${self:service}/${self:provider.stage}/api/cfDistribution/id}
   layers:
     - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-lambda-cache:1
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:48
+    - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPython:6

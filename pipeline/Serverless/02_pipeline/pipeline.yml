@@ -6,8 +6,8 @@ check:
   memorySize: 256
   layers:
     - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-packaging:1
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-requests:9
-    - arn:aws:lambda:ap-southeast-1:770693421928:layer:Klayers-python38-aws-lambda-powertools:48
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-requests:26
+    - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPython:6
 
 build:
   handler: 02_pipeline/build.main
@@ -36,7 +36,7 @@ build:
     Resource: ${self:custom.dbArn}
   layers:
     - arn:aws:lambda:${self:provider.region}:553035198032:layer:gcc-lambda2:4  # https://github.com/lambci/gcc-lambda-layer
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:48
+    - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPython:6
 
 
 deploy:
@@ -75,4 +75,4 @@ deploy:
       Resource: ${self:custom.s3LayersArn}/*
   layers:
     - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-packaging:1
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:48
+    - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPython:6
