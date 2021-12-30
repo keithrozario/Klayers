@@ -233,7 +233,7 @@ def main(event, context):
         if layer_version > 1:
             logger.info(
                 {
-                    "message": "Updating Previous Version",
+                    "message": "Updating Expiry on previous version",
                     "region": region,
                     "package": package,
                     "arn": layer_version_arn,

@@ -77,8 +77,28 @@ deploy:
     - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-packaging:1
     - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPython:6
 
-build_with_container:
+build39:
+  description: Builds the package in a container for python3.9 then uploads to S3
   image:
     name: buildImage
     command:
-      - app.main
+      - build.main
+  timeout: 600
+  memorySize: 1769  # exactly one vcpu
+  iamRoleStatementsName: ${self:provider.stage}-buildp39
+  iamRoleStatements:
+  - Effect: Allow
+    Action:
+    - s3:PutObject
+    - s3:PutObjectAcl
+    Resource: ${self:custom.s3LayersArn}/*
+  - Effect: Allow
+    Action:
+    - s3:ListBucket
+    Resource: ${self:custom.s3LayersArn}
+  - Effect: Allow
+    Action:
+    - dynamodb:PutItem
+    - dynamodb:UpdateItem
+    - dynamodb:GetItem
+    Resource: ${self:custom.dbArn}

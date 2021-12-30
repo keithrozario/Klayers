@@ -50,6 +50,7 @@ def main(event, context):
 
     logger.debug(event)
     package = event.get("detail").get("package")
+    python_version = event.get("detail").get("python_version", "3.8")  # default to 3.8
 
     logger.debug(f"Checking {package}")
 
@@ -64,4 +65,6 @@ def main(event, context):
         "version": str(latest_version),
         "package": package,
         "license_info": license_info,
+        "python_version": python_version,
+        "type": 0,  # type is required for choice step in Step Functions
     }

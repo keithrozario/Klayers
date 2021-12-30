@@ -44,6 +44,16 @@ resource "aws_dynamodb_table" "t" {
     type = "S"
   }
 
+  attribute {
+    name = "rgn#PyVrsn"
+    type = "S"
+  }
+
+  attribute {
+    name = "pckg#PyVrsn"
+    type = "S"
+  }
+
   ttl {
     attribute_name = "exDt"
     enabled        = true
@@ -61,8 +71,24 @@ resource "aws_dynamodb_table" "t" {
   }
 
   global_secondary_index {
+    name            = "deployed_in_region_by_python_version"
+    hash_key        = "rgn#PyVrsn"
+    range_key       = "dplySts"
+    projection_type = "INCLUDE"
+    non_key_attributes = ["exDt","crtdDt", "pckg", "pckgVrsn", "arn"]
+  }
+
+  global_secondary_index {
     name            = "package_global"
     hash_key        = "pckg"
+    range_key       = "dplySts"
+    projection_type = "INCLUDE"
+    non_key_attributes = ["rgn", "rqrmntsHsh"]
+  }
+
+  global_secondary_index {
+    name            = "package_global_by_python_version"
+    hash_key        = "pckg#PyVrsn"
     range_key       = "dplySts"
     projection_type = "INCLUDE"
     non_key_attributes = ["rgn", "rqrmntsHsh"]

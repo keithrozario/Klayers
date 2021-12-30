@@ -7,7 +7,7 @@ definition:
       Type: Task
       Resource:
         Fn::GetAtt: [CheckLambdaFunction, Arn]
-      Next: Build
+      Next: ChoicePythonVersion
       Retry:
         - ErrorEquals:
           - States.Timeout
@@ -18,7 +18,17 @@ definition:
         - ErrorEquals:
           - States.ALL
           Next: CheckFail
-    Build:
+    ChoicePythonVersion:
+      Type: Choice
+      Choices:
+        - Variable: $.python_version
+          StringEquals: "3.9"
+          Next: Build39
+        - Variable: $.python_version
+          StringEquals: "3.8"
+          Next: Build38
+      Default: UnknownPythonVersion
+    Build38:
       Type: Task
       Resource:
         Fn::GetAtt: [BuildLambdaFunction, Arn]
@@ -32,7 +42,22 @@ definition:
       Catch:
         - ErrorEquals:
           - States.ALL
-          Next: BuildFail
+          Next: Build38Fail
+    Build39:
+      Type: Task
+      Resource:
+        Fn::GetAtt: [Build39LambdaFunction, Arn]
+      Next: Deploy
+      Retry:
+        - ErrorEquals:
+          - States.Timeout
+          MaxAttempts: 2
+          BackoffRate: 30
+          IntervalSeconds: 60
+      Catch:
+        - ErrorEquals:
+          - States.ALL
+          Next: Build39Fail
     Deploy:
       Type: Task
       Resource:
@@ -54,7 +79,11 @@ definition:
       Type: Fail
       Error: CheckFailure
       Cause: Unknown
-    BuildFail:
+    Build38Fail:
+      Type: Fail
+      Error: BuildFailure
+      Cause: Unknown
+    Build39Fail:
       Type: Fail
       Error: BuildFailure
       Cause: Unknown
@@ -62,6 +91,10 @@ definition:
       Type: Fail
       Error: DeployFailure
       Cause: Unknown
+    UnknownPythonVersion:
+      Type: Fail
+      Error: UnknownPythonVersion
+      Cause: UnknownPythonVersion
 notifications:
   ABORTED:
     - lambda:
