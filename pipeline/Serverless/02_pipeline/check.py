@@ -42,6 +42,7 @@ def main(event, context):
     """
     Args:
       package: Package to check for
+      python_version: Version of python (e.g. p3.8, p3.9, p3.10)
     return:
       package: Name of package
       version: Version of package to deploy
@@ -50,7 +51,7 @@ def main(event, context):
 
     logger.debug(event)
     package = event.get("detail").get("package")
-    python_version = event.get("detail").get("python_version", "3.8")  # default to 3.8
+    python_version = event.get("detail").get("python_version", "p3.8")  # default to 3.8
 
     logger.debug(f"Checking {package}")
 

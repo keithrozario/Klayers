@@ -22,10 +22,10 @@ definition:
       Type: Choice
       Choices:
         - Variable: $.python_version
-          StringEquals: "3.9"
+          StringEquals: "p3.9"
           Next: Build39
         - Variable: $.python_version
-          StringEquals: "3.8"
+          StringEquals: "p3.8"
           Next: Build38
       Default: UnknownPythonVersion
     Build38:

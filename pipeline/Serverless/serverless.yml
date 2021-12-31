@@ -34,7 +34,6 @@ provider:
 custom:
   # Env
   awsRegion: ${self:provider.region} 
-  lambdaPrefix: ${ssm:/${self:service}/${self:provider.stage}/lambda_prefix}
   pipelineName: ${self:service}-${self:provider.stage}-pipeline
 
   # S3

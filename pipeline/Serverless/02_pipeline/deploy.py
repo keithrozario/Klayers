@@ -13,21 +13,22 @@ logger = Logger()
 import common.get_config as get_config
 
 
-def check_regions_to_deploy(package, requirements_hash, regions):
+def check_regions_to_deploy(package: str, requirements_hash: str, regions: list, python_version: str) -> list:
     """
     Args:
         package: Name of package to deploy
         requirements_hash: Hash of requirements.txt file
         regions: Total regions configured to deployed
+        python_version: version of python
     return:
-        regions_to_deploy(list): Regions where latest package doesn't match requirements_hash provided
+        regions_to_deploy: Regions where latest package doesn't match requirements_hash provided
     """
     table_name = os.environ["DB_NAME"]
     dynamodb = boto3.resource("dynamodb")
     table = dynamodb.Table(table_name)
     response = table.query(
-        IndexName="package_global",
-        KeyConditionExpression=Key("pckg").eq(package) & Key("dplySts").eq("latest"),
+        IndexName="package_global_by_python_version",
+        KeyConditionExpression=Key("pckg#PyVrsn").eq(f"{package}:{python_version}") & Key("dplySts").eq("latest"),
     )
 
     # check if there are any region in regions that aren't deployed
@@ -55,33 +56,37 @@ def check_regions_to_deploy(package, requirements_hash, regions):
     return regions_to_deploy
 
 
-def download_artifact(package_artifact):
+def download_artifact(zip_file_S3Key):
     """
-    Downloads s3://bucket_name/package_artifact to /tmp directory
+    Downloads s3://bucket_name/zip_file_S3Key to /tmp directory
+    Returns the full zip binary for easier upload
     """
 
     bucket_name = os.environ["BUCKET_NAME"]
     s3 = boto3.resource("s3")
+    tmp_file_path = "/tmp/package.zip"
 
+    logger.info(f"Downloading package from S3 : {zip_file_S3Key} to location: {tmp_file_path}")
     s3.meta.client.download_file(
-        bucket_name, package_artifact, f"/tmp/{package_artifact}"
+        bucket_name, zip_file_S3Key, tmp_file_path
     )
-    with open(f"/tmp/{package_artifact}", "rb") as zip_file:
+    logger.debug(f"Downloaded package from S3")
+    with open(tmp_file_path, "rb") as zip_file:
         zip_binary = zip_file.read()
-    logger.info(f"Package {package_artifact} downloaded")
 
     return zip_binary
 
 
-def get_requirements_txt(package):
+def get_requirements_txt(package:str , python_version: str) -> str:
     """
     Args:
         package: Name of package to query for
+        python_version: Version fo python used (e.g. 3.9, 3.8, 3.10)
     return:
-        requirements_txt (str): Requirements.txt of the package, or "null" ot not present
+        requirements_txt: Requirements.txt of the package, or "null" if not present
     """
 
-    build_v0 = "bldVrsn0#"
+    build_v0 = f"bldVrsn0#p{python_version}"
     sk = f"pckg#{package}"
 
     client = boto3.client("dynamodb")
@@ -103,17 +108,18 @@ def main(event, context):
     package = event["package"]
     version = event["version"]
     build_flag = event["build_flag"]
-    package_artifact = event["zip_file"]
+    zip_file_S3key = event["zip_file_S3key"]
     requirements_hash = event["requirements_hash"]
     license_info = event["license_info"]
     table_name = os.environ["DB_NAME"]
     expiry_days = int(os.environ["EXPIRY_DAYS"])
+    python_version = event['python_version']
 
     dynamo_client = boto3.client("dynamodb")
     deployed_flag = False
 
     # Check if need to deploy
-    regions_to_deploy = check_regions_to_deploy(package, requirements_hash, regions)
+    regions_to_deploy = check_regions_to_deploy(package=package, requirements_hash=requirements_hash, regions=regions, python_version=python_version)
     if len(regions_to_deploy) == 0:
         logger.info({"message": "No new regions to deploy to, terminating!"})
         return {
@@ -128,11 +134,11 @@ def main(event, context):
     )
 
     # Download Lambda Artifact
-    layer_name = f"{os.environ['LAMBDA_PREFIX']}{package}"
-    zip_binary = download_artifact(package_artifact)
+    layer_name = f"{os.environ['LAMBDA_PREFIX']}{python_version.replace('.','')}-{package}"
+    zip_binary = download_artifact(zip_file_S3key)
 
     # Get requirements txt
-    requirements_txt = get_requirements_txt(package)
+    requirements_txt = get_requirements_txt(package=package, python_version=python_version)
 
     for region in regions_to_deploy:
 
@@ -143,7 +149,7 @@ def main(event, context):
             LayerName=layer_name,
             Description=f"{package}=={version} | {requirements_hash}",
             Content={"ZipFile": zip_binary},
-            CompatibleRuntimes=["python3.6", "python3.7", "python3.8"],
+            CompatibleRuntimes=["python3.6", "python3.7", "python3.8", "python3.9"],
             LicenseInfo=license_info,
         )
         layer_version_arn = response["LayerVersionArn"]
@@ -156,6 +162,7 @@ def main(event, context):
                 "message": "Making Public",
                 "region": region,
                 "package": package,
+                "python_version": python_version,
                 "arn": layer_version_arn,
                 "created_date": layer_version_created_date,
             }
@@ -175,12 +182,13 @@ def main(event, context):
                 "region": region,
                 "package": package,
                 "arn": layer_version_arn,
+                "python_version": python_version,
             }
         )
 
-        pk = f"lyr#{region}.{package}"
+        pk = f"lyr#{region}:{package}:{python_version}"
         sk_v0 = "lyrVrsn0#"
-        sk = f"lyrVrsn#v{layer_version}"
+        sk = f"lyrVrsn#v{layer_version}:{python_version}"
         sk_previous = f"lyrVrsn#v{layer_version-1}"
 
         dynamo_client.transact_write_items(
@@ -195,7 +203,8 @@ def main(event, context):
                         "rqrmntsHsh = :rqrmntsHsh,"
                         "arn = :arn,"
                         "crtdDt = :crtdDt,"
-                        "lyrVrsn = :lyrVrsn",
+                        "lyrVrsn = :lyrVrsn,"
+                        "pyVrsn = :pyVrsn",
                         "ExpressionAttributeValues": {
                             ":rqrmntsTxt": {"S": requirements_txt},
                             ":crtdDt": {"S": layer_version_created_date},
@@ -203,6 +212,7 @@ def main(event, context):
                             ":rqrmntsHsh": {"S": requirements_hash},
                             ":arn": {"S": layer_version_arn},
                             ":lyrVrsn": {"N": str(layer_version)},
+                            ":pyVrsn": {"S": python_version},
                         },
                         # Allow update only if
                         # Current lyrVrsn is less than updated value
@@ -225,6 +235,9 @@ def main(event, context):
                             "rgn": {"S": region},
                             "dplySts": {"S": "latest"},
                             "lyrVrsn": {"N": str(layer_version)},
+                            "pyVrsn": {"S": python_version},
+                            "rgn#PyVrsn": {"S": f"{region}:{python_version}"},
+                            "pckg#PyVrsn":{"S": f"{package}:{python_version}"},
                         },
                     }
                 },
@@ -268,4 +281,5 @@ def main(event, context):
         "package": package,
         "version": version,
         "requirements_hash": requirements_hash,
+        "python_version": python_version,
     }

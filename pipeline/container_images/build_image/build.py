@@ -25,7 +25,7 @@ def put_requirements_hash(python_version: str, package: str, version: str, requi
     """
     Args:
       package: Package name
-      python_version: Version of python
+      python_version: Version of python "p<major>.<minor>" (e.g. p3.8, p3.9, p3.10)
       version: Package version
       requirements_hash: SHA256 hash of the requirements.txt file
       requirements_txt: requirements txt of the entire build
@@ -47,8 +47,7 @@ def put_requirements_hash(python_version: str, package: str, version: str, requi
     try:
         latest_version = response["Item"]["bltVrsn"]["S"]
         new_version = (
-            f"{build_version_prefix}#{python_version}#v\
-            {int(latest_version[len(build_version_prefix):])+1}"
+            f"{build_version_prefix}#{int(latest_version[len(build_version_prefix):])+1}:{python_version}"
         )
     except KeyError:
         # Version wasn't deployed before, start with v1
@@ -64,6 +63,7 @@ def put_requirements_hash(python_version: str, package: str, version: str, requi
         "bltVrsn": {"S": new_version},
         "crtdDt": {"S": created_date},
         "pckg": {"S": package},
+        "pyVrsn": {"S": python_version},
     }
 
     # Insert new record
@@ -79,13 +79,15 @@ def put_requirements_hash(python_version: str, package: str, version: str, requi
                         "pckgVrsn = :pckgVrsn, "
                         "rqrmntsHsh = :rqrmntsHsh,"
                         "bltVrsn = :bltVrsn,"
-                        "crtdDt = :crtdDt",
+                        "crtdDt = :crtdDt,"
+                        "pyVrsn = :pyVrsn",
                         "ExpressionAttributeValues": {
                             ":rqrmntsTxt": {"S": requirements_txt},
                             ":pckgVrsn": {"S": str(version)},
                             ":rqrmntsHsh": {"S": requirements_hash},
                             ":bltVrsn": {"S": new_version},
                             ":crtdDt": {"S": created_date},
+                            ":pyVrsn": {"S": python_version},
                         },
                         "ConditionExpression": "bltVrsn <> :bltVrsn",
                     }
@@ -112,7 +114,7 @@ def put_requirements_hash(python_version: str, package: str, version: str, requi
 def check_requirement_hash(package: str, python_version: str,requirements_hash):
     """
     Args:
-      python_version: Python Version to check for
+      python_version: Version of python (e.g. p3.8, p3.9, p3.10)
       package: Package name
       requirements_hash: SHA256 hash of the requirements.txt file
     returns:
@@ -266,7 +268,7 @@ def check_python_version(python_version: str) -> bool:
     return:
       True if matches running version, False otherwise
     """
-    running_python_version = f"{sys.version_info.major}.{sys.version_info.minor}"
+    running_python_version = f"p{sys.version_info.major}.{sys.version_info.minor}"
     if python_version == running_python_version:
         logger.debug(f"Python version supplied: {python_version}")
         logger.debug(f"Python version running: {sys.version_info}")
@@ -348,7 +350,7 @@ def main(event, context):
         )
 
     return {
-        "zip_file": uploaded_file_name,
+        "zip_file_S3key": uploaded_file_name,
         "package": package,
         "version": version,
         "requirements_hash": requirements_hash,

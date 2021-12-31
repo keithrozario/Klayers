@@ -48,7 +48,7 @@ layer_delete:
             - "*"  # need permissions to delete layers in other regions
             - Ref: AWS::AccountId
             - layer
-            - ${self:custom.lambdaPrefix}*  # prefix is different for different stages
+            - "*" # delete all layers
             - "*" # ability to delete any version
     - Effect: Allow
       Action:

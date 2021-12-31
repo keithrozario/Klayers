@@ -54,6 +54,8 @@ module "certificate" {
 }
 
 # High level parameters
+
+# Remove this layer in next version...
 resource "aws_ssm_parameter" "lambda_prefix" {
   type      = "String"
   name      = "/${lookup(var.app_name, local.workspace_full_name)}/${local.workspace_full_name}/lambda_prefix"

@@ -46,9 +46,9 @@ deploy:
   timeout: 600
   memorySize: 512
   environment:
-    LAMBDA_PREFIX: ${self:custom.lambdaPrefix}
+    LAMBDA_PREFIX: "Klayers-python"
     POWERTOOLS_SERVICE_NAME: Klayers.Deploy
-    EXPIRY_DAYS: 60
+    EXPIRY_DAYS: 180
   iamRoleStatementsName: ${self:provider.stage}-deploy
   iamRoleStatements:
     - Effect: Allow
@@ -59,7 +59,7 @@ deploy:
       - dynamodb:UpdateItem
       Resource: 
       - ${self:custom.dbArn}
-      - ${self:custom.dbArn}/index/package_global
+      - ${self:custom.dbArn}/index/package_global_by_python_version
     - Effect: Allow
       Action:
       - lambda:AddLayerVersionPermission
