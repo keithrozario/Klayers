@@ -17,9 +17,10 @@ def get_pk_sk_latest_build (package: str, python_version: str):
     build_v0_prefix = "bldVrsn0#"
     package_prefix = "pckg#"
     sk = {"S": f"{package_prefix}{package}"}
-    pk = {"S": f"{build_v0_prefix}#{python_version}#"}
+    pk = {"S": f"{build_v0_prefix}{python_version}"}
 
     return pk, sk
+
 
 def put_requirements_hash(python_version: str, package: str, version: str, requirements_txt: str, requirements_hash: str):
     """
@@ -47,7 +48,7 @@ def put_requirements_hash(python_version: str, package: str, version: str, requi
     try:
         latest_version = response["Item"]["bltVrsn"]["S"]
         new_version = (
-            f"{build_version_prefix}#{int(latest_version[len(build_version_prefix):])+1}:{python_version}"
+            f"{build_version_prefix}#v{int(latest_version[len(build_version_prefix):])+1}:{python_version}"
         )
     except KeyError:
         # Version wasn't deployed before, start with v1
