@@ -41,6 +41,13 @@ module "dynamo_table" {
   workspace_name     = local.workspace_full_name
 }
 
+module "dynamo_table_ver_2" {
+  source             = "./dynamodb"
+  table_logical_name = "db-ver2"
+  app_name           = lookup(var.app_name, local.workspace_full_name)
+  workspace_name     = local.workspace_full_name
+}
+
 module "certificate" {
   source          = "./certificate_manager"
   api_domain_name = lookup(var.api_domain_name, local.workspace_full_name)
