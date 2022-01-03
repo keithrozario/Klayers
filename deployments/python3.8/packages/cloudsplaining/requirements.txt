@@ -23,4 +23,4 @@ schema==0.7.5
 six==1.16.0
 soupsieve==2.3.1
 urllib3==1.26.7
-zipp==3.6.0
+zipp==3.7.0

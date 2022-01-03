@@ -1,7 +1,7 @@
 aiohttp==3.8.1
 aiosignal==1.2.0
 async-timeout==4.0.2
-attrs==21.2.0
+attrs==21.4.0
 charset-normalizer==2.0.9
 frozenlist==1.2.0
 idna==3.3

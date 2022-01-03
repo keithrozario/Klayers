@@ -2,7 +2,8 @@ boto3==1.20.26
 botocore==1.23.26
 jmespath==0.10.0
 python-dateutil==2.8.2
-rdk==0.8.2
+PyYAML==6.0
+rdk==0.8.3
 rdklib==0.2.0
 s3transfer==0.5.0
 six==1.16.0

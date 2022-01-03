@@ -13,7 +13,7 @@ lxml==4.7.1
 ntlm-auth==1.5.0
 oauthlib==3.1.1
 pycparser==2.21
-Pygments==2.10.0
+Pygments==2.11.1
 pytz-deprecation-shim==0.1.0.post0
 requests==2.26.0
 requests-ntlm==1.1.0

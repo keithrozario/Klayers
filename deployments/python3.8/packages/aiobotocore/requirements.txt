@@ -3,7 +3,7 @@ aiohttp==3.8.1
 aioitertools==0.8.0
 aiosignal==1.2.0
 async-timeout==4.0.2
-attrs==21.2.0
+attrs==21.4.0
 botocore==1.23.24
 charset-normalizer==2.0.9
 frozenlist==1.2.0
