@@ -46,7 +46,6 @@ deploy:
   timeout: 600
   memorySize: 512
   environment:
-    LAMBDA_PREFIX: "Klayers-python"
     POWERTOOLS_SERVICE_NAME: Klayers.Deploy
     EXPIRY_DAYS: 180
   iamRoleStatementsName: ${self:provider.stage}-deploy
@@ -80,7 +79,7 @@ deploy:
 build39:
   description: Builds the package in a container for python3.9 then uploads to S3
   image:
-    name: buildImage
+    name: build_image
     command:
       - build.main
   timeout: 600

@@ -10,7 +10,7 @@ from aws_lambda_powertools.logging import Logger
 
 logger = Logger()
 
-import common.get_config as get_config
+from common.get_config import get_config_items
 
 
 def check_regions_to_deploy(package: str, requirements_hash: str, regions: list, python_version: str) -> list:
@@ -86,7 +86,7 @@ def get_requirements_txt(package:str , python_version: str) -> str:
         requirements_txt: Requirements.txt of the package, or "null" if not present
     """
 
-    build_v0 = f"bldVrsn0#p{python_version}"
+    build_v0 = f"bldVrsn0#{python_version}"
     sk = f"pckg#{package}"
 
     client = boto3.client("dynamodb")
@@ -103,8 +103,6 @@ def get_requirements_txt(package:str , python_version: str) -> str:
 @logger.inject_lambda_context
 def main(event, context):
 
-    regions = get_config.get_aws_regions()
-
     package = event["package"]
     version = event["version"]
     build_flag = event["build_flag"]
@@ -115,11 +113,20 @@ def main(event, context):
     expiry_days = int(os.environ["EXPIRY_DAYS"])
     python_version = event['python_version']
 
+    regions = get_config_items(
+        config_type='rgns',
+        python_version=python_version
+    )
     dynamo_client = boto3.client("dynamodb")
     deployed_flag = False
 
     # Check if need to deploy
-    regions_to_deploy = check_regions_to_deploy(package=package, requirements_hash=requirements_hash, regions=regions, python_version=python_version)
+    regions_to_deploy = check_regions_to_deploy(
+        package=package,
+        requirements_hash=requirements_hash,
+        regions=regions,
+        python_version=python_version
+    )
     if len(regions_to_deploy) == 0:
         logger.info({"message": "No new regions to deploy to, terminating!"})
         return {
@@ -134,7 +141,7 @@ def main(event, context):
     )
 
     # Download Lambda Artifact
-    layer_name = f"{os.environ['LAMBDA_PREFIX']}{python_version.replace('.','')}-{package}"
+    layer_name = f"{os.environ['LAMBDA_LAYER_PREFIX']}{python_version.replace('.','')}-{package}"
     zip_binary = download_artifact(zip_file_S3key)
 
     # Get requirements txt
@@ -188,8 +195,18 @@ def main(event, context):
 
         pk = f"lyr#{region}:{package}:{python_version}"
         sk_v0 = "lyrVrsn0#"
-        sk = f"lyrVrsn#v{layer_version}:{python_version}"
-        sk_previous = f"lyrVrsn#v{layer_version-1}"
+        # This version is different from the Lambda Layer Version -- this is the Klayer Version
+        try:
+            layer_version = dynamo_client.get_item(
+                TableName=table_name,
+                Key={"pk": {"S": pk}, "sk": {"S": sk_v0}, },
+                ProjectionExpression="lyrVrsn",
+            )['Item']['lyrVrsn']['N']
+            new_layer_version = int(layer_version) + 1
+        except KeyError:
+            new_layer_version = 1
+        sk = f"lyrVrsn#v{new_layer_version}"
+        sk_previous = f"lyrVrsn#v{new_layer_version-1}"
 
         dynamo_client.transact_write_items(
             TransactItems=[
@@ -211,7 +228,7 @@ def main(event, context):
                             ":pckgVrsn": {"S": version},
                             ":rqrmntsHsh": {"S": requirements_hash},
                             ":arn": {"S": layer_version_arn},
-                            ":lyrVrsn": {"N": str(layer_version)},
+                            ":lyrVrsn": {"N": str(new_layer_version)},
                             ":pyVrsn": {"S": python_version},
                         },
                         # Allow update only if
@@ -234,16 +251,16 @@ def main(event, context):
                             "pckg": {"S": package},
                             "rgn": {"S": region},
                             "dplySts": {"S": "latest"},
-                            "lyrVrsn": {"N": str(layer_version)},
+                            "lyrVrsn": {"N": str(new_layer_version)},
                             "pyVrsn": {"S": python_version},
                             "rgn#PyVrsn": {"S": f"{region}:{python_version}"},
-                            "pckg#PyVrsn":{"S": f"{package}:{python_version}"},
+                            "pckg#PyVrsn": {"S": f"{package}:{python_version}"},
                         },
                     }
                 },
             ]
         )
-        if layer_version > 1:
+        if new_layer_version > 1:
             logger.info(
                 {
                     "message": "Updating Expiry on previous version",
@@ -268,8 +285,8 @@ def main(event, context):
                     logger.warning(
                         {
                             "message": "Conditional Check failed",
-                            "layer_version": layer_version,
-                            "sk": sk_previous,
+                            "new_layer_version": new_layer_version,
+                            "sk_previous": sk_previous,
                         }
                     )
         deployed_flag = True

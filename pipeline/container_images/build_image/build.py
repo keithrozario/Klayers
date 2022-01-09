@@ -190,15 +190,15 @@ def upload_to_s3(zip_file, package, uploaded_file_name):
 
     client = boto3.client("s3")
     response = client.list_objects_v2(Bucket=bucket_name, Prefix=package)
-
-    logger.info(
-        {
-            "message": f"Uploaded {package}.zip",
-            "size": response["Contents"][0]["Size"],
-            "time": response["Contents"][0]["LastModified"],
-            "bucket": bucket_name,
-        }
-    )
+    logger.info(response)
+    # logger.info(
+    #     {
+    #         "message": f"Uploaded {package}.zip",
+    #         "size": response["Contents"][0]["Size"],
+    #         "time": response["Contents"][0]["LastModified"],
+    #         "bucket": bucket_name,
+    #     }
+    # )
 
     return uploaded_file_name
 
@@ -261,6 +261,7 @@ def install(package, package_dir):
     logger.info(output)
 
     return package_dir
+
 
 def check_python_version(python_version: str) -> bool:
     """"

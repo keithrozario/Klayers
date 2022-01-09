@@ -19,8 +19,10 @@ invoke_pipeline:
               - Ref: AWS::AccountId
               - event-bus/default
     - Effect: Allow
-      Action: s3:GetObject
-      Resource: ${self:custom.s3LayersArn}/*
+      Action:
+      - dynamodb:GetItem
+      Resource:
+      - ${self:custom.dbArn}
   layers:
     - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPython:6
 
@@ -32,16 +34,15 @@ download_config:
   timeout: 60
   environment:
     POWERTOOLS_SERVICE_NAME: Klayers.download_config
+    GITHUB_REPO: ${self:custom.githubRepo}
   iamRoleStatementsName: ${self:provider.stage}-download_config
   iamRoleStatements:
     - Effect: Allow
       Action:
-        - s3:GetObject
-        - s3:PutObject
+      - dynamodb:PutItem
       Resource:
-        - ${self:custom.s3LayersArn}/config/*
+      - ${self:custom.dbArn}
   layers:
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-lambda-cache:1
     - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-requests:26
     - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPython:6 
 

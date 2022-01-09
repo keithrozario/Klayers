@@ -20,6 +20,7 @@ provider:
     DB_NAME: ${self:custom.dbName}
     BUCKET_NAME: ${self:custom.s3LayersName}
     POWERTOOLS_SERVICE_NAME: ${self:provider.stage}
+    LAMBDA_LAYER_PREFIX: "Klayers-"
   logs:
     httpApi: true
   httpApi:
@@ -28,7 +29,7 @@ provider:
     useCloudFormation: true
   ecr:
     images:
-      buildImage:
+      build_image:
         path: ../container_images/build_image
   
 custom:
@@ -41,10 +42,10 @@ custom:
   s3LayersArn: ${ssm:/${self:service}/${self:provider.stage}/layers_bucket/arn}
 
   # DynamoDB
-  dbName: ${ssm:/${self:service}/${self:provider.stage}/db/name}
-  dbArn: ${ssm:/${self:service}/${self:provider.stage}/db/arn}
-  dbStreamLabel: ${ssm:/${self:service}/${self:provider.stage}/db/stream/label}
-  dbStreamArn: ${ssm:/${self:service}/${self:provider.stage}/db/stream/arn}
+  dbName: ${ssm:/${self:service}/${self:provider.stage}/db-ver2/name}
+  dbArn: ${ssm:/${self:service}/${self:provider.stage}/db-ver2/arn}
+  dbStreamLabel: ${ssm:/${self:service}/${self:provider.stage}/db-ver2/stream/label}
+  dbStreamArn: ${ssm:/${self:service}/${self:provider.stage}/db-ver2/stream/arn}
 
   # Github
   githubSSHKeyParameter: /${self:service}/${self:provider.stage}/github_ssh_key

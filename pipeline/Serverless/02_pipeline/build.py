@@ -38,20 +38,18 @@ def put_requirements_hash(python_version: str, package: str, version: str, requi
     pk, sk = get_pk_sk_latest_build(package, python_version)
 
     # Get latest build version for package
-    build_version_prefix = "bld#"
+    build_version_prefix = "bld#v"
     response = client.get_item(
         TableName=table_name,
         Key={"pk": pk, "sk": sk},
         ProjectionExpression="bltVrsn",
     )
     try:
-        latest_version = response["Item"]["bltVrsn"]["S"]
-        new_version = (
-            f"{build_version_prefix}#v{int(latest_version[len(build_version_prefix):])+1}:{python_version}"
-        )
+        latest_version = int(response["Item"]["bltVrsn"]["N"])
+        new_version = latest_version + 1
     except KeyError:
         # Version wasn't deployed before, start with v1
-        new_version = f"{build_version_prefix}1"
+        new_version = 1
 
     created_date = datetime.utcnow().isoformat()
     Item = {
@@ -60,7 +58,7 @@ def put_requirements_hash(python_version: str, package: str, version: str, requi
         "pckgVrsn": {"S": str(version)},
         "rqrmntsTxt": {"S": requirements_txt},
         "rqrmntsHsh": {"S": requirements_hash},
-        "bltVrsn": {"S": new_version},
+        "bltVrsn": {"N": str(new_version)},
         "crtdDt": {"S": created_date},
         "pckg": {"S": package},
         "pyVrsn": {"S": python_version},
@@ -85,7 +83,7 @@ def put_requirements_hash(python_version: str, package: str, version: str, requi
                             ":rqrmntsTxt": {"S": requirements_txt},
                             ":pckgVrsn": {"S": str(version)},
                             ":rqrmntsHsh": {"S": requirements_hash},
-                            ":bltVrsn": {"S": new_version},
+                            ":bltVrsn": {"N": str(new_version)},
                             ":crtdDt": {"S": created_date},
                             ":pyVrsn": {"S": python_version},
                         },
@@ -188,8 +186,8 @@ def upload_to_s3(zip_file, package, uploaded_file_name):
     s3.meta.client.upload_file(zip_file, bucket_name, uploaded_file_name)
 
     client = boto3.client("s3")
-    response = client.list_objects_v2(Bucket=bucket_name, Prefix=package)
-
+    response = client.list_objects_v2(Bucket=bucket_name, Prefix=uploaded_file_name)
+    logger.info(response)
     logger.info(
         {
             "message": f"Uploaded {package}.zip",
@@ -261,6 +259,7 @@ def install(package, package_dir):
 
     return package_dir
 
+
 def check_python_version(python_version: str) -> bool:
     """"
     Args:
@@ -279,7 +278,6 @@ def check_python_version(python_version: str) -> bool:
         logger.error(f"Python version running: {running_python_version}")
         return False
     
-
 
 @logger.inject_lambda_context
 def main(event, context):
