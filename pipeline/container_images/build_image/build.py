@@ -12,8 +12,7 @@ from aws_lambda_powertools.logging import Logger
 logger = Logger()
 
 
-def get_pk_sk_latest_build (package: str, python_version: str):
-    
+def get_pk_sk_latest_build(package: str, python_version: str):
     build_v0_prefix = "bldVrsn0#"
     package_prefix = "pckg#"
     sk = {"S": f"{package_prefix}{package}"}
@@ -22,7 +21,8 @@ def get_pk_sk_latest_build (package: str, python_version: str):
     return pk, sk
 
 
-def put_requirements_hash(python_version: str, package: str, version: str, requirements_txt: str, requirements_hash: str):
+def put_requirements_hash(python_version: str, package: str, version: str, requirements_txt: str,
+                          requirements_hash: str):
     """
     Args:
       package: Package name
@@ -39,29 +39,27 @@ def put_requirements_hash(python_version: str, package: str, version: str, requi
     pk, sk = get_pk_sk_latest_build(package, python_version)
 
     # Get latest build version for package
-    build_version_prefix = "bld#"
+    build_version_prefix = "bld#v"
     response = client.get_item(
         TableName=table_name,
         Key={"pk": pk, "sk": sk},
         ProjectionExpression="bltVrsn",
     )
     try:
-        latest_version = response["Item"]["bltVrsn"]["S"]
-        new_version = (
-            f"{build_version_prefix}#v{int(latest_version[len(build_version_prefix):])+1}:{python_version}"
-        )
+        latest_version = int(response["Item"]["bltVrsn"]["N"])
+        new_version = latest_version + 1
     except KeyError:
         # Version wasn't deployed before, start with v1
-        new_version = f"{build_version_prefix}1"
+        new_version = 1
 
     created_date = datetime.utcnow().isoformat()
     Item = {
-        "pk": {"S": new_version},
+        "pk": {"S": f"{build_version_prefix}{new_version}:{python_version}"},
         "sk": sk,
         "pckgVrsn": {"S": str(version)},
         "rqrmntsTxt": {"S": requirements_txt},
         "rqrmntsHsh": {"S": requirements_hash},
-        "bltVrsn": {"S": new_version},
+        "bltVrsn": {"N": str(new_version)},
         "crtdDt": {"S": created_date},
         "pckg": {"S": package},
         "pyVrsn": {"S": python_version},
@@ -74,26 +72,26 @@ def put_requirements_hash(python_version: str, package: str, version: str, requi
                 {
                     "Update": {
                         "TableName": table_name,
-                        "Key": {"pk": pk, "sk": sk,},
+                        "Key": {"pk": pk, "sk": sk, },
                         "UpdateExpression": "set "
-                        "rqrmntsTxt = :rqrmntsTxt, "
-                        "pckgVrsn = :pckgVrsn, "
-                        "rqrmntsHsh = :rqrmntsHsh,"
-                        "bltVrsn = :bltVrsn,"
-                        "crtdDt = :crtdDt,"
-                        "pyVrsn = :pyVrsn",
+                                            "rqrmntsTxt = :rqrmntsTxt, "
+                                            "pckgVrsn = :pckgVrsn, "
+                                            "rqrmntsHsh = :rqrmntsHsh,"
+                                            "bltVrsn = :bltVrsn,"
+                                            "crtdDt = :crtdDt,"
+                                            "pyVrsn = :pyVrsn",
                         "ExpressionAttributeValues": {
                             ":rqrmntsTxt": {"S": requirements_txt},
                             ":pckgVrsn": {"S": str(version)},
                             ":rqrmntsHsh": {"S": requirements_hash},
-                            ":bltVrsn": {"S": new_version},
+                            ":bltVrsn": {"N": str(new_version)},
                             ":crtdDt": {"S": created_date},
                             ":pyVrsn": {"S": python_version},
                         },
                         "ConditionExpression": "bltVrsn <> :bltVrsn",
                     }
                 },
-                {"Put": {"TableName": table_name, "Item": Item,}},
+                {"Put": {"TableName": table_name, "Item": Item, }},
             ]
         )
         logger.info({"message": "Successfully written", "item": Item})
@@ -112,7 +110,7 @@ def put_requirements_hash(python_version: str, package: str, version: str, requi
     return None
 
 
-def check_requirement_hash(package: str, python_version: str,requirements_hash):
+def check_requirement_hash(package: str, python_version: str, requirements_hash):
     """
     Args:
       python_version: Version of python (e.g. p3.8, p3.9, p3.10)
@@ -133,7 +131,7 @@ def check_requirement_hash(package: str, python_version: str,requirements_hash):
     )
 
     if requirements_hash == response.get("Item", {}).get("rqrmntsHsh", {}).get(
-        "S", False
+            "S", False
     ):
         hash_match = True
     else:
@@ -189,16 +187,16 @@ def upload_to_s3(zip_file, package, uploaded_file_name):
     s3.meta.client.upload_file(zip_file, bucket_name, uploaded_file_name)
 
     client = boto3.client("s3")
-    response = client.list_objects_v2(Bucket=bucket_name, Prefix=package)
+    response = client.list_objects_v2(Bucket=bucket_name, Prefix=uploaded_file_name)
     logger.info(response)
-    # logger.info(
-    #     {
-    #         "message": f"Uploaded {package}.zip",
-    #         "size": response["Contents"][0]["Size"],
-    #         "time": response["Contents"][0]["LastModified"],
-    #         "bucket": bucket_name,
-    #     }
-    # )
+    logger.info(
+        {
+            "message": f"Uploaded {package}.zip",
+            "size": response["Contents"][0]["Size"],
+            "time": response["Contents"][0]["LastModified"],
+            "bucket": bucket_name,
+        }
+    )
 
     return uploaded_file_name
 
@@ -280,12 +278,10 @@ def check_python_version(python_version: str) -> bool:
         logger.error(f"Python version supplied: {python_version}")
         logger.error(f"Python version running: {running_python_version}")
         return False
-    
 
 
 @logger.inject_lambda_context
 def main(event, context):
-
     package = event["package"]
     license_info = event["license_info"]
     python_version = event["python_version"]
@@ -310,7 +306,7 @@ def main(event, context):
         requirements_file.write(requirements_txt)
     zip_file = zip_dir(dir_path=package_dir, package=package)
 
-    if not check_requirement_hash(package=package, 
+    if not check_requirement_hash(package=package,
                                   requirements_hash=requirements_hash,
                                   python_version=python_version):
         logger.info(

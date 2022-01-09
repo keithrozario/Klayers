@@ -53,7 +53,7 @@ def put_requirements_hash(python_version: str, package: str, version: str, requi
 
     created_date = datetime.utcnow().isoformat()
     Item = {
-        "pk": {"S": new_version},
+        "pk": {"S": f"{build_version_prefix}{new_version}:{python_version}"},
         "sk": sk,
         "pckgVrsn": {"S": str(version)},
         "rqrmntsTxt": {"S": requirements_txt},
