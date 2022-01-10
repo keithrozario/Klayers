@@ -1,1 +1,1 @@
-jellyfish==0.8.9
+jellyfish==0.9.0
