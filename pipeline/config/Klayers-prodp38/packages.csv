@@ -95,3 +95,4 @@ opensearch-py,Apache-2.0,Aleksei Atavin <axeo@aiven.io>;Rushi Agrawal	<rushi.agr
 xarray, Apache License V2.0, Xarray <xarray-core-team@googlegroups.com>
 gdal, MIT, Gdal <gdal-dev-owner@lists.osgeo.org>
 tradologics, Apache Software License (Apache 2.0), opensource@tradologics.com
+pygsheets,MIT,Nithin Murali <imnmfotmal@gmail.com>
