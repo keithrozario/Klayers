@@ -13,13 +13,13 @@ beautifulsoup4,MIT,Leonard Richardson <leonardr@segfault.org>
 black,MIT,Lukasz Langa <lukasz@langa.pl>
 boltons,BSD,Mahmoud Hashemi <mahmoud@hatnote.com>
 boto3,Apache-2.0,AWS
-Cerberus, ISC, Frank Sachsenheim <funkyfuture@riseup.net>
-chevron, MIT, Noah Morrison <noah@morrison.ph>
+Cerberus,ISC,Frank Sachsenheim <funkyfuture@riseup.net>
+chevron,MIT,Noah Morrison <noah@morrison.ph>
 cloudsplaining, MIT, Kinnaird McQuade <kinnairdm@gmail.com>
 construct,MIT,Arkadiusz Bulski<arek.bulski@gmail.com>; Tomer Filiba <tomerfiliba@gmail.com>; Corbin Simpson <MostAwesomeDude@gmail.com>
 crhelper,Apache-2.0,Jay McConnell <jmmccon@amazon.com>
-cryptography, Apache-2.0, The Python Cryptographic Authority and individual contributors <cryptography-dev@python.org>
-datadog,BSD, Datadog Inc <dev@datadoghq.com>
+cryptography,Apache-2.0,The Python Cryptographic Authority and individual contributors <cryptography-dev@python.org>
+datadog,BSD,Datadog Inc <dev@datadoghq.com>
 dynamodb-encryption-sdk,Apache-2.0,<aws-cryptools@amazon.com>
 elasticsearch,Apache-2.0,Honza Kral <honza.kral@gmail.com>; Nick Lang <nick@nicklang.com>
 envelopes,MIT,tomekwojcik <tomek@bthlabs.pl>
@@ -37,12 +37,12 @@ jellyfish,BSD, James Turk
 jinja2,BSD,Armin Ronache <armin.ronacher@active-4.com>; Pallets <contact@palletsprojects.com>
 jsonschema,MIT,Julian Berman <Julian@GrayVines.com>
 kafka-python,Apache-2.0,Dana Powers <dana.powers@gmail.com>
-lambda-cache, MIT, Keith Rozario <keith@keithrozario.com>
-lambda-decorators, MIT, Daniel Schep <dschep@gmail.com>
+lambda-cache,MIT,Keith Rozario <keith@keithrozario.com>
+lambda-decorators,MIT,Daniel Schep <dschep@gmail.com>
 ldap3,LGPLv3, Giovanni Cannata <cannatag@gmail.com>
 langdetect,Apache-2.0,Michal Mimino Danilak <michal.danilak@gmail.com>
-loguru,MIT, Delgan <delgan.py@gmail.com>
-lxml, BSD, <lxml-dev@lxml.de>
+loguru,MIT,Delgan <delgan.py@gmail.com>
+lxml,BSD,<lxml-dev@lxml.de>
 matplotlib,PSF,matplotlib-users@python.org
 mpld3,BSD,<jakevdp@cs.washington.edu>
 nltk,Apache-2.0,Steven Bird <stevenbird1@gmail.com>
@@ -83,8 +83,8 @@ slackclient,MIT,slack <opensource@slack.com>
 spacy,MIT,contact@explosion.ai
 spacy_syllables, MIT, Bright Effect <developer@brighteffect.io>
 SQLAlchemy,MIT,Mike Bayer <mike_mp@zzzcomputing.com>
-tablib, MIT, Kenneth Reitz <me@kennethreitz.org>
-textdistance,MIT, orsinium <master_fess@mail.ru>
+tablib,MIT,Kenneth Reitz <me@kennethreitz.org>
+textdistance,MIT,orsinium <master_fess@mail.ru>
 tinydb,MIT,Markus Siemens <markus@m-siemens.de>
 tldextract,BSD,John Kurkowski <john.kurkowski@gmail.com>
 translate,MIT,Terry Yin <terry.yinze@gmail.com>
@@ -92,7 +92,7 @@ twilio,MIT,twilio <help@twilio.com>
 dropbox,MIT,Dropbox <dev-platform@dropbox.com>
 praw,BSD,Bryce Boe <bbzbryce@gmail.com>
 opensearch-py,Apache-2.0,Aleksei Atavin <axeo@aiven.io>;Rushi Agrawal	<rushi.agr@gmail.com>; Shephali Mittal <shephali.mittal1995@gmail.com>
-xarray, Apache License V2.0, Xarray <xarray-core-team@googlegroups.com>
-gdal, MIT, Gdal <gdal-dev-owner@lists.osgeo.org>
-tradologics, Apache Software License (Apache 2.0), opensource@tradologics.com
+xarray,Apache License V2.0,Xarray <xarray-core-team@googlegroups.com>
+gdal,MIT,Gdal <gdal-dev-owner@lists.osgeo.org>
+tradologics,Apache Software License (Apache 2.0),opensource@tradologics.com
 pygsheets,MIT,Nithin Murali <imnmfotmal@gmail.com>
