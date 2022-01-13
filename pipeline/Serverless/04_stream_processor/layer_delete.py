@@ -15,7 +15,7 @@ def main(event, context):
     return
 
 
-def remove(record):
+def remove(record: dict) -> None:
     """
     Deletes lambda_layer_arn from account.
     record: record from DynamoDB Table
@@ -23,16 +23,18 @@ def remove(record):
 
     old_image = record["dynamodb"]["OldImage"]
     layer_version_arn = old_image["arn"]["S"]
-    deploy_status = old_image["dplySts"][
-        "S"
-    ]  # to see if it's a arn record, Key error otherwise
-    logger.info(
-        {
-            "message": "Deleting",
-            "layer_arn": layer_version_arn,
-            "deploy_status": deploy_status,
-        }
-    )
+    try:
+        deploy_status = old_image["dplySts"]["S"]
+        logger.info(
+            {
+                "message": "Deleting",
+                "layer_arn": layer_version_arn,
+                "deploy_status": deploy_status,
+            }
+        )
+    except KeyError:
+        return None
+
     arn_elements = layer_version_arn.split(":")
     region = arn_elements[3]
     layer_name = arn_elements[6]
@@ -43,13 +45,13 @@ def remove(record):
     insert_expired_record(old_image)
     client.delete_layer_version(LayerName=layer_name, VersionNumber=layer_version)
     logger.info(
-        {"message": "Deleted Layer", "arn": layer_version_arn,}
+        {"message": "Deleted Layer", "arn": layer_version_arn, }
     )
 
     return
 
 
-def insert_expired_record(old_image):
+def insert_expired_record(old_image: dict) -> None:
     """
     Inserts a expired record back to DB, removing the dplySts, and entering a deleted date
     """
@@ -58,7 +60,7 @@ def insert_expired_record(old_image):
     old_image["dltdDt"] = {"S": datetime.utcnow().isoformat()}
 
     try:
-        del old_image["exDt"]
+        del old_image["exDt"]  # deleted image should have an expiry date
     except KeyError:
         logger.warning("Image doesn't have exDt entry")
 
