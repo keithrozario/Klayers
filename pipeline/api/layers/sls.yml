@@ -11,11 +11,12 @@ arn_by_regions:
   - Effect: Allow
     Action:
     - dynamodb:Query
-    Resource: ${self:custom.dbArn}/index/deployed_in_region
+    Resource: ${self:custom.dbArn}/index/deployed_in_region_by_python_version
   layers:
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:32
+    - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPython:6
   events:
     - httpApi: 'GET /api/v1/layers/latest/{region}'
+    - httpApi: 'GET /api/v2/{python_version}/layers/latest/{region}'
 
 arn_by_package_region:
   handler: layers/latest_region_package.main
@@ -32,9 +33,10 @@ arn_by_package_region:
     - dynamodb:GetItem
     Resource: ${self:custom.dbArn}
   layers:
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:32
+    - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPython:6
   events:
     - httpApi: 'GET /api/v1/layers/latest/{region}/{package}'
+    - httpApi: 'GET /api/v2/{python_version}/layers/latest/{region}/{package}'
 
 list_layers:
   handler: layers/list_layer_version.main
@@ -51,6 +53,7 @@ list_layers:
     - dynamodb:Query
     Resource: ${self:custom.dbArn}
   layers:
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:32
+    - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPython:6
   events:
     - httpApi: 'GET /api/v1/layers/{region}/{package}'
+    - httpApi: 'GET /api/v2/{python_version}/layers/{region}/{package}'

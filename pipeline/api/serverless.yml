@@ -1,4 +1,6 @@
 service: api
+projectDir: ../
+variablesResolutionMode: 20210326
 
 plugins:
   - serverless-iam-roles-per-function
@@ -30,8 +32,8 @@ custom:
   s3LayersArn: ${ssm:/${self:custom.appName}/${self:provider.stage}/layers_bucket/arn}
 
   # DynamoDB
-  dbName: ${ssm:/${self:custom.appName}/${self:provider.stage}/db/name}
-  dbArn: ${ssm:/${self:custom.appName}/${self:provider.stage}/db/arn}
+  dbName: ${ssm:/${self:custom.appName}/${self:provider.stage}/db-ver2/name}
+  dbArn: ${ssm:/${self:custom.appName}/${self:provider.stage}/db-ver2/arn}
 
   # Cloudformation
   apiCertArn: ${ssm:/${self:custom.appName}/${self:provider.stage}/api/cert/arn}

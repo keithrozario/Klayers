@@ -10,11 +10,16 @@ import time
 profile = 'KlayersDev'
 
 # config = {"table_name": "kl.Klayers-prodp38.db", "region": "us-east-2"}
-# config = {'table_name': 'kl.Klayers-devp38.db', 'region': 'us-west-2'}
-config = {'bucket': 'klayers-bucket-defaultp38',
-          'table_name_source': 'kl.Klayers-defaultp38.db',
-          'table_name_dest': 'kl.Klayers-defaultp38.db-ver2',
-          'region': 'ap-southeast-1'}
+config = {'bucket': 'klayers-bucket--devp38',
+          'table_name_source': 'kl.Klayers-devp38.db',
+          'region': 'us-west-2',
+          'table_name_dest': 'kl.Klayers-devp38.db-ver2'}
+
+# config = {'bucket': 'klayers-bucket-defaultp38',
+#           'table_name_source': 'kl.Klayers-defaultp38.db',
+#           'table_name_dest': 'kl.Klayers-defaultp38.db-ver2',
+#           'region': 'ap-southeast-1'}
+
 session = boto3.session.Session(profile_name=profile, region_name=config["region"])
 error_file = "error_items.jsonl"
 
@@ -162,15 +167,14 @@ if __name__ == "__main__":
     download_directory = "downloads"
     output_directory = "output"
 
-    # shutil.rmtree(download_directory)
-    # os.mkdir(download_directory)
-    # shutil.rmtree(output_directory)
-    # os.mkdir(output_directory)
-    # client_token = datetime.datetime.now().isoformat()
-    # s3_prefix = export_to_s3(client_token=client_token)
+    shutil.rmtree(download_directory)
+    os.mkdir(download_directory)
+    shutil.rmtree(output_directory)
+    os.mkdir(output_directory)
+    client_token = datetime.datetime.now().isoformat()
+    s3_prefix = export_to_s3(client_token=client_token)
 
-    # s3_prefix = "AWSDynamoDBBackups/2022-01-05T11:23:10.933506"
-    # download_objects_from_s3(s3_prefix=s3_prefix)
+    download_objects_from_s3(s3_prefix=s3_prefix)
 
     downloaded_jsons = os.listdir("downloads")
 
