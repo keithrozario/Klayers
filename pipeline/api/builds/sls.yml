@@ -16,3 +16,4 @@ list_builds:
     - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPython:6
   events:
     - httpApi: 'GET /api/v1/builds/latest'
+    - httpApi: 'GET /api/v2/{python_version}/builds/latest'

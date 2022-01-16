@@ -14,6 +14,7 @@ def main(event, context):
     Args:
         event.pathParameter.region: AWS region
         event.pathParameter.package: Python Package
+        event.pathParameter.python_version: Python Version (e.g. p3.8, p3.9)
     returns:
         api_response: Dictionary containing, region, package, arn and requirements.txt data
     """
@@ -22,8 +23,9 @@ def main(event, context):
     table = dynamodb.Table(os.environ["DB_NAME"])
     region = event.get("pathParameters").get("region")
     package = event.get("pathParameters").get("package")
+    python_version = event.get("pathParameters").get("python_version", "p3.8")
 
-    pk = f"lyr#{region}.{package}"
+    pk = f"lyr#{region}:{package}:{python_version}"
     sk = "lyrVrsn0#"
 
     try:
@@ -44,7 +46,7 @@ def main(event, context):
     return {
         "statusCode": 200,
         "headers": {
-            "Content-Type" : "application/json"
+            "Content-Type": "application/json"
         },
         "body": json.dumps(api_response),
     }
