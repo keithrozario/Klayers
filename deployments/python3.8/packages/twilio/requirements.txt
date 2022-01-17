@@ -4,5 +4,5 @@ idna==3.3
 PyJWT==2.3.0
 pytz==2021.3
 requests==2.27.1
-twilio==7.4.0
+twilio==7.5.0
 urllib3==1.26.8
