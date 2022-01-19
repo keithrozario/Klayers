@@ -94,5 +94,5 @@ xarray,Apache License V2.0,Xarray <xarray-core-team@googlegroups.com>
 gdal,MIT,Gdal <gdal-dev-owner@lists.osgeo.org>
 tradologics,Apache Software License (Apache 2.0),opensource@tradologics.com
 pygsheets,MIT,Nithin Murali <imnmfotmal@gmail.com>
-ccxt, MIT License (MIT), igor.kroitor@gmail.com
-pybit, MIT License (MIT License), verata@pm.me
+ccxt,MIT License (MIT),igor.kroitor@gmail.com
+pybit,MIT License (MIT License),verata@pm.me
