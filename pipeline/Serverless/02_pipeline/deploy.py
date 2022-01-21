@@ -13,7 +13,9 @@ logger = Logger()
 from common.get_config import get_config_items
 
 
-def check_regions_to_deploy(package: str, requirements_hash: str, regions: list, python_version: str) -> list:
+def check_regions_to_deploy(
+    package: str, requirements_hash: str, regions: list, python_version: str
+) -> list:
     """
     Args:
         package: Name of package to deploy
@@ -28,7 +30,8 @@ def check_regions_to_deploy(package: str, requirements_hash: str, regions: list,
     table = dynamodb.Table(table_name)
     response = table.query(
         IndexName="package_global_by_python_version",
-        KeyConditionExpression=Key("pckg#PyVrsn").eq(f"{package}:{python_version}") & Key("dplySts").eq("latest"),
+        KeyConditionExpression=Key("pckg#PyVrsn").eq(f"{package}:{python_version}")
+        & Key("dplySts").eq("latest"),
     )
 
     # check if there are any region in regions that aren't deployed
@@ -66,10 +69,10 @@ def download_artifact(zip_file_S3Key):
     s3 = boto3.resource("s3")
     tmp_file_path = "/tmp/package.zip"
 
-    logger.info(f"Downloading package from S3 : {zip_file_S3Key} to location: {tmp_file_path}")
-    s3.meta.client.download_file(
-        bucket_name, zip_file_S3Key, tmp_file_path
+    logger.info(
+        f"Downloading package from S3 : {zip_file_S3Key} to location: {tmp_file_path}"
     )
+    s3.meta.client.download_file(bucket_name, zip_file_S3Key, tmp_file_path)
     logger.debug(f"Downloaded package from S3")
     with open(tmp_file_path, "rb") as zip_file:
         zip_binary = zip_file.read()
@@ -77,7 +80,7 @@ def download_artifact(zip_file_S3Key):
     return zip_binary
 
 
-def get_requirements_txt(package:str , python_version: str) -> str:
+def get_requirements_txt(package: str, python_version: str) -> str:
     """
     Args:
         package: Name of package to query for
@@ -111,12 +114,9 @@ def main(event, context):
     license_info = event["license_info"]
     table_name = os.environ["DB_NAME"]
     expiry_days = int(os.environ["EXPIRY_DAYS"])
-    python_version = event['python_version']
+    python_version = event["python_version"]
 
-    regions = get_config_items(
-        config_type='rgns',
-        python_version=python_version
-    )
+    regions = get_config_items(config_type="rgns", python_version=python_version)
     dynamo_client = boto3.client("dynamodb")
     deployed_flag = False
 
@@ -125,7 +125,7 @@ def main(event, context):
         package=package,
         requirements_hash=requirements_hash,
         regions=regions,
-        python_version=python_version
+        python_version=python_version,
     )
     if len(regions_to_deploy) == 0:
         logger.info({"message": "No new regions to deploy to, terminating!"})
@@ -141,11 +141,15 @@ def main(event, context):
     )
 
     # Download Lambda Artifact
-    layer_name = f"{os.environ['LAMBDA_LAYER_PREFIX']}{python_version.replace('.','')}-{package}"
+    layer_name = (
+        f"{os.environ['LAMBDA_LAYER_PREFIX']}{python_version.replace('.','')}-{package}"
+    )
     zip_binary = download_artifact(zip_file_S3key)
 
     # Get requirements txt
-    requirements_txt = get_requirements_txt(package=package, python_version=python_version)
+    requirements_txt = get_requirements_txt(
+        package=package, python_version=python_version
+    )
 
     for region in regions_to_deploy:
 
@@ -199,9 +203,9 @@ def main(event, context):
         try:
             layer_version = dynamo_client.get_item(
                 TableName=table_name,
-                Key={"pk": {"S": pk}, "sk": {"S": sk_v0}, },
+                Key={"pk": {"S": pk}, "sk": {"S": sk_v0},},
                 ProjectionExpression="lyrVrsn",
-            )['Item']['lyrVrsn']['N']
+            )["Item"]["lyrVrsn"]["N"]
             new_layer_version = int(layer_version) + 1
         except KeyError:
             new_layer_version = 1

@@ -21,7 +21,13 @@ def get_pk_sk_latest_build(package: str, python_version: str):
     return pk, sk
 
 
-def put_requirements_hash(python_version: str, package: str, version: str, requirements_txt: str, requirements_hash: str):
+def put_requirements_hash(
+    python_version: str,
+    package: str,
+    version: str,
+    requirements_txt: str,
+    requirements_hash: str,
+):
     """
     Args:
       package: Package name
@@ -40,9 +46,7 @@ def put_requirements_hash(python_version: str, package: str, version: str, requi
     # Get latest build version for package
     build_version_prefix = "bld#v"
     response = client.get_item(
-        TableName=table_name,
-        Key={"pk": pk, "sk": sk},
-        ProjectionExpression="bltVrsn",
+        TableName=table_name, Key={"pk": pk, "sk": sk}, ProjectionExpression="bltVrsn",
     )
     try:
         latest_version = int(response["Item"]["bltVrsn"]["N"])
@@ -109,7 +113,7 @@ def put_requirements_hash(python_version: str, package: str, version: str, requi
     return None
 
 
-def check_requirement_hash(package: str, python_version: str,requirements_hash):
+def check_requirement_hash(package: str, python_version: str, requirements_hash):
     """
     Args:
       python_version: Version of python (e.g. p3.8, p3.9, p3.10)
@@ -277,7 +281,7 @@ def check_python_version(python_version: str) -> bool:
         logger.error(f"Python version supplied: {python_version}")
         logger.error(f"Python version running: {running_python_version}")
         return False
-    
+
 
 @logger.inject_lambda_context
 def main(event, context):
@@ -306,9 +310,11 @@ def main(event, context):
         requirements_file.write(requirements_txt)
     zip_file = zip_dir(dir_path=package_dir, package=package)
 
-    if not check_requirement_hash(package=package, 
-                                  requirements_hash=requirements_hash,
-                                  python_version=python_version):
+    if not check_requirement_hash(
+        package=package,
+        requirements_hash=requirements_hash,
+        python_version=python_version,
+    ):
         logger.info(
             {
                 "requirements_hash": requirements_hash,
@@ -327,7 +333,7 @@ def main(event, context):
             requirements_txt=requirements_txt,
             requirements_hash=requirements_hash,
             version=version,
-            python_version=python_version
+            python_version=python_version,
         )
 
         logger.info(

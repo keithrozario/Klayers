@@ -20,7 +20,8 @@ def query_table(region: str, table: str, python_version: str) -> list:
 
     kwargs = {
         "IndexName": "deployed_in_region_by_python_version",
-        "KeyConditionExpression": Key("rgn#PyVrsn").eq(f"{region}:{python_version}") & Key("dplySts").eq("latest"),
+        "KeyConditionExpression": Key("rgn#PyVrsn").eq(f"{region}:{python_version}")
+        & Key("dplySts").eq("latest"),
         "ProjectionExpression": "pckg, arn, pckgVrsn",
     }
     items = query_till_end(table=table, kwargs=kwargs)
@@ -38,12 +39,12 @@ def main(event, context):
     table = dynamodb.Table(os.environ["DB_NAME"])
     region = event.get("pathParameters").get("region")
     python_version = event.get("pathParameters").get("python_version", "p3.8")
-    api_response = query_table(table=table, region=region, python_version=python_version)
+    api_response = query_table(
+        table=table, region=region, python_version=python_version
+    )
 
     return {
         "statusCode": 200,
-        "headers": {
-            "Content-Type": "application/json"
-        },
+        "headers": {"Content-Type": "application/json"},
         "body": json.dumps(api_response, cls=DecimalEncoder),
     }

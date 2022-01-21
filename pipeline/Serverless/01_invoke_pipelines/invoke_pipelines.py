@@ -39,7 +39,7 @@ def main(event, context):
     client = boto3.client("events")
     stage = os.environ["STAGE"]
 
-    for python_version in ['p3.8', 'p3.9']:
+    for python_version in ["p3.8", "p3.9"]:
         packages = get_config_items(config_type="pckgs", python_version=python_version)
         entries = []
         logger.info(f"Preparing {len(packages)} packages")
@@ -50,7 +50,9 @@ def main(event, context):
                 "Source": f"Klayers.invoke.{stage}",
                 "Resources": [],
                 "DetailType": "invoke_pipeline",
-                "Detail": json.dumps({"package": package, "python_version": python_version}),
+                "Detail": json.dumps(
+                    {"package": package, "python_version": python_version}
+                ),
                 "EventBusName": "default",
             }
             entries.append(entry)

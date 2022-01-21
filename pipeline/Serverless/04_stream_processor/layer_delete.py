@@ -45,7 +45,7 @@ def remove(record: dict) -> None:
     insert_expired_record(old_image)
     client.delete_layer_version(LayerName=layer_name, VersionNumber=layer_version)
     logger.info(
-        {"message": "Deleted Layer", "arn": layer_version_arn, }
+        {"message": "Deleted Layer", "arn": layer_version_arn,}
     )
 
     return
