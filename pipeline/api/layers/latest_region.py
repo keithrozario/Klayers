@@ -1,5 +1,7 @@
 import os
 import json
+import csv
+from tabulate import tabulate
 import boto3
 from boto3.dynamodb.conditions import Key
 from aws_lambda_powertools.logging import Logger
@@ -28,6 +30,33 @@ def query_table(region: str, table: str, python_version: str) -> list:
 
     return map_keys(items)
 
+def return_format(data: list, format: str):
+    """
+    Args:
+      data: Data to be formatted (list of dicts)
+      format: Format of data (e.g. csv, html, json)
+    returns:
+      body: body of data (str)
+      headers: Additional HTML headers if required (dict)
+    """
+
+    if format == 'json':
+        body = json.dumps(data, cls=DecimalEncoder)
+        headers = {"Content-Type": "application/json"}
+    if format == 'html':
+        body = tabulate(data, headers={'package': 'Package', 'packageVersion': 'Package Version', 'arn': 'arn'}, tablefmt="html")
+        headers = {"Content-Type": "text/html"}
+    elif format == 'csv':
+        with io.StringIO() as csvfile:
+            fieldnames = ['package', 'packageVersion', 'arn']
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+            writer.writerow(target_header)
+            for row in data:
+                writer.writerow(row)
+            body = csvfile.getvalue()
+        headers = {"Content-Type": "text/html", "Content-Disposition" : f'attachment; filename="klayers-{region}-{python_version}.csv"'}
+
+    return body, headers
 
 @logger.inject_lambda_context
 def main(event, context):
@@ -39,12 +68,17 @@ def main(event, context):
     table = dynamodb.Table(os.environ["DB_NAME"])
     region = event.get("pathParameters").get("region")
     python_version = event.get("pathParameters").get("python_version", "p3.8")
+    format = event.get("pathParameters").get("format", "json")
     api_response = query_table(
         table=table, region=region, python_version=python_version
     )
 
+    body, headers = return_format(
+        data=api_response, format=format
+    )
+        
     return {
         "statusCode": 200,
-        "headers": {"Content-Type": "application/json"},
-        "body": json.dumps(api_response, cls=DecimalEncoder),
+        "headers": headers,
+        "body": body,
     }
