@@ -14,7 +14,7 @@ packaging==21.3
 pathy==0.6.1
 preshed==3.0.6
 pydantic==1.8.2
-pyparsing==3.0.6
+pyparsing==3.0.7
 requests==2.27.1
 smart-open==5.2.1
 spacy==3.2.1
