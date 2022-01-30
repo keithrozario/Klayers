@@ -51,7 +51,12 @@ def main(event, context):
                 "Resources": [],
                 "DetailType": "invoke_pipeline",
                 "Detail": json.dumps(
-                    {"package": package, "python_version": python_version, "force_build": False, "force_deploy": False}
+                    {
+                        "package": package,
+                        "python_version": python_version,
+                        "force_build": False,
+                        "force_deploy": False,
+                    }
                 ),
                 "EventBusName": "default",
             }

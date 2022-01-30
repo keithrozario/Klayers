@@ -293,8 +293,8 @@ def main(event, context):
     package = event["package"]
     license_info = event["license_info"]
     python_version = event["python_version"]
-    force_build = event['force_build']
-    force_deploy = event['force_deploy']
+    force_build = event["force_build"]
+    force_deploy = event["force_deploy"]
 
     if not check_python_version(python_version):
         sys.exit(1)

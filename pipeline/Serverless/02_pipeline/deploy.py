@@ -14,7 +14,11 @@ from common.get_config import get_config_items
 
 
 def check_regions_to_deploy(
-    package: str, requirements_hash: str, regions: list, python_version: str, force_deploy: bool
+    package: str,
+    requirements_hash: str,
+    regions: list,
+    python_version: str,
+    force_deploy: bool,
 ) -> list:
     """
     Args:
@@ -116,7 +120,7 @@ def main(event, context):
     zip_file_S3key = event["zip_file_S3key"]
     requirements_hash = event["requirements_hash"]
     license_info = event["license_info"]
-    force_deploy = event['force_deploy']
+    force_deploy = event["force_deploy"]
     table_name = os.environ["DB_NAME"]
     expiry_days = int(os.environ["EXPIRY_DAYS"])
     python_version = event["python_version"]

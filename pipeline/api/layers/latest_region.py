@@ -31,6 +31,7 @@ def query_table(region: str, table: str, python_version: str) -> list:
 
     return map_keys(items)
 
+
 def return_format(data: list, format: str, region: str, python_version: str):
     """
     Args:
@@ -41,28 +42,36 @@ def return_format(data: list, format: str, region: str, python_version: str):
       headers: Additional HTML headers if required (dict)
     """
 
-    map_header_row = {'package': 'Package', 'packageVersion': 'Package Version', 'arn': 'arn'}
+    map_header_row = {
+        "package": "Package",
+        "packageVersion": "Package Version",
+        "arn": "arn",
+    }
 
-    if format == 'json':
+    if format == "json":
         body = json.dumps(data, cls=DecimalEncoder)
         headers = {"Content-Type": "application/json"}
-    if format == 'html':
+    if format == "html":
         body = tabulate(data, headers=map_header_row, tablefmt="html")
         headers = {"Content-Type": "text/html"}
-    elif format == 'csv':
+    elif format == "csv":
         with io.StringIO() as csvfile:
-            fieldnames = ['package', 'packageVersion', 'arn']
+            fieldnames = ["package", "packageVersion", "arn"]
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writerow(map_header_row)
             for row in data:
                 writer.writerow(row)
             body = csvfile.getvalue()
-        headers = {"Content-Type": "text/html", "Content-Disposition" : f'attachment; filename="klayers-{region}-{python_version}.csv"'}
+        headers = {
+            "Content-Type": "text/html",
+            "Content-Disposition": f'attachment; filename="klayers-{region}-{python_version}.csv"',
+        }
     else:
         body = "Please specify a file format in lowercase, only csv, html and json are accepted"
         headers = {}
 
     return body, headers
+
 
 @logger.inject_lambda_context
 def main(event, context):
@@ -82,7 +91,7 @@ def main(event, context):
     body, headers = return_format(
         data=api_response, format=format, region=region, python_version=python_version
     )
-        
+
     return {
         "statusCode": 200,
         "headers": headers,
