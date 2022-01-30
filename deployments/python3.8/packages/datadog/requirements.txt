@@ -1,6 +1,6 @@
 certifi==2021.10.8
-charset-normalizer==2.0.9
+charset-normalizer==2.0.10
 datadog==0.43.0
 idna==3.3
-requests==2.26.0
-urllib3==1.26.7
+requests==2.27.1
+urllib3==1.26.8

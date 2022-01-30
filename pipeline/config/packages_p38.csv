@@ -1,7 +1,6 @@
 Package_Name,License,Authors/Maintainers
 aiobotocore,Apache-2.0,Nikolay Novik nickolainovik@gmail.com
 aiohttp,Apache-2.0,Nikolay Kim <fafhrd91@gmail.com>; Andrew Svetlov <andrew.svetlov@gmail.com>
-ansible,GPLv3+,Ansible Inc <info@ansible.com>
 asyncio,PSF,Guido van Rossum <guido@python.org>
 aws-lambda-powertools,https://github.com/awslabs/aws-lambda-powertools/blob/develop/LICENSE,AWS
 aws-psycopg2,MIT,<manyu1994@hotmail.com>
@@ -80,7 +79,6 @@ reportlab,BSD,<reportlab-users@lists2.reportlab.com>
 shapely,BSD,Sean Gillies <sean.gillies@gmail.com>
 simplejson,MIT,Bob Ippolito <bob@redivi.com>
 slackclient,MIT,slack <opensource@slack.com>
-spacy,MIT,contact@explosion.ai
 spacy_syllables, MIT, Bright Effect <developer@brighteffect.io>
 SQLAlchemy,MIT,Mike Bayer <mike_mp@zzzcomputing.com>
 tablib,MIT,Kenneth Reitz <me@kennethreitz.org>
