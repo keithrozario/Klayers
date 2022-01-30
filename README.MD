@@ -14,30 +14,10 @@ There might be multiple versions for a single package, as we publish a new layer
 
 ## Python Packages
 
-| Region (Code) | Region (Name)| ARNs|
-| :------------- |:--------|:--------|
-| af-south-1 |Africa (Cape Town)| [json](https://api.klayers.cloud//api/v2/p3.9/layers/latest/af-south-1/json) \| [csv]((https://api.klayers.cloud//api/v2/p3.9/layers/latest/af-south-1/csv)) \| [html]((https://api.klayers.cloud//api/v2/p3.9/layers/latest/af-south-1/html))|
-| ap-east-1 | Asia Pacific (Hong Kong)| [json](https://api.klayers.cloud//api/v2/p3.9/layers/latest/ap-east-1/json) \| [csv]((https://api.klayers.cloud//api/v2/p3.9/layers/latest/ap-east-1/csv)) \| [html]((https://api.klayers.cloud//api/v2/p3.9/layers/latest/ap-east-1/html))|
-| ap-northeast-1 |Asia Pacific (Tokyo)| [json](https://api.klayers.cloud//api/v2/p3.9/layers/latest/ap-northeast-1/json) \| [csv]((https://api.klayers.cloud//api/v2/p3.9/layers/latest/ap-northeast-1/csv)) \| [html]((https://api.klayers.cloud//api/v2/p3.9/layers/latest/ap-northeast-1/html))|
-| ap-northeast-2 |Asia Pacific (Seoul)| [json](https://api.klayers.cloud//api/v2/p3.9/layers/latest/ap-northeast-2/json) \| [csv]((https://api.klayers.cloud//api/v2/p3.9/layers/latest/ap-northeast-2/csv)) \| [html]((https://api.klayers.cloud//api/v2/p3.9/layers/latest/ap-northeast-2/html))|
-| ap-south-1 |Asia Pacific (Mumbai)| [json](https://api.klayers.cloud//api/v2/p3.9/layers/latest/ap-south-1/json) \| [csv]((https://api.klayers.cloud//api/v2/p3.9/layers/latest/ap-south-1/csv)) \| [html]((https://api.klayers.cloud//api/v2/p3.9/layers/latest/ap-south-1/html))|
-| ap-southeast-1 |Asia Pacific (Singapore)| [json](https://api.klayers.cloud//api/v2/p3.9/layers/latest/ap-southeast-1/json) \| [csv]((https://api.klayers.cloud//api/v2/p3.9/layers/latest/ap-southeast-1/csv)) \| [html]((https://api.klayers.cloud//api/v2/p3.9/layers/latest/ap-southeast-1/html))|
-| ap-southeast-2 |Asia Pacific (Sydney)| [json](https://api.klayers.cloud//api/v2/p3.9/layers/latest/ap-southeast-2/json) \| [csv]((https://api.klayers.cloud//api/v2/p3.9/layers/latest/ap-southeast-2/csv)) \| [html]((https://api.klayers.cloud//api/v2/p3.9/layers/latest/ap-southeast-2/html))|
-| ap-southeast-3 |Asia Pacific (Jakarta)| [json](https://api.klayers.cloud//api/v2/p3.9/layers/latest/ap-southeast-3/json) \| [csv]((https://api.klayers.cloud//api/v2/p3.9/layers/latest/ap-southeast-3/csv)) \| [html]((https://api.klayers.cloud//api/v2/p3.9/layers/latest/ap-southeast-3/html))|
-| ca-central-1 |Canada (Central)| [json](https://api.klayers.cloud//api/v2/p3.9/layers/latest/ca-central-1/json) \| [csv]((https://api.klayers.cloud//api/v2/p3.9/layers/latest/ca-central-1/csv)) \| [html]((https://api.klayers.cloud//api/v2/p3.9/layers/latest/ca-central-1/html))|
-| eu-central-1 |EU (Frankfurt)| [json](https://api.klayers.cloud//api/v2/p3.9/layers/latest/eu-central-1/json) \| [csv]((https://api.klayers.cloud//api/v2/p3.9/layers/latest/eu-central-1/csv)) \| [html]((https://api.klayers.cloud//api/v2/p3.9/layers/latest/eu-central-1/html))|
-| eu-north-1 |EU (Stockholm)| [json](https://api.klayers.cloud//api/v2/p3.9/layers/latest/eu-north-1/json) \| [csv]((https://api.klayers.cloud//api/v2/p3.9/layers/latest/eu-north-1/csv)) \| [html]((https://api.klayers.cloud//api/v2/p3.9/layers/latest/eu-north-1/html))|
-| eu-south-1 |EU (Milan)| [json](https://api.klayers.cloud//api/v2/p3.9/layers/latest/eu-south-1/json) \| [csv]((https://api.klayers.cloud//api/v2/p3.9/layers/latest/eu-south-1/csv)) \| [html]((https://api.klayers.cloud//api/v2/p3.9/layers/latest/eu-south-1/html))|
-| eu-west-1 |EU (Ireland)| [json](https://api.klayers.cloud//api/v2/p3.9/layers/latest/eu-west-1/json) \| [csv]((https://api.klayers.cloud//api/v2/p3.9/layers/latest/eu-west-1/csv)) \| [html]((https://api.klayers.cloud//api/v2/p3.9/layers/latest/eu-west-1/html))|
-| eu-west-2 |EU (London)| [json](https://api.klayers.cloud//api/v2/p3.9/layers/latest/eu-west-2/json) \| [csv]((https://api.klayers.cloud//api/v2/p3.9/layers/latest/eu-west-2/csv)) \| [html]((https://api.klayers.cloud//api/v2/p3.9/layers/latest/eu-west-2/html))|
-| eu-west-3 |EU (Paris)| [json](https://api.klayers.cloud//api/v2/p3.9/layers/latest/eu-west-3/json) \| [csv]((https://api.klayers.cloud//api/v2/p3.9/layers/latest/eu-west-3/csv)) \| [html]((https://api.klayers.cloud//api/v2/p3.9/layers/latest/eu-west-3/html))|
-| me-south-1 |Middle East (Bahrain)| [json](https://api.klayers.cloud//api/v2/p3.9/layers/latest/me-south-1/json) \| [csv]((https://api.klayers.cloud//api/v2/p3.9/layers/latest/me-south-1/csv)) \| [html]((https://api.klayers.cloud//api/v2/p3.9/layers/latest/me-south-1/html))|
-| sa-east-1 |South America (São Paulo)| [json](https://api.klayers.cloud//api/v2/p3.9/layers/latest/sa-east-1/json) \| [csv]((https://api.klayers.cloud//api/v2/p3.9/layers/latest/sa-east-1/csv)) \| [html]((https://api.klayers.cloud//api/v2/p3.9/layers/latest/sa-east-1/html))|
-| us-east-1 |US East (N. Virginia)| [json](https://api.klayers.cloud//api/v2/p3.9/layers/latest/us-east-1/json) \| [csv]((https://api.klayers.cloud//api/v2/p3.9/layers/latest/us-east-1/csv)) \| [html]((https://api.klayers.cloud//api/v2/p3.9/layers/latest/us-east-1/html))|
-| us-east-2 |US East (Ohio)| [json](https://api.klayers.cloud//api/v2/p3.9/layers/latest/us-east-2/json) \| [csv]((https://api.klayers.cloud//api/v2/p3.9/layers/latest/us-east-2/csv)) \| [html]((https://api.klayers.cloud//api/v2/p3.9/layers/latest/us-east-2/html))|
-| us-west-1 |US West (N. California)| [json](https://api.klayers.cloud//api/v2/p3.9/layers/latest/us-west-1/json) \| [csv]((https://api.klayers.cloud//api/v2/p3.9/layers/latest/us-west-1/csv)) \| [html]((https://api.klayers.cloud//api/v2/p3.9/layers/latest/us-west-1/html))|
-| us-west-2 |US West (Oregon)| [json](https://api.klayers.cloud//api/v2/p3.9/layers/latest/us-west-2/json) \| [csv]((https://api.klayers.cloud//api/v2/p3.9/layers/latest/us-west-2/csv)) \| [html]((https://api.klayers.cloud//api/v2/p3.9/layers/latest/us-west-2/html))|
+For the full list of Python packages, refer to the following:
 
+* [Python 3.8](deployments/python3.8)
+* [Python 3.9](deployments/python3.9)
 
 ## Using the Layers
 
@@ -45,11 +25,7 @@ You can use the layers anyway you see fit, here are 4 proposed options:
 
 ### Option 1: Set ARN as layer
 
-Click links below for your preferred version of python, and then select your region of choice, you will see a full list of layer version ARNs to use.
-
-* [Arns](deployments/python3.8)
-
-Once selected, you can add the arn directly from the console, by selecting Layers->Add a Layer->Specify an Arn:
+Add the arn directly from the console, by selecting Layers->Add a Layer->Specify an Arn:
 
 ![Screenshot](documentation/add_arn.png)
 
@@ -102,20 +78,6 @@ In general, layers are scheduled for deletion 365 days after a new layer version
 
 All functions deployed with a layer will still work indefinitely, but you won't be able to deploy new functions referencing a deleted layer version.
 
-## Binaries
-
-Special hand-crafted binaries for layers. These layers are not automatically built, and hence slower update cycles, and will only work with python3.7 functions as the underlying OS is Amazon Linux 1.
-
-| Package        | ARN                                                                             | Version    |
-| :------------- |:------------------------------------------------------------------------------- | ---------- |
-| en_core_web_sm | arn:aws:lambda:\<*region*>:770693421928:layer:Klayers-python38-spacy_model_en_small:1 | 2.2.5 <sup>2</sup>|
-| es_core_news_sm | arn:aws:lambda:\<*region*>:770693421928:layer:Klayers-python38-spacy_model_es_small:1 | 2.3.1 <sup>2</sup>|
-
-<sup>1</sup> Python3.8 layers already have new version of pip, use only if on Python3.7
-
-<sup>2</sup> Spacy [en_core_web_sm](https://spacy.io/models/en) model, for use with the spacy layer refer [here](https://github.com/keithrozario/Klayers/issues/97) for more info.
-
-
 ## Architecture Diagram
 
 ![Screenshot](documentation/Klayers-Architecture.png)
@@ -132,9 +94,8 @@ Returns data on the latest layer for a specific *{package}* in a specific *{regi
 
 example:
 
-  * https://api.klayers.cloud/api/v2/p3.9/layers/latest/us-east-1/
-  * https://api.klayers.cloud/api/v2/p3.8/layers/latest/ap-southeast-1/
-
+* [https://api.klayers.cloud/api/v2/p3.9/layers/latest/us-east-1/](https://api.klayers.cloud/api/v2/p3.9/layers/latest/us-east-1/)
+* [https://api.klayers.cloud/api/v2/p3.8/layers/latest/ap-southeast-1/](https://api.klayers.cloud/api/v2/p3.9/layers/latest/ap-southeast-1/)
 
 ### Get all ARNs for specific package in region
 
@@ -142,12 +103,10 @@ Returns data on the all layers (latest and deprecated) for a specific *{package}
 
 *https://api.klayers.cloud/api/v2/{python_version}/layers/{region}/{package}*
 
-
 example:
 
-  * https://api.klayers.cloud/api/v2/p3.8/layers/us-east-1/requests
-  * https://api.klayers.cloud/api/v2/p3.9/layers/ap-southeast-1/boto3
-
+* [https://api.klayers.cloud/api/v2/p3.8/layers/us-east-1/requests](https://api.klayers.cloud/api/v2/p3.8/layers/us-east-1/requests)
+* [https://api.klayers.cloud/api/v2/p3.9/layers/ap-southeast-1/boto3](https://api.klayers.cloud/api/v2/p3.9/layers/ap-southeast-1/boto3)
 
 ## Special Thanks
 
