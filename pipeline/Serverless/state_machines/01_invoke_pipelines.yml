@@ -1,5 +1,5 @@
 events:
-  - schedule: cron(0 2 ? * MON *)  # runs at 2am UTC on Monday
+  - schedule: cron(0 2 1 * ? *)  # runs on the first of the month
 name: ${self:custom.pipelineName}-invoke
 definition:
   Comment: "Invoke the pipeline for all packages"

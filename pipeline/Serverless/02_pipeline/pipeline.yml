@@ -14,7 +14,7 @@ build:
   description: Builds the package inside the lambda using pip
   runtime: python3.8
   timeout: 180
-  memorySize: 1792
+  memorySize: 1769
   environment:
     POWERTOOLS_SERVICE_NAME: Klayers.Build
   iamRoleStatementsName: ${self:provider.stage}-build
@@ -47,7 +47,7 @@ deploy:
   memorySize: 512
   environment:
     POWERTOOLS_SERVICE_NAME: Klayers.Deploy
-    EXPIRY_DAYS: 180
+    EXPIRY_DAYS: 365
   iamRoleStatementsName: ${self:provider.stage}-deploy
   iamRoleStatements:
     - Effect: Allow
