@@ -63,7 +63,6 @@ custom:
 functions:
   - ${file(01_invoke_pipelines/invoke_pipelines.yml)}
   - ${file(02_pipeline/pipeline.yml)}
-# 03_publish has been deprecated and removed.
   - ${file(04_stream_processor/streams.yml)}
   - ${file(05_slack_notification/slack.yml)}
   - ${file(06_webhook/webhook.yml)}

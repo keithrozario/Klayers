@@ -14,7 +14,7 @@ from common.get_config import get_config_items
 
 
 def check_regions_to_deploy(
-    package: str, requirements_hash: str, regions: list, python_version: str
+    package: str, requirements_hash: str, regions: list, python_version: str, force_deploy: bool
 ) -> list:
     """
     Args:
@@ -25,6 +25,10 @@ def check_regions_to_deploy(
     return:
         regions_to_deploy: Regions where latest package doesn't match requirements_hash provided
     """
+
+    if force_deploy:
+        return regions
+
     table_name = os.environ["DB_NAME"]
     dynamodb = boto3.resource("dynamodb")
     table = dynamodb.Table(table_name)
@@ -112,6 +116,7 @@ def main(event, context):
     zip_file_S3key = event["zip_file_S3key"]
     requirements_hash = event["requirements_hash"]
     license_info = event["license_info"]
+    force_deploy = event['force_deploy']
     table_name = os.environ["DB_NAME"]
     expiry_days = int(os.environ["EXPIRY_DAYS"])
     python_version = event["python_version"]
@@ -126,6 +131,7 @@ def main(event, context):
         requirements_hash=requirements_hash,
         regions=regions,
         python_version=python_version,
+        force_deploy=force_deploy,
     )
     if len(regions_to_deploy) == 0:
         logger.info({"message": "No new regions to deploy to, terminating!"})
@@ -136,17 +142,16 @@ def main(event, context):
             "version": version,
             "requirements_hash": requirements_hash,
         }
+
     logger.info(
         {"message": "Regions to deploy", "regions_to_deploy": regions_to_deploy}
     )
 
-    # Download Lambda Artifact
     layer_name = (
         f"{os.environ['LAMBDA_LAYER_PREFIX']}{python_version.replace('.','')}-{package}"
     )
     zip_binary = download_artifact(zip_file_S3key)
 
-    # Get requirements txt
     requirements_txt = get_requirements_txt(
         package=package, python_version=python_version
     )

@@ -21,8 +21,13 @@ def get_pk_sk_latest_build(package: str, python_version: str):
     return pk, sk
 
 
-def put_requirements_hash(python_version: str, package: str, version: str, requirements_txt: str,
-                          requirements_hash: str):
+def put_requirements_hash(
+    python_version: str,
+    package: str,
+    version: str,
+    requirements_txt: str,
+    requirements_hash: str,
+):
     """
     Args:
       package: Package name
@@ -41,9 +46,7 @@ def put_requirements_hash(python_version: str, package: str, version: str, requi
     # Get latest build version for package
     build_version_prefix = "bld#v"
     response = client.get_item(
-        TableName=table_name,
-        Key={"pk": pk, "sk": sk},
-        ProjectionExpression="bltVrsn",
+        TableName=table_name, Key={"pk": pk, "sk": sk}, ProjectionExpression="bltVrsn",
     )
     try:
         latest_version = int(response["Item"]["bltVrsn"]["N"])
@@ -72,14 +75,14 @@ def put_requirements_hash(python_version: str, package: str, version: str, requi
                 {
                     "Update": {
                         "TableName": table_name,
-                        "Key": {"pk": pk, "sk": sk, },
+                        "Key": {"pk": pk, "sk": sk,},
                         "UpdateExpression": "set "
-                                            "rqrmntsTxt = :rqrmntsTxt, "
-                                            "pckgVrsn = :pckgVrsn, "
-                                            "rqrmntsHsh = :rqrmntsHsh,"
-                                            "bltVrsn = :bltVrsn,"
-                                            "crtdDt = :crtdDt,"
-                                            "pyVrsn = :pyVrsn",
+                        "rqrmntsTxt = :rqrmntsTxt, "
+                        "pckgVrsn = :pckgVrsn, "
+                        "rqrmntsHsh = :rqrmntsHsh,"
+                        "bltVrsn = :bltVrsn,"
+                        "crtdDt = :crtdDt,"
+                        "pyVrsn = :pyVrsn",
                         "ExpressionAttributeValues": {
                             ":rqrmntsTxt": {"S": requirements_txt},
                             ":pckgVrsn": {"S": str(version)},
@@ -91,7 +94,7 @@ def put_requirements_hash(python_version: str, package: str, version: str, requi
                         "ConditionExpression": "bltVrsn <> :bltVrsn",
                     }
                 },
-                {"Put": {"TableName": table_name, "Item": Item, }},
+                {"Put": {"TableName": table_name, "Item": Item,}},
             ]
         )
         logger.info({"message": "Successfully written", "item": Item})
@@ -131,7 +134,7 @@ def check_requirement_hash(package: str, python_version: str, requirements_hash)
     )
 
     if requirements_hash == response.get("Item", {}).get("rqrmntsHsh", {}).get(
-            "S", False
+        "S", False
     ):
         hash_match = True
     else:
@@ -282,9 +285,12 @@ def check_python_version(python_version: str) -> bool:
 
 @logger.inject_lambda_context
 def main(event, context):
+
     package = event["package"]
     license_info = event["license_info"]
     python_version = event["python_version"]
+    force_build = event['force_build']
+    force_deploy = event['force_deploy']
 
     if not check_python_version(python_version):
         sys.exit(1)
@@ -306,9 +312,11 @@ def main(event, context):
         requirements_file.write(requirements_txt)
     zip_file = zip_dir(dir_path=package_dir, package=package)
 
-    if not check_requirement_hash(package=package,
-                                  requirements_hash=requirements_hash,
-                                  python_version=python_version):
+    if force_build or not check_requirement_hash(
+        package=package,
+        requirements_hash=requirements_hash,
+        python_version=python_version,
+    ):
         logger.info(
             {
                 "requirements_hash": requirements_hash,
@@ -327,7 +335,7 @@ def main(event, context):
             requirements_txt=requirements_txt,
             requirements_hash=requirements_hash,
             version=version,
-            python_version=python_version
+            python_version=python_version,
         )
 
         logger.info(
@@ -354,5 +362,6 @@ def main(event, context):
         "requirements_hash": requirements_hash,
         "license_info": license_info,
         "build_flag": build_flag,
+        "force_deploy": force_deploy,
         "python_version": python_version,
     }

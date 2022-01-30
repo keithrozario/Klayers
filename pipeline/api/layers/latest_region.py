@@ -1,4 +1,5 @@
 import os
+import io
 import json
 import csv
 from tabulate import tabulate
@@ -30,7 +31,7 @@ def query_table(region: str, table: str, python_version: str) -> list:
 
     return map_keys(items)
 
-def return_format(data: list, format: str):
+def return_format(data: list, format: str, region: str, python_version: str):
     """
     Args:
       data: Data to be formatted (list of dicts)
@@ -40,21 +41,26 @@ def return_format(data: list, format: str):
       headers: Additional HTML headers if required (dict)
     """
 
+    map_header_row = {'package': 'Package', 'packageVersion': 'Package Version', 'arn': 'arn'}
+
     if format == 'json':
         body = json.dumps(data, cls=DecimalEncoder)
         headers = {"Content-Type": "application/json"}
     if format == 'html':
-        body = tabulate(data, headers={'package': 'Package', 'packageVersion': 'Package Version', 'arn': 'arn'}, tablefmt="html")
+        body = tabulate(data, headers=map_header_row, tablefmt="html")
         headers = {"Content-Type": "text/html"}
     elif format == 'csv':
         with io.StringIO() as csvfile:
             fieldnames = ['package', 'packageVersion', 'arn']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-            writer.writerow(target_header)
+            writer.writerow(map_header_row)
             for row in data:
                 writer.writerow(row)
             body = csvfile.getvalue()
         headers = {"Content-Type": "text/html", "Content-Disposition" : f'attachment; filename="klayers-{region}-{python_version}.csv"'}
+    else:
+        body = "Please specify a file format in lowercase, only csv, html and json are accepted"
+        headers = {}
 
     return body, headers
 
@@ -74,7 +80,7 @@ def main(event, context):
     )
 
     body, headers = return_format(
-        data=api_response, format=format
+        data=api_response, format=format, region=region, python_version=python_version
     )
         
     return {

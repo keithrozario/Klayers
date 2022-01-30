@@ -53,6 +53,8 @@ def main(event, context):
     logger.debug(event)
     package = event.get("detail").get("package")
     python_version = event.get("detail").get("python_version", "p3.8")  # default to 3.8
+    force_build = event.get("detail").get('force_build', False)
+    force_deploy = event.get("detail").get('force_deploy', False)
 
     logger.debug(f"Checking {package}")
 
@@ -68,5 +70,7 @@ def main(event, context):
         "package": package,
         "license_info": license_info,
         "python_version": python_version,
+        "force_build": force_build,
+        "force_deploy": force_deploy,
         "type": 0,  # type is required for choice step in Step Functions
     }

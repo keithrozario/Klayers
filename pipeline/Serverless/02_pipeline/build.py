@@ -1,3 +1,7 @@
+################################################################################################################
+# This build.py is for python3.8 only. For later versions refer to build.py in the container_images directory  #
+################################################################################################################
+
 import os
 import sys
 import shutil
@@ -289,6 +293,8 @@ def main(event, context):
     package = event["package"]
     license_info = event["license_info"]
     python_version = event["python_version"]
+    force_build = event['force_build']
+    force_deploy = event['force_deploy']
 
     if not check_python_version(python_version):
         sys.exit(1)
@@ -310,7 +316,7 @@ def main(event, context):
         requirements_file.write(requirements_txt)
     zip_file = zip_dir(dir_path=package_dir, package=package)
 
-    if not check_requirement_hash(
+    if force_build or not check_requirement_hash(
         package=package,
         requirements_hash=requirements_hash,
         python_version=python_version,
@@ -360,5 +366,6 @@ def main(event, context):
         "requirements_hash": requirements_hash,
         "license_info": license_info,
         "build_flag": build_flag,
+        "force_deploy": force_deploy,
         "python_version": python_version,
     }
