@@ -1,7 +1,7 @@
 blis==0.7.5
 catalogue==2.0.6
 certifi==2021.10.8
-charset-normalizer==2.0.10
+charset-normalizer==2.0.11
 click==8.0.3
 cymem==2.0.6
 idna==3.3
