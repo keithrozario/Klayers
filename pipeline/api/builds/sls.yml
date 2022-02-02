@@ -13,6 +13,7 @@ list_builds:
     - dynamodb:Query
     Resource: ${self:custom.dbArn}
   layers:
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:32
+    - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPython:6
   events:
     - httpApi: 'GET /api/v1/builds/latest'
+    - httpApi: 'GET /api/v2/{python_version}/builds/latest'

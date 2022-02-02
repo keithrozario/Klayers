@@ -3,7 +3,7 @@
   "ModelMetadata": {
     "Author": "Keith Rozario",
     "DateCreated": "May 15, 2020, 7:22 PM",
-    "DateLastModified": "May 29, 2020, 11:33 PM",
+    "DateLastModified": "Jan 09, 2022, 12:14 PM",
     "Description": "Data Model for Klayers\n",
     "Version": "1.0"
   },
@@ -59,6 +59,14 @@
         },
         {
           "AttributeName": "bltVrsn",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "rgn#PyVrsn",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "pckg#PyVrsn",
           "AttributeType": "S"
         }
       ],
@@ -146,6 +154,38 @@
           "KeyAttributes": {
             "PartitionKey": {
               "AttributeName": "pckg",
+              "AttributeType": "S"
+            },
+            "SortKey": {
+              "AttributeName": "dplySts",
+              "AttributeType": "S"
+            }
+          },
+          "Projection": {
+            "ProjectionType": "ALL"
+          }
+        },
+        {
+          "IndexName": "deployed_in_region_by_python_version",
+          "KeyAttributes": {
+            "PartitionKey": {
+              "AttributeName": "rgn#PyVrsn",
+              "AttributeType": "S"
+            },
+            "SortKey": {
+              "AttributeName": "dplySts",
+              "AttributeType": "S"
+            }
+          },
+          "Projection": {
+            "ProjectionType": "ALL"
+          }
+        },
+        {
+          "IndexName": "package_global_by_python_version",
+          "KeyAttributes": {
+            "PartitionKey": {
+              "AttributeName": "pckg#PyVrsn",
               "AttributeType": "S"
             },
             "SortKey": {
@@ -246,7 +286,7 @@
             "S": "...."
           },
           "bltVrsn": {
-            "S": "v2"
+            "S": "bld#v2"
           }
         },
         {
@@ -266,7 +306,7 @@
             "S": "...."
           },
           "bltVrsn": {
-            "S": "v1"
+            "S": "bld#v1"
           }
         },
         {
@@ -286,7 +326,7 @@
             "S": "...."
           },
           "bltVrsn": {
-            "S": "v2"
+            "S": "bld#v2"
           }
         },
         {
@@ -329,7 +369,7 @@
             "S": "bldVrsn0#"
           },
           "sk": {
-            "S": "pckg#dna"
+            "S": "pckg#idna"
           },
           "rqrmntsTxt": {
             "S": "..."
@@ -341,7 +381,7 @@
             "S": "...."
           },
           "bltVrsn": {
-            "S": "v1"
+            "S": "bld#v1"
           }
         },
         {
@@ -361,7 +401,7 @@
             "S": "...."
           },
           "bltVrsn": {
-            "S": "v1"
+            "S": "bld#v1"
           }
         },
         {
@@ -448,7 +488,7 @@
             "S": "...."
           },
           "bltVrsn": {
-            "S": "v2"
+            "S": "bld#v2"
           }
         },
         {
@@ -468,7 +508,7 @@
             "S": "...."
           },
           "bltVrsn": {
-            "S": "v1"
+            "S": "bld#v1"
           }
         },
         {
@@ -488,7 +528,7 @@
             "S": "...."
           },
           "bltVrsn": {
-            "S": "v2"
+            "S": "bld#v2"
           }
         },
         {
@@ -655,6 +695,145 @@
           },
           "rgn": {
             "S": "ap-southeast-1"
+          }
+        },
+        {
+          "pk": {
+            "S": "lyr#ap-southeast-1:requests:p3.9"
+          },
+          "sk": {
+            "S": "lyrVrsn0#"
+          },
+          "rgnPckg": {
+            "S": "ap-southeast-1.requests"
+          },
+          "pckg": {
+            "S": "requests"
+          },
+          "rqrmntsTxt": {
+            "S": "..."
+          },
+          "arn": {
+            "S": "..."
+          },
+          "lyrVrsn": {
+            "N": "0"
+          },
+          "pckgVrsn": {
+            "S": "0.1"
+          },
+          "rqrmntsHsh": {
+            "S": "..."
+          },
+          "rgn": {
+            "S": "ap-southeast-1"
+          },
+          "rgn#PyVrsn": {
+            "S": "ap-southeast-1:p3.9"
+          },
+          "pckg#PyVrsn": {
+            "S": "requests:p3.9"
+          }
+        },
+        {
+          "pk": {
+            "S": "lyr#ap-southeast-1:requests:p3.9"
+          },
+          "sk": {
+            "S": "lyrVrsn#v1"
+          },
+          "rgnPckg": {
+            "S": "ap-southeast-1.requests"
+          },
+          "pckg": {
+            "S": "requests"
+          },
+          "rqrmntsTxt": {
+            "S": "..."
+          },
+          "arn": {
+            "S": "..."
+          },
+          "lyrVrsn": {
+            "N": "1"
+          },
+          "pckgVrsn": {
+            "S": "0.1"
+          },
+          "rqrmntsHsh": {
+            "S": "..."
+          },
+          "rgn": {
+            "S": "ap-southeast-1"
+          },
+          "dplySts": {
+            "S": "latest"
+          },
+          "rgn#PyVrsn": {
+            "S": "ap-southeast-1:p3.9"
+          },
+          "pckg#PyVrsn": {
+            "S": "requests:p3.9"
+          }
+        },
+        {
+          "pk": {
+            "S": "bldVrsn0#p3.9"
+          },
+          "sk": {
+            "S": "pckg#requests"
+          },
+          "pckg": {
+            "S": "requests"
+          },
+          "rqrmntsTxt": {
+            "S": "..."
+          },
+          "arn": {
+            "S": "..."
+          }
+        },
+        {
+          "pk": {
+            "S": "bld#v1:p3.9"
+          },
+          "sk": {
+            "S": "pckg#requests"
+          },
+          "pckg": {
+            "S": "requests"
+          }
+        },
+        {
+          "pk": {
+            "S": "cnfg#pckgs"
+          },
+          "sk": {
+            "S": "p3.8"
+          }
+        },
+        {
+          "pk": {
+            "S": "cnfg#rgns"
+          },
+          "sk": {
+            "S": "p3.8"
+          }
+        },
+        {
+          "pk": {
+            "S": "cnfg#pckgs"
+          },
+          "sk": {
+            "S": "p3.9"
+          }
+        },
+        {
+          "pk": {
+            "S": "cnfg#rgns"
+          },
+          "sk": {
+            "S": "p3.9"
           }
         }
       ],

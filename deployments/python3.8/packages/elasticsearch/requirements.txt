@@ -1,3 +1,0 @@
-certifi==2021.10.8
-elasticsearch==7.16.3
-urllib3==1.26.8

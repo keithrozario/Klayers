@@ -12,6 +12,7 @@ session = boto3.session.Session(profile_name=profile, region_name=config["region
 dynamodb = session.resource("dynamodb")
 table = dynamodb.Table(config["table_name"])
 
+
 response = table.scan(
     Select="ALL_ATTRIBUTES",
     FilterExpression=Attr("pk").BEGINS_WITH("bld"),

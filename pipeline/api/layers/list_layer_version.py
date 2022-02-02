@@ -40,13 +40,12 @@ def main(event, context):
     table = dynamodb.Table(os.environ["DB_NAME"])
     region = event.get("pathParameters").get("region")
     package = event.get("pathParameters").get("package")
-    pk = f"lyr#{region}.{package}"
+    python_version = event.get("pathParameters").get("python_version", "p3.8")
+    pk = f"lyr#{region}:{package}:{python_version}"
     api_response = query_table(table=table, region=region, pk=pk)
 
     return {
         "statusCode": 200,
-        "headers": {
-            "Content-Type" : "application/json"
-        },
+        "headers": {"Content-Type": "application/json"},
         "body": json.dumps(api_response, cls=DecimalEncoder),
     }

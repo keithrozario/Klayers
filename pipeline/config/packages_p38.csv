@@ -46,7 +46,6 @@ matplotlib,PSF,matplotlib-users@python.org
 mpld3,BSD,<jakevdp@cs.washington.edu>
 nltk,Apache-2.0,Steven Bird <stevenbird1@gmail.com>
 numpy,https://www.numpy.org/license.html,numpy-discussion@python.org
-opencv-python-headless,MIT, Unknown
 openpyxl,MIT,Charlie Clark <charlie.clark@clark-consulting.eu>
 parliament,https://github.com/duo-labs/parliament/blob/master/LICENSE,<scott@summitroute.com>
 pandas,BSD,<pydata@googlegroups.com>
@@ -66,7 +65,6 @@ pyOpenSSL,Apache-2.0,Hynek Schlawack <hs@ox.cx
 pyparsing,MIT,Paul McGuire <ptmcg@users.sourceforge.net>
 pyqldb,Apache-2.0,AWS
 pytesseract,GPLv3,Matthias Lee <pytesseract@madmaze.net>
-python-docx,MIT,Steve Canny <python-docx@googlegroups.com>
 python-Levenshtein-wheels,GPLv2+,Antti Haapala <antti@haapala.name>
 pytz,MIT,Stuart Bishop <stuart@stuartbishop.net>
 PyYAML,MIT,Kirril Simonov <xi@resolvent.net>
@@ -79,7 +77,6 @@ reportlab,BSD,<reportlab-users@lists2.reportlab.com>
 shapely,BSD,Sean Gillies <sean.gillies@gmail.com>
 simplejson,MIT,Bob Ippolito <bob@redivi.com>
 slackclient,MIT,slack <opensource@slack.com>
-spacy_syllables, MIT, Bright Effect <developer@brighteffect.io>
 SQLAlchemy,MIT,Mike Bayer <mike_mp@zzzcomputing.com>
 tablib,MIT,Kenneth Reitz <me@kennethreitz.org>
 textdistance,MIT,orsinium <master_fess@mail.ru>

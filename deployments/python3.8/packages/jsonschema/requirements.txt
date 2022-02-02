@@ -1,5 +1,0 @@
-attrs==21.4.0
-importlib-resources==5.4.0
-jsonschema==4.4.0
-pyrsistent==0.18.1
-zipp==3.7.0

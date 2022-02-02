@@ -1,9 +1,0 @@
-certifi==2021.10.8
-charset-normalizer==2.0.11
-idna==3.3
-praw==7.5.0
-prawcore==2.3.0
-requests==2.27.1
-update-checker==0.18.0
-urllib3==1.26.8
-websocket-client==1.2.3
