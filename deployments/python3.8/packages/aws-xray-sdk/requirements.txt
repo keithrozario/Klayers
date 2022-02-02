@@ -1,8 +1,0 @@
-aws-xray-sdk==2.9.0
-botocore==1.23.46
-future==0.18.2
-jmespath==0.10.0
-python-dateutil==2.8.2
-six==1.16.0
-urllib3==1.26.8
-wrapt==1.13.3

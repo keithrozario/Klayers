@@ -1,2 +1,0 @@
-langdetect==1.0.9
-six==1.16.0

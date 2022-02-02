@@ -1,7 +1,0 @@
-aniso8601==7.0.0
-graphene==2.1.8
-graphql-core==2.2.1
-graphql-relay==2.0.1
-promise==2.3
-Rx==1.6.1
-six==1.13.0
