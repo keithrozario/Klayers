@@ -4,11 +4,12 @@
 
 [![Python 3.8](https://img.shields.io/badge/python-3.8-green.svg)](https://www.python.org/downloads/release/python-380/) [![Python 3.8](https://img.shields.io/badge/python-3.9-green.svg)](https://www.python.org/downloads/release/python-390/) [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/keithrozario/Klayers.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/keithrozario/Klayers/context:python) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) 
 
-## Layer List
+## List of ARNs
 
-List of the latest layer version arns are available by region [here](deployments/python3.8) for python3.8 and [here](deployments/python3.9) for python3.9.
+List of the latest layer version arns are available by region:
 
-We publish a new layer version if the package dependencies (`requirements.txt`) has been updated. Refer to [Layer expiry](#Layer-expiry) for more data.
+* [Python 3.8](deployments/python3.8)
+* [Python 3.9](deployments/python3.9)
 
 *Note: We have deprecated layers for python3.6 and python 3.7, please use these newer versions that are built for python 3.8 and python 3.9 going forward.*
 
@@ -18,11 +19,6 @@ For the full list of Python packages, refer to the following, feel free to make 
 
 * [Python 3.8](pipeline/config/packages_p38.csv)
 * [Python 3.9](pipeline/config/packages_p39.csv)
-
-For the full list of arns (that you can use immediately), refer to the following:
-
-* [Python 3.8](deployments/python3.8/)
-* [Python 3.9](deployments/python3.9/)
 
 ## Using the Layers
 
@@ -75,9 +71,7 @@ ServerlessFunction:
 
 Layers are built with the latest package version at 2am UTC on the first day of the Month.
 
-If there's a critical issue with a package, which needs a new version of it published, raise an issue for the package, and I'll try my best to perform the deploy. 
-
-In the future we'll get Klayers-bot to automatically rebuild it.
+If there's a critical issue with a package, which needs a new version of it published, raise an issue for the package, and I'll try my best to perform the deploy.
 
 ## Layer expiry
 
@@ -93,7 +87,7 @@ All functions deployed with a layer will still work indefinitely, but you won't 
 
 ## API
 
-API v2 has been released, while API v1 has been deprecated. Please use api v2 going forward, as we'll end support for v1 by June-2022.
+API v2 has been released. Please use v2 going forward, as we'll end v1 by June-2022.
 
 All API calls are http-based, and work only with https (TLS1.2 and above). The API is heavily cached, so there could be minor delays in updates.
 
