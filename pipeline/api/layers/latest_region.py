@@ -47,11 +47,11 @@ def return_format(data: list, format: str, region: str, python_version: str):
         "packageVersion": "Package Version",
         "arn": "arn",
     }
-
+    logger.info(f"Format: {format}")
     if format == "json":
         body = json.dumps(data, cls=DecimalEncoder)
         headers = {"Content-Type": "application/json"}
-    if format == "html":
+    elif format == "html":
         body = tabulate(data, headers=map_header_row, tablefmt="html")
         headers = {"Content-Type": "text/html"}
     elif format == "csv":

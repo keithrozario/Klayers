@@ -4,7 +4,7 @@ Use the following links to download the latest Arns for your specific region in 
 
 | Region (Code) | Region (Name)| ARNs|
 | :------------- |:--------|:--------|
-| af-south-1 |Africa (Cape Town)| [json](https://api.klayers.cloud//api/v2/p3.8/layers/latest/af-south-1/json) \| [csv]((https://api.klayers.cloud//api/v2/p3.8/layers/latest/af-south-1/csv)) \| [html]((https://api.klayers.cloud//api/v2/p3.8/layers/latest/af-south-1/html))|
+| af-south-1 |Africa (Cape Town)| [json](https://api.klayers.cloud//api/v2/p3.8/layers/latest/af-south-1/json) \| [csv](https://api.klayers.cloud//api/v2/p3.8/layers/latest/af-south-1/csv) \| [html](https://api.klayers.cloud//api/v2/p3.8/layers/latest/af-south-1/html)|
 | ap-east-1 | Asia Pacific (Hong Kong)| [json](https://api.klayers.cloud//api/v2/p3.8/layers/latest/ap-east-1/json) \| [csv]((https://api.klayers.cloud//api/v2/p3.8/layers/latest/ap-east-1/csv)) \| [html]((https://api.klayers.cloud//api/v2/p3.8/layers/latest/ap-east-1/html))|
 | ap-northeast-1 |Asia Pacific (Tokyo)| [json](https://api.klayers.cloud//api/v2/p3.8/layers/latest/ap-northeast-1/json) \| [csv]((https://api.klayers.cloud//api/v2/p3.8/layers/latest/ap-northeast-1/csv)) \| [html]((https://api.klayers.cloud//api/v2/p3.8/layers/latest/ap-northeast-1/html))|
 | ap-northeast-2 |Asia Pacific (Seoul)| [json](https://api.klayers.cloud//api/v2/p3.8/layers/latest/ap-northeast-2/json) \| [csv]((https://api.klayers.cloud//api/v2/p3.8/layers/latest/ap-northeast-2/csv)) \| [html]((https://api.klayers.cloud//api/v2/p3.8/layers/latest/ap-northeast-2/html))|
