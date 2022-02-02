@@ -1,7 +1,3 @@
-################################################################################################################
-# This build.py is for python3.8 only. For later versions refer to build.py in the container_images directory  #
-################################################################################################################
-
 import os
 import sys
 import shutil

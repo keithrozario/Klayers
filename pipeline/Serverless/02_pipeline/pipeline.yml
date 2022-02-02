@@ -6,15 +6,15 @@ check:
   memorySize: 256
   layers:
     - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-packaging:1
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-requests:9
-    - arn:aws:lambda:ap-southeast-1:770693421928:layer:Klayers-python38-aws-lambda-powertools:48
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-requests:26
+    - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPython:6
 
 build:
   handler: 02_pipeline/build.main
   description: Builds the package inside the lambda using pip
   runtime: python3.8
   timeout: 180
-  memorySize: 1792
+  memorySize: 1769
   environment:
     POWERTOOLS_SERVICE_NAME: Klayers.Build
   iamRoleStatementsName: ${self:provider.stage}-build
@@ -36,7 +36,7 @@ build:
     Resource: ${self:custom.dbArn}
   layers:
     - arn:aws:lambda:${self:provider.region}:553035198032:layer:gcc-lambda2:4  # https://github.com/lambci/gcc-lambda-layer
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:48
+    - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPython:6
 
 
 deploy:
@@ -46,9 +46,8 @@ deploy:
   timeout: 600
   memorySize: 512
   environment:
-    LAMBDA_PREFIX: ${self:custom.lambdaPrefix}
     POWERTOOLS_SERVICE_NAME: Klayers.Deploy
-    EXPIRY_DAYS: 60
+    EXPIRY_DAYS: 365
   iamRoleStatementsName: ${self:provider.stage}-deploy
   iamRoleStatements:
     - Effect: Allow
@@ -59,7 +58,7 @@ deploy:
       - dynamodb:UpdateItem
       Resource: 
       - ${self:custom.dbArn}
-      - ${self:custom.dbArn}/index/package_global
+      - ${self:custom.dbArn}/index/package_global_by_python_version
     - Effect: Allow
       Action:
       - lambda:AddLayerVersionPermission
@@ -75,4 +74,30 @@ deploy:
       Resource: ${self:custom.s3LayersArn}/*
   layers:
     - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-packaging:1
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:48
+    - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPython:6
+
+build39:
+  description: Builds the package in a container for python3.9 then uploads to S3
+  image:
+    name: build_image
+    command:
+      - build.main
+  timeout: 600
+  memorySize: 1769  # exactly one vcpu
+  iamRoleStatementsName: ${self:provider.stage}-buildp39
+  iamRoleStatements:
+  - Effect: Allow
+    Action:
+    - s3:PutObject
+    - s3:PutObjectAcl
+    Resource: ${self:custom.s3LayersArn}/*
+  - Effect: Allow
+    Action:
+    - s3:ListBucket
+    Resource: ${self:custom.s3LayersArn}
+  - Effect: Allow
+    Action:
+    - dynamodb:PutItem
+    - dynamodb:UpdateItem
+    - dynamodb:GetItem
+    Resource: ${self:custom.dbArn}

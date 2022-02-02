@@ -25,7 +25,7 @@ stream_handler:
         arn: ${self:custom.dbStreamArn}
         batchSize: 10
   layers:
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:48
+    - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPython:6
 
 layer_delete:
   handler: 04_stream_processor/layer_delete.main
@@ -48,7 +48,7 @@ layer_delete:
             - "*"  # need permissions to delete layers in other regions
             - Ref: AWS::AccountId
             - layer
-            - ${self:custom.lambdaPrefix}*  # prefix is different for different stages
+            - "*" # delete all layers
             - "*" # ability to delete any version
     - Effect: Allow
       Action:
@@ -65,4 +65,4 @@ layer_delete:
             pk_type:
               - "lyr"
   layers:
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-aws-lambda-powertools:48
+    - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPython:6

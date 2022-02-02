@@ -1,9 +1,0 @@
-certifi==2021.10.8
-charset-normalizer==2.0.11
-click==8.0.3
-idna==3.3
-libretranslatepy==2.1.1
-lxml==4.7.1
-requests==2.27.1
-translate==3.6.1
-urllib3==1.26.8
