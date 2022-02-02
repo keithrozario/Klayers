@@ -1,5 +1,5 @@
 certifi==2021.10.8
-charset-normalizer==2.0.10
+charset-normalizer==2.0.11
 filelock==3.4.2
 idna==3.3
 requests==2.27.1

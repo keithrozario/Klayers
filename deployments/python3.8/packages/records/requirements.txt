@@ -4,5 +4,5 @@ greenlet==1.1.2
 jdcal==1.4.1
 openpyxl==2.4.11
 records==0.5.3
-SQLAlchemy==1.4.29
-tablib==3.1.0
+SQLAlchemy==1.4.31
+tablib==3.2.0
