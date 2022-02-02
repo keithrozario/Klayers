@@ -146,13 +146,11 @@ def modify_data(input_file: str, output_file: str):
                 item['pk']['S'] = new_pk
                 item['bltVrsn']['N'] = item['bltVrsn']['S'][len("bld#v"):]
                 item['bltVrsn'].pop('S')
-                pass
             elif item['pk']['S'][:5] == 'bld#v':
                 new_pk = f"{item['pk']['S']}:p3.8"
                 item['pk']['S'] = new_pk
                 item['bltVrsn']['N'] = item['bltVrsn']['S'][len("bld#v"):]
                 item['bltVrsn'].pop('S')
-                pass
             else:
                 print(f"Unknown: {item}")
                 write_error_to_file(error_item=item)
