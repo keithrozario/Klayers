@@ -6,18 +6,23 @@
 
 ## Layer List
 
-List of all layer version arns are available by region [here](deployments/python3.8/arns)
+List of the latest layer version arns are available by region [here](deployments/python3.8/arns) for python3.8 and [here](deployments/python3.9/arns) for python3.9.
 
-There might be multiple versions for a single package, as we publish a new layer version if the package dependencies (`requirements.txt`) has been updated. Refer to [Layer expiry](#Layer-expiry) for more data.
+We publish a new layer version if the package dependencies (`requirements.txt`) has been updated. Refer to [Layer expiry](#Layer-expiry) for more data.
 
 *Note: We have deprecated layers for python3.6 and python 3.7, please use these newer versions that are built for python 3.8 and python 3.9 going forward.*
 
 ## Python Packages
 
-For the full list of Python packages, refer to the following:
+For the full list of Python packages, refer to the following, feel free to make a pull requests modifying the files below to requests for newer python versions.
 
-* [Python 3.8](deployments/python3.8)
-* [Python 3.9](deployments/python3.9)
+* [Python 3.8](pipeline/config/packages_p38.csv)
+* [Python 3.9](pipeline/config/packages_p39.csv)
+
+For the full list of arns (that you can use immediately), refer to the following:
+
+* [Python 3.8](deployments/python3.8/arns)
+* [Python 3.9](deployments/python3.9/arns)
 
 ## Using the Layers
 
@@ -88,7 +93,7 @@ We've recently added an API under beta. All API calls are http-based, and work o
 
 ### Get latest ARN for specific package in region
 
-Returns data on the latest layer for a specific *{package}* in a specific *{region}* for your *{python_version}*
+Returns data on the latest layer for a all packages in a specific *{region}* for your *{python_version}*
 
 *https://api.klayers.cloud/api/v2/{python_version}/layers/latest/{region}/*
 
@@ -99,7 +104,7 @@ example:
 
 ### Get all ARNs for specific package in region
 
-Returns data on the all layers (latest and deprecated) for a specific *{package}* in a specific *{region}* for your *{python_version}*
+Returns data on the all layers (latest and deprecated) for a **specific** *{package}* in a specific *{region}* for your *{python_version}*
 
 *https://api.klayers.cloud/api/v2/{python_version}/layers/{region}/{package}*
 
@@ -115,4 +120,4 @@ example:
 
 ## Asking for additional layers
 
-If you would like a new package to be made a layer, raise a `pull request` modifying the `pipeline/config/packages_p39.csv` file.
+If you would like a new package to be made a layer, raise a `pull request` modifying the `pipeline/config/packages_p39.csv` or `pipeline/config/packages_p38.csv` file (depending on which version of python you use). By default, please request for the latest version of python unless you absolutely need an older version.
