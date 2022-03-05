@@ -19,6 +19,7 @@ redshift-connector,Apache License Version 2.0,Amazon Web Services <redshift-driv
 requests,Apache-2.0,Kenneth Reitz <me@kennethreitz.org>
 requests-html,MIT,<me@kennethreitz.org>
 SQLAlchemy,MIT,Mike Bayer <mike_mp@zzzcomputing.com>
+sympy,https://github.com/sympy/sympy/blob/master/LICENSE,https://github.com/sympy/sympy/blob/master/AUTHORS
 twilio,MIT,twilio <help@twilio.com>
 dropbox,MIT,Dropbox <dev-platform@dropbox.com>
 praw,BSD,Bryce Boe <bbzbryce@gmail.com>
