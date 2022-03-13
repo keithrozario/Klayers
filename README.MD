@@ -84,9 +84,9 @@ ServerlessFunction:
         - arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-p39-packaging:1
 ```
 
-### Option 5: Using Terraform with the Klayers provider
+### Option 5: Using Terraform with the Klayer provider
 
-Using Terraform, you can use the Klayers-provider from [@ldcorentin](https://github.com/ldcorentin). The provider uses the API to enable your functions to always reference the latest layer versions.
+Using Terraform, you can use the [terraform-provider-klayer](https://github.com/ldcorentin/terraform-provider-klayer). The provider uses the API to enable your functions to always reference the latest layer versions.
 
 ```terraform
 terraform {
