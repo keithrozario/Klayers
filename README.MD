@@ -92,8 +92,8 @@ Using Terraform, you can use the Klayers-provider from [@ldcorentin](https://git
 terraform {
   required_providers {
     klayers = {
-      version = ">= 1.0.0"
-      source  = "ldcorentin/klayers"
+      version = "~> 1.0.0"
+      source  = "ldcorentin/klayer"
     }
     aws = {
       source  = "hashicorp/aws"
@@ -118,7 +118,7 @@ resource "aws_lambda_function" "test_lambda" {
   handler       = "index.handler"
   runtime       = "python3.9"
   layers = [
-    data.klayers_package_latest_version.pandas
+    data.klayers_package_latest_version.pandas.arn
   ]
 }
 ```
