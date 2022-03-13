@@ -11,7 +11,7 @@
       -   [Option 2: Download copy of layer](#option-2-download-copy-of-layer)
       -   [Option 3: Using Serverless Framework](#option-3-using-serverless-framework)
       -   [Option 4: Using AWS Serverless Application Model (SAM)](#option-4-using-aws-serverless-application-model-sam)
-      -   [Option 5: Using Terraform with the Klayers provider](#option-5-using-terraform-with-the-klayers-provider)
+      -   [Option 5: Using Terraform with the Klayer provider](#option-5-using-terraform-with-the-klayer-provider)
   -   [Status of layers](#status-of-layers)
   -   [Layer expiry](#layer-expiry)
   -   [Architecture Diagram](#architecture-diagram)
