@@ -2,7 +2,24 @@
 
 🐍 A collection of Python Packages as AWS Lambda(λ) Layers 🐍
 
-[![Python 3.8](https://img.shields.io/badge/python-3.8-green.svg)](https://www.python.org/downloads/release/python-380/) [![Python 3.8](https://img.shields.io/badge/python-3.9-green.svg)](https://www.python.org/downloads/release/python-390/) [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/keithrozario/Klayers.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/keithrozario/Klayers/context:python) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) 
+[![Python 3.8](https://img.shields.io/badge/python-3.8-green.svg)](https://www.python.org/downloads/release/python-380/) [![Python 3.8](https://img.shields.io/badge/python-3.9-green.svg)](https://www.python.org/downloads/release/python-390/) [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/keithrozario/Klayers.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/keithrozario/Klayers/context:python) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
+  -   [List of ARNs](#list-of-arns)
+  -   [Python Packages](#python-packages)
+  -   [Using the Layers](#using-the-layers)
+      -   [Option 1: Using the Console](#option-1-using-the-console)
+      -   [Option 2: Download copy of layer](#option-2-download-copy-of-layer)
+      -   [Option 3: Using Serverless Framework](#option-3-using-serverless-framework)
+      -   [Option 4: Using AWS Serverless Application Model (SAM)](#option-4-using-aws-serverless-application-model-sam)
+      -   [Option 5: Using Terraform with the Klayers provider](#option-5-using-terraform-with-the-klayers-provider)
+  -   [Status of layers](#status-of-layers)
+  -   [Layer expiry](#layer-expiry)
+  -   [Architecture Diagram](#architecture-diagram)
+  -   [API](#api)
+      -   [Get latest ARN for all packages in region](#get-latest-arn-for-all-packages-in-region)
+      -   [Get all ARNs for specific package in region](#get-all-arns-for-specific-package-in-region)
+  -   [Special Thanks](#special-thanks)
+  -   [Asking for additional layers](#asking-for-additional-layers)
 
 ## List of ARNs
 
@@ -24,7 +41,7 @@ For the full list of Python packages, refer to the following, feel free to make 
 
 You can use the layers anyway you see fit, here are 4 options based on what method you use to deploy your lambda functions:
 
-### Option 1: Set ARN as layer
+### Option 1: Using the Console
 
 Add the arn directly from the console, by selecting Layers->Add a Layer->Specify an Arn:
 
@@ -67,6 +84,45 @@ ServerlessFunction:
         - arn:aws:lambda:ap-southeast-1:113088814899:layer:Klayers-p39-packaging:1
 ```
 
+### Option 5: Using Terraform with the Klayer provider
+
+Using Terraform, you can use the [terraform-provider-klayer](https://github.com/ldcorentin/terraform-provider-klayer). The provider uses the API to enable your functions to always reference the latest layer versions.
+
+```terraform
+terraform {
+  required_providers {
+    klayers = {
+      version = "~> 1.0.0"
+      source  = "ldcorentin/klayer"
+    }
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 3.0"
+    }
+  }
+}
+
+provider "aws" {
+  region = "us-east-1"
+}
+
+data "klayers_package_latest_version" "pandas" {
+  name   = "pandas"
+  region = "us-east-1"
+}
+
+resource "aws_lambda_function" "test_lambda" {
+  filename      = "index.zip"
+  function_name = "klayers-test"
+  role          = aws_iam_role.iam_for_lambda.arn
+  handler       = "index.handler"
+  runtime       = "python3.9"
+  layers = [
+    data.klayers_package_latest_version.pandas.arn
+  ]
+}
+```
+
 ## Status of layers
 
 Layers are built with the latest package version at 2am UTC on the first day of the Month.
@@ -91,16 +147,18 @@ API v2 has been released. Please use v2 going forward, as we'll end v1 by June-2
 
 All API calls are http-based, and work only with https (TLS1.2 and above). The API is heavily cached, so there could be minor delays in updates.
 
-### Get latest ARN for specific package in region
+### Get latest ARN for all packages in region
 
-Returns data on the latest layer for a all packages in a specific *{region}* for your *{python_version}*
+Returns data on the latest layer for a all packages in a specific *{region}* for your *{python_version}*. Defaults to json, but both csv and html can be returned as well.
 
-*https://api.klayers.cloud/api/v2/{python_version}/layers/latest/{region}/*
+*https://api.klayers.cloud/api/v2/{python_version}/layers/latest/{region}/{format}*
 
 example:
 
 * [https://api.klayers.cloud/api/v2/p3.9/layers/latest/us-east-1/](https://api.klayers.cloud/api/v2/p3.9/layers/latest/us-east-1/)
 * [https://api.klayers.cloud/api/v2/p3.8/layers/latest/ap-southeast-1/](https://api.klayers.cloud/api/v2/p3.9/layers/latest/ap-southeast-1/)
+* [https://api.klayers.cloud/api/v2/p3.9/layers/latest/ap-southeast-1/csv](https://api.klayers.cloud/api/v2/p3.9/layers/latest/ap-southeast-1/csv)
+* [https://api.klayers.cloud/api/v2/p3.9/layers/latest/ap-southeast-1/html](https://api.klayers.cloud/api/v2/p3.9/layers/latest/ap-southeast-1/html)
 
 ### Get all ARNs for specific package in region
 
@@ -117,6 +175,7 @@ example:
 
 * [Chahna107](https://github.com/chahna107) 
 * [~ Dependencies scanned by PyUp.io ~](https://pyup.io/)
+* [@ldcorentin](https://github.com/ldcorentin) for making the awesome klayers-provider
 
 ## Asking for additional layers
 
