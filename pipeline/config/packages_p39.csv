@@ -11,6 +11,7 @@ idna,https://github.com/kjd/idna/blob/master/LICENSE.rst,Kim Davis kim@cynosure.
 jinja2,BSD,Armin Ronache <armin.ronacher@active-4.com>; Pallets <contact@palletsprojects.com>
 numpy,https://www.numpy.org/license.html,numpy-discussion@python.org
 pandas,BSD,<pydata@googlegroups.com>
+pendulum,MIT,<sebastien@eustace.io>
 pysftp,BSD,Jeff Hinrichs <jeffh@dundeemt.com>
 pymongo,Apache-2.0,Bernie Hackett <bernie@mongodb.com>
 pyqldb,Apache-2.0,AWS
