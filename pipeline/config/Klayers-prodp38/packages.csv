@@ -10,6 +10,7 @@ aws-requests-auth,BSD,davehmuller@gmail.com
 arrow,Apache-2.0,Chris Smith <crsmithdev@gmail.com>
 bcrypt,Apache-2.0,cryptography-dev@python.org
 beautifulsoup4,MIT,Leonard Richardson <leonardr@segfault.org>
+biopython,BSD,Peter Cock <p.j.a.cock@googlemail.com>
 black,MIT,Lukasz Langa <lukasz@langa.pl>
 boltons,BSD,Mahmoud Hashemi <mahmoud@hatnote.com>
 boto3,Apache-2.0,AWS
