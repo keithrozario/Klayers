@@ -27,3 +27,5 @@ praw,BSD,Bryce Boe <bbzbryce@gmail.com>
 pygsheets,MIT,Nithin Murali <imnmfotmal@gmail.com>
 astropy,BSD,Astropy Collaboration <astropy@python.org>
 mysql-connector-python,GNU GPLv2,Oracle
+Metaphone,BSD,Andrew Collins <AtomBoy@SWCP.com>
+usaddress,MIT,Datamade <info@datamade.us>
