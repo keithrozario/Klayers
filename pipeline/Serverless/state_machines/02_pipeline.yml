@@ -54,6 +54,11 @@ definition:
           MaxAttempts: 2
           BackoffRate: 30
           IntervalSeconds: 60
+        - ErrorEquals:
+          - Lambda.AWSLambdaException
+          MaxAttempts: 3
+          BackoffRate: 10
+          IntervalSeconds: 30
       Catch:
         - ErrorEquals:
           - States.ALL
