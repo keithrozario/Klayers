@@ -55,7 +55,7 @@ pika,BSD,Gavin M Roy <gavinmroy@gmail.com>
 pulp,https://github.com/coin-or/pulp/blob/master/LICENSE,<pulp@stuartmitchell.com>
 pyarrow,Apache-2.0,Apache Arrow Developers <dev@arrow.apache.org>
 pycryptodome,Apache-2.0,<helderijs@gmail.com>
-pydantic,https://github.com/samuelcolvin/pydantic/blob/master/LICENSE,Samuel Colvin <samcolvin@gmail.com>
+pydantic[email],https://github.com/samuelcolvin/pydantic/blob/master/LICENSE,Samuel Colvin <samcolvin@gmail.com>
 PyJWT,MIT,Jose Padilla <hello@jpadilla.com>
 pysftp,BSD,Jeff Hinrichs <jeffh@dundeemt.com>
 pymongo,Apache-2.0,Bernie Hackett <bernie@mongodb.com>
