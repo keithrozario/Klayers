@@ -23,3 +23,4 @@ twilio,MIT,twilio <help@twilio.com>
 dropbox,MIT,Dropbox <dev-platform@dropbox.com>
 praw,BSD,Bryce Boe <bbzbryce@gmail.com>
 pygsheets,MIT,Nithin Murali <imnmfotmal@gmail.com>
+pyarrow,Apache-2.0,Apache Arrow Developers <dev@arrow.apache.org>
