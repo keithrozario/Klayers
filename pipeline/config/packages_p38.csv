@@ -37,6 +37,7 @@ jellyfish,BSD, James Turk
 jinja2,BSD,Armin Ronache <armin.ronacher@active-4.com>; Pallets <contact@palletsprojects.com>
 jsonschema,MIT,Julian Berman <Julian@GrayVines.com>
 kafka-python,Apache-2.0,Dana Powers <dana.powers@gmail.com>
+kazoo,Apache-2.0,Python ZK <python-zk@googlegroups.com>
 lambda-cache,MIT,Keith Rozario <keith@keithrozario.com>
 lambda-decorators,MIT,Daniel Schep <dschep@gmail.com>
 ldap3,LGPLv3, Giovanni Cannata <cannatag@gmail.com>
