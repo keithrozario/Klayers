@@ -12,6 +12,7 @@ jinja2,BSD,Armin Ronache <armin.ronacher@active-4.com>; Pallets <contact@pallets
 numpy,https://www.numpy.org/license.html,numpy-discussion@python.org
 pandas,BSD,<pydata@googlegroups.com>
 pendulum,MIT,<sebastien@eustace.io>
+pycountry,GNU Lesser General Public License v2 (LGPLv2) (LGPL 2.1),Christian Theune <ct@flyingcircus.io>
 pydantic[email],https://github.com/samuelcolvin/pydantic/blob/master/LICENSE,Samuel Colvin <samcolvin@gmail.com>
 pysftp,BSD,Jeff Hinrichs <jeffh@dundeemt.com>
 pymongo,Apache-2.0,Bernie Hackett <bernie@mongodb.com>
