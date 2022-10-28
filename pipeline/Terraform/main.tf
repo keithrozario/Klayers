@@ -91,3 +91,11 @@ resource "aws_ssm_parameter" "cert_arn" {
   value       = module.certificate.cert_arn
   overwrite   = true
 }
+
+## OIDC Block
+
+module "oidc_github" {
+  source             = "./oidc_github"
+  github_org         = split("/", split(":", lookup(var.github_repo, local.workspace_full_name))[1])[0]
+  github_repo_name   = split(".", split(":", lookup(var.github_repo, local.workspace_full_name))[1])[0]
+}
