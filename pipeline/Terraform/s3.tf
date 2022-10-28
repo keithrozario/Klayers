@@ -3,21 +3,32 @@ variable "s3bucket_layers" { type = map(any) }
 ## S3 Bucket
 resource "aws_s3_bucket" "s3bucket_layers" {
   bucket        = lookup(var.s3bucket_layers, local.workspace_full_name)
-  acl           = "private"
   force_destroy = true
+}
 
-  versioning {
-    enabled = true
+resource "aws_s3_bucket_acl" "s3bucket_layers_acl" {
+  bucket = aws_s3_bucket.s3bucket_layers.id
+  acl    = "private"
+}
+
+resource "aws_s3_bucket_versioning" "s3bucket_layers_versioning" {
+  bucket = aws_s3_bucket.s3bucket_layers.id
+  versioning_configuration {
+    status = "Enabled"
   }
+}
 
-  lifecycle_rule {
-
-    enabled = true
-
+resource "aws_s3_bucket_lifecycle_configuration" "s3bucket_layers_bucket_config" {
+  # Must have bucket versioning enabled first
+  depends_on = [aws_s3_bucket_versioning.s3bucket_layers_versioning]
+  bucket = aws_s3_bucket.s3bucket_layers.id
+  rule {
+    id = "layers-lifecycle"
     noncurrent_version_transition {
-      days          = 2
-      storage_class = "DEEP_ARCHIVE"
+      noncurrent_days = 2
+      storage_class   = "DEEP_ARCHIVE"
     }
+    status = "Enabled"
   }
 }
 
