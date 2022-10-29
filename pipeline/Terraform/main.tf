@@ -4,7 +4,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 3.0"
+      version = "~> 4.0"
     }
   }
 
@@ -98,4 +98,8 @@ module "oidc_github" {
   source             = "./oidc_github"
   github_org         = split("/", split(":", lookup(var.github_repo, local.workspace_full_name))[1])[0]
   github_repo_name   = split(".", split(":", lookup(var.github_repo, local.workspace_full_name))[1])[0]
+}
+
+output "github_role_arn" {
+  value = module.oidc_github.github_role_arn
 }

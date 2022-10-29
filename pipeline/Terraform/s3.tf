@@ -25,7 +25,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "s3bucket_layers_bucket_config"
   rule {
     id = "layers-lifecycle"
     noncurrent_version_transition {
-      noncurrent_days = 2
+      noncurrent_days = 7
       storage_class   = "DEEP_ARCHIVE"
     }
     status = "Enabled"
@@ -46,17 +46,4 @@ resource "aws_ssm_parameter" "layers_bucket_arn" {
   name        = "/${lookup(var.app_name, local.workspace_full_name)}/${local.workspace_full_name}/layers_bucket/arn"
   value       = aws_s3_bucket.s3bucket_layers.arn
   overwrite   = true
-}
-
-## Configuration Files
-resource "aws_s3_bucket_object" "packages_config" {
-  bucket = aws_s3_bucket.s3bucket_layers.bucket
-  key    = "config/packages.csv"
-  source = "../config/${local.workspace_full_name}/packages.csv"
-}
-
-resource "aws_s3_bucket_object" "regions_config" {
-  bucket = aws_s3_bucket.s3bucket_layers.bucket
-  key    = "config/regions.csv"
-  source = "../config/${local.workspace_full_name}/regions.csv"
 }
