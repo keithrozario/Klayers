@@ -97,7 +97,7 @@ resource "aws_ssm_parameter" "cert_arn" {
 module "oidc_github" {
   source             = "./oidc_github"
   app_name           = lookup(var.app_name, local.workspace_full_name)
-  github_org         = split("/", split(":", lookup(var.github_repo, local.workspace_full_name))[1])[0]
-  github_repo_name   = split(".", split(":", lookup(var.github_repo, local.workspace_full_name))[1])[0]
+  github_org         = split("/", split(":", var.github_repo)[1])[0]
+  github_repo_name   = split(".", split(":", var.github_repo)[1])[0]
   config_bucket_arn  = aws_s3_bucket.s3bucket_config.arn
 }
