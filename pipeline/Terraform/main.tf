@@ -98,9 +98,5 @@ module "oidc_github" {
   source             = "./oidc_github"
   github_org         = split("/", split(":", lookup(var.github_repo, local.workspace_full_name))[1])[0]
   github_repo_name   = split(".", split(":", lookup(var.github_repo, local.workspace_full_name))[1])[0]
-  layers_bucket_arn  = aws_s3_bucket.s3bucket_layers.arn
-}
-
-output "github_role_arn" {
-  value = module.oidc_github.github_role_arn
+  config_bucket_arn  = aws_s3_bucket.s3bucket_config.arn
 }

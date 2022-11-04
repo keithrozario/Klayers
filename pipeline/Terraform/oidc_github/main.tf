@@ -31,7 +31,7 @@ data "aws_iam_policy_document" "github_actions_assume_role_policy" {
 data "aws_iam_policy_document" "github_role_inline_policy" {
   statement {
     actions   = ["s3:PutObject"]
-    resources = ["${var.layers_bucket_arn}/*"]
+    resources = ["${var.config_bucket_arn}/*"]
   }
 }
 

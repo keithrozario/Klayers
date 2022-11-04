@@ -1,3 +1,3 @@
 variable github_org {}
 variable github_repo_name {}
-variable layers_bucket_arn {}
+variable config_bucket_arn {}

@@ -6,9 +6,14 @@ resource "aws_s3_bucket" "s3bucket_layers" {
   force_destroy = true
 }
 
-resource "aws_s3_bucket_acl" "s3bucket_layers_acl" {
+
+resource "aws_s3_bucket_public_access_block" "layers_bucket" {
   bucket = aws_s3_bucket.s3bucket_layers.id
-  acl    = "private"
+
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
 }
 
 resource "aws_s3_bucket_versioning" "s3bucket_layers_versioning" {
@@ -45,5 +50,37 @@ resource "aws_ssm_parameter" "layers_bucket_arn" {
   description = "ARN of layer bucket"
   name        = "/${lookup(var.app_name, local.workspace_full_name)}/${local.workspace_full_name}/layers_bucket/arn"
   value       = aws_s3_bucket.s3bucket_layers.arn
+  overwrite   = true
+}
+
+## Config Bucket -- to be uploaded from github
+
+resource "aws_s3_bucket" "s3bucket_config" {
+  bucket_prefix = "klayers-config-${lookup(var.app_name, local.workspace_full_name)}"
+  force_destroy = true
+}
+
+resource "aws_s3_bucket_public_access_block" "config_bucket" {
+  bucket = aws_s3_bucket.s3bucket_config.id
+
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
+
+resource "aws_ssm_parameter" "config_bucket_name" {
+  type        = "String"
+  description = "Name of s3 bucket to hold configuration files"
+  name        = "/${lookup(var.app_name, local.workspace_full_name)}/config_bucket/name"
+  value       = aws_s3_bucket.s3bucket_config.bucket
+  overwrite   = true
+}
+
+resource "aws_ssm_parameter" "config_bucket_arn" {
+  type        = "String"
+  description = "ARN of config bucket"
+  name        = "/${lookup(var.app_name, local.workspace_full_name)}/config_bucket/arn"
+  value       = aws_s3_bucket.s3bucket_config.arn
   overwrite   = true
 }
