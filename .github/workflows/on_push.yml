@@ -1,0 +1,39 @@
+name: Change to Master
+
+on:
+  push:
+    branches:
+      - master
+      - klayers-default
+      - klayers-dev
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v3
+
+      - name: Configure AWS
+        run: |
+          export AWS_ROLE_ARN=arn:aws:iam::908645878701:role/github_role
+          export AWS_WEB_IDENTITY_TOKEN_FILE=/tmp/awscreds
+          export AWS_DEFAULT_REGION=ap-southeast-1
+
+          echo AWS_WEB_IDENTITY_TOKEN_FILE=$AWS_WEB_IDENTITY_TOKEN_FILE >> $GITHUB_ENV
+          echo AWS_ROLE_ARN=$AWS_ROLE_ARN >> $GITHUB_ENV
+          echo AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION >> $GITHUB_ENV
+
+          curl -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL" | jq -r '.value' > $AWS_WEB_IDENTITY_TOKEN_FILE
+
+      - name: Get Bucket name
+        run: |
+          export CONFIG_BUCKET_NAME=$(aws ssm get-parameter --name "/kl/config_bucket/name" | jq -r ".Parameter.Value")
+          echo CONFIG_BUCKET_NAME=$CONFIG_BUCKET_NAME >> $GITHUB_ENV
+
+      - name: Upload new configuration to S3
+        run: aws s3 cp ./pipeline/config s3://$CONFIG_BUCKET_NAME --recursive
