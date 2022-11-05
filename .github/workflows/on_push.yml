@@ -30,20 +30,19 @@ jobs:
           fi
         shell: bash
       
-      - name: Get AWS Role to assume
+      - name: Get AWS configuration
         run: |
-          GITHUB_ROLE_ARN=$(cat ./pipeline/Terraform/terraform.tfvars.json | jq --arg arg $AWS_ENV '.github_role_arn | .[$arg]')
-          echo $GITHUB_ROLE_ARN
+          GITHUB_ROLE_ARN=$(cat ./pipeline/Terraform/terraform.tfvars.json | jq -r --arg arg $AWS_ENV '.github_role_arn | .[$arg]')
+          AWS_REGION=$(cat ./pipeline/Terraform/terraform.tfvars.json | jq -r --arg arg $AWS_ENV '.aws_region | .[$arg]')
+          
           echo AWS_ROLE_ARN=$GITHUB_ROLE_ARN >> $GITHUB_ENV
+          echo AWS_DEFAULT_REGION=$AWS_REGION >> $GITHUB_ENV
 
-      - name: Configure AWS
+      - name: Update Token File
         run: |
           export AWS_WEB_IDENTITY_TOKEN_FILE=/tmp/awscreds
-          export AWS_DEFAULT_REGION=ap-southeast-1
-
           echo AWS_WEB_IDENTITY_TOKEN_FILE=$AWS_WEB_IDENTITY_TOKEN_FILE >> $GITHUB_ENV
-          echo AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION >> $GITHUB_ENV
-
+          
           curl -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL" | jq -r '.value' > $AWS_WEB_IDENTITY_TOKEN_FILE
 
       - name: Get Bucket name
