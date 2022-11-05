@@ -32,7 +32,7 @@ jobs:
       
       - name: Get AWS configuration
         run: |
-          GITHUB_ROLE_ARN=$(cat ./pipeline/Terraform/terraform.tfvars.json | jq -r --arg arg $AWS_ENV '.github_role_arn | .[$arg]')
+          GITHUB_ROLE_ARN=$(cat ./.github/workflows/role_arns.json | jq -r --arg arg $AWS_ENV '.github_role_arn | .[$arg]')
           AWS_REGION=$(cat ./pipeline/Terraform/terraform.tfvars.json | jq -r --arg arg $AWS_ENV '.aws_region | .[$arg]')
           
           echo AWS_ROLE_ARN=$GITHUB_ROLE_ARN >> $GITHUB_ENV
