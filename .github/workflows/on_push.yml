@@ -19,10 +19,10 @@ jobs:
       
       - name: Set AWS Environment variable based on branch
         run: |
-          if [ ${{ github.ref }} != 'refs/heads/master' ]
+          if [ ${{ github.ref }} == 'refs/heads/master' ]
           then
             echo AWS_ENV=Klayers-prodp38 >> $GITHUB_ENV
-          elif [ ${{ github.ref }} != 'refs/heads/klayers-dev']
+          elif [ ${{ github.ref }} == 'refs/heads/klayers-dev']
           then
             echo AWS_ENV=Klayers-devp38 >> $GITHUB_ENV
           else
@@ -32,8 +32,8 @@ jobs:
       
       - name: Get AWS Role to assume
         run: |
-          cat ./pipeline/Terraform/terraform.tfvars.json | jq --arg arg $AWS_ENV '.aws_profile | .[$arg]'
-          GITHUB_ROLE_ARN=$(cat terraform.tfvars.json | jq --arg arg $AWS_ENV '.github_role_arn | .[$arg]')
+          GITHUB_ROLE_ARN=$(cat ./pipeline/Terraform/terraform.tfvars.json | jq --arg arg $AWS_ENV '.github_role_arn | .[$arg]')
+          echo $GITHUB_ROLE_ARN
           echo GITHUB_ROLE_ARN=$GITHUB_ROLE_ARN >> $GITHUB_ENV
 
       # - name: Configure AWS
