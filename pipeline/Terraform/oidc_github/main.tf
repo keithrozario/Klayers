@@ -43,7 +43,7 @@ data "aws_iam_policy_document" "github_role_inline_policy" {
 }
 
 resource "aws_iam_role" "github_role" {
-  name = "github_role"
+  name = var.github_role_name
   assume_role_policy = data.aws_iam_policy_document.github_actions_assume_role_policy.json
   inline_policy {
     name   = "klayers-inline-policy"

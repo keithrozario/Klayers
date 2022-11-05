@@ -40,7 +40,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "s3bucket_layers_bucket_config"
 resource "aws_ssm_parameter" "layers_bucket_name" {
   type        = "String"
   description = "Name of s3 bucket to hold layer artifacts"
-  name        = "/${lookup(var.app_name, local.workspace_full_name)}/${local.workspace_full_name}/layers_bucket/name"
+  name        = "/${var.app_name}/${local.workspace_full_name}/layers_bucket/name"
   value       = aws_s3_bucket.s3bucket_layers.bucket
   overwrite   = true
 }
@@ -48,7 +48,7 @@ resource "aws_ssm_parameter" "layers_bucket_name" {
 resource "aws_ssm_parameter" "layers_bucket_arn" {
   type        = "String"
   description = "ARN of layer bucket"
-  name        = "/${lookup(var.app_name, local.workspace_full_name)}/${local.workspace_full_name}/layers_bucket/arn"
+  name        = "/${var.app_name}/${local.workspace_full_name}/layers_bucket/arn"
   value       = aws_s3_bucket.s3bucket_layers.arn
   overwrite   = true
 }
@@ -56,7 +56,7 @@ resource "aws_ssm_parameter" "layers_bucket_arn" {
 ## Config Bucket -- to be uploaded from github
 
 resource "aws_s3_bucket" "s3bucket_config" {
-  bucket_prefix = "klayers-config-${lookup(var.app_name, local.workspace_full_name)}"
+  bucket_prefix = "klayers-config-${var.app_name}"
   force_destroy = true
 }
 
@@ -72,7 +72,7 @@ resource "aws_s3_bucket_public_access_block" "config_bucket" {
 resource "aws_ssm_parameter" "config_bucket_name" {
   type        = "String"
   description = "Name of s3 bucket to hold configuration files"
-  name        = "/${lookup(var.app_name, local.workspace_full_name)}/config_bucket/name"
+  name        = var.s3bucket_config_parameter_name
   value       = aws_s3_bucket.s3bucket_config.bucket
   overwrite   = true
 }
@@ -80,7 +80,7 @@ resource "aws_ssm_parameter" "config_bucket_name" {
 resource "aws_ssm_parameter" "config_bucket_arn" {
   type        = "String"
   description = "ARN of config bucket"
-  name        = "/${lookup(var.app_name, local.workspace_full_name)}/config_bucket/arn"
+  name        = "/${var.app_name}/config_bucket/arn"
   value       = aws_s3_bucket.s3bucket_config.arn
   overwrite   = true
 }

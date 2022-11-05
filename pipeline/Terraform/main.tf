@@ -34,24 +34,18 @@ provider "aws" {
   alias   = "cloudfront"
 }
 
-module "dynamo_table" {
-  source             = "./dynamodb"
-  table_logical_name = "db"
-  app_name           = lookup(var.app_name, local.workspace_full_name)
-  workspace_name     = local.workspace_full_name
-}
-
+# Version 1 has been deleted
 module "dynamo_table_ver_2" {
   source             = "./dynamodb"
   table_logical_name = "db-ver2"
-  app_name           = lookup(var.app_name, local.workspace_full_name)
+  app_name           = var.app_name
   workspace_name     = local.workspace_full_name
 }
 
 module "certificate" {
   source          = "./certificate_manager"
   api_domain_name = lookup(var.api_domain_name, local.workspace_full_name)
-  app_name        = lookup(var.app_name, local.workspace_full_name)
+  app_name        = var.app_name
   workspace_name  = local.workspace_full_name
 
   providers = {
@@ -65,21 +59,21 @@ module "certificate" {
 # Remove this layer in next version...
 resource "aws_ssm_parameter" "lambda_prefix" {
   type      = "String"
-  name      = "/${lookup(var.app_name, local.workspace_full_name)}/${local.workspace_full_name}/lambda_prefix"
+  name      = "/${var.app_name}/${local.workspace_full_name}/lambda_prefix"
   value     = lookup(var.lambda_prefix, local.workspace_full_name)
   overwrite = true
 }
 
 resource "aws_ssm_parameter" "github_repo" {
   type      = "String"
-  name      = "/${lookup(var.app_name, local.workspace_full_name)}/${local.workspace_full_name}/github_repo"
+  name      = "/${var.app_name}/${local.workspace_full_name}/github_repo"
   value     = var.github_repo
   overwrite = true
 }
 
 resource "aws_ssm_parameter" "api_domain_name" {
   type      = "String"
-  name      = "/${lookup(var.app_name, local.workspace_full_name)}/${local.workspace_full_name}/api/domain_name"
+  name      = "/${var.app_name}/${local.workspace_full_name}/api/domain_name"
   value     = lookup(var.api_domain_name, local.workspace_full_name)
   overwrite = true
 }
@@ -87,7 +81,7 @@ resource "aws_ssm_parameter" "api_domain_name" {
 resource "aws_ssm_parameter" "cert_arn" {
   type        = "String"
   description = "Certificate Arn"
-  name        = "/${lookup(var.app_name, local.workspace_full_name)}/${local.workspace_full_name}/api/cert/arn"
+  name        = "/${var.app_name}/${local.workspace_full_name}/api/cert/arn"
   value       = module.certificate.cert_arn
   overwrite   = true
 }
@@ -96,7 +90,8 @@ resource "aws_ssm_parameter" "cert_arn" {
 
 module "oidc_github" {
   source             = "./oidc_github"
-  app_name           = lookup(var.app_name, local.workspace_full_name)
+  app_name           = var.app_name
+  github_role_name   = lookup(var.github_role_name, local.workspace_full_name)
   github_org         = split("/", split(":", var.github_repo)[1])[0]
   github_repo_name   = split(".", split(":", var.github_repo)[1])[0]
   config_bucket_arn  = aws_s3_bucket.s3bucket_config.arn
