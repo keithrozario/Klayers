@@ -21,12 +21,12 @@ jobs:
         run: |
           if [ ${{ github.ref }} != 'refs/heads/master' ]
           then
-            echo $AWS_ENV=Klayers-prodp38 >> $GITHUB_ENV
+            echo AWS_ENV=Klayers-prodp38 >> $GITHUB_ENV
           elif [ ${{ github.ref }} != 'refs/heads/klayers-dev']
           then
-            echo $AWS_ENV=Klayers-devp38 >> $GITHUB_ENV
+            echo AWS_ENV=Klayers-devp38 >> $GITHUB_ENV
           else
-            echo $AWS_ENV=Klayers-defaultp38 >> $GITHUB_ENV
+            echo AWS_ENV=Klayers-defaultp38 >> $GITHUB_ENV
           fi
         shell: bash
       
