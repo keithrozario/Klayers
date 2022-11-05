@@ -1,0 +1,7 @@
+{
+    "github_role_arn": {
+        "default": "arn:aws:iam::908645878701:role/github_role",
+        "dev": "<INSERT ARN HERE>",
+        "prod": "<INSERT ARN HERE>"
+  }
+}
