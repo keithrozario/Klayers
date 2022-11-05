@@ -16,23 +16,40 @@ jobs:
     steps:
       - name: Set up Git repository
         uses: actions/checkout@v3
-
-      - name: Configure AWS
+      
+      - name: Set AWS Environment variable based on branch
         run: |
-          export AWS_ROLE_ARN=arn:aws:iam::908645878701:role/github_role
-          export AWS_WEB_IDENTITY_TOKEN_FILE=/tmp/awscreds
-          export AWS_DEFAULT_REGION=ap-southeast-1
-
-          echo AWS_WEB_IDENTITY_TOKEN_FILE=$AWS_WEB_IDENTITY_TOKEN_FILE >> $GITHUB_ENV
-          echo AWS_ROLE_ARN=$AWS_ROLE_ARN >> $GITHUB_ENV
-          echo AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION >> $GITHUB_ENV
-
-          curl -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL" | jq -r '.value' > $AWS_WEB_IDENTITY_TOKEN_FILE
-
-      - name: Get Bucket name
+          if [ ${{ github.ref }} != 'refs/heads/master' ]; then
+            echo $AWS_ENV=Klayers-prodp38 >> $GITHUB_ENV
+          elif [ ${{ github.ref }} != 'refs/heads/klayers-dev' ];
+            echo $AWS_ENV=Klayers-devp38 >> $GITHUB_ENV
+          else
+            echo $AWS_ENV=Klayers-defaultp38 >> $GITHUB_ENV
+          fi
+        shell: bash
+      
+      - name: Get AWS Role to assume
         run: |
-          export CONFIG_BUCKET_NAME=$(aws ssm get-parameter --name "/kl/config_bucket/name" | jq -r ".Parameter.Value")
-          echo CONFIG_BUCKET_NAME=$CONFIG_BUCKET_NAME >> $GITHUB_ENV
+        cat ./pipeline/Terraform/terraform.tfvars.json | jq --arg arg $AWS_ENV '.aws_profile | .[$arg]'
+        GITHUB_ROLE_ARN=$(cat terraform.tfvars.json | jq --arg arg $AWS_ENV '.github_role_arn | .[$arg]')
+        echo GITHUB_ROLE_ARN=$GITHUB_ROLE_ARN >> $GITHUB_ENV
 
-      - name: Upload new configuration to S3
-        run: aws s3 cp ./pipeline/config s3://$CONFIG_BUCKET_NAME --recursive
+      # - name: Configure AWS
+      #   run: |
+      #     export AWS_ROLE_ARN=arn:aws:iam::908645878701:role/github_role
+      #     export AWS_WEB_IDENTITY_TOKEN_FILE=/tmp/awscreds
+      #     export AWS_DEFAULT_REGION=ap-southeast-1
+
+      #     echo AWS_WEB_IDENTITY_TOKEN_FILE=$AWS_WEB_IDENTITY_TOKEN_FILE >> $GITHUB_ENV
+      #     echo AWS_ROLE_ARN=$AWS_ROLE_ARN >> $GITHUB_ENV
+      #     echo AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION >> $GITHUB_ENV
+
+      #     curl -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL" | jq -r '.value' > $AWS_WEB_IDENTITY_TOKEN_FILE
+
+      # - name: Get Bucket name
+      #   run: |
+      #     export CONFIG_BUCKET_NAME=$(aws ssm get-parameter --name "/kl/config_bucket/name" | jq -r ".Parameter.Value")
+      #     echo CONFIG_BUCKET_NAME=$CONFIG_BUCKET_NAME >> $GITHUB_ENV
+
+      # - name: Upload new configuration to S3
+      #   run: aws s3 cp ./pipeline/config s3://$CONFIG_BUCKET_NAME --recursive

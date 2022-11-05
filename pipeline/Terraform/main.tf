@@ -73,7 +73,7 @@ resource "aws_ssm_parameter" "lambda_prefix" {
 resource "aws_ssm_parameter" "github_repo" {
   type      = "String"
   name      = "/${lookup(var.app_name, local.workspace_full_name)}/${local.workspace_full_name}/github_repo"
-  value     = lookup(var.github_repo, local.workspace_full_name)
+  value     = var.github_repo
   overwrite = true
 }
 
