@@ -17,30 +17,30 @@ jobs:
       - name: Set up Git repository
         uses: actions/checkout@v3
       
-      - name: Set AWS Environment variable based on branch
-        run: |
-          if [ ${{ github.ref }} == 'refs/heads/master' ]
-          then
-            echo AWS_ENV=Klayers-prodp38 >> $GITHUB_ENV
-          elif [ ${{ github.ref }} == 'refs/heads/klayers-dev']
-          then
-            echo AWS_ENV=Klayers-devp38 >> $GITHUB_ENV
-          else
-            echo AWS_ENV=Klayers-defaultp38 >> $GITHUB_ENV
-          fi
-        shell: bash
+    #   - name: Set AWS Environment variable based on branch
+    #     run: |
+    #       if [ ${{ github.ref }} == 'refs/heads/master' ]
+    #       then
+    #         echo AWS_ENV=Klayers-prodp38 >> $GITHUB_ENV
+    #       elif [ ${{ github.ref }} == 'refs/heads/klayers-dev']
+    #       then
+    #         echo AWS_ENV=Klayers-devp38 >> $GITHUB_ENV
+    #       else
+    #         echo AWS_ENV=Klayers-defaultp38 >> $GITHUB_ENV
+    #       fi
+    #     shell: bash
       
-    - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-region: $AWS_DEFAULT_REGION
-        role-to-assume: $AWS_ROLE_ARN
-        role-duration-seconds: 600
+    # - name: Configure AWS Credentials
+    #   uses: aws-actions/configure-aws-credentials@v1
+    #   with:
+    #     aws-region: $AWS_DEFAULT_REGION
+    #     role-to-assume: $AWS_ROLE_ARN
+    #     role-duration-seconds: 600
 
-      - name: Get Bucket name
-        run: |
-          export CONFIG_BUCKET_NAME=$(aws ssm get-parameter --name "/kl/config_bucket/name" | jq -r ".Parameter.Value")
-          echo CONFIG_BUCKET_NAME=$CONFIG_BUCKET_NAME >> $GITHUB_ENV
+    #   - name: Get Bucket name
+    #     run: |
+    #       export CONFIG_BUCKET_NAME=$(aws ssm get-parameter --name "/kl/config_bucket/name" | jq -r ".Parameter.Value")
+    #       echo CONFIG_BUCKET_NAME=$CONFIG_BUCKET_NAME >> $GITHUB_ENV
 
-      - name: Upload new configuration to S3
-        run: aws s3 cp ./pipeline/config s3://$CONFIG_BUCKET_NAME --recursive
+    #   - name: Upload new configuration to S3
+    #     run: aws s3 cp ./pipeline/config s3://$CONFIG_BUCKET_NAME --recursive
