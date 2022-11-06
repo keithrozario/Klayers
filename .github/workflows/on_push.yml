@@ -50,7 +50,7 @@ jobs:
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
           role-to-assume: ${{ env.AWS_ROLE_ARN }}
           role-duration-seconds: 900
-          role-session-name: on-push-klayers-${{ github.repository }}
+          role-session-name: on-push-klayers-${{ env.AWS_ENV }}
 
       - name: Get Bucket name
         run: |
