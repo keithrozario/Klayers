@@ -30,12 +30,12 @@ jobs:
           fi
         shell: bash
       
-    # - name: Configure AWS Credentials
-    #   uses: aws-actions/configure-aws-credentials@v1
-    #   with:
-    #     aws-region: $AWS_DEFAULT_REGION
-    #     role-to-assume: $AWS_ROLE_ARN
-    #     role-duration-seconds: 600
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: $AWS_DEFAULT_REGION
+          role-to-assume: $AWS_ROLE_ARN
+          role-duration-seconds: 600
 
     #   - name: Get Bucket name
     #     run: |
