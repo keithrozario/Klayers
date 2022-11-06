@@ -28,6 +28,10 @@ jobs:
           else
             echo AWS_ENV=Klayers-defaultp38 >> $GITHUB_ENV
           fi
+          
+          APP_NAME=$(cat ./pipeline/Terraform/terraform.tfvars.json | jq '.app_name')
+          echo APP_NAME=$APP_NAME >> $GITHUB_ENV
+
         shell: bash
       
       - name: Get AWS configuration
@@ -49,12 +53,17 @@ jobs:
         with:
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
           role-to-assume: ${{ env.AWS_ROLE_ARN }}
-          role-duration-seconds: 900
+          role-duration-seconds: 90
           role-session-name: on-push-klayers-${{ env.AWS_ENV }}
+      
+      - name: Bucket Parameter
+        run: |
+          BUCKET_PARAMETER_SUFFIX=$(cat ./pipeline/Terraform/terraform.tfvars.json | jq '.s3bucket_config_parameter_name_suffix')
+          echo CONFIG_BUCKET_PARAMETER_NAME=/$APP_NAME/$AWS_ENV/$BUCKET_PARAMETER_SUFFIX >> $GITHUB_ENV
 
       - name: Get Bucket name
         run: |
-          export CONFIG_BUCKET_NAME=$(aws ssm get-parameter --name "/kl/config_bucket/name" | jq -r ".Parameter.Value")
+          export CONFIG_BUCKET_NAME=$(aws ssm get-parameter --name $CONFIG_BUCKET_PARAMETER_NAME | jq -r ".Parameter.Value")
           echo CONFIG_BUCKET_NAME=$CONFIG_BUCKET_NAME >> $GITHUB_ENV
 
       - name: Upload new configuration to S3

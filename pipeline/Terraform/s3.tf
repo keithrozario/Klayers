@@ -72,7 +72,7 @@ resource "aws_s3_bucket_public_access_block" "config_bucket" {
 resource "aws_ssm_parameter" "config_bucket_name" {
   type        = "String"
   description = "Name of s3 bucket to hold configuration files"
-  name        = var.s3bucket_config_parameter_name
+  name        = "/${var.app_name}/${local.workspace_full_name}/${var.s3bucket_config_parameter_name_suffix}"
   value       = aws_s3_bucket.s3bucket_config.bucket
   overwrite   = true
 }
@@ -80,7 +80,7 @@ resource "aws_ssm_parameter" "config_bucket_name" {
 resource "aws_ssm_parameter" "config_bucket_arn" {
   type        = "String"
   description = "ARN of config bucket"
-  name        = "/${var.app_name}/config_bucket/arn"
+  name        = "/${var.app_name}/${local.workspace_full_name}/config_bucket/arn"
   value       = aws_s3_bucket.s3bucket_config.arn
   overwrite   = true
 }
