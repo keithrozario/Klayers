@@ -2,7 +2,8 @@ resource "aws_iam_openid_connect_provider" "github" {
   url = "https://token.actions.githubusercontent.com"
 
   client_id_list = [
-    "https://github.com/${var.github_org}",
+    "https://github.com/${var.github_org}", # github script
+    "sts.amazonaws.com" # aws-actions/configure-aws-credentials@v1
   ]
   
   ## https://github.blog/changelog/2022-01-13-github-actions-update-on-oidc-based-deployments-to-aws/
