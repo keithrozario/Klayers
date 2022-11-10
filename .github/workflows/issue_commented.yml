@@ -1,0 +1,19 @@
+on: issue_comment
+
+jobs:
+  pr_commented:
+    # This job only runs if Keith created the comment and addressed it to @Klayersbot,
+    name: PR comment to Klayers bot
+    if: ${{ github.event.comment.author_association == 'OWNER' &&
+            github.event.comment.user.id == 795867 &&
+            startsWith(github.event.comment.body, '@KlayersBot') }}
+
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo A comment on PR $NUMBER from $USER at $HTML_URL, content $CONTENT
+        env:
+          NUMBER: ${{ github.event.issue.number }}
+          HTML_URL: ${{ github.event.issue.html_url }}
+          USER: ${{ github.event.comment.user.login }}
+          CONTENT: ${{ github.event.comment.body }}

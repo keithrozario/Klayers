@@ -1,0 +1,50 @@
+
+service: gh
+frameworkVersion: '3'
+
+plugins:
+  - serverless-better-credentials
+
+provider:
+  name: aws
+  runtime: python3.9
+  stage: ${opt:stage, 'Klayers-defaultp38'}
+  region: ${file(../Terraform/terraform.tfvars.json):aws_region.${self:provider.stage}}
+  profile: ${file(../Terraform/terraform.tfvars.json):aws_profile.${self:provider.stage}}
+  versionFunctions: false
+  logRetentionInDays: 90
+  environment:
+    STAGE: ${self:provider.stage}
+    LOG_LEVEL: INFO
+    DB_NAME: ${self:custom.dbName}
+    POWERTOOLS_SERVICE_NAME: ${self:service}-${self:provider.stage}
+
+custom:
+  # Env
+  awsRegion: ${self:provider.region} 
+
+  # S3
+  s3ConfigBucketName: ${ssm:/kl/${self:provider.stage}/config_bucket/name}
+  s3Arn: ${ssm:/kl/${self:provider.stage}/config_bucket/arn}
+
+  # DynamoDB
+  dbName: ${ssm:/kl/${self:provider.stage}/db-ver2/name}
+  dbArn: ${ssm:/kl/${self:provider.stage}/db-ver2/arn}
+
+functions:
+  new_object_in_config_bucket:
+    handler: new_object_in_config_bucket.main
+    events:
+      - s3:
+          bucket: ${self:custom.s3ConfigBucketName} 
+          event: s3:ObjectCreated:*
+          existing: true
+    layers:
+      - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPythonV2:12
+
+package:
+  patterns:
+    - '!package-lock.json'
+    - '!package.json'
+    - '!node_modules/**'
+    - '!serverless.yml'
