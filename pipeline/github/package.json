@@ -1,5 +1,8 @@
 {
   "dependencies": {
     "serverless-better-credentials": "^1.1.3"
+  },
+  "devDependencies": {
+    "serverless-step-functions": "^3.11.0"
   }
 }

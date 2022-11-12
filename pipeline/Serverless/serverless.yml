@@ -5,7 +5,7 @@ variablesResolutionMode: 20210326
 plugins:
   - serverless-iam-roles-per-function
   - serverless-step-functions
-
+  - serverless-better-credentials
 provider:
   name: aws
   runtime: python3.8

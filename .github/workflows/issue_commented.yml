@@ -17,3 +17,23 @@ jobs:
           HTML_URL: ${{ github.event.issue.html_url }}
           USER: ${{ github.event.comment.user.login }}
           CONTENT: ${{ github.event.comment.body }}
+
+      - name: Set up Git repository
+        uses: actions/checkout@v3
+      
+      - name: Setup AWS environment for Klayers-default (testing building a package in Klayers-defaultp38 env)
+        run: |
+          AWS_ENV=Klayers-defaultp38 >> $GITHUB_ENV
+          GITHUB_ROLE_ARN=$(cat ./.github/workflows/role_arns.json | jq -r --arg arg $AWS_ENV '.github_role_arn | .[$arg]')
+          AWS_REGION=$(cat ./pipeline/Terraform/terraform.tfvars.json | jq -r --arg arg $AWS_ENV '.aws_region | .[$arg]')
+          
+          echo AWS_ROLE_ARN=$GITHUB_ROLE_ARN >> $GITHUB_ENV
+          echo AWS_DEFAULT_REGION=$AWS_REGION >> $GITHUB_ENV
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1-node16
+        with:
+          aws-region: ${{ env.AWS_DEFAULT_REGION }}
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
+          role-duration-seconds: 1800
+          role-session-name: on-push-klayers-${{ env.AWS_ENV }}
