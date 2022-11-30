@@ -20,6 +20,7 @@ construct,MIT,Arkadiusz Bulski<arek.bulski@gmail.com>; Tomer Filiba <tomerfiliba
 crhelper,Apache-2.0,Jay McConnell <jmmccon@amazon.com>
 cryptography,Apache-2.0,The Python Cryptographic Authority and individual contributors <cryptography-dev@python.org>
 datadog,BSD,Datadog Inc <dev@datadoghq.com>
+DBnomics,GNU Affero General Public License v3 (AGPLv3),DBnomics Team <contact@nomics.world>
 dynamodb-encryption-sdk,Apache-2.0,<aws-cryptools@amazon.com>
 elasticsearch,Apache-2.0,Honza Kral <honza.kral@gmail.com>; Nick Lang <nick@nicklang.com>
 envelopes,MIT,tomekwojcik <tomek@bthlabs.pl>
