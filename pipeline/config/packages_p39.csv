@@ -33,6 +33,8 @@ mysql-connector-python,GNU GPLv2,Oracle
 Metaphone,BSD,Andrew Collins <AtomBoy@SWCP.com>
 usaddress,MIT,Datamade <info@datamade.us>
 pyephem,MIT,Brandon Craig Rhodes <brandon@rhodesmill.org>
+pymsql,GNU LGPL license, http://www.pymssql.org/
 gremlinpython,Apache-2.0,stephen mallette <stepmall@amazon.com>
 oracledb,Apache-2.0,anthony-tuininga (Oracle)
 rasa,Apache-2.0,Tom Bocklisch - Rasa Technologies GmbH,tom@rasa.com
+pytz,MIT,Stuart Bishop <stuart@stuartbishop.net>
