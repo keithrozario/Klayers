@@ -1,0 +1,57 @@
+service: gh-push
+frameworkVersion: '3'
+
+plugins:
+  - serverless-better-credentials
+  - serverless-step-functions
+  - serverless-iam-roles-per-function
+
+provider:
+  name: aws
+  runtime: python3.9
+  stage:  ${opt:stage, 'Klayers-defaultp38'}
+  region: ${file(../Terraform/terraform.tfvars.json):aws_region.${self:provider.stage}}
+  profile: ${file(../Terraform/terraform.tfvars.json):aws_profile.${self:provider.stage}}
+  versionFunctions: false
+  logRetentionInDays: 90
+  environment:
+    STAGE: ${self:provider.stage}
+    LOG_LEVEL: INFO
+    DB_NAME: ${self:custom.dbName}
+    POWERTOOLS_SERVICE_NAME: ${self:service}-${self:provider.stage}
+    CONFIG_BUCKET: ${self:custom.configBucketName}
+
+
+custom:
+  # DynamoDB
+  dbArn: ${ssm:/kl/${self:provider.stage}/db-ver2/arn}
+  dbName: ${ssm:/kl/${self:provider.stage}/db-ver2/name}
+
+  # Config bucket
+  configBucketArn: ${ssm:/kl/${self:provider.stage}/config_bucket/arn}
+  configBucketName: ${ssm:/kl/${self:provider.stage}/config_bucket/name}
+
+
+functions:
+  check_for_new_package:
+    handler: check_for_new_package.main
+    description: Compares newly uploaded files in S3 vs. DynamoDB
+    runtime: python3.9
+    timeout: 120
+    memorySize: 256
+    environment:
+      POWERTOOLS_SERVICE_NAME: Klayers.on_push_master
+    iamRoleStatementsName: ${self:provider.stage}-check-packages
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+        - dynamodb:GetItem
+        Resource:
+        - ${self:custom.dbArn}
+      - Effect: Allow
+        Action:
+        - s3:GetObject
+        Resource:
+        - ${self:custom.configBucketArn}/*
+    layers:
+      - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPythonV2:13
