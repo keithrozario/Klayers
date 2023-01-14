@@ -49,7 +49,7 @@ data "aws_iam_policy_document" "github_role_inline_policy" {
 
   statement {
     actions = ["states:StartExecution"]
-    resources = ["arn:aws:states:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:stateMachine/gh-*"]  # all github statemachines
+    resources = ["arn:aws:states:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:stateMachine:gh-*"]  # all github statemachines
   }
 
 }
