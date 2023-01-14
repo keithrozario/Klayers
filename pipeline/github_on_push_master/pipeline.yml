@@ -1,0 +1,26 @@
+name: ${self:service}
+definition:
+  Comment: Trigger build from Github
+  StartAt: CheckPythonVersion
+  States:
+    CheckPythonVersion:
+      Type: Task
+      Resource:
+        Fn::GetAtt: [CheckUnderscorepythonUnderscoreversionsLambdaFunction, Arn]
+      Next: Done
+      Retry:
+        - ErrorEquals:
+          - States.Timeout
+          MaxAttempts: 2
+          BackoffRate: 30
+          IntervalSeconds: 60
+      Catch:
+        - ErrorEquals:
+          - States.ALL
+          Next: CatchAllFail
+    Done:
+      Type: Succeed
+    CatchAllFail:
+      Type: Fail
+      Error: Failure
+      Cause: Unknown

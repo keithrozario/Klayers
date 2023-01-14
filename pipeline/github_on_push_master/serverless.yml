@@ -31,23 +31,45 @@ custom:
   configBucketArn: ${ssm:/kl/${self:provider.stage}/config_bucket/arn}
   configBucketName: ${ssm:/kl/${self:provider.stage}/config_bucket/name}
 
+stepFunctions:
+  stateMachines:
+    invoke_pipelines:
+      ${file(./pipeline.yml)}
 
 functions:
-  check_for_new_package:
-    handler: check_for_new_package.main
+  check_new_packages:
+    handler: check_new_packages.main
     description: Compares newly uploaded files in S3 vs. DynamoDB
     runtime: python3.9
     timeout: 120
     memorySize: 256
     environment:
       POWERTOOLS_SERVICE_NAME: Klayers.on_push_master
-    iamRoleStatementsName: ${self:provider.stage}-check-packages
+    iamRoleStatementsName: ${self:provider.stage}-check-new-packages
     iamRoleStatements:
       - Effect: Allow
         Action:
         - dynamodb:GetItem
         Resource:
         - ${self:custom.dbArn}
+      - Effect: Allow
+        Action:
+        - s3:GetObject
+        Resource:
+        - ${self:custom.configBucketArn}/*
+    layers:
+      - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPythonV2:13
+
+  check_python_versions:
+    handler: check_python_versions.main
+    description: Compares python versions
+    runtime: python3.9
+    timeout: 120
+    memorySize: 256
+    environment:
+      POWERTOOLS_SERVICE_NAME: Klayers.on_push_master
+    iamRoleStatementsName: ${self:provider.stage}-check-python-versions
+    iamRoleStatements:
       - Effect: Allow
         Action:
         - s3:GetObject

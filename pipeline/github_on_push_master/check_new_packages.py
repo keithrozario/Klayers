@@ -6,12 +6,6 @@ from aws_lambda_powertools.logging import Logger
 from common.get_config import get_config_items
 
 logger = Logger()
-
-configs = {
-    "p3.8": "packages_p38.csv",
-    "p3.9": "packages_p39.csv",
-}
-
 s3 = boto3.client('s3')
 
 @logger.inject_lambda_context
@@ -39,4 +33,3 @@ def main(event, context):
         'new_packages': new_packages,
         'deleted_packages': deleted_packages
     }
-
