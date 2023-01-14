@@ -33,8 +33,36 @@ custom:
 
 stepFunctions:
   stateMachines:
-    invoke_pipelines:
+    pipeline:
       ${file(./pipeline.yml)}
+
+resources:
+  Outputs:
+    PipelineArn:
+      Description: The ARN of the example state machine
+      Value:
+        Fn::GetAtt: [GhDashpushDashpipeline, Arn]
+
+  Resources:
+    PipelineArnParameter:
+      Type: AWS::SSM::Parameter
+      Properties: 
+        Description: Arn of Pipeline step function
+        Name: /${self:service}/${self:provider.stage}/PipelineArn
+        Type: String
+        Value: 
+          Fn::GetAtt: [GhDashpushDashpipeline, Arn] 
+
+
+  # Resources:
+  #   stateMachineArn:
+  #     Type: AWS::SSM::Parameter
+  #     Properties: 
+  #       DataType: text
+  #       Description: Arn of the pipeline state machine
+  #       Name: /gh-push/${self:provider.stage}/pipeline/arn
+  #       Type: String
+  #       Value: ${self:resources.Outputs.PipelineArn.Value}
 
 functions:
   check_new_packages:

@@ -1,4 +1,4 @@
-name: ${self:service}
+name: ${self:service}-pipeline
 definition:
   Comment: Trigger build from Github
   StartAt: CheckPythonVersion

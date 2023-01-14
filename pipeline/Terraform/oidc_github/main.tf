@@ -41,6 +41,17 @@ data "aws_iam_policy_document" "github_role_inline_policy" {
     actions = ["ssm:GetParameter"]
     resources = ["arn:aws:ssm:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:parameter/${var.app_name}/*"]
   }
+
+  statement {
+    actions = ["ssm:GetParameter"]
+    resources = ["arn:aws:ssm:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:parameter/gh*"]  # all github stacks
+  }
+
+  statement {
+    actions = ["states:StartExecution"]
+    resources = ["arn:aws:states:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:stateMachine/gh-*"]  # all github statemachines
+  }
+
 }
 
 resource "aws_iam_role" "github_role" {

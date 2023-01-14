@@ -68,3 +68,8 @@ jobs:
 
       - name: Upload new configuration to S3
         run: aws s3 cp ./pipeline/config s3://$CONFIG_BUCKET_NAME --recursive
+
+      - name: Invoke GithubPush Pipeline
+        run: |
+          STATE_MACHINE_ARN=$(aws ssm get-parameter --name "/gh-push/$AWS_ENV/PiepelineArn" | jq -r ".Parameter.Value")
+          aws stepfunctions start-execution --state-machine-arn $STATE_MACHINE_ARN
