@@ -3,7 +3,6 @@ import csv
 import json
 import boto3
 from aws_lambda_powertools.logging import Logger
-from common.get_config import get_config_items
 
 logger = Logger()
 s3 = boto3.client('s3')

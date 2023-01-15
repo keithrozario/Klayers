@@ -7,7 +7,7 @@ definition:
       Type: Task
       Resource:
         Fn::GetAtt: [CheckUnderscorepythonUnderscoreversionsLambdaFunction, Arn]
-      Next: Done
+      Next: MapPythonVersions
       Retry:
         - ErrorEquals:
           - States.Timeout
@@ -18,8 +18,18 @@ definition:
         - ErrorEquals:
           - States.ALL
           Next: CatchAllFail
-    Done:
-      Type: Succeed
+    MapPythonVersions:
+      Type: Map
+      # SLS framework has a bug with ItemProcessor https://github.com/serverless-operations/serverless-step-functions/issues/542
+      Iterator:  
+        StartAt: CheckNewPackages
+        States:
+          CheckNewPackages:
+            Type: Task
+            Resource:
+              Fn::GetAtt: [CheckUnderscorenewUnderscorepackagesLambdaFunction, Arn]
+            End: true
+      End: true
     CatchAllFail:
       Type: Fail
       Error: Failure
