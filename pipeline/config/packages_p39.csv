@@ -37,3 +37,8 @@ gremlinpython,Apache-2.0,stephen mallette <stepmall@amazon.com>
 oracledb,Apache-2.0,anthony-tuininga (Oracle)
 rasa,Apache-2.0,Tom Bocklisch - Rasa Technologies GmbH,tom@rasa.com
 kafka-python,Apache-2.0,Dana Powers
+lxml,BSD,<lxml-dev@lxml.de>
+sklearn,BSD,<scikit-learn@python.org>
+transformers,Apache-2.0,Thomas Wolf,<api-enterprise@huggingface.co>
+selenium,Apache-2.0,The Selenium Project
+jieba,MIT,Sun Junyi, <ccnusjy@gmail.com>
