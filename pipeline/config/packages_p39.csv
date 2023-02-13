@@ -36,6 +36,7 @@ pyephem,MIT,Brandon Craig Rhodes <brandon@rhodesmill.org>
 gremlinpython,Apache-2.0,stephen mallette <stepmall@amazon.com>
 oracledb,Apache-2.0,anthony-tuininga (Oracle)
 rasa,Apache-2.0,Tom Bocklisch - Rasa Technologies GmbH,tom@rasa.com
+PyJWT,MIT,Jose Padilla <https://github.com/jpadilla>
 kafka-python,Apache-2.0,Dana Powers
 lxml,BSD,<lxml-dev@lxml.de>
 sklearn,BSD,<scikit-learn@python.org>
