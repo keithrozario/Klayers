@@ -42,6 +42,10 @@ jobs:
           
           echo AWS_ROLE_ARN=$GITHUB_ROLE_ARN >> $GITHUB_ENV
           echo AWS_DEFAULT_REGION=$AWS_REGION >> $GITHUB_ENV
+
+          echo $AWS_REGION
+          echo $AWS_ROLE_ARN
+          
         shell: bash
 
       - name: Configure AWS Credentials
