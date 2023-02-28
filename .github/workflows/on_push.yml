@@ -52,21 +52,21 @@ jobs:
           role-duration-seconds: 1800
           role-session-name: on-push-klayers-${{ env.AWS_ENV }}
       
-      # - name: Bucket Parameter
-      #   run: |
-      #     BUCKET_PARAMETER_SUFFIX=$(cat ./pipeline/Terraform/terraform.tfvars.json | jq -r '.s3bucket_config_parameter_name_suffix')
-      #     echo CONFIG_BUCKET_PARAMETER_NAME=/$APP_NAME/$AWS_ENV/$BUCKET_PARAMETER_SUFFIX >> $GITHUB_ENV
+      - name: Bucket Parameter
+        run: |
+          BUCKET_PARAMETER_SUFFIX=$(cat ./pipeline/Terraform/terraform.tfvars.json | jq -r '.s3bucket_config_parameter_name_suffix')
+          echo CONFIG_BUCKET_PARAMETER_NAME=/$APP_NAME/$AWS_ENV/$BUCKET_PARAMETER_SUFFIX >> $GITHUB_ENV
 
-      # - name: Get Bucket name
-      #   run: |
-      #     export CONFIG_BUCKET_NAME=$(aws ssm get-parameter --name $CONFIG_BUCKET_PARAMETER_NAME | jq -r ".Parameter.Value")
-      #     echo CONFIG_BUCKET_NAME=$CONFIG_BUCKET_NAME >> $GITHUB_ENV
+      - name: Get Bucket name
+        run: |
+          export CONFIG_BUCKET_NAME=$(aws ssm get-parameter --name $CONFIG_BUCKET_PARAMETER_NAME | jq -r ".Parameter.Value")
+          echo CONFIG_BUCKET_NAME=$CONFIG_BUCKET_NAME >> $GITHUB_ENV
 
-      # - name: Upload new configuration to S3
-      #   run: aws s3 cp ./pipeline/config s3://$CONFIG_BUCKET_NAME --recursive
+      - name: Upload new configuration to S3
+        run: aws s3 cp ./pipeline/config s3://$CONFIG_BUCKET_NAME --recursive
       
-      # - name: Echo github obj
-      #   run: echo ${{ toJson(github) }}
+      - name: Echo github obj
+        run: echo ${{ toJson(github) }}
 
       # - name: Invoke GithubPush Pipeline
       #   run: |
