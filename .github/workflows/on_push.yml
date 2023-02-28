@@ -25,7 +25,7 @@ jobs:
           elif [ ${{ github.ref }} == 'refs/heads/klayers-dev']
           then
             echo AWS_ENV=Klayers-devp38 >> $GITHUB_ENV
-          else
+          elif [ ${{ github.ref }} == 'refs/heads/klayers-default']
             echo AWS_ENV=Klayers-defaultp38 >> $GITHUB_ENV
           fi
           
@@ -68,6 +68,9 @@ jobs:
 
       - name: Upload new configuration to S3
         run: aws s3 cp ./pipeline/config s3://$CONFIG_BUCKET_NAME --recursive
+      
+      - name: Echo github obj
+        run: echo ${{ toJson(github) }}
 
       - name: Invoke GithubPush Pipeline
         run: |
