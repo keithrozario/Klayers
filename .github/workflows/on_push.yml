@@ -30,7 +30,7 @@ jobs:
           fi
           
           APP_NAME=$(cat ./pipeline/Terraform/terraform.tfvars.json | jq -r '.app_name')
-          echo APP_NAME=$APP_NAME >> $GITHUB_EN
+          echo APP_NAME=$APP_NAME >> $GITHUB_ENV
 
         shell: bash
 
