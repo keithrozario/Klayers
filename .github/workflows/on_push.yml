@@ -22,7 +22,7 @@ jobs:
       
       - name: Set AWS Environment variable based on branch
         run: |
-          if [ ${{ github.ref }} == 'refs/heads/klayers-default']
+          if [ ${{ github.ref }} == "refs/heads/klayers-default"]
           then
             echo AWS_ENV=Klayers-defaultp38 >> $GITHUB_ENV
           else
