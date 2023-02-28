@@ -37,6 +37,9 @@ jobs:
           echo APP_NAME=$APP_NAME >> $GITHUB_ENV
 
         shell: bash
+
+      - name: Echo Environment
+        run: echo $AWS_ENV
       
       # - name: Get AWS configuration
       #   run: |
