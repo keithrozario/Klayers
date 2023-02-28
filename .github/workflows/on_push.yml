@@ -26,6 +26,7 @@ jobs:
           then
             echo AWS_ENV=Klayers-devp38 >> $GITHUB_ENV
           elif [ ${{ github.ref }} == 'refs/heads/klayers-default']
+          then
             echo AWS_ENV=Klayers-defaultp38 >> $GITHUB_ENV
           fi
           
