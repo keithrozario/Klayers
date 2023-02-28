@@ -22,19 +22,15 @@ jobs:
       
       - name: Set AWS Environment variable based on branch
         run: |
-          if [ ${{ github.ref }} == 'refs/heads/master' ]
-          then
-            echo AWS_ENV=Klayers-prodp38 >> $GITHUB_ENV
-          elif [ ${{ github.ref }} == 'refs/heads/klayers-dev']
-          then
-            echo AWS_ENV=Klayers-devp38 >> $GITHUB_ENV
-          elif [ ${{ github.ref }} == 'refs/heads/klayers-default']
+          if [ ${{ github.ref }} == 'refs/heads/klayers-default']
           then
             echo AWS_ENV=Klayers-defaultp38 >> $GITHUB_ENV
+          else
+            echo AWS_ENV=null >> $GITHUB_ENV
           fi
           
           APP_NAME=$(cat ./pipeline/Terraform/terraform.tfvars.json | jq -r '.app_name')
-          echo APP_NAME=$APP_NAME >> $GITHUB_ENV
+          echo APP_NAME=$APP_NAME >> $GITHUB_EN
 
         shell: bash
 
