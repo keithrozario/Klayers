@@ -67,7 +67,8 @@ jobs:
       
       - name: Echo github obj
         run: |
-          echo ${{ github }}
+          echo '${{ toJson(github) }}' > release.json
+          cat release.json | jq '.'
 
       # - name: Invoke GithubPush Pipeline
       #   run: |
