@@ -67,10 +67,6 @@ jobs:
       
       - name: Echo github obj
         run: |
-          echo '${{ toJson(github) }}' > release.json
-          cat release.json | jq '.'
-
-      # - name: Invoke GithubPush Pipeline
-      #   run: |
-      #     STATE_MACHINE_ARN=$(aws ssm get-parameter --name "/gh-push/$AWS_ENV/PipelineArn" | jq -r ".Parameter.Value")
-      #     aws stepfunctions start-execution --state-machine-arn $STATE_MACHINE_ARN
+          echo '${{ toJson(github) }}' > event.json
+          STATE_MACHINE_ARN=$(aws ssm get-parameter --name "/gh-push/$AWS_ENV/PipelineArn" | jq -r ".Parameter.Value")
+          aws stepfunctions start-execution --state-machine-arn $STATE_MACHINE_ARN --input file://event.json
