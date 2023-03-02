@@ -1,4 +1,4 @@
-name: Change to Master
+name: Push To Master
 
 on:
   push:
@@ -66,7 +66,9 @@ jobs:
         run: aws s3 cp ./pipeline/config s3://$CONFIG_BUCKET_NAME --recursive
       
       - name: Echo github obj
-        run: echo ${{ toJson(github) }}
+        run: |
+          GITHUB_EVENT=$(jq @json <<< ${{ toJson(github) }})
+          echo $GITHUB_EVENT
 
       # - name: Invoke GithubPush Pipeline
       #   run: |
