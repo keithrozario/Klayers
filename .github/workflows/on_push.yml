@@ -67,8 +67,7 @@ jobs:
       
       - name: Echo github obj
         run: |
-          GITHUB_EVENT=$(jq @json <<< ${{ toJson(github) }})
-          echo $GITHUB_EVENT
+          echo ${{ github }}
 
       # - name: Invoke GithubPush Pipeline
       #   run: |
