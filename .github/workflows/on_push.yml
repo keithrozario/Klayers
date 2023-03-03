@@ -13,20 +13,24 @@ jobs:
     permissions:
       id-token: write
       contents: read
+    if: github.event.pull_request.merged == true  # only if merged
     steps:
       - name: Set up Git repository
         uses: actions/checkout@v3
-
-      - name: Echo github obj
-        run: echo ${{ github.ref }} 
       
       - name: Set AWS Environment variable based on branch
         run: |
           if [ ${{ github.ref }} == refs/heads/klayers-default ]
           then
             echo AWS_ENV=Klayers-defaultp38 >> $GITHUB_ENV
+          elif [ ${{ github.ref }} == refs/heads/klayers-dev ]
+          then
+            echo AWS_ENV=Klayers-devp38 >> $GITHUB_ENV
+          elif [ ${{ github.ref }} == refs/heads/master ]
+          then
+            echo AWS_ENV=Klayers-prodp38 >> $GITHUB_ENV            
           else
-            echo AWS_ENV=null >> $GITHUB_ENV
+            exit 1
           fi
           
           APP_NAME=$(cat ./pipeline/Terraform/terraform.tfvars.json | jq -r '.app_name')
@@ -65,7 +69,7 @@ jobs:
       - name: Upload new configuration to S3
         run: aws s3 cp ./pipeline/config s3://$CONFIG_BUCKET_NAME --recursive
       
-      - name: Echo github obj
+      - name: Invoke Pipeline
         run: |
           echo '${{ toJson(github) }}' > event.json
           STATE_MACHINE_ARN=$(aws ssm get-parameter --name "/gh-push/$AWS_ENV/PipelineArn" | jq -r ".Parameter.Value")
