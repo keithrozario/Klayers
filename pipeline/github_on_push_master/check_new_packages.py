@@ -11,6 +11,9 @@ config_file_name = 'config.json'
 
 @logger.inject_lambda_context
 def main(event, context):
+    """
+    check_python_versions will return the python versions, an iterate each version for each lambda function
+    """
     
     python_version = event
     logger.info({'python_version': python_version})
@@ -32,10 +35,7 @@ def main(event, context):
     new_packages = [pckg for pckg in packages_in_csv if pckg not in packages_in_dynamo]
     logger.info({'new_packages': new_packages})
 
-    deleted_packages = [pckg for pckg in packages_in_dynamo if pckg not in packages_in_csv]
-    logger.info({'deleted_packages': deleted_packages})
-
     return {
-        'new_packages': new_packages,
-        'deleted_packages': deleted_packages
+        'python_version': python_version,
+        'new_packages': new_packages
     }

@@ -31,20 +31,19 @@ def main(event, context):
 
     """
     Args:
-      package: Python Package to build and deploy
-    return:
-      response: Entries in EventBridge for processing
+      event: list of dict. e.g. {"python_version": str, "new_packages": list}
     """
 
-    packages = event.get('new_packages', [])
-    invoke_pipelines(packages=packages)
+    for item in event:
+        invoke_pipelines(packages=item['new_packages'], python_version=item['python_version'])
 
     return None
 
-def invoke_pipelines(packages: list):
+def invoke_pipelines(packages: list, python_version: str):
     """
     Args:
         packages: List of packages to build
+        python_version: Str of python version (e.g. p3.8, p3.9)
     return:
         None
     """

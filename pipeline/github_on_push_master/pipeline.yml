@@ -29,6 +29,21 @@ definition:
             Resource:
               Fn::GetAtt: [CheckUnderscorenewUnderscorepackagesLambdaFunction, Arn]
             End: true
+      Next: InvokePipelines
+    InvokePipelines:
+      Type: Task
+      Resource:
+        Fn::GetAtt: [InvokeUnderscorepipelinesLambdaFunction, Arn]
+      Retry:
+        - ErrorEquals:
+          - States.Timeout
+          MaxAttempts: 2
+          BackoffRate: 30
+          IntervalSeconds: 60
+      Catch:
+        - ErrorEquals:
+          - States.ALL
+          Next: CatchAllFail
       End: true
     CatchAllFail:
       Type: Fail

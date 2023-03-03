@@ -105,3 +105,26 @@ functions:
         - ${self:custom.configBucketArn}/*
     layers:
       - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPythonV2:13
+
+  invoke_pipelines:
+    handler: invoke_pipelines.main
+    description: Invoke multiple pipelines, one for each package
+    runtime: python3.9
+    timeout: 120
+    memorySize: 256
+    environment:
+      POWERTOOLS_SERVICE_NAME: Klayers.github.invoke_pipeline
+    iamRoleStatementsName: ${self:provider.stage}-gh_invoke_pipeline
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - events:PutEvents
+        Resource:
+          - Fn::Join:
+              - ":"
+              - - arn:aws:events
+                - ${self:provider.region}
+                - Ref: AWS::AccountId
+                - event-bus/default
+    layers:
+      - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPythonV2:13
