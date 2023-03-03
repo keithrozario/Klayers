@@ -51,14 +51,14 @@ definition:
       Retry:
         - ErrorEquals:
           - States.Timeout
-          MaxAttempts: 2
-          BackoffRate: 30
+          MaxAttempts: 5
+          BackoffRate: 45
           IntervalSeconds: 60
         - ErrorEquals:
           - Lambda.AWSLambdaException
-          MaxAttempts: 3
-          BackoffRate: 10
-          IntervalSeconds: 30
+          MaxAttempts: 5
+          BackoffRate: 45
+          IntervalSeconds: 60
       Catch:
         - ErrorEquals:
           - States.ALL
