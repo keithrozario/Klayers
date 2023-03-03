@@ -13,10 +13,13 @@ jobs:
     permissions:
       id-token: write
       contents: read
-    if: github.event.pull_request.merged == true  # only if merged
+    # if: github.event.pull_request.merged == true  # only if merged
     steps:
       - name: Set up Git repository
         uses: actions/checkout@v3
+
+      - name: echo event
+        run : cat ${{ github.event_path }}
       
       - name: Set AWS Environment variable based on branch
         run: |
