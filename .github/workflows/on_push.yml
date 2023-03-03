@@ -17,9 +17,6 @@ jobs:
     steps:
       - name: Set up Git repository
         uses: actions/checkout@v3
-
-      - name: echo event
-        run : cat ${{ github.event_path }}
       
       - name: Set AWS Environment variable based on branch
         run: |
@@ -72,8 +69,8 @@ jobs:
       - name: Upload new configuration to S3
         run: aws s3 cp ./pipeline/config s3://$CONFIG_BUCKET_NAME --recursive
       
-      - name: Invoke Pipeline
+      - name: Invoke Pipeline with entire github event
         run: |
           echo '${{ toJson(github) }}' > event.json
           STATE_MACHINE_ARN=$(aws ssm get-parameter --name "/gh-push/$AWS_ENV/PipelineArn" | jq -r ".Parameter.Value")
-          aws stepfunctions start-execution --state-machine-arn $STATE_MACHINE_ARN --input file://event.json
+          aws stepfunctions start-execution --state-machine-arn $STATE_MACHINE_ARN --input file://${{ github.event_path }}
