@@ -71,6 +71,8 @@ jobs:
       
       - name: Invoke Pipeline with entire github event
         run: |
-          echo '${{ toJson(github) }}' > event.json
+          echo $EVENT_JSON >> event.json
           STATE_MACHINE_ARN=$(aws ssm get-parameter --name "/gh-push/$AWS_ENV/PipelineArn" | jq -r ".Parameter.Value")
-          aws stepfunctions start-execution --state-machine-arn $STATE_MACHINE_ARN --input file://${{ github.event_path }}
+          aws stepfunctions start-execution --state-machine-arn $STATE_MACHINE_ARN --input file://event.json
+        env:
+          EVENT_JSON: ${{ toJSON(github) }}
