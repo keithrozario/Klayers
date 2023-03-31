@@ -1,5 +1,6 @@
 import os
 import json
+import time
 
 import boto3
 from aws_lambda_powertools.logging import Logger
@@ -23,7 +24,7 @@ def log_eventbridge_errors(response: dict, function_logger: Logger):
             if entry.get("ErrorCode", False):
                 function_logger.error(entry)
 
-    return response["FailedEntryCount"]
+    return None
 
 
 @logger.inject_lambda_context
@@ -60,13 +61,17 @@ def main(event, context):
                 ),
                 "EventBusName": "default",
             }
-            entries.append(entry)
-
-        # maximum 10 entries per put_events API call
-        chunk_10 = [entries[i : i + 10] for i in range(0, len(entries), 10)]
-        for chunk in chunk_10:
-            response = client.put_events(Entries=chunk)
+            response = client.put_events(Entries=[entry])
             log_eventbridge_errors(response, logger)
+            ### Anti-patternt to put time.sleep(1) above -- but will implement SQS in the next release ###
+            time.sleep(2)
+
+        ### Had to Remve this section, as dumping 10 messages into Event bridge, caused congestion issues when invoking lambda in step functions ###
+        # maximum 10 entries per put_events API call
+        # chunk_10 = [entries[i : i + 10] for i in range(0, len(entries), 10)]
+        # for chunk in chunk_10:
+        #     response = client.put_events(Entries=chunk)
+        #     log_eventbridge_errors(response, logger)
 
         # Post Status to Slack
         message = f"Started build on {len(packages)} packages for {python_version}"

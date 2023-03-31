@@ -65,7 +65,6 @@ functions:
   - ${file(02_pipeline/pipeline.yml)}
   - ${file(04_stream_processor/streams.yml)}
   - ${file(05_slack_notification/slack.yml)}
-  - ${file(06_webhook/webhook.yml)}
 
 stepFunctions:
   stateMachines:

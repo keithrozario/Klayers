@@ -15,7 +15,8 @@ def get_latest_release(package):
     returns:
       version: Version number of latest release that is **not** a pre-release as packaging.version
     """
-    req = requests.get(f"https://pypi.python.org/pypi/{package}/json")
+    clean_package_name = package.split("[")[0]
+    req = requests.get(f"https://pypi.python.org/pypi/{clean_package_name}/json")
     version = parse("0")
     license_info = None
 

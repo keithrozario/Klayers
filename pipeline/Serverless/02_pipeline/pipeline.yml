@@ -78,10 +78,7 @@ deploy:
 
 build39:
   description: Builds the package in a container for python3.9 then uploads to S3
-  image:
-    name: build_image
-    command:
-      - build.main
+  image: ${ssm:/${self:service}/${self:provider.stage}/build/p39/x86/repo}@${ssm:/${self:service}/${self:provider.stage}/build/p39/x86/digest}
   timeout: 600
   memorySize: 1769  # exactly one vcpu
   iamRoleStatementsName: ${self:provider.stage}-buildp39
