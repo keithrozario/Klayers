@@ -18,3 +18,4 @@ var/
 
 # Serverless directories
 .serverless
+event.json 
