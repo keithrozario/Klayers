@@ -47,6 +47,10 @@ jobs:
           echo AWS_DEFAULT_REGION=$AWS_REGION >> $GITHUB_ENV
 
         shell: bash
+      
+      - name: Get PR Number
+        run: |
+
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1-node16
@@ -71,8 +75,6 @@ jobs:
       
       - name: Invoke Pipeline with entire github event
         run: |
-          echo $EVENT_JSON >> event.json
+          echo ${{ toJSON(github) }} | jq 'del(.token)' | jq 'del(.event.repository)') >> event.json
           STATE_MACHINE_ARN=$(aws ssm get-parameter --name "/gh-push/$AWS_ENV/PipelineArn" | jq -r ".Parameter.Value")
           aws stepfunctions start-execution --state-machine-arn $STATE_MACHINE_ARN --input file://event.json
-        env:
-          EVENT_JSON: ${{ toJSON(github) }}
