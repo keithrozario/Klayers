@@ -53,7 +53,7 @@ jobs:
         with:
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
           role-to-assume: ${{ env.AWS_ROLE_ARN }}
-          role-duration-seconds: 1800
+          role-duration-seconds: 1200
           role-session-name: on-push-klayers-${{ env.AWS_ENV }}
       
       - name: Bucket Parameter
