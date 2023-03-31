@@ -2,7 +2,7 @@ invoke_pipeline:
   handler: 01_invoke_pipelines/invoke_pipelines.main
   description: Invoke multiple pipelines, one for each package
   runtime: python3.8
-  timeout: 120
+  timeout: 900
   memorySize: 256
   environment:
     POWERTOOLS_SERVICE_NAME: Klayers.invoke_pipeline

@@ -11,9 +11,13 @@ definition:
       Retry:
         - ErrorEquals:
           - States.Timeout
-          MaxAttempts: 2
-          BackoffRate: 30
-          IntervalSeconds: 60
+          - Lambda.ClientExecutionTimeoutException
+          - Lambda.ServiceException
+          - Lambda.AWSLambdaException
+          - Lambda.TooManyRequestsException
+          MaxAttempts: 5
+          BackoffRate: 2
+          IntervalSeconds: 15
       Catch:
         - ErrorEquals:
           - States.ALL
@@ -36,9 +40,9 @@ definition:
       Retry:
         - ErrorEquals:
           - States.Timeout
-          MaxAttempts: 2
-          BackoffRate: 30
-          IntervalSeconds: 60
+          MaxAttempts: 5
+          BackoffRate: 2
+          IntervalSeconds: 15
       Catch:
         - ErrorEquals:
           - States.ALL
@@ -50,15 +54,15 @@ definition:
       Next: Deploy
       Retry:
         - ErrorEquals:
-          - States.Timeout
-          MaxAttempts: 5
-          BackoffRate: 45
-          IntervalSeconds: 60
-        - ErrorEquals:
           - Lambda.AWSLambdaException
+          - States.Timeout
+          - Lambda.ClientExecutionTimeoutException
+          - Lambda.ServiceException
+          - Lambda.AWSLambdaException
+          - Lambda.TooManyRequestsException
           MaxAttempts: 5
-          BackoffRate: 45
-          IntervalSeconds: 60
+          BackoffRate: 2
+          IntervalSeconds: 15
       Catch:
         - ErrorEquals:
           - States.ALL
@@ -71,6 +75,12 @@ definition:
       Retry:
         - ErrorEquals:
           - States.Timeout
+          - Lambda.AWSLambdaException
+          - States.Timeout
+          - Lambda.ClientExecutionTimeoutException
+          - Lambda.ServiceException
+          - Lambda.AWSLambdaException
+          - Lambda.TooManyRequestsException
           MaxAttempts: 2
           BackoffRate: 30
           IntervalSeconds: 60
