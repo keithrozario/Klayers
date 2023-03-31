@@ -10,9 +10,13 @@ s3 = boto3.client('s3')
 config_file_name = 'config.json'
 
 @logger.inject_lambda_context
-def main(event, context):
+def main(event, context) -> dict:
     """
-    check_python_versions will return the python versions, an iterate each version for each lambda function
+    Args:
+        event (Str): Python version to check for
+    Return:
+        python_version (Str): Python version as string (e.g. p3.8)
+        new_packages (List): List of packages to be deployed
     """
     
     python_version = event
