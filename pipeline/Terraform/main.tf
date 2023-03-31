@@ -86,6 +86,7 @@ resource "aws_ssm_parameter" "cert_arn" {
   overwrite   = true
 }
 
+
 ## OIDC Block
 
 module "oidc_github" {
@@ -95,4 +96,31 @@ module "oidc_github" {
   github_org         = split("/", split(":", var.github_repo)[1])[0]
   github_repo_name   = split(".", split(":", var.github_repo)[1])[0]
   config_bucket_arn  = aws_s3_bucket.s3bucket_config.arn
+}
+
+
+# Container Build Images 
+resource "aws_ecr_repository" "p39build_x86" {
+  name                 = "p39build"
+  image_tag_mutability = "MUTABLE"
+
+  image_scanning_configuration {
+    scan_on_push = true
+  }
+}
+
+resource "aws_ssm_parameter" "p39_build_x86_digest" {
+  type        = "String"
+  description = "URL for p39 x86 digest"
+  name        = "/${var.app_name}/${local.workspace_full_name}/build/p39/x86/digest"
+  value       = "default"
+  overwrite   = false
+}
+
+resource "aws_ssm_parameter" "p39_build_repo" {
+  type        = "String"
+  description = "URL for p39 x86 repo"
+  name        = "/${var.app_name}/${local.workspace_full_name}/build/p39/x86/repo"
+  value       = aws_ecr_repository.p39build_x86.repository_url
+  overwrite   = true
 }

@@ -78,10 +78,7 @@ deploy:
 
 build39:
   description: Builds the package in a container for python3.9 then uploads to S3
-  image:
-    name: build_image
-    command:
-      - build.main
+  image: 908645878701.dkr.ecr.ap-southeast-1.amazonaws.com/p39build@sha256:022c481fe6e52f7a71d422ea87ec8ae364a98f560019a737080ff1dff35bfc81
   timeout: 600
   memorySize: 1769  # exactly one vcpu
   iamRoleStatementsName: ${self:provider.stage}-buildp39
