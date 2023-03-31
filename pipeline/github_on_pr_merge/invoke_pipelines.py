@@ -37,7 +37,7 @@ def main(event, context):
     for item in event:
         invoke_pipelines(packages=item['new_packages'], python_version=item['python_version'])
 
-    return None
+    return event
 
 def invoke_pipelines(packages: list, python_version: str):
     """
