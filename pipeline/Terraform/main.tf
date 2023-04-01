@@ -109,14 +109,6 @@ resource "aws_ecr_repository" "p39build_x86" {
   }
 }
 
-resource "aws_ssm_parameter" "p39_build_x86_digest" {
-  type        = "String"
-  description = "URL for p39 x86 digest"
-  name        = "/${var.app_name}/${local.workspace_full_name}/build/p39/x86/digest"
-  value       = "default"
-  overwrite   = false
-}
-
 resource "aws_ssm_parameter" "p39_build_repo" {
   type        = "String"
   description = "URL for p39 x86 repo"
