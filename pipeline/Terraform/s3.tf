@@ -84,3 +84,40 @@ resource "aws_ssm_parameter" "config_bucket_arn" {
   value       = aws_s3_bucket.s3bucket_config.arn
   overwrite   = true
 }
+
+
+## DynamoDB backup bucket config
+resource "aws_s3_bucket" "s3bucket_ddb_backup" {
+  bucket_prefix = "ddb-backup"
+  force_destroy = true
+}
+
+resource "aws_s3_bucket_public_access_block" "ddb_backup" {
+  bucket = aws_s3_bucket.s3bucket_ddb_backup.id
+
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
+
+resource "aws_s3_bucket_versioning" "ddb_backup_versioning" {
+  bucket = aws_s3_bucket.s3bucket_ddb_backup.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+resource "aws_s3_bucket_lifecycle_configuration" "ddb_backup_bucket_config" {
+  # Must have bucket versioning enabled first
+  depends_on = [aws_s3_bucket_versioning.ddb_backup_versioning]
+  bucket = aws_s3_bucket.s3bucket_ddb_backup.id
+  rule {
+    id = "backup-lifecycle"
+    noncurrent_version_transition {
+      noncurrent_days = 5
+      storage_class   = "DEEP_ARCHIVE"
+    }
+    status = "Enabled"
+  }
+}

@@ -103,6 +103,7 @@ module "oidc_github" {
 resource "aws_ecr_repository" "p39build_x86" {
   name                 = "p39build"
   image_tag_mutability = "MUTABLE"
+  force_delete = true
 
   image_scanning_configuration {
     scan_on_push = true
