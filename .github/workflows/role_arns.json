@@ -1,6 +1,6 @@
 {
     "github_role_arn": {
-        "Klayers-defaultp38": "arn:aws:iam::908645878701:role/github_role_default",
+        "Klayers-defaultp38": "arn:aws:iam::367660174341:role/github_role_default",
         "Klayers-devp38": "<empty>",
         "Klayers-prodp38": "<empty>"
   }

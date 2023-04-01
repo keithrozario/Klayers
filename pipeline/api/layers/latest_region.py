@@ -48,10 +48,8 @@ def return_format(data: list, format: str, region: str, python_version: str):
         "arn": "arn",
     }
     logger.info(f"Format: {format}")
-    if format == "json":
-        body = json.dumps(data, cls=DecimalEncoder)
-        headers = {"Content-Type": "application/json"}
-    elif format == "html":
+
+    if format == "html":
         body = tabulate(data, headers=map_header_row, tablefmt="html")
         headers = {"Content-Type": "text/html"}
     elif format == "csv":
@@ -66,10 +64,10 @@ def return_format(data: list, format: str, region: str, python_version: str):
             "Content-Type": "text/html",
             "Content-Disposition": f'attachment; filename="klayers-{region}-{python_version}.csv"',
         }
-    else:
-        body = "Please specify a file format in lowercase, only csv, html and json are accepted"
-        headers = {}
-
+    else:  # defaults to json
+        body = json.dumps(data, cls=DecimalEncoder)
+        headers = {"Content-Type": "application/json"}
+    
     return body, headers
 
 
