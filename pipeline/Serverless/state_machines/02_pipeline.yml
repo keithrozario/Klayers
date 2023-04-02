@@ -1,8 +1,12 @@
 name: ${self:custom.pipelineName}
 definition:
   Comment: "Check, Build, and Deploy Lambda Layer"
-  StartAt: Check
+  StartAt: RandomDelay
   States:
+    RandomDelay:
+      Type: Wait
+      SecondsPath: $.detail.secondsDelay
+      Next: Check
     Check:
       Type: Task
       Resource:
@@ -40,6 +44,10 @@ definition:
       Retry:
         - ErrorEquals:
           - States.Timeout
+          - Lambda.ClientExecutionTimeoutException
+          - Lambda.ServiceException
+          - Lambda.AWSLambdaException
+          - Lambda.TooManyRequestsException
           MaxAttempts: 5
           BackoffRate: 2
           IntervalSeconds: 15
