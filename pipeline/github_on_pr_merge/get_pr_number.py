@@ -20,7 +20,10 @@ def main(event, context) -> dict:
     if commit_sha:
         response = requests.get(f"https://api.github.com/repos/{repo}/commits/{commit_sha}/pulls")
         logger.info(json.loads(response.content))
-        pr_number = json.loads(response.content)[0]['number']
+        try:
+            pr_number = json.loads(response.content)[0]['number']
+        except IndexError:
+            pr_number = False    
     else:
         pr_number = False
 
