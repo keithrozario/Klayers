@@ -231,11 +231,14 @@ def delete_dir(dir):
 
 def dir_size(path="."):
     total = 0
-    for entry in os.scandir(path):
-        if entry.is_file():
-            total += entry.stat().st_size
-        elif entry.is_dir():
-            total += dir_size(entry.path)
+    try:
+        for entry in os.scandir(path):
+            if entry.is_file():
+                total += entry.stat().st_size
+            elif entry.is_dir():
+                total += dir_size(entry.path)
+    except FileNotFoundError:
+        total = 0
     return total
 
 

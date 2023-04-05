@@ -1,5 +1,6 @@
 import os
 import json
+import time
 
 import boto3
 from aws_lambda_powertools.logging import Logger
@@ -23,7 +24,7 @@ def log_eventbridge_errors(response: dict, function_logger: Logger):
             if entry.get("ErrorCode", False):
                 function_logger.error(entry)
 
-    return response["FailedEntryCount"]
+    return None
 
 
 @logger.inject_lambda_context
@@ -41,10 +42,16 @@ def main(event, context):
 
     for python_version in ["p3.8", "p3.9"]:
         packages = get_config_items(config_type="pckgs", python_version=python_version)
-        entries = []
         logger.info(f"Preparing {len(packages)} packages")
+
         # post message to EventBridge to trigger step functions
-        for package in packages:
+        seconds_delay = 30  # Start with no delay
+        seconds_interval = 30 # Increment it by 30 seconds
+        parallel_executions_between_delays = 2  # Every 2 executions **PER** python version
+        for i, package in enumerate(packages):
+            
+            if (i+1) % parallel_executions_between_delays == 0:
+                seconds_delay += seconds_interval
 
             entry = {
                 "Source": f"Klayers.invoke.{stage}",
@@ -56,16 +63,13 @@ def main(event, context):
                         "python_version": python_version,
                         "force_build": False,
                         "force_deploy": False,
+                        "secondsDelay": seconds_delay
                     }
                 ),
                 "EventBusName": "default",
             }
-            entries.append(entry)
-
-        # maximum 10 entries per put_events API call
-        chunk_10 = [entries[i : i + 10] for i in range(0, len(entries), 10)]
-        for chunk in chunk_10:
-            response = client.put_events(Entries=chunk)
+            logger.info(entry)
+            response = client.put_events(Entries=[entry])
             log_eventbridge_errors(response, logger)
 
         # Post Status to Slack
