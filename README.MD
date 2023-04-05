@@ -174,7 +174,6 @@ example:
 ## Special Thanks
 
 * [Chahna107](https://github.com/chahna107) 
-* [~ Dependencies scanned by PyUp.io ~](https://pyup.io/)
 * [@ldcorentin](https://github.com/ldcorentin) for making the awesome klayers-provider
 
 ## Asking for additional layers
