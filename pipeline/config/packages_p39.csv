@@ -6,6 +6,7 @@ bcrypt,Apache-2.0,cryptography-dev@python.org
 beautifulsoup4,MIT,Leonard Richardson <leonardr@segfault.org>
 boto3,Apache-2.0,AWS
 cryptography,Apache-2.0,The Python Cryptographic Authority and individual contributors <cryptography-dev@python.org>
+DBnomics,GNU Affero General Public License v3 (AGPLv3),DBnomics Team <contact@nomics.world>
 dynamodb-encryption-sdk,Apache-2.0,<aws-cryptools@amazon.com>
 idna,https://github.com/kjd/idna/blob/master/LICENSE.rst,Kim Davis kim@cynosure.com.au
 jinja2,BSD,Armin Ronache <armin.ronacher@active-4.com>; Pallets <contact@palletsprojects.com>
@@ -34,3 +35,11 @@ usaddress,MIT,Datamade <info@datamade.us>
 pyephem,MIT,Brandon Craig Rhodes <brandon@rhodesmill.org>
 gremlinpython,Apache-2.0,stephen mallette <stepmall@amazon.com>
 oracledb,Apache-2.0,anthony-tuininga (Oracle)
+rasa,Apache-2.0,Tom Bocklisch - Rasa Technologies GmbH,tom@rasa.com
+PyJWT,MIT,Jose Padilla <https://github.com/jpadilla>
+kafka-python,Apache-2.0,Dana Powers
+lxml,BSD,<lxml-dev@lxml.de>
+sklearn,BSD,<scikit-learn@python.org>
+transformers,Apache-2.0,Thomas Wolf,<api-enterprise@huggingface.co>
+selenium,Apache-2.0,The Selenium Project
+jieba,MIT,Sun Junyi, <ccnusjy@gmail.com>
