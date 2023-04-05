@@ -76,5 +76,6 @@ def main(event, context):
         "type": 0,  # You must specify a $.type field for a step function choice field, see below
     }
 
+
 # https://docs.aws.amazon.com/step-functions/latest/dg/amazon-states-language-choice-state.html
 # "You must specify the $.type field. If the state input doesn't contain the $.type field, the execution fails and an error is displayed in the execution history."

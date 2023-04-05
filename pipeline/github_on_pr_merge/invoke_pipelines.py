@@ -28,16 +28,18 @@ def log_eventbridge_errors(response: dict, function_logger: Logger):
 
 @logger.inject_lambda_context
 def main(event, context):
-
     """
     Args:
       event: list of dict. e.g. {"python_version": str, "new_packages": list}
     """
 
     for item in event:
-        invoke_pipelines(packages=item['new_packages'], python_version=item['python_version'])
+        invoke_pipelines(
+            packages=item["new_packages"], python_version=item["python_version"]
+        )
 
     return event
+
 
 def invoke_pipelines(packages: list, python_version: str):
     """
@@ -54,7 +56,6 @@ def invoke_pipelines(packages: list, python_version: str):
     logger.info(f"Preparing {len(packages)} packages")
     # post message to EventBridge to trigger step functions
     for package in packages:
-
         entry = {
             "Source": f"Klayers.invoke.{stage}",
             "Resources": [],
@@ -77,5 +78,5 @@ def invoke_pipelines(packages: list, python_version: str):
         for chunk in chunk_10:
             response = client.put_events(Entries=chunk)
             log_eventbridge_errors(response, logger)
-    
+
     return None

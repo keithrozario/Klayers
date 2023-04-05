@@ -5,6 +5,7 @@ from aws_lambda_powertools.logging import Logger
 
 logger = Logger()
 
+
 @logger.inject_lambda_context
 def main(event, context):
     logger.debug(event)
@@ -16,7 +17,7 @@ def main(event, context):
     force_deploy = detail.get("force_deploy", True)
     github_comment_id = detail.get("github_comment_id", "")
     github_issue_id = detail.get("github_issue_id", "")
-   
+
     return {
         "version": "0",
         "github_comment_id": github_comment_id,
@@ -27,5 +28,5 @@ def main(event, context):
             "python_version": python_version,
             "force_build": force_build,
             "force_deploy": force_deploy,
-        }
+        },
     }

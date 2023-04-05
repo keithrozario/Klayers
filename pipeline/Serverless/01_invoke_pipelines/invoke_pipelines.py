@@ -29,7 +29,6 @@ def log_eventbridge_errors(response: dict, function_logger: Logger):
 
 @logger.inject_lambda_context
 def main(event, context):
-
     """
     Args:
       package: Python Package to build and deploy
@@ -46,11 +45,12 @@ def main(event, context):
 
         # post message to EventBridge to trigger step functions
         seconds_delay = 30  # Start with no delay
-        seconds_interval = 30 # Increment it by 30 seconds
-        parallel_executions_between_delays = 2  # Every 2 executions **PER** python version
+        seconds_interval = 30  # Increment it by 30 seconds
+        parallel_executions_between_delays = (
+            2  # Every 2 executions **PER** python version
+        )
         for i, package in enumerate(packages):
-            
-            if (i+1) % parallel_executions_between_delays == 0:
+            if (i + 1) % parallel_executions_between_delays == 0:
                 seconds_delay += seconds_interval
 
             entry = {
@@ -63,7 +63,7 @@ def main(event, context):
                         "python_version": python_version,
                         "force_build": False,
                         "force_deploy": False,
-                        "secondsDelay": seconds_delay
+                        "secondsDelay": seconds_delay,
                     }
                 ),
                 "EventBusName": "default",

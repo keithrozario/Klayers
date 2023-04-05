@@ -90,12 +90,12 @@ resource "aws_ssm_parameter" "cert_arn" {
 ## OIDC Block
 
 module "oidc_github" {
-  source             = "./oidc_github"
-  app_name           = var.app_name
-  github_role_name   = lookup(var.github_role_name, local.workspace_full_name)
-  github_org         = split("/", split(":", var.github_repo)[1])[0]
-  github_repo_name   = split(".", split(":", var.github_repo)[1])[0]
-  config_bucket_arn  = aws_s3_bucket.s3bucket_config.arn
+  source            = "./oidc_github"
+  app_name          = var.app_name
+  github_role_name  = lookup(var.github_role_name, local.workspace_full_name)
+  github_org        = split("/", split(":", var.github_repo)[1])[0]
+  github_repo_name  = split(".", split(":", var.github_repo)[1])[0]
+  config_bucket_arn = aws_s3_bucket.s3bucket_config.arn
 }
 
 
@@ -103,7 +103,7 @@ module "oidc_github" {
 resource "aws_ecr_repository" "p39build_x86" {
   name                 = "p39build"
   image_tag_mutability = "MUTABLE"
-  force_delete = true
+  force_delete         = true
 
   image_scanning_configuration {
     scan_on_push = true

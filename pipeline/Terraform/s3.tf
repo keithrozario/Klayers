@@ -26,7 +26,7 @@ resource "aws_s3_bucket_versioning" "s3bucket_layers_versioning" {
 resource "aws_s3_bucket_lifecycle_configuration" "s3bucket_layers_bucket_config" {
   # Must have bucket versioning enabled first
   depends_on = [aws_s3_bucket_versioning.s3bucket_layers_versioning]
-  bucket = aws_s3_bucket.s3bucket_layers.id
+  bucket     = aws_s3_bucket.s3bucket_layers.id
   rule {
     id = "layers-lifecycle"
     noncurrent_version_transition {
@@ -111,7 +111,7 @@ resource "aws_s3_bucket_versioning" "ddb_backup_versioning" {
 resource "aws_s3_bucket_lifecycle_configuration" "ddb_backup_bucket_config" {
   # Must have bucket versioning enabled first
   depends_on = [aws_s3_bucket_versioning.ddb_backup_versioning]
-  bucket = aws_s3_bucket.s3bucket_ddb_backup.id
+  bucket     = aws_s3_bucket.s3bucket_ddb_backup.id
   rule {
     id = "backup-lifecycle"
     noncurrent_version_transition {

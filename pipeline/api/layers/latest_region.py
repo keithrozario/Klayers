@@ -67,7 +67,7 @@ def return_format(data: list, format: str, region: str, python_version: str):
     else:  # defaults to json
         body = json.dumps(data, cls=DecimalEncoder)
         headers = {"Content-Type": "application/json"}
-    
+
     return body, headers
 
 
