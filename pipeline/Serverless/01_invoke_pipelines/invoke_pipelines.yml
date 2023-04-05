@@ -2,7 +2,7 @@ invoke_pipeline:
   handler: 01_invoke_pipelines/invoke_pipelines.main
   description: Invoke multiple pipelines, one for each package
   runtime: python3.8
-  timeout: 120
+  timeout: 900
   memorySize: 256
   environment:
     POWERTOOLS_SERVICE_NAME: Klayers.invoke_pipeline
@@ -43,7 +43,7 @@ download_config:
       Resource:
       - ${self:custom.dbArn}
   layers:
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-requests:26
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-p38-requests:7
     - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPython:6 
 
 

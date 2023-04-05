@@ -25,7 +25,6 @@ client = slack.WebClient(token=slack_token)
 
 @logger.inject_lambda_context
 def slack_notification_pipeline_error(event, context):
-
     """
     Post error messages for various failed statuses of Pipeline step function to slack
     event: see https://docs.aws.amazon.com/step-functions/latest/dg/cw-events.html
@@ -47,7 +46,6 @@ def slack_notification_pipeline_error(event, context):
 
 @logger.inject_lambda_context
 def slack_notification_invoke_pipeline_error(event, context):
-
     """
     Post error messages for various failed statuses of Pipeline step function to slack
     event: see https://docs.aws.amazon.com/step-functions/latest/dg/cw-events.html
@@ -67,7 +65,6 @@ def slack_notification_invoke_pipeline_error(event, context):
 
 @logger.inject_lambda_context
 def slack_notification_publish(event, context):
-
     """
     Post status of publish state machine to Slack
     event: see https://docs.aws.amazon.com/step-functions/latest/dg/cw-events.html
@@ -88,7 +85,6 @@ def slack_notification_publish(event, context):
 
 
 def post_to_slack(message, channel=default_channel):
-
     response = client.chat_postMessage(channel=channel, text=message)
 
     if response["ok"]:
@@ -103,7 +99,6 @@ def post_to_slack(message, channel=default_channel):
 
 @logger.inject_lambda_context
 def post_message_to_slack(event, context):
-
     """
     Post status of publish state machine to Slack
     event: see https://docs.aws.amazon.com/step-functions/latest/dg/cw-events.html

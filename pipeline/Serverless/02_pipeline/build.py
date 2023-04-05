@@ -50,7 +50,9 @@ def put_requirements_hash(
     # Get latest build version for package
     build_version_prefix = "bld#v"
     response = client.get_item(
-        TableName=table_name, Key={"pk": pk, "sk": sk}, ProjectionExpression="bltVrsn",
+        TableName=table_name,
+        Key={"pk": pk, "sk": sk},
+        ProjectionExpression="bltVrsn",
     )
     try:
         latest_version = int(response["Item"]["bltVrsn"]["N"])
@@ -79,7 +81,10 @@ def put_requirements_hash(
                 {
                     "Update": {
                         "TableName": table_name,
-                        "Key": {"pk": pk, "sk": sk,},
+                        "Key": {
+                            "pk": pk,
+                            "sk": sk,
+                        },
                         "UpdateExpression": "set "
                         "rqrmntsTxt = :rqrmntsTxt, "
                         "pckgVrsn = :pckgVrsn, "
@@ -98,7 +103,12 @@ def put_requirements_hash(
                         "ConditionExpression": "bltVrsn <> :bltVrsn",
                     }
                 },
-                {"Put": {"TableName": table_name, "Item": Item,}},
+                {
+                    "Put": {
+                        "TableName": table_name,
+                        "Item": Item,
+                    }
+                },
             ]
         )
         logger.info({"message": "Successfully written", "item": Item})
@@ -231,16 +241,19 @@ def delete_dir(dir):
 
 def dir_size(path="."):
     total = 0
-    for entry in os.scandir(path):
-        if entry.is_file():
-            total += entry.stat().st_size
-        elif entry.is_dir():
-            total += dir_size(entry.path)
+    try:
+        for entry in os.scandir(path):
+            if entry.is_file():
+                total += entry.stat().st_size
+            elif entry.is_dir():
+                total += dir_size(entry.path)
+    except FileNotFoundError:
+        total = 0
     return total
 
 
 def install(package, package_dir):
-    """"
+    """ "
     Args:
       package: Name of package to be queried
     return:
@@ -269,7 +282,7 @@ def install(package, package_dir):
 
 
 def check_python_version(python_version: str) -> bool:
-    """"
+    """ "
     Args:
       python_version: Version of python required in form of major.minor
     return:
@@ -289,7 +302,6 @@ def check_python_version(python_version: str) -> bool:
 
 @logger.inject_lambda_context
 def main(event, context):
-
     package = event["package"]
     license_info = event["license_info"]
     python_version = event["python_version"]
