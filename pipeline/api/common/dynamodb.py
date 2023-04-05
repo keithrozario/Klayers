@@ -2,6 +2,7 @@ import json
 import decimal
 from datetime import datetime
 
+
 # Helper class to convert a DynamoDB item to JSON.
 class DecimalEncoder(json.JSONEncoder):
     def default(self, o):

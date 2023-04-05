@@ -33,7 +33,11 @@ def load_config_into_dynamo(
     dynamodb = boto3.resource("dynamodb")
     table = dynamodb.Table(os.environ["DB_NAME"])
     response = table.put_item(
-        Item={"pk": f"cnfg#{config_type}", "sk": python_version, "cnfg": config_items,}
+        Item={
+            "pk": f"cnfg#{config_type}",
+            "sk": python_version,
+            "cnfg": config_items,
+        }
     )
     logger.info(response)
     return response

@@ -19,7 +19,12 @@ def main(event, context):
     response = client.create_invalidation(
         DistributionId=distribution_id,
         InvalidationBatch={
-            "Paths": {"Quantity": 1, "Items": ["/api/v1/*",]},
+            "Paths": {
+                "Quantity": 1,
+                "Items": [
+                    "/api/v1/*",
+                ],
+            },
             "CallerReference": CallerReference,
         },
     )
