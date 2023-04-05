@@ -1,0 +1,149 @@
+service: gh-push
+frameworkVersion: '3'
+
+plugins:
+  - serverless-better-credentials
+  - serverless-step-functions
+  - serverless-iam-roles-per-function
+
+provider:
+  name: aws
+  runtime: python3.9
+  stage:  ${opt:stage, 'Klayers-defaultp38'}
+  region: ${file(../Terraform/terraform.tfvars.json):aws_region.${self:provider.stage}}
+  profile: ${file(../Terraform/terraform.tfvars.json):aws_profile.${self:provider.stage}}
+  versionFunctions: false
+  logRetentionInDays: 90
+  environment:
+    STAGE: ${self:provider.stage}
+    LOG_LEVEL: INFO
+    DB_NAME: ${self:custom.dbName}
+    POWERTOOLS_SERVICE_NAME: ${self:service}-${self:provider.stage}
+    CONFIG_BUCKET: ${self:custom.configBucketName}
+
+
+custom:
+  # DynamoDB
+  dbArn: ${ssm:/kl/${self:provider.stage}/db-ver2/arn}
+  dbName: ${ssm:/kl/${self:provider.stage}/db-ver2/name}
+
+  # Config bucket
+  configBucketArn: ${ssm:/kl/${self:provider.stage}/config_bucket/arn}
+  configBucketName: ${ssm:/kl/${self:provider.stage}/config_bucket/name}
+
+stepFunctions:
+  stateMachines:
+    pipeline:
+      ${file(./pipeline.yml)}
+
+resources:
+  Outputs:
+    PipelineArn:
+      Description: The ARN of the example state machine
+      Value:
+        Fn::GetAtt: [GhDashpushDashpipeline, Arn]
+
+  Resources:
+    PipelineArnParameter:
+      Type: AWS::SSM::Parameter
+      Properties: 
+        Description: Arn of Pipeline step function
+        Name: /${self:service}/${self:provider.stage}/PipelineArn
+        Type: String
+        Value: 
+          Fn::GetAtt: [GhDashpushDashpipeline, Arn] 
+
+
+  # Resources:
+  #   stateMachineArn:
+  #     Type: AWS::SSM::Parameter
+  #     Properties: 
+  #       DataType: text
+  #       Description: Arn of the pipeline state machine
+  #       Name: /gh-push/${self:provider.stage}/pipeline/arn
+  #       Type: String
+  #       Value: ${self:resources.Outputs.PipelineArn.Value}
+
+functions:
+  check_new_packages:
+    handler: check_new_packages.main
+    description: Compares newly uploaded files in S3 vs. DynamoDB
+    runtime: python3.9
+    timeout: 120
+    memorySize: 256
+    environment:
+      POWERTOOLS_SERVICE_NAME: Klayers.on_push_master
+    iamRoleStatementsName: ${self:provider.stage}-check-new-packages
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+        - dynamodb:GetItem
+        Resource:
+        - ${self:custom.dbArn}
+      - Effect: Allow
+        Action:
+        - s3:GetObject
+        Resource:
+        - ${self:custom.configBucketArn}/*
+    layers:
+      - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPythonV2:13
+
+  check_python_versions:
+    handler: check_python_versions.main
+    description: Compares python versions
+    runtime: python3.9
+    timeout: 120
+    memorySize: 256
+    environment:
+      POWERTOOLS_SERVICE_NAME: Klayers.on_push_master
+    iamRoleStatementsName: ${self:provider.stage}-check-python-versions
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+        - s3:GetObject
+        Resource:
+        - ${self:custom.configBucketArn}/*
+    layers:
+      - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPythonV2:13
+
+  invoke_pipelines:
+    handler: invoke_pipelines.main
+    description: Invoke multiple pipelines, one for each package
+    runtime: python3.9
+    timeout: 120
+    memorySize: 256
+    environment:
+      POWERTOOLS_SERVICE_NAME: Klayers.github.invoke_pipeline
+    iamRoleStatementsName: ${self:provider.stage}-gh_invoke_pipeline
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - events:PutEvents
+        Resource:
+          - Fn::Join:
+              - ":"
+              - - arn:aws:events
+                - ${self:provider.region}
+                - Ref: AWS::AccountId
+                - event-bus/default
+    layers:
+      - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPythonV2:13
+
+  get_pr_number:
+    handler: get_pr_number.main
+    description: Get PR Number from Github Event
+    runtime: python3.9
+    timeout: 120
+    memorySize: 256
+    layers:
+      - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPythonV2:13
+      - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-p39-requests:10
+
+  update_pr:
+    handler: update_pr.main
+    description: Update the PR with a comment on build status
+    runtime: python3.9
+    timeout: 30
+    memorySize: 256
+    layers:
+      - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPythonV2:13

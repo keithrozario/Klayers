@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-tf workspace new Klayers-prodp38
+terraform workspace select prodp38

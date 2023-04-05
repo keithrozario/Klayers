@@ -1,0 +1,44 @@
+
+service: gh
+frameworkVersion: '3'
+
+plugins:
+  - serverless-better-credentials
+  - serverless-step-functions
+  - serverless-iam-roles-per-function
+provider:
+  name: aws
+  runtime: python3.9
+  stage: Klayers-devp38  # only in Klayers-devp38 for this one.
+  region: ${file(../Terraform/terraform.tfvars.json):aws_region.${self:provider.stage}}
+  profile: ${file(../Terraform/terraform.tfvars.json):aws_profile.${self:provider.stage}}
+  versionFunctions: false
+  logRetentionInDays: 90
+  environment:
+    STAGE: ${self:provider.stage}
+    LOG_LEVEL: INFO
+    DB_NAME: ${self:custom.dbName}
+    POWERTOOLS_SERVICE_NAME: ${self:service}-${self:provider.stage}
+
+custom:
+  # Env
+  awsRegion: ${self:provider.region} 
+
+  # DynamoDB
+  dbName: ${ssm:/kl/${self:provider.stage}/db-ver2/name}
+  dbArn: ${ssm:/kl/${self:provider.stage}/db-ver2/arn}
+
+functions:
+  - ${file(01_on_issue_comment/functions.yml)}
+
+stepFunctions:
+  stateMachines:
+    on_commented_issue:
+      ${file(01_on_issue_comment/step_function.yml)}
+
+package:
+  patterns:
+    - '!package-lock.json'
+    - '!package.json'
+    - '!node_modules/**'
+    - '!serverless.yml'
