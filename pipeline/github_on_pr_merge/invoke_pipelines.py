@@ -51,11 +51,10 @@ def invoke_pipelines(packages: list, python_version: str):
     """
     client = boto3.client("events")
     stage = os.environ["STAGE"]
-    entries = []
 
     logger.info(f"Preparing {len(packages)} packages")
     # post message to EventBridge to trigger step functions
-    for package in packages:
+    for i, package in enumerate(packages):
         entry = {
             "Source": f"Klayers.invoke.{stage}",
             "Resources": [],
@@ -66,17 +65,11 @@ def invoke_pipelines(packages: list, python_version: str):
                     "python_version": python_version,
                     "force_build": False,
                     "force_deploy": False,
-                    "secondsDelay": 5,
+                    "secondsDelay": 5*i,
                 }
             ),
             "EventBusName": "default",
         }
-        entries.append(entry)
-
-        # maximum 10 entries per put_events API call
-        chunk_10 = [entries[i : i + 10] for i in range(0, len(entries), 10)]
-        for chunk in chunk_10:
-            response = client.put_events(Entries=chunk)
-            log_eventbridge_errors(response, logger)
+        response = client.put_events(Entries=entry)
 
     return None
