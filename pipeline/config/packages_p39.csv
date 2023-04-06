@@ -45,3 +45,4 @@ selenium,Apache-2.0,The Selenium Project
 jieba,MIT,Sun Junyi, <ccnusjy@gmail.com>
 xmltodict,MIT,Martin Blech <martinblech@gmail.com>
 dask,BSD, Matthew Rocklin
+google-api-python-client,Apache-2.0,Google LLC <googleapis-packages@google.com>
