@@ -65,7 +65,7 @@ def invoke_pipelines(packages: list, python_version: str):
                     "python_version": python_version,
                     "force_build": False,
                     "force_deploy": False,
-                    "secondsDelay": 5*i,
+                    "secondsDelay": 5 * i,
                 }
             ),
             "EventBusName": "default",

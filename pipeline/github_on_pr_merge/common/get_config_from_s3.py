@@ -5,7 +5,6 @@ import boto3
 
 
 def download_packages_from_s3(python_version: str) -> list():
-    
     s3 = boto3.client("s3")
     config_file_name = "config.json"
     s3.download_file(

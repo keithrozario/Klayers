@@ -35,5 +35,3 @@ def main(event, context) -> dict:
     logger.info({"new_packages": new_packages})
 
     return {"python_version": python_version, "new_packages": new_packages}
-
-
