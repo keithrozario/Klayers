@@ -5,7 +5,7 @@ definition:
   States:
     OnPushEvent:
       Type: Parallel
-      Next: UpdatePR
+      Next: LoadConfig
       Branches:
       - StartAt: CheckPythonVersion
         States:
@@ -62,6 +62,11 @@ definition:
             Resource:
               Fn::GetAtt: [GetUnderscoreprUnderscorenumberLambdaFunction, Arn]
             End: true
+    LoadConfig:
+      Type: Task
+      Resource:
+        Fn::GetAtt: [LoadUnderscoreconfigLambdaFunction, Arn]
+      Next: UpdatePR
     UpdatePR:
       Type: Task
       Resource:

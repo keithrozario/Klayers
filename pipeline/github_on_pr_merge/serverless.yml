@@ -54,20 +54,10 @@ resources:
           Fn::GetAtt: [GhDashpushDashpipeline, Arn] 
 
 
-  # Resources:
-  #   stateMachineArn:
-  #     Type: AWS::SSM::Parameter
-  #     Properties: 
-  #       DataType: text
-  #       Description: Arn of the pipeline state machine
-  #       Name: /gh-push/${self:provider.stage}/pipeline/arn
-  #       Type: String
-  #       Value: ${self:resources.Outputs.PipelineArn.Value}
-
 functions:
   check_new_packages:
     handler: check_new_packages.main
-    description: Compares newly uploaded files in S3 vs. DynamoDB
+    description: Compares newly uploaded files in S3 vs. DynamoDB, Update new config in Dynamo
     runtime: python3.9
     timeout: 120
     memorySize: 256
@@ -145,5 +135,25 @@ functions:
     runtime: python3.9
     timeout: 30
     memorySize: 256
+    layers:
+      - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPythonV2:13
+
+  load_config:
+    handler: load_config.main
+    description: Load New config into Dynamo
+    runtime: python3.9
+    timeout: 30
+    memorySize: 256
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+        - dynamodb:PutItem
+        Resource:
+        - ${self:custom.dbArn}
+      - Effect: Allow
+        Action:
+        - s3:GetObject
+        Resource:
+        - ${self:custom.configBucketArn}/*
     layers:
       - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPythonV2:13
