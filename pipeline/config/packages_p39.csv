@@ -46,3 +46,4 @@ jieba,MIT,Sun Junyi, <ccnusjy@gmail.com>
 python-docx,<preetigaba16@gmail.com>
 xmltodict,MIT,Martin Blech <martinblech@gmail.com>
 dask,BSD, Matthew Rocklin
+google-api-python-client,Apache-2.0,Google LLC <googleapis-packages@google.com>
