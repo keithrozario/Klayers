@@ -1,0 +1,49 @@
+name: sandbox-build-step-function
+definition:
+  Comment: "Sandbox build for step function"
+  StartAt: CheckInput
+  States:
+    CheckInput:
+      Type: Task
+      Resource:
+        Fn::GetAtt: [CheckUnderscoreinputLambdaFunction, Arn]
+      Next: Build
+      Catch:
+        - ErrorEquals:
+          - States.ALL
+          Next: CatchError
+    Build:
+      Type: Task
+      Resource: arn:aws:states:::states:startExecution.sync:2
+      Parameters:
+        StateMachineArn:
+          Fn::Join:
+            - ":"
+            - - arn:aws:states
+              - ${self:provider.region}
+              - Ref: AWS::AccountId
+              - stateMachine
+              - kl-${self:provider.stage}-pipeline  # only Klayers-devp38 for gh service
+        Input:
+          AWS_STEP_FUNCTIONS_STARTED_BY_EXECUTION_ID.$: $$.Execution.Id
+          detail.$: $.detail
+      InputPath: $
+      Catch:
+        - ErrorEquals:
+          - States.ALL
+          Next: CatchError
+      Next: CommentIssue
+    CatchError:
+      Type: Task
+      Resource:
+        Fn::GetAtt: [CatchUnderscoreerrorLambdaFunction, Arn]
+      Next: CommentIssue
+    CommentIssue:
+      Type: Task
+      Resource:
+        Fn::GetAtt: [CommentUnderscoreissueLambdaFunction, Arn]
+      Next: Done
+    Done:
+      Type: Succeed
+
+

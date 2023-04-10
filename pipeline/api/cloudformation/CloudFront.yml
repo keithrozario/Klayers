@@ -39,6 +39,7 @@ cloudfrontdistribution:
           Cookies:
             Forward: none
         MinTTL: '3600'
+        MaxTTL: '86400'
         ViewerProtocolPolicy: https-only
         Compress: True
 
