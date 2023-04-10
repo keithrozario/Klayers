@@ -37,7 +37,11 @@ def main(event, context):
 
     except ClientError as e:
         logger.error(
-            {"message": response["Error"]["Message"], "pk": pk, "sk": sk,}
+            {
+                "message": response["Error"]["Message"],
+                "pk": pk,
+                "sk": sk,
+            }
         )
         api_response = {}
     except KeyError as e:  # no item return

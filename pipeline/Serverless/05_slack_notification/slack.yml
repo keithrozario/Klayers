@@ -20,7 +20,7 @@ slack_pipeline:
             - Ref: AWS::AccountId
             - parameter${self:custom.slackTokenParameter}
   layers:
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-slackclient:42
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-p38-slackclient:6 
     - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPython:6
 
 slack_publish:
@@ -45,7 +45,7 @@ slack_publish:
             - Ref: AWS::AccountId
             - parameter${self:custom.slackTokenParameter}
   layers:
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-slackclient:42
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-p38-slackclient:6
     - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPython:6
 
 post_message_to_slack:
@@ -70,7 +70,7 @@ post_message_to_slack:
             - Ref: AWS::AccountId
             - parameter${self:custom.slackTokenParameter}
   layers:
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-slackclient:42
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-p38-slackclient:6
     - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPython:6
   events:
     - eventBridge:
@@ -100,6 +100,6 @@ slack_invokepipeline:
             - Ref: AWS::AccountId
             - parameter${self:custom.slackTokenParameter}
   layers:
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-slackclient:42
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-p38-slackclient:6
     - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPython:6
 

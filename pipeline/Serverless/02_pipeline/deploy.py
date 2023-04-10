@@ -103,7 +103,8 @@ def get_requirements_txt(package: str, python_version: str) -> str:
     client = boto3.client("dynamodb")
     table_name = os.environ["DB_NAME"]
     response = client.get_item(
-        TableName=table_name, Key={"pk": {"S": build_v0}, "sk": {"S": sk}},
+        TableName=table_name,
+        Key={"pk": {"S": build_v0}, "sk": {"S": sk}},
     )
     logger.info({"query_requirements": response})
     requirements_txt = response.get("Item", {}).get("rqrmntsTxt", {}).get("S", "null")
@@ -113,7 +114,6 @@ def get_requirements_txt(package: str, python_version: str) -> str:
 
 @logger.inject_lambda_context
 def main(event, context):
-
     package = event["package"]
     version = event["version"]
     build_flag = event["build_flag"]
@@ -161,7 +161,6 @@ def main(event, context):
     )
 
     for region in regions_to_deploy:
-
         # Publish Layer Version
         logger.info({"message": "Deploying", "region": region, "package": package})
         lambda_client = boto3.client("lambda", region_name=region)
@@ -212,7 +211,10 @@ def main(event, context):
         try:
             layer_version = dynamo_client.get_item(
                 TableName=table_name,
-                Key={"pk": {"S": pk}, "sk": {"S": sk_v0},},
+                Key={
+                    "pk": {"S": pk},
+                    "sk": {"S": sk_v0},
+                },
                 ProjectionExpression="lyrVrsn",
             )["Item"]["lyrVrsn"]["N"]
             new_layer_version = int(layer_version) + 1
@@ -226,7 +228,10 @@ def main(event, context):
                 {
                     "Update": {
                         "TableName": table_name,
-                        "Key": {"pk": {"S": pk}, "sk": {"S": sk_v0},},
+                        "Key": {
+                            "pk": {"S": pk},
+                            "sk": {"S": sk_v0},
+                        },
                         "UpdateExpression": "set "
                         "rqrmntsTxt = :rqrmntsTxt, "
                         "pckgVrsn = :pckgVrsn, "

@@ -44,3 +44,5 @@ transformers,Apache-2.0,Thomas Wolf,<api-enterprise@huggingface.co>
 selenium,Apache-2.0,The Selenium Project
 jieba,MIT,Sun Junyi, <ccnusjy@gmail.com>
 python-docx,<preetigaba16@gmail.com>
+xmltodict,MIT,Martin Blech <martinblech@gmail.com>
+dask,BSD, Matthew Rocklin
