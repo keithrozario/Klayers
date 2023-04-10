@@ -1,0 +1,7 @@
+{
+    "github_role_arn": {
+        "Klayers-defaultp38": "arn:aws:iam::367660174341:role/github_role_default",
+        "Klayers-devp38": "arn:aws:iam::908645878701:role/github_role_dev",
+        "Klayers-prodp38": "arn:aws:iam::770693421928:role/github_role_prod"
+  }
+}

@@ -35,14 +35,17 @@ def run_pipeline_till_success(package="boto3"):
 
 
 def get_latest_build(package="boto3"):
-
     client = session.client("dynamodb")
 
     pk_latest = "bldVrsn0#"
     sk = f"pckg#{package}"
 
     response = client.get_item(
-        TableName=table_name, Key={"pk": {"S": pk_latest}, "sk": {"S": sk},}
+        TableName=table_name,
+        Key={
+            "pk": {"S": pk_latest},
+            "sk": {"S": sk},
+        },
     )
     pk_bld = response["Item"]["bltVrsn"]["S"]
 
@@ -50,7 +53,6 @@ def get_latest_build(package="boto3"):
 
 
 def update_build(package="boto3"):
-
     dynamo_client = session.client("dynamodb")
 
     pk_latest = "bldVrsn0#"
@@ -63,17 +65,27 @@ def update_build(package="boto3"):
             {
                 "Update": {
                     "TableName": table_name,
-                    "Key": {"pk": {"S": pk_latest}, "sk": {"S": sk},},
+                    "Key": {
+                        "pk": {"S": pk_latest},
+                        "sk": {"S": sk},
+                    },
                     "UpdateExpression": "set rqrmntsHsh = :rqrmntsHsh",
-                    "ExpressionAttributeValues": {":rqrmntsHsh": {"S": "dummy"},},
+                    "ExpressionAttributeValues": {
+                        ":rqrmntsHsh": {"S": "dummy"},
+                    },
                 }
             },
             {
                 "Update": {
                     "TableName": table_name,
-                    "Key": {"pk": {"S": pk_bld}, "sk": {"S": sk},},
+                    "Key": {
+                        "pk": {"S": pk_bld},
+                        "sk": {"S": sk},
+                    },
                     "UpdateExpression": "set rqrmntsHsh = :rqrmntsHsh",
-                    "ExpressionAttributeValues": {":rqrmntsHsh": {"S": "dummy"},},
+                    "ExpressionAttributeValues": {
+                        ":rqrmntsHsh": {"S": "dummy"},
+                    },
                 }
             },
         ]
@@ -93,7 +105,11 @@ def get_latest_layer_version(package="boto3", region="ap-southeast-1"):
     sk = "lyrVrsn0#"
 
     response = client.get_item(
-        TableName=table_name, Key={"pk": {"S": pk}, "sk": {"S": sk},}
+        TableName=table_name,
+        Key={
+            "pk": {"S": pk},
+            "sk": {"S": sk},
+        },
     )
     layer_version = response["Item"]["lyrVrsn"]["N"]
 
@@ -107,7 +123,11 @@ def get_layer_record(layer_version, package="boto3", region="ap-southeast-1"):
     sk = f"lyrVrsn#v{layer_version}"
 
     response = client.get_item(
-        TableName=table_name, Key={"pk": {"S": pk}, "sk": {"S": sk},}
+        TableName=table_name,
+        Key={
+            "pk": {"S": pk},
+            "sk": {"S": sk},
+        },
     )
 
     return response["Item"]
@@ -127,17 +147,27 @@ def update_layer(package="boto3", region="ap-southeast-1"):
             {
                 "Update": {
                     "TableName": table_name,
-                    "Key": {"pk": {"S": pk}, "sk": {"S": sk},},
+                    "Key": {
+                        "pk": {"S": pk},
+                        "sk": {"S": sk},
+                    },
                     "UpdateExpression": "set rqrmntsHsh = :rqrmntsHsh",
-                    "ExpressionAttributeValues": {":rqrmntsHsh": {"S": "dummy"},},
+                    "ExpressionAttributeValues": {
+                        ":rqrmntsHsh": {"S": "dummy"},
+                    },
                 }
             },
             {
                 "Update": {
                     "TableName": table_name,
-                    "Key": {"pk": {"S": pk}, "sk": {"S": sk_latest},},
+                    "Key": {
+                        "pk": {"S": pk},
+                        "sk": {"S": sk_latest},
+                    },
                     "UpdateExpression": "set rqrmntsHsh = :rqrmntsHsh",
-                    "ExpressionAttributeValues": {":rqrmntsHsh": {"S": "dummy"},},
+                    "ExpressionAttributeValues": {
+                        ":rqrmntsHsh": {"S": "dummy"},
+                    },
                 }
             },
         ]
@@ -163,14 +193,17 @@ def delete_layer(layer_version, package="boto3", region="ap-southeast-1"):
     sk = f"lyrVrsn#v{layer_version}"
 
     response = client.delete_item(
-        TableName=table_name, Key={"pk": {"S": pk}, "sk": {"S": sk},}
+        TableName=table_name,
+        Key={
+            "pk": {"S": pk},
+            "sk": {"S": sk},
+        },
     )
 
     return response
 
 
 def test_build():
-
     ## update build, check build flag
     current_build_number = int(update_build(package=package)[5:])
     output = run_pipeline_till_success()
@@ -182,7 +215,6 @@ def test_build():
 
 
 def test_deploy():
-
     # update deploy in ap-southeast-1 check deploy flag
     current_layer_version = int(update_layer(package=package, region=region))
     output = run_pipeline_till_success()
