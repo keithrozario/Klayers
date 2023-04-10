@@ -70,6 +70,7 @@ def invoke_pipelines(packages: list, python_version: str):
             ),
             "EventBusName": "default",
         }
-        response = client.put_events(Entries=entry)
+        response = client.put_events(Entries=[entry])
+        logger.info(response)
 
     return None

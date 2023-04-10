@@ -4,6 +4,7 @@ import json
 import boto3
 from aws_lambda_powertools.logging import Logger
 from common.get_config import get_config_items
+from common.get_config_from_s3 import download_packages_from_s3
 
 logger = Logger()
 s3 = boto3.client("s3")
@@ -28,25 +29,11 @@ def main(event, context) -> dict:
     )
     logger.info({f"packages_in_dynamo": packages_in_dynamo})
 
-    s3.download_file(
-        os.getenv("CONFIG_BUCKET"), config_file_name, f"/tmp/{config_file_name}"
-    )
-    with open(f"/tmp/{config_file_name}", "r") as config_file:
-        python_package_file_name = json.loads(config_file.read())[python_version][
-            "packages_file"
-        ]
+    packages_in_s3 = download_packages_from_s3(python_version=python_version)
 
-    s3.download_file(
-        os.getenv("CONFIG_BUCKET"),
-        python_package_file_name,
-        f"/tmp/{python_package_file_name}",
-    )
-    with open(f"/tmp/{python_package_file_name}", "r") as python_package_file:
-        csv_reader = csv.DictReader(python_package_file)
-        packages_in_csv = [line["Package_Name"] for line in csv_reader]
-        logger.info({"packages_in_csv": packages_in_csv})
-
-    new_packages = [pckg for pckg in packages_in_csv if pckg not in packages_in_dynamo]
+    new_packages = [pckg for pckg in packages_in_s3 if pckg not in packages_in_dynamo]
     logger.info({"new_packages": new_packages})
 
     return {"python_version": python_version, "new_packages": new_packages}
+
+
