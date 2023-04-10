@@ -6,6 +6,7 @@ from common.get_config_from_s3 import download_packages_from_s3
 logger = Logger()
 dynamodb = boto3.resource("dynamodb")
 
+
 def main(event, context):
     """
     Args:
@@ -19,14 +20,13 @@ def main(event, context):
     logger.info("hello")
     logger.info(event)
     for elem in event[0]:
-        python_version = elem['python_version']
-        load_config(python_version=python_version, config_type='pckgs')
+        python_version = elem["python_version"]
+        load_config(python_version=python_version, config_type="pckgs")
 
     return event
 
-def load_config(
-    python_version: str, config_type: str
-) -> dict:
+
+def load_config(python_version: str, config_type: str) -> dict:
     """
     Args:
         python_version: Version of python (e.g. p3.8, p3.9)
