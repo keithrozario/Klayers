@@ -1,0 +1,74 @@
+name: ${self:service}-pipeline
+definition:
+  Comment: Trigger build from Github
+  StartAt: OnPushEvent
+  States:
+    OnPushEvent:
+      Type: Parallel
+      Next: LoadConfig
+      Branches:
+      - StartAt: CheckPythonVersion
+        States:
+          CheckPythonVersion:
+            Type: Task
+            Resource:
+              Fn::GetAtt: [CheckUnderscorepythonUnderscoreversionsLambdaFunction, Arn]
+            Next: MapPythonVersions
+            Retry:
+              - ErrorEquals:
+                - States.Timeout
+                MaxAttempts: 2
+                BackoffRate: 30
+                IntervalSeconds: 60
+            Catch:
+              - ErrorEquals:
+                - States.ALL
+                Next: CatchAllFail
+          MapPythonVersions:
+            Type: Map
+            # SLS framework has a bug with ItemProcessor https://github.com/serverless-operations/serverless-step-functions/issues/542
+            Iterator:  
+              StartAt: CheckNewPackages
+              States:
+                CheckNewPackages:
+                  Type: Task
+                  Resource:
+                    Fn::GetAtt: [CheckUnderscorenewUnderscorepackagesLambdaFunction, Arn]
+                  End: true
+            Next: InvokePipelines
+          InvokePipelines:
+            Type: Task
+            Resource:
+              Fn::GetAtt: [InvokeUnderscorepipelinesLambdaFunction, Arn]
+            Retry:
+              - ErrorEquals:
+                - States.Timeout
+                MaxAttempts: 2
+                BackoffRate: 30
+                IntervalSeconds: 60
+            Catch:
+              - ErrorEquals:
+                - States.ALL
+                Next: CatchAllFail
+            End: true
+          CatchAllFail:
+            Type: Fail
+            Error: Failure
+            Cause: Unknown
+      - StartAt: GetPRNumber
+        States:
+          GetPRNumber:
+            Type: Task
+            Resource:
+              Fn::GetAtt: [GetUnderscoreprUnderscorenumberLambdaFunction, Arn]
+            End: true
+    LoadConfig:
+      Type: Task
+      Resource:
+        Fn::GetAtt: [LoadUnderscoreconfigLambdaFunction, Arn]
+      Next: UpdatePR
+    UpdatePR:
+      Type: Task
+      Resource:
+        Fn::GetAtt: [UpdateUnderscoreprLambdaFunction, Arn]
+      End: true

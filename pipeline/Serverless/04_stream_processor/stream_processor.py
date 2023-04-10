@@ -10,12 +10,14 @@ logger = Logger()
 
 @logger.inject_lambda_context
 def main(event, context):
-
     records = event.get("Records", [])
     entries = []
     stream_label = os.environ["STREAM_LABEL"]
     logger.info(
-        {"record_count": len(records), "stream": stream_label,}
+        {
+            "record_count": len(records),
+            "stream": stream_label,
+        }
     )
 
     for record in records:
@@ -55,7 +57,10 @@ def main(event, context):
     response = client.put_events(Entries=entries)
     logger.debug(entries)
     logger.info(
-        {"num_entries": len(records), "failed_entries": response["FailedEntryCount"],}
+        {
+            "num_entries": len(records),
+            "failed_entries": response["FailedEntryCount"],
+        }
     )
 
     return
