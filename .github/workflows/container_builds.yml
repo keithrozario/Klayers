@@ -14,6 +14,9 @@ jobs:
     
     name: Build Image
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
 
     steps:
 
@@ -58,6 +61,6 @@ jobs:
         role-duration-seconds: 1200
         role-session-name: container-build-${{ env.AWS_ENV }}
 
-    # - name: Login to Amazon ECR
-    #   id: login-ecr
-    #   uses: aws-actions/amazon-ecr-login@v1
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
