@@ -28,7 +28,7 @@ jobs:
         if [ ${{ github.ref }} == refs/heads/container_builds-default ]
         then
           echo AWS_ENV=Klayers-defaultp38 >> $GITHUB_ENV
-        elif [ ${{ github.ref }} == refs/heads/container_builds-dev]
+        elif [ ${{ github.ref }} == refs/heads/container_builds-dev ]
         then
           echo AWS_ENV=Klayers-devp38 >> $GITHUB_ENV
         elif [ ${{ github.ref }} == refs/heads/container_builds-prod ]
