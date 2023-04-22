@@ -18,6 +18,11 @@ data "aws_iam_policy_document" "github_role_push_to_ecr" {
     actions = ["ecr:GetAuthorizationToken"]
     resources = ["*"]  # Needed for logging in
   }
+
+  statement {
+    actions = ["ssm:PutParameter"]
+    resources = ["arn:aws:ssm:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:parameter/${var.app_name}/*"]  # Needed for logging in
+  }
 }
 
 resource "aws_iam_policy" "ecr_policy_for_github" {
