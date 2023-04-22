@@ -52,6 +52,25 @@ data "aws_iam_policy_document" "github_role_inline_policy" {
     resources = ["arn:aws:states:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:stateMachine:gh-*"]  # all github statemachines
   }
 
+  statement {
+    ## https://github.com/aws-actions/amazon-ecr-login
+    actions = [
+        "ecr:BatchGetImage",
+        "ecr:BatchCheckLayerAvailability",
+        "ecr:CompleteLayerUpload",
+        "ecr:GetDownloadUrlForLayer",
+        "ecr:InitiateLayerUpload",
+        "ecr:PutImage",
+        "ecr:UploadLayerPart"
+      ]
+    resources = ["arn:aws:ecr:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:repository:*"]  # all ecr repositories
+  }
+
+  statement {
+    actions = ["ecr:GetAuthorizationToken"]
+    resources = ["*"]  # Needed for logging in
+  }
+
 }
 
 resource "aws_iam_role" "github_role" {
