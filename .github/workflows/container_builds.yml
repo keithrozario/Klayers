@@ -85,13 +85,13 @@ jobs:
         echo REPO_URL=$REPO_URL >> $GITHUB_ENV
       
     - name: Build and push
-        uses: docker/build-push-action@v4
-        with:
-          context: pipeline/container_images/build_images/p310_arm64
-          push: true
-          tags:
-            - $REPO_URL:latest
-            - $REPO_NAME:latest
+      uses: docker/build-push-action@v4
+      with:
+        context: pipeline/container_images/build_images/p310_arm64
+        push: true
+        tags:
+          - $REPO_URL:latest
+          - $REPO_NAME:latest
 
     # - name: Build, tag, and push docker image to Amazon ECR
     #   run: |
