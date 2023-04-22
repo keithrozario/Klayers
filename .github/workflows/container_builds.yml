@@ -72,5 +72,5 @@ jobs:
 
     - name: Build, tag, and push docker image to Amazon ECR
       run: |
-        cd pipeline/container_images/build_images/p39_x86
-        ./deploy-container.sh $AWS_ENV
+        cd pipeline/container_images/build_images/
+        ./deploy_all.sh $AWS_ENV
