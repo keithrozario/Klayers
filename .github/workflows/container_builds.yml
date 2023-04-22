@@ -65,6 +65,11 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
 
+    - name: Set AWS Profile
+      run: |
+        AWS_PROFILE=$(cat ./pipeline/Terraform/terraform.tfvars.json | jq -r --arg STAGE $STAGE '.aws_profile."\($STAGE)"')
+        echo AAWS_PROFILE=$AWS_PROFILE >> $GITHUB_ENV
+
     - name: Build, tag, and push docker image to Amazon ECR
       run: |
         cd pipeline/container_images/build_images
