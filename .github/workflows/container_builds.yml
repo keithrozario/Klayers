@@ -51,13 +51,13 @@ jobs:
       shell: bash
 
     - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1-node16
+      uses: aws-actions/configure-aws-credentials@v2
       with:
         aws-region: ${{ env.AWS_DEFAULT_REGION }}
         role-to-assume: ${{ env.AWS_ROLE_ARN }}
         role-duration-seconds: 1200
-        role-session-name: on-push-klayers-${{ env.AWS_ENV }}
+        role-session-name: container-build-${{ env.AWS_ENV }}
 
-    - name: Login to Amazon ECR
-      id: login-ecr
-      uses: aws-actions/amazon-ecr-login@v1
+    # - name: Login to Amazon ECR
+    #   id: login-ecr
+    #   uses: aws-actions/amazon-ecr-login@v1
