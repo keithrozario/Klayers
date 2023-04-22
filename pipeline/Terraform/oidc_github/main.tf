@@ -61,7 +61,8 @@ data "aws_iam_policy_document" "github_role_inline_policy" {
         "ecr:GetDownloadUrlForLayer",
         "ecr:InitiateLayerUpload",
         "ecr:PutImage",
-        "ecr:UploadLayerPart"
+        "ecr:UploadLayerPart",
+        "ecr:DescribeImages"
       ]
     resources = ["arn:aws:ecr:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:repository:*"]  # all ecr repositories
   }
