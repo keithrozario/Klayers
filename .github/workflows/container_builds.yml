@@ -89,9 +89,7 @@ jobs:
       with:
         context: pipeline/container_images/build_images/p310_arm64
         push: true
-        tags:
-          - $REPO_URL:latest
-          - $REPO_NAME:latest
+        tags: ${{ env.REPO_URL }}:latest, ${{ env.REPO_NAME }}:latest
 
     # - name: Build, tag, and push docker image to Amazon ECR
     #   run: |
