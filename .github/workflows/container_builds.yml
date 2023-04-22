@@ -73,10 +73,29 @@ jobs:
       run: |
         AWS_PROFILE=$(cat ./pipeline/Terraform/terraform.tfvars.json | jq -r --arg STAGE $STAGE '.aws_profile."\($STAGE)"')
         echo AAWS_PROFILE=$AWS_PROFILE >> $GITHUB_ENV
-
-    - name: Build, tag, and push docker image to Amazon ECR
+    
+    - name: Set up repository variables
       run: |
-        cd pipeline/container_images/build_images/p310_arm64
-        ./deploy-container.sh $AWS_ENV
-      with:
-        platforms: linux/arm64
+        PARAM_PREFIX=build/p310/x86
+        REPO_PARAM=/kl/$AWS_ENV/$PARAM_PREFIX/repo
+        REPO_URL=$(aws ssm get-parameter --name $REPO_PARAM | jq -r '.Parameter.Value')
+        REPO_NAME=$(echo $REPO_URL | cut -d'/' -f2)
+
+        echo REPO_NAME=$REPO_NAME >> $GITHUB_ENV
+        echo REPO_URL=$REPO_URL >> $GITHUB_ENV
+      
+    - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: pipeline/container_images/build_images/p310_arm64
+          push: true
+          tags:
+            - $REPO_URL:latest
+            - $REPO_NAME:latest
+
+    # - name: Build, tag, and push docker image to Amazon ECR
+    #   run: |
+    #     cd pipeline/container_images/build_images/p310_arm64
+    #     ./deploy-container.sh $AWS_ENV
+    #   with:
+    #     platforms: linux/arm64
