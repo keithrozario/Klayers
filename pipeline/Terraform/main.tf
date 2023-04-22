@@ -135,7 +135,7 @@ resource "aws_ssm_parameter" "p310_build_repo" {
   type        = "String"
   description = "URL for p39 x86 repo"
   name        = "/${var.app_name}/${local.workspace_full_name}/build/p310/x86/repo"
-  value       = aws_ecr_repository.p39build_x86.repository_url
+  value       = aws_ecr_repository.p310build_x86.repository_url
   overwrite   = true
 }
 
@@ -154,7 +154,7 @@ resource "aws_ssm_parameter" "p310_arm64_build_repo" {
   type        = "String"
   description = "URL for p39 x86 repo"
   name        = "/${var.app_name}/${local.workspace_full_name}/build/p310/arm64/repo"
-  value       = aws_ecr_repository.p39build_x86.repository_url
+  value       = aws_ecr_repository.p310build_arm64.repository_url
   overwrite   = true
 }
 

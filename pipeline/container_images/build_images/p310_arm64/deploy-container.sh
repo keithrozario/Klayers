@@ -5,7 +5,7 @@
 
 STAGE="${1:-Klayers-defaultp38}"
 REGION=$(cat ../../../Terraform/terraform.tfvars.json | jq -r --arg STAGE $STAGE '.aws_region."\($STAGE)"')
-PARAM_PREFIX=build/p310/x86
+PARAM_PREFIX=build/p310/arm64
 REPO_PARAM=/kl/$STAGE/$PARAM_PREFIX/repo
 
 REPO_URL=$(aws ssm get-parameter --name $REPO_PARAM --region $REGION | jq -r '.Parameter.Value')
