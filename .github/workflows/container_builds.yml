@@ -82,6 +82,7 @@ jobs:
 
         echo REPO_NAME=$REPO_NAME >> $GITHUB_ENV
         echo REPO_URL=$REPO_URL >> $GITHUB_ENV
+        echo PARAM_PREFIX=$PARAM_PREFIX >> $GITHUB_ENV
       
     - name: Build and push
       uses: docker/build-push-action@v4
@@ -90,6 +91,11 @@ jobs:
         push: true
         tags: ${{ env.REPO_URL }}:latest
         platforms: linux/arm64
+
+    - name: update SSM
+      run: |
+        DIGEST=$(aws ecr describe-images --repository-name $REPO_NAME --image-ids imageTag=latest | jq -r '.imageDetails[0].imageDigest')
+        aws ssm put-parameter --name /kl/$AWS_ENV/$PARAM_PREFIX/digest --value $DIGEST --overwrite --type String | jq '.'
 
     - name: Set up repository variables
       run: |
@@ -100,6 +106,7 @@ jobs:
 
         echo REPO_NAME=$REPO_NAME >> $GITHUB_ENV
         echo REPO_URL=$REPO_URL >> $GITHUB_ENV
+        echo PARAM_PREFIX=$PARAM_PREFIX >> $GITHUB_ENV
       
     - name: Build and push
       uses: docker/build-push-action@v4
@@ -109,6 +116,10 @@ jobs:
         tags: ${{ env.REPO_URL }}:latest
         platforms: linux/amd64
 
+    - name: update SSM
+      run: |
+        DIGEST=$(aws ecr describe-images --repository-name $REPO_NAME --image-ids imageTag=latest | jq -r '.imageDetails[0].imageDigest')
+        aws ssm put-parameter --name /kl/$AWS_ENV/$PARAM_PREFIX/digest --value $DIGEST --overwrite --type String | jq '.'
 
     - name: Set up repository variables
       run: |
@@ -119,6 +130,7 @@ jobs:
 
         echo REPO_NAME=$REPO_NAME >> $GITHUB_ENV
         echo REPO_URL=$REPO_URL >> $GITHUB_ENV
+        echo PARAM_PREFIX=$PARAM_PREFIX >> $GITHUB_ENV
       
     - name: Build and push
       uses: docker/build-push-action@v4
@@ -128,9 +140,7 @@ jobs:
         tags: ${{ env.REPO_URL }}:latest
         platforms: linux/amd64
 
-    # - name: Build, tag, and push docker image to Amazon ECR
-    #   run: |
-    #     cd pipeline/container_images/build_images/p310_arm64
-    #     ./deploy-container.sh $AWS_ENV
-    #   with:
-    #     platforms: linux/arm64
+    - name: update SSM
+      run: |
+        DIGEST=$(aws ecr describe-images --repository-name $REPO_NAME --image-ids imageTag=latest | jq -r '.imageDetails[0].imageDigest')
+        aws ssm put-parameter --name /kl/$AWS_ENV/$PARAM_PREFIX/digest --value $DIGEST --overwrite --type String | jq '.'
