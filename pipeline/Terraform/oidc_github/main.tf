@@ -1,3 +1,6 @@
+data "aws_caller_identity" "current" {}
+data "aws_region" "current" {}
+
 resource "aws_iam_openid_connect_provider" "github" {
   url = "https://token.actions.githubusercontent.com"
 
@@ -12,9 +15,6 @@ resource "aws_iam_openid_connect_provider" "github" {
     "6938fd4d98bab03faadb97b34396831e3780aea1"
     ]
 }
-
-data "aws_caller_identity" "current" {}
-data "aws_region" "current" {}
 
 data "aws_iam_policy_document" "github_actions_assume_role_policy" {
   statement {
@@ -31,35 +31,9 @@ data "aws_iam_policy_document" "github_actions_assume_role_policy" {
   }
 }
 
-data "aws_iam_policy_document" "github_role_inline_policy" {
-  statement {
-    actions   = ["s3:PutObject"]
-    resources = ["${var.config_bucket_arn}/*"]
-  }
-
-  statement {
-    actions = ["ssm:GetParameter"]
-    resources = ["arn:aws:ssm:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:parameter/${var.app_name}/*"]
-  }
-
-  statement {
-    actions = ["ssm:GetParameter"]
-    resources = ["arn:aws:ssm:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:parameter/gh*"]  # all github stacks
-  }
-
-  statement {
-    actions = ["states:StartExecution"]
-    resources = ["arn:aws:states:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:stateMachine:gh-*"]  # all github statemachines
-  }
-
-}
-
 resource "aws_iam_role" "github_role" {
   name = var.github_role_name
   assume_role_policy = data.aws_iam_policy_document.github_actions_assume_role_policy.json
-  inline_policy {
-    name   = "klayers-inline-policy"
-    policy = data.aws_iam_policy_document.github_role_inline_policy.json
-  }
 }
+
 

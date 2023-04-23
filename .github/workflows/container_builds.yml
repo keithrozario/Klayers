@@ -1,0 +1,146 @@
+name: Deploy to ECR
+
+on:
+ 
+  push:
+    branches:
+      - container_builds-default
+      - container_builds-dev
+      - container_builds-prod
+
+jobs:
+  
+  build:
+    
+    name: Build Image
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v2
+    
+    - name: Set AWS Environment variable based on branch
+      run: |
+        if [ ${{ github.ref }} == refs/heads/container_builds-default ]
+        then
+          echo AWS_ENV=Klayers-defaultp38 >> $GITHUB_ENV
+        elif [ ${{ github.ref }} == refs/heads/container_builds-dev ]
+        then
+          echo AWS_ENV=Klayers-devp38 >> $GITHUB_ENV
+        elif [ ${{ github.ref }} == refs/heads/container_builds-prod ]
+        then
+          echo AWS_ENV=Klayers-prodp38 >> $GITHUB_ENV            
+        else
+          exit 1
+        fi
+        
+        APP_NAME=$(cat ./pipeline/Terraform/terraform.tfvars.json | jq -r '.app_name')
+        echo APP_NAME=$APP_NAME >> $GITHUB_ENV
+
+      shell: bash
+
+    - name: Get AWS configuration
+      run: |
+        GITHUB_ROLE_ARN=$(cat ./.github/workflows/role_arns.json | jq -r --arg arg $AWS_ENV '.github_role_arn | .[$arg]')
+        AWS_REGION=$(cat ./pipeline/Terraform/terraform.tfvars.json | jq -r --arg arg $AWS_ENV '.aws_region | .[$arg]')
+        
+        echo AWS_ROLE_ARN=$GITHUB_ROLE_ARN >> $GITHUB_ENV
+        echo AWS_DEFAULT_REGION=$AWS_REGION >> $GITHUB_ENV
+
+      shell: bash
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-region: ${{ env.AWS_DEFAULT_REGION }}
+        role-to-assume: ${{ env.AWS_ROLE_ARN }}
+        role-duration-seconds: 1200
+        role-session-name: container-build-${{ env.AWS_ENV }}
+
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+
+    - name: Set AWS Profile
+      run: |
+        AWS_PROFILE=$(cat ./pipeline/Terraform/terraform.tfvars.json | jq -r --arg STAGE $STAGE '.aws_profile."\($STAGE)"')
+        echo AAWS_PROFILE=$AWS_PROFILE >> $GITHUB_ENV
+    
+    - name: Set up repository variables
+      run: |
+        PARAM_PREFIX=build/p310/arm64
+        REPO_PARAM=/kl/$AWS_ENV/$PARAM_PREFIX/repo
+        REPO_URL=$(aws ssm get-parameter --name $REPO_PARAM | jq -r '.Parameter.Value')
+        REPO_NAME=$(echo $REPO_URL | cut -d'/' -f2)
+
+        echo REPO_NAME=$REPO_NAME >> $GITHUB_ENV
+        echo REPO_URL=$REPO_URL >> $GITHUB_ENV
+        echo PARAM_PREFIX=$PARAM_PREFIX >> $GITHUB_ENV
+      
+    - name: Build and push
+      uses: docker/build-push-action@v4
+      with:
+        context: pipeline/container_images/build_images/p310_arm64
+        push: true
+        tags: ${{ env.REPO_URL }}:latest
+        platforms: linux/arm64
+
+    - name: update SSM
+      run: |
+        DIGEST=$(aws ecr describe-images --repository-name $REPO_NAME --image-ids imageTag=latest | jq -r '.imageDetails[0].imageDigest')
+        aws ssm put-parameter --name /kl/$AWS_ENV/$PARAM_PREFIX/digest --value $DIGEST --overwrite --type String | jq '.'
+
+    - name: Set up repository variables
+      run: |
+        PARAM_PREFIX=build/p310/x86
+        REPO_PARAM=/kl/$AWS_ENV/$PARAM_PREFIX/repo
+        REPO_URL=$(aws ssm get-parameter --name $REPO_PARAM | jq -r '.Parameter.Value')
+        REPO_NAME=$(echo $REPO_URL | cut -d'/' -f2)
+
+        echo REPO_NAME=$REPO_NAME >> $GITHUB_ENV
+        echo REPO_URL=$REPO_URL >> $GITHUB_ENV
+        echo PARAM_PREFIX=$PARAM_PREFIX >> $GITHUB_ENV
+      
+    - name: Build and push
+      uses: docker/build-push-action@v4
+      with:
+        context: pipeline/container_images/build_images/p310_x86
+        push: true
+        tags: ${{ env.REPO_URL }}:latest
+        platforms: linux/amd64
+
+    - name: update SSM
+      run: |
+        DIGEST=$(aws ecr describe-images --repository-name $REPO_NAME --image-ids imageTag=latest | jq -r '.imageDetails[0].imageDigest')
+        aws ssm put-parameter --name /kl/$AWS_ENV/$PARAM_PREFIX/digest --value $DIGEST --overwrite --type String | jq '.'
+
+    - name: Set up repository variables
+      run: |
+        PARAM_PREFIX=build/p39/x86
+        REPO_PARAM=/kl/$AWS_ENV/$PARAM_PREFIX/repo
+        REPO_URL=$(aws ssm get-parameter --name $REPO_PARAM | jq -r '.Parameter.Value')
+        REPO_NAME=$(echo $REPO_URL | cut -d'/' -f2)
+
+        echo REPO_NAME=$REPO_NAME >> $GITHUB_ENV
+        echo REPO_URL=$REPO_URL >> $GITHUB_ENV
+        echo PARAM_PREFIX=$PARAM_PREFIX >> $GITHUB_ENV
+      
+    - name: Build and push
+      uses: docker/build-push-action@v4
+      with:
+        context: pipeline/container_images/build_images/p39_x86
+        push: true
+        tags: ${{ env.REPO_URL }}:latest
+        platforms: linux/amd64
+
+    - name: update SSM
+      run: |
+        DIGEST=$(aws ecr describe-images --repository-name $REPO_NAME --image-ids imageTag=latest | jq -r '.imageDetails[0].imageDigest')
+        aws ssm put-parameter --name /kl/$AWS_ENV/$PARAM_PREFIX/digest --value $DIGEST --overwrite --type String | jq '.'
