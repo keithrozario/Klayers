@@ -144,3 +144,4 @@ Build310Arm64:
     - dynamodb:UpdateItem
     - dynamodb:GetItem
     Resource: ${self:custom.dbArn}
+  architecture: arm64
