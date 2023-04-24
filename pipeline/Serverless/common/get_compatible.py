@@ -6,7 +6,7 @@ def get_compatible_runtimes(python_version: str) ->list:
         compatible_runtime: In the form of accepted here: https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html
     """
 
-    compatible_runtime = python_version.split('-')[0].replace('p','Python') # remember capital 'P'
+    compatible_runtime = python_version.split('-')[0].replace('p','python')
     return [compatible_runtime]  
 
 
