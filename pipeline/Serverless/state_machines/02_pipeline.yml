@@ -30,6 +30,12 @@ definition:
       Type: Choice
       Choices:
         - Variable: $.python_version
+          StringEquals: "p3.10-arm64"
+          Next: Build310arm64
+        - Variable: $.python_version
+          StringEquals: "p3.10"
+          Next: Build310
+        - Variable: $.python_version
           StringEquals: "p3.9"
           Next: Build39
         - Variable: $.python_version
@@ -54,7 +60,7 @@ definition:
       Catch:
         - ErrorEquals:
           - States.ALL
-          Next: Build38Fail
+          Next: BuildFail
     Build39:
       Type: Task
       Resource:
@@ -74,7 +80,46 @@ definition:
       Catch:
         - ErrorEquals:
           - States.ALL
-          Next: Build39Fail
+          Next: BuildFail
+    Build310arm64:
+      Type: Task
+      Resource:
+        Fn::GetAtt: [Build310a64LambdaFunction, Arn]
+      Next: Deploy
+      Retry:
+        - ErrorEquals:
+          - States.Timeout
+          - Lambda.ClientExecutionTimeoutException
+          - Lambda.ServiceException
+          - Lambda.AWSLambdaException
+          - Lambda.TooManyRequestsException
+          MaxAttempts: 5
+          BackoffRate: 2
+          IntervalSeconds: 15
+      Catch:
+        - ErrorEquals:
+          - States.ALL
+          Next: BuildFail
+    Build310:
+      Type: Task
+      Resource:
+        Fn::GetAtt: [Build310LambdaFunction, Arn]
+      Next: Deploy
+      Retry:
+        - ErrorEquals:
+          - Lambda.AWSLambdaException
+          - States.Timeout
+          - Lambda.ClientExecutionTimeoutException
+          - Lambda.ServiceException
+          - Lambda.AWSLambdaException
+          - Lambda.TooManyRequestsException
+          MaxAttempts: 5
+          BackoffRate: 2
+          IntervalSeconds: 15
+      Catch:
+        - ErrorEquals:
+          - States.ALL
+          Next: BuildFail
     Deploy:
       Type: Task
       Resource:
@@ -102,11 +147,7 @@ definition:
       Type: Fail
       Error: CheckFailure
       Cause: Unknown
-    Build38Fail:
-      Type: Fail
-      Error: BuildFailure
-      Cause: Unknown
-    Build39Fail:
+    BuildFail:
       Type: Fail
       Error: BuildFailure
       Cause: Unknown

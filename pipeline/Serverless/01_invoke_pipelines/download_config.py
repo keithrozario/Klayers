@@ -11,6 +11,8 @@ logger = Logger()
 configs = {
     "p3.8": "packages_p38.csv",
     "p3.9": "packages_p39.csv",
+    "p3.10": "packages_p310.csv",
+    "p3.10-arm64": "packages_p310-arm64.csv"
 }
 region_config_filename = "regions.csv"
 
