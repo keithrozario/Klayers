@@ -72,6 +72,8 @@ jobs:
       run: |
         AWS_PROFILE=$(cat ./pipeline/Terraform/terraform.tfvars.json | jq -r --arg STAGE $STAGE '.aws_profile."\($STAGE)"')
         echo AAWS_PROFILE=$AWS_PROFILE >> $GITHUB_ENV
+
+    # p310 Arm64 Build Container
     
     - name: Set up repository variables
       run: |
@@ -97,6 +99,8 @@ jobs:
         DIGEST=$(aws ecr describe-images --repository-name $REPO_NAME --image-ids imageTag=latest | jq -r '.imageDetails[0].imageDigest')
         aws ssm put-parameter --name /kl/$AWS_ENV/$PARAM_PREFIX/digest --value $DIGEST --overwrite --type String | jq '.'
 
+    # p310 x86 Build Container
+
     - name: Set up repository variables
       run: |
         PARAM_PREFIX=build/p310/x86
@@ -120,6 +124,8 @@ jobs:
       run: |
         DIGEST=$(aws ecr describe-images --repository-name $REPO_NAME --image-ids imageTag=latest | jq -r '.imageDetails[0].imageDigest')
         aws ssm put-parameter --name /kl/$AWS_ENV/$PARAM_PREFIX/digest --value $DIGEST --overwrite --type String | jq '.'
+
+    # p39 x86 Build Container
 
     - name: Set up repository variables
       run: |

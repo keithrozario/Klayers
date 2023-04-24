@@ -17,3 +17,5 @@ def get_config_items(config_type: str, python_version: str = "p.38") -> list:
     config_items = response["Item"]["cnfg"]
 
     return config_items
+
+
