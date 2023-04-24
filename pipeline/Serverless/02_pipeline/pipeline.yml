@@ -122,7 +122,7 @@ build310:
     - dynamodb:GetItem
     Resource: ${self:custom.dbArn}
 
-build310Arm64:
+Build310Arm64:
   description: Builds the package in a container for python3.10 then uploads to S3
   image: ${ssm:/${self:service}/${self:provider.stage}/build/p310/arm64/repo}@${ssm:/${self:service}/${self:provider.stage}/build/p310/arm64/digest}
   timeout: 600

@@ -84,7 +84,7 @@ definition:
     Build310arm64:
       Type: Task
       Resource:
-        Fn::GetAtt: [Build310a64LambdaFunction, Arn]
+        Fn::GetAtt: [Build310Arm64LambdaFunction, Arn]
       Next: Deploy
       Retry:
         - ErrorEquals:

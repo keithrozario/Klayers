@@ -11,6 +11,7 @@ from aws_lambda_powertools.logging import Logger
 logger = Logger()
 
 from common.get_config import get_config_items
+from common.get_compatible import get_compatible_runtimes, get_compatible_architectures
 
 
 def check_regions_to_deploy(
@@ -168,7 +169,8 @@ def main(event, context):
             LayerName=layer_name,
             Description=f"{package}=={version} | {requirements_hash}",
             Content={"ZipFile": zip_binary},
-            CompatibleRuntimes=["python3.6", "python3.7", "python3.8", "python3.9"],
+            CompatibleRuntimes=get_compatible_runtimes(python_version=python_version),
+            CompatibleArchitectures=get_compatible_architectures(python_version=python_version),
             LicenseInfo=license_info,
         )
         layer_version_arn = response["LayerVersionArn"]
