@@ -77,7 +77,7 @@ jobs:
         with:
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
           role-to-assume: ${{ env.AWS_ROLE_ARN }}
-          role-duration-seconds: 600 # 10 minutes
+          role-duration-seconds: 900 # minimum of 900
           role-session-name: container-build-${{ env.AWS_ENV }}
 
       - name: Login to Amazon ECR
