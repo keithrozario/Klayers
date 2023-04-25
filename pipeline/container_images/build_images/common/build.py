@@ -285,14 +285,22 @@ def check_python_version(python_version: str) -> bool:
       True if matches running version, False otherwise
     """
     running_python_version = f"p{sys.version_info.major}.{sys.version_info.minor}"
-    if python_version == running_python_version:
-        logger.debug(f"Python version supplied: {python_version}")
-        logger.debug(f"Python version running: {sys.version_info}")
+    python_version_supplied = python_version.split('-')[0]  # remove trailing arm64
+    
+    if python_version_supplied == running_python_version:
+        logger.debug({
+            "Python version": python_version,
+            "Python version supplied": python_version_supplied,
+            "Python version running": running_python_version
+            })
         return True
     else:
-        logger.error("Python version doesn't match")
-        logger.error(f"Python version supplied: {python_version}")
-        logger.error(f"Python version running: {running_python_version}")
+        logger.error({
+            "Error": "Python version doesn't match",
+            "Python version": python_version,
+            "Python version supplied": python_version_supplied,
+            "Python version running": running_python_version
+            })
         return False
 
 
