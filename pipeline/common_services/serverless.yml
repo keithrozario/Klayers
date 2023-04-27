@@ -1,0 +1,154 @@
+service: common-service
+frameworkVersion: '3'
+
+plugins:
+  - serverless-better-credentials
+  - serverless-iam-roles-per-function
+provider:
+  name: aws
+  runtime: python3.9
+  stage:  ${opt:stage, 'Klayers-defaultp38'}
+  region: ${file(../Terraform/terraform.tfvars.json):aws_region.${self:provider.stage}}
+  profile: ${file(../Terraform/terraform.tfvars.json):aws_profile.${self:provider.stage}}
+  versionFunctions: false
+  logRetentionInDays: 90
+  environment:
+    STAGE: ${self:provider.stage}
+    LOG_LEVEL: INFO
+    DB_NAME: ${self:custom.dbName}
+    POWERTOOLS_SERVICE_NAME: ${self:service}-${self:provider.stage}
+    CONFIG_BUCKET: ${self:custom.configBucketName}
+
+
+custom:
+  # DynamoDB
+  dbArn: ${ssm:/kl/${self:provider.stage}/db-ver2/arn}
+  dbName: ${ssm:/kl/${self:provider.stage}/db-ver2/name}
+
+  # Config bucket
+  configBucketArn: ${ssm:/kl/${self:provider.stage}/config_bucket/arn}
+  configBucketName: ${ssm:/kl/${self:provider.stage}/config_bucket/name}
+
+resources:
+
+  Resources:
+    CommonServiceApi:
+      Type: AWS::SSM::Parameter
+      Properties: 
+        Description: URL for Common Service API
+        Name: /${self:service}/${self:provider.stage}/CommonServiceApi/URL
+        Type: String
+        Value:
+          Fn::Join:
+            - ""
+            - - "https://"
+              - Fn::GetAtt: 
+                - ApiGatewayRestApi
+                - RestApiId
+              - ".execute-api."
+              - ${self:provider.region}
+              - ".amazonaws.com/"
+              - ${self:provider.stage}
+
+    CommonServiceApiArn:
+      Type: AWS::SSM::Parameter
+      Properties: 
+        Description: Arn for Common Service API
+        Name: /${self:service}/${self:provider.stage}/CommonServiceApi/arn
+        Type: String
+        Value:
+          Fn::Join:
+            - ""
+            - - "arn:aws:execute-api:"
+              - ${self:provider.region}
+              - ":*:"
+              - Fn::GetAtt: 
+                - ApiGatewayRestApi
+                - RestApiId
+              - "/*"
+
+functions:
+
+  check_python_versions:
+    handler: check_python_versions.main
+    description: Compares python versions
+    runtime: python3.9
+    timeout: 30
+    memorySize: 256
+    environment:
+      POWERTOOLS_SERVICE_NAME: Klayers.${self:service}
+    iamRoleStatementsName: ${self:service}-${self:provider.stage}-check-python-versions
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+        - s3:GetObject
+        Resource:
+        - ${self:custom.configBucketArn}/*
+    layers:
+      - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPythonV2:13
+    events:
+      - http:
+          path: /api/v1/python-versions
+          method: get
+          authorizer: aws_iam
+
+  load_config:
+    handler: load_config_from_s3.main
+    description: Load New config from S3 into Dynamo
+    runtime: python3.9
+    timeout: 30
+    memorySize: 256
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+        - dynamodb:PutItem
+        Resource:
+        - ${self:custom.dbArn}
+      - Effect: Allow
+        Action:
+        - s3:GetObject
+        Resource:
+        - ${self:custom.configBucketArn}/*
+    layers:
+      - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPythonV2:13
+    events:
+      - http:
+          path: /api/v1/load-config
+          method: post
+          authorizer: aws_iam
+
+  test_api:
+    handler: test_api.main
+    description: Test the API
+    runtime: python3.9
+    timeout: 60
+    memorySize: 256
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - execute-api:Invoke
+        Resource:
+          Fn::Join:
+            - ""
+            - - "arn:aws:execute-api:"
+              - ${self:provider.region}
+              - ":*:"
+              - Fn::GetAtt: 
+                - ApiGatewayRestApi
+                - RestApiId
+              - "/*"
+    layers:
+      - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPythonV2:13
+      -	arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-p39-aws-requests-auth:11 
+
+package:
+  exclude:
+    - package-lock.json
+    - package.json
+    - node_modules/**
+    - serverless.yml
+    - .gitignore
+    - .serverless/**
+    - sls_components/**
+    - README.MD
+    - tests/**

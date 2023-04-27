@@ -23,61 +23,9 @@ invoke_pipeline:
       - dynamodb:GetItem
       Resource:
       - ${self:custom.dbArn}
+    - Effect: Allow
+      Action: execute-api:Invoke
+      Resource: ${ssm:/common-service/${self:provider.stage}/CommonServiceApi/arn}
   layers:
     - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPython:6
-
-download_config:
-  handler: 01_invoke_pipelines/download_config.download_config_from_github
-  description: Updates config before launch by downloading CSV from Github
-  runtime: python3.8
-  memorySize: 256
-  timeout: 60
-  environment:
-    POWERTOOLS_SERVICE_NAME: Klayers.download_config
-    GITHUB_REPO: ${self:custom.githubRepo}
-  iamRoleStatementsName: ${self:provider.stage}-download_config
-  iamRoleStatements:
-    - Effect: Allow
-      Action:
-      - dynamodb:PutItem
-      Resource:
-      - ${self:custom.dbArn}
-  layers:
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-p38-requests:7
-    - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPython:6 
-
-
-invalidate_cache:
-  handler: 01_invoke_pipelines/invalidate_cf_cache.main
-  description: Invalidated CF cache after deployment
-  runtime: python3.8
-  memorySize: 256
-  timeout: 30
-  environment:
-    POWERTOOLS_SERVICE_NAME: Klayers.invalidate_cf_cache
-    # this parameter deployed as part of api Cloudformation
-    DISTRIBUTION_NAME: /${self:service}/${self:provider.stage}/api/cfDistribution/id
-  iamRoleStatementsName: ${self:provider.stage}-invalidate_cache
-  iamRoleStatements:
-    - Effect: Allow
-      Action:
-        - ssm:GetParameter
-      Resource:
-      - Fn::Join:
-        - ":"
-        - - arn:aws:ssm
-          - ${self:provider.region}
-          - Ref: AWS::AccountId
-          - parameter/${self:service}/${self:provider.stage}/api/cfDistribution/id
-    - Effect: Allow
-      Action: 
-        - cloudfront:CreateInvalidation
-      Resource:
-      - Fn::Join:
-        - ":"
-        - - "arn:aws:cloudfront:"
-          - Ref: AWS::AccountId
-          - distribution/${ssm:/${self:service}/${self:provider.stage}/api/cfDistribution/id}
-  layers:
-    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-python38-lambda-cache:1
-    - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPython:6
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-p39-aws-requests-auth:11
