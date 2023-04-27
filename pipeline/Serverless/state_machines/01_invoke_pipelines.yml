@@ -3,26 +3,12 @@ events:
 name: ${self:custom.pipelineName}-invoke
 definition:
   Comment: "Invoke the pipeline for all packages"
-  StartAt: DownloadConfig
+  StartAt: Invoke
   States:
-    DownloadConfig:
-      Type: Task
-      Resource:
-        Fn::GetAtt: [DownloadUnderscoreconfigLambdaFunction, Arn]
-      Next: Invoke
     Invoke:
       Type: Task
       Resource:
         Fn::GetAtt: [InvokeUnderscorepipelineLambdaFunction, Arn]
-      Next: WaitForCompletion
-    WaitForCompletion:
-      Type: Wait
-      Seconds: 600
-      Next: InvalidateCache
-    InvalidateCache:
-      Type: Task
-      Resource:
-        Fn::GetAtt: [InvalidateUnderscorecacheLambdaFunction, Arn]
       Next: Done
     Done:
       Type: Succeed

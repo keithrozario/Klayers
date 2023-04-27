@@ -1,6 +1,8 @@
 import os
 import json
 import time
+from aws_requests_auth.boto_utils import BotoAWSRequestsAuth
+import requests
 
 import boto3
 from aws_lambda_powertools.logging import Logger
@@ -38,8 +40,11 @@ def main(event, context):
 
     client = boto3.client("events")
     stage = os.environ["STAGE"]
+    common_service_url = os.environ["COMMON_SERVICE_URL"]
+    python_versions = get_python_versions(url=common_service_url)['python_versions']
+    logger.info(f"Python Versions: {python_versions}")
 
-    for python_version in ["p3.8", "p3.9"]:
+    for python_version in python_versions:
         packages = get_config_items(config_type="pckgs", python_version=python_version)
         logger.info(f"Preparing {len(packages)} packages")
 
@@ -84,4 +89,17 @@ def main(event, context):
         slack_response = client.put_events(Entries=[entry])
         log_eventbridge_errors(slack_response, logger)
 
-    return None
+    return python_versions
+
+def get_python_versions(url: str):
+    auth = BotoAWSRequestsAuth(
+        aws_host=url.split("/")[2],
+        aws_region=os.environ['AWS_REGION'],
+        aws_service='execute-api'
+    )
+    
+    response = requests.get(
+        f"{url}/api/v1/python-versions",
+        auth=auth
+    )
+    return json.loads(response.content)

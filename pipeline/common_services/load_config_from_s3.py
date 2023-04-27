@@ -1,5 +1,6 @@
 import os
 import boto3
+import json
 from aws_lambda_powertools.logging import Logger
 from common.get_config_from_s3 import download_packages_from_s3
 
@@ -9,27 +10,32 @@ dynamodb = boto3.resource("dynamodb")
 def main(event, context):
     """
     Args:
-     event::tuple(2)
-        package:: list(dict)
-            python_version::string (e.g. p3.8)
-            python_package::list list of packages that were deployed
-        pr_number::dict
-            pr_number::int PR Number associated with this event
+     event::dict
+        python_versions::list of python_versions
+     returns::dict
     """
-    logger.info(event)
-    for elem in event[0]:
-        python_version = elem["python_version"]
-        load_config(python_version=python_version, config_type="pckgs")
+    logger.debug(event)
+    python_versions = event['python_versions']
+    responses = []
+    for python_version in python_versions:
+        response = load_config(python_version=python_version, config_type="rgns")
+        responses.append(response)
 
-    return event
-
+    return {
+        "statusCode": 200,
+        "headers": {"Content-Type": "application/json"},
+        "body": json.dumps(responses),
+    }
 
 def load_config(python_version: str, config_type: str) -> dict:
     """
     Args:
         python_version: Version of python (e.g. p3.8, p3.9)
         config_type: What type of item (e.g. rgns, pckgs) remember the 's'
-    Returns: None
+    Returns:
+        response::dict
+            python_version::str
+            num_packages::int
     """
 
     logger.info(
@@ -46,4 +52,7 @@ def load_config(python_version: str, config_type: str) -> dict:
         }
     )
     logger.info(response)
-    return response
+    return {
+        "python_version": python_version,
+        "num_packages": len(packages),
+    }
