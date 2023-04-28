@@ -55,6 +55,9 @@ custom:
   # Config bucket
   configBucketArn: ${ssm:/kl/${self:provider.stage}/config_bucket/arn}
   configBucketName: ${ssm:/kl/${self:provider.stage}/config_bucket/name}
+
+  # Cron for Invoke Pipelines
+  cron_expression_invoke_pipelines: ${file(../Terraform/terraform.tfvars.json):cron_expression_invoke_pipelines.${self:provider.stage}}
   
 functions:
   - ${file(01_invoke_pipelines/invoke_pipelines.yml)}
@@ -64,8 +67,6 @@ functions:
 
 stepFunctions:
   stateMachines:
-    invoke_pipelines:
-      ${file(state_machines/01_invoke_pipelines.yml)}
     pipeline:
       ${file(state_machines/02_pipeline.yml)}
 
