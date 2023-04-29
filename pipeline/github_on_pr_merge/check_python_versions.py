@@ -4,7 +4,9 @@ import boto3
 import requests
 
 from aws_lambda_powertools.logging import Logger
-from aws_requests_auth.boto_utils import BotoAWSRequestsAuth
+from common.get_config import get_from_common_service 
+ 
+
 
 logger = Logger()
 s3 = boto3.client("s3")
@@ -19,21 +21,8 @@ def main(event, context):
         python_versions : List of python versions e.g. ["p3.8","p3.9"]
     """
 
-    common_service_url = os.environ["COMMON_SERVICE_URL"]
-    python_versions = get_python_versions(url=common_service_url)['python_versions']
+    python_versions = get_from_common_service(resource="/api/v1/python-versions")['python_versions']
     logger.info(f"Python Versions: {python_versions}")
 
     return python_versions
 
-def get_python_versions(url: str):
-    auth = BotoAWSRequestsAuth(
-        aws_host=url.split("/")[2],
-        aws_region=os.environ['AWS_REGION'],
-        aws_service='execute-api'
-    )
-    
-    response = requests.get(
-        f"{url}/api/v1/python-versions",
-        auth=auth
-    )
-    return json.loads(response.content)

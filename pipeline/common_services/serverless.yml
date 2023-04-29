@@ -12,12 +12,14 @@ provider:
   profile: ${file(../Terraform/terraform.tfvars.json):aws_profile.${self:provider.stage}}
   versionFunctions: false
   logRetentionInDays: 90
+  memorySize: 256
+  timeout: 29
   environment:
     STAGE: ${self:provider.stage}
     LOG_LEVEL: INFO
     DB_NAME: ${self:custom.dbName}
-    POWERTOOLS_SERVICE_NAME: ${self:service}-${self:provider.stage}
     CONFIG_BUCKET: ${self:custom.configBucketName}
+    POWERTOOLS_SERVICE_NAME: Klayers.${self:service}
 
 
 custom:
@@ -70,14 +72,50 @@ resources:
 functions:
 
   check_python_versions:
-    handler: check_python_versions.main
-    description: Compares python versions
-    runtime: python3.9
-    timeout: 30
-    memorySize: 256
-    environment:
-      POWERTOOLS_SERVICE_NAME: Klayers.${self:service}
+    handler: get_python_versions.main
+    description: Returns python versions currently supported
+    timeout: 3
     iamRoleStatementsName: ${self:service}-${self:provider.stage}-check-python-versions
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+        - dynamodb:GetItem
+        Resource:
+        - ${self:custom.dbArn}
+    layers:
+      - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPythonV2:13
+    events:
+      - httpApi:
+          method: get
+          path: /api/v1/python-versions
+          authorizer:
+            type: aws_iam
+
+  get_config:
+    handler: get_config.main
+    description: Compares python versions
+    timeout: 3
+    iamRoleStatementsName: ${self:service}-${self:provider.stage}-get-config
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+        - dynamodb:GetItem
+        Resource:
+        - ${self:custom.dbArn}
+    layers:
+      - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPythonV2:13
+    events:
+      - httpApi:
+          method: get
+          path: /api/v1/config/{python_version}/{config}
+          authorizer:
+            type: aws_iam
+
+  get_config_s3:
+    handler: get_config_s3.main
+    description: Compares python versions
+    timeout: 3
+    iamRoleStatementsName: ${self:service}-${self:provider.stage}-get-config-s3
     iamRoleStatements:
       - Effect: Allow
         Action:
@@ -87,17 +125,17 @@ functions:
     layers:
       - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPythonV2:13
     events:
-      - http:
-          path: /api/v1/python-versions
+      - httpApi:
           method: get
-          authorizer: aws_iam
+          path: /api/v1/configS3/{python_version}/{config}
+          authorizer:
+            type: aws_iam
 
   load_config:
     handler: load_config_from_s3.main
     description: Load New config from S3 into Dynamo
-    runtime: python3.9
-    timeout: 30
-    memorySize: 256
+    timeout: 29
+    memorySize: 512
     iamRoleStatements:
       - Effect: Allow
         Action:
@@ -116,30 +154,6 @@ functions:
           path: /api/v1/load-config
           method: post
           authorizer: aws_iam
-
-  test_api:
-    handler: test_api.main
-    description: Test the API
-    runtime: python3.9
-    timeout: 60
-    memorySize: 256
-    iamRoleStatements:
-      - Effect: Allow
-        Action:
-          - execute-api:Invoke
-        Resource:
-          Fn::Join:
-            - ""
-            - - "arn:aws:execute-api:"
-              - ${self:provider.region}
-              - ":*:"
-              - Fn::GetAtt: 
-                - ApiGatewayRestApi
-                - RestApiId
-              - "/*"
-    layers:
-      - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPythonV2:13
-      -	arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-p39-aws-requests-auth:11 
 
 package:
   exclude:
