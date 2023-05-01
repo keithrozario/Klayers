@@ -41,16 +41,9 @@ resources:
         Name: /${self:service}/${self:provider.stage}/CommonServiceApi/URL
         Type: String
         Value:
-          Fn::Join:
-            - ""
-            - - "https://"
-              - Fn::GetAtt: 
-                - ApiGatewayRestApi
-                - RestApiId
-              - ".execute-api."
-              - ${self:provider.region}
-              - ".amazonaws.com/"
-              - ${self:provider.stage}
+          Fn::GetAtt: 
+            - HttpApi
+            - ApiEndpoint
 
     CommonServiceApiArn:
       Type: AWS::SSM::Parameter
@@ -65,8 +58,8 @@ resources:
               - ${self:provider.region}
               - ":*:"
               - Fn::GetAtt: 
-                - ApiGatewayRestApi
-                - RestApiId
+                - HttpApi
+                - ApiId
               - "/*"
 
 functions:
@@ -107,7 +100,7 @@ functions:
     events:
       - httpApi:
           method: get
-          path: /api/v1/config/{python_version}/{config}
+          path: /api/v1/config/{python_version}/{config_type}
           authorizer:
             type: aws_iam
 
@@ -127,7 +120,7 @@ functions:
     events:
       - httpApi:
           method: get
-          path: /api/v1/configS3/{python_version}/{config}
+          path: /api/v1/configS3/{python_version}/{config_type}
           authorizer:
             type: aws_iam
 
@@ -150,10 +143,12 @@ functions:
     layers:
       - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPythonV2:13
     events:
-      - http:
-          path: /api/v1/load-config
+      - httpApi:
           method: post
-          authorizer: aws_iam
+          path: /api/v1/load-config
+          authorizer:
+            type: aws_iam
+
 
 package:
   exclude:

@@ -48,10 +48,6 @@ jobs:
 
         shell: bash
       
-      - name: Get PR Number
-        run: |
-
-
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1-node16
         with:
@@ -70,10 +66,13 @@ jobs:
           export CONFIG_BUCKET_NAME=$(aws ssm get-parameter --name $CONFIG_BUCKET_PARAMETER_NAME | jq -r ".Parameter.Value")
           echo CONFIG_BUCKET_NAME=$CONFIG_BUCKET_NAME >> $GITHUB_ENV
 
+
       - name: Upload new configuration to S3
-        run: aws s3 cp ./pipeline/config s3://$CONFIG_BUCKET_NAME --recursive
-      
-      - name: Invoke Pipeline with entire github event
         run: |
-          STATE_MACHINE_ARN=$(aws ssm get-parameter --name "/gh-push/$AWS_ENV/PipelineArn" | jq -r ".Parameter.Value")
-          aws stepfunctions start-execution --state-machine-arn $STATE_MACHINE_ARN --input file://${{ github.event_path }}
+        CONFIG_DIR=$(cat ./pipeline/Terraform/terraform.tfvars.json | jq -r --arg arg $AWS_ENV '.config_dir | .[$arg]')
+        aws s3 cp $CONFIG_DIR s3://$CONFIG_BUCKET_NAME --recursive
+      
+      # - name: Invoke Pipeline with entire github event
+      #   run: |
+      #     STATE_MACHINE_ARN=$(aws ssm get-parameter --name "/gh-push/$AWS_ENV/PipelineArn" | jq -r ".Parameter.Value")
+      #     aws stepfunctions start-execution --state-machine-arn $STATE_MACHINE_ARN --input file://${{ github.event_path }}

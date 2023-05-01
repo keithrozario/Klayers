@@ -23,6 +23,7 @@ def main(event, context):
     config_items = get_config_items(
         python_version=python_version, config_type=config_type
     )
+    logger.info(get_config_items.cache_info())
 
     return {
         "statusCode": 200,

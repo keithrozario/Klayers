@@ -23,6 +23,8 @@ def main(event, context):
         config_items = download_packages_from_s3(python_version=python_version)
     elif config_type == "rgns":
         config_items = download_regions_from_s3()
+    else: 
+        config_items = []
     
     return {
         "statusCode": 200,

@@ -2,6 +2,7 @@ import os
 import boto3
 
 from aws_requests_auth.boto_utils import BotoAWSRequestsAuth
+import requests
 
 def get_config_items(config_type: str, python_version: str = "p.38") -> list:
     """
