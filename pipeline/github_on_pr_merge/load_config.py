@@ -1,4 +1,3 @@
-import boto3
 from aws_lambda_powertools.logging import Logger
 from common.get_config import get_from_common_service
 
