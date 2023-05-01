@@ -1,26 +1,11 @@
 import os
-import boto3
+import json
 
 from aws_requests_auth.boto_utils import BotoAWSRequestsAuth
 import requests
 
-def get_config_items(config_type: str, python_version: str = "p.38") -> list:
-    """
-    Args:
-        python_version: Version of Python
-    returns:
-        config_items : List of configuration items
-    """
 
-    dynamodb = boto3.resource("dynamodb")
-    table = dynamodb.Table(os.environ["DB_NAME"])
-
-    response = table.get_item(Key={"pk": f"cnfg#{config_type}", "sk": python_version})
-    config_items = response["Item"]["cnfg"]
-
-    return config_items
-
-def get_from_common_service(resource: str):
+def get_from_common_service(resource: str, method: str = "GET", data: dict = None, headers: dict = None):
     """
     Args:
         resource: The resource to get from the common service (e.g. /api/v1/config/python-version). Remember '/' at beginning
@@ -35,8 +20,24 @@ def get_from_common_service(resource: str):
         aws_service='execute-api'
     )
     
-    response = requests.get(
-        f"{common_service_url}{resource}",
-        auth=auth
-    )
-    return json.loads(response.content)
+    if method == "GET":
+        response = requests.get(
+            f"{common_service_url}{resource}",
+            auth=auth
+        )
+    elif method == "POST":
+        response = requests.post(
+            f"{common_service_url}{resource}",
+            auth=auth,
+            json=data,
+            headers=headers
+        )
+    else:
+        raise Exception(f"Method '{method}' not supported")
+
+    if response.status_code != 200:
+        raise Exception(f"Error {response.status_code} from common service: {response.content}")
+    else:
+        result = json.loads(response.content)
+
+    return result

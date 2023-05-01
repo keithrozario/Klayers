@@ -76,8 +76,12 @@ functions:
         - s3:GetObject
         Resource:
         - ${self:custom.configBucketArn}/*
+      - Effect: Allow
+        Action: execute-api:Invoke
+        Resource: ${ssm:/common-service/${self:provider.stage}/CommonServiceApi/arn}/GET*
     layers:
       - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPythonV2:13
+      - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-p39-aws-requests-auth:11
 
   check_python_versions:
     handler: check_python_versions.main
@@ -91,7 +95,7 @@ functions:
     iamRoleStatements:
       - Effect: Allow
         Action: execute-api:Invoke
-        Resource: ${ssm:/common-service/${self:provider.stage}/CommonServiceApi/arn}
+        Resource: ${ssm:/common-service/${self:provider.stage}/CommonServiceApi/arn}/GET*
     layers:
       - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPythonV2:13
       - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-p39-aws-requests-auth:11
@@ -155,5 +159,21 @@ functions:
         - s3:GetObject
         Resource:
         - ${self:custom.configBucketArn}/*
+      - Effect: Allow
+        Action: execute-api:Invoke
+        Resource: ${ssm:/common-service/${self:provider.stage}/CommonServiceApi/arn}
     layers:
       - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPythonV2:13
+      - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-p39-aws-requests-auth:11
+
+package:
+  exclude:
+    - package-lock.json
+    - package.json
+    - node_modules/**
+    - serverless.yml
+    - .gitignore
+    - .serverless/**
+    - sls_components/**
+    - README.MD
+    - tests/**
