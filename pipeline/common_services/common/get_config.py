@@ -1,7 +1,9 @@
 import os
+from functools import lru_cache
 import boto3
 
 
+@lru_cache(maxsize=64)
 def get_config_items(config_type: str, python_version: str = "p.38") -> list:
     """
     Args:

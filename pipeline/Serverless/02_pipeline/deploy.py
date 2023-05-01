@@ -10,7 +10,7 @@ from aws_lambda_powertools.logging import Logger
 
 logger = Logger()
 
-from common.get_config import get_config_items
+from common.get_config import get_from_common_service
 from common.get_compatible import get_compatible_runtimes, get_compatible_architectures
 
 
@@ -126,7 +126,10 @@ def main(event, context):
     expiry_days = int(os.environ["EXPIRY_DAYS"])
     python_version = event["python_version"]
 
-    regions = get_config_items(config_type="rgns", python_version=python_version)
+    regions = get_from_common_service(
+            resource = f"/api/v1/config/{python_version}/rgns"
+        )
+
     dynamo_client = boto3.client("dynamodb")
     deployed_flag = False
 

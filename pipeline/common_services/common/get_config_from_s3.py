@@ -26,6 +26,7 @@ def download_packages_from_s3(python_version: str) -> list():
 
     return packages_in_csv
 
+
 def download_regions_from_s3() -> list():
 
     s3 = boto3.client("s3")
@@ -38,6 +39,7 @@ def download_regions_from_s3() -> list():
         regions_in_csv = [line["Code"] for line in csv_reader]
 
     return regions_in_csv
+
 
 def download_python_versions_from_s3() -> list():
     s3 = boto3.client("s3")
