@@ -3,6 +3,7 @@ from common.get_config import get_from_common_service
 
 logger = Logger()
 
+
 @logger.inject_lambda_context
 def main(event, context):
     """
@@ -15,10 +16,7 @@ def main(event, context):
             pr_number::int PR Number associated with this event
     """
 
-    response = get_from_common_service( 
-        resource="/api/v1/load-config",
-        method="POST"
-    )
+    response = get_from_common_service(resource="/api/v1/load-config", method="POST")
     logger.info(response)
 
     return event
