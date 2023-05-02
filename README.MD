@@ -157,8 +157,8 @@ example:
 
 * [https://api.klayers.cloud/api/v2/p3.9/layers/latest/us-east-1/](https://api.klayers.cloud/api/v2/p3.9/layers/latest/us-east-1/)
 * [https://api.klayers.cloud/api/v2/p3.8/layers/latest/ap-southeast-1/](https://api.klayers.cloud/api/v2/p3.9/layers/latest/ap-southeast-1/)
-* [https://api.klayers.cloud/api/v2/p3.9/layers/latest/ap-southeast-1/csv](https://api.klayers.cloud/api/v2/p3.9/layers/latest/ap-southeast-1/csv)
-* [https://api.klayers.cloud/api/v2/p3.9/layers/latest/ap-southeast-1/html](https://api.klayers.cloud/api/v2/p3.9/layers/latest/ap-southeast-1/html)
+* [https://api.klayers.cloud/api/v2/p3.10/layers/latest/ap-southeast-1/csv](https://api.klayers.cloud/api/v2/p3.10/layers/latest/ap-southeast-1/csv)
+* [https://api.klayers.cloud/api/v2/p3.10-arm64/layers/latest/ap-southeast-1/html](https://api.klayers.cloud/api/v2/p3.10-arm64/layers/latest/ap-southeast-1/html)
 
 ### Get all ARNs for specific package in region
 
@@ -178,4 +178,4 @@ example:
 
 ## Asking for additional layers
 
-If you would like a new package to be made a layer, raise a `pull request` modifying the `pipeline/config/packages_p39.csv` or `pipeline/config/packages_p38.csv` file (depending on which version of python you use). By default, please request for the latest version of python unless you absolutely need an older version.
+If you would like a new package to be made a layer, raise a `pull request` modifying the `pipeline/config/packages_p39.csv` or `pipeline/config/packages_p38.csv` file (depending on which version of python you use). By default, please request for the latest version of python unless you absolutely need an older version. I hope to deprecate non-latest versions. 
