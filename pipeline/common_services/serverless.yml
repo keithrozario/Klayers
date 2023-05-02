@@ -56,7 +56,9 @@ resources:
             - ""
             - - "arn:aws:execute-api:"
               - ${self:provider.region}
-              - ":*:"
+              - ":"
+              - ${aws:accountId}
+              - ":"
               - Fn::GetAtt: 
                 - HttpApi
                 - ApiId

@@ -3,12 +3,10 @@ import csv
 import json
 import boto3
 from aws_lambda_powertools.logging import Logger
-from common.get_config import get_config_items
+from common.get_config import get_from_common_service
 from common.get_config_from_s3 import download_packages_from_s3
 
 logger = Logger()
-s3 = boto3.client("s3")
-config_file_name = "config.json"
 
 
 @logger.inject_lambda_context
@@ -21,11 +19,11 @@ def main(event, context) -> dict:
         new_packages (List): List of packages to be deployed
     """
 
-    python_version = event
+    python_version = event  # based on step function
     logger.info({"python_version": python_version})
 
-    packages_in_dynamo = get_config_items(
-        config_type="pckgs", python_version=python_version
+    packages_in_dynamo = get_from_common_service(
+        resource=f"/api/v1/config/{python_version}/pckgs"
     )
     logger.info({f"packages_in_dynamo": packages_in_dynamo})
 

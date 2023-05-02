@@ -73,7 +73,7 @@ jobs:
           echo $CONFIG_DIR
           aws s3 cp $CONFIG_DIR s3://$CONFIG_BUCKET_NAME --recursive
       
-      # - name: Invoke Pipeline with entire github event
-      #   run: |
-      #     STATE_MACHINE_ARN=$(aws ssm get-parameter --name "/gh-push/$AWS_ENV/PipelineArn" | jq -r ".Parameter.Value")
-      #     aws stepfunctions start-execution --state-machine-arn $STATE_MACHINE_ARN --input file://${{ github.event_path }}
+      - name: Invoke Pipeline with entire github event
+        run: |
+          STATE_MACHINE_ARN=$(aws ssm get-parameter --name "/gh-push/$AWS_ENV/PipelineArn" | jq -r ".Parameter.Value")
+          aws stepfunctions start-execution --state-machine-arn $STATE_MACHINE_ARN --input file://${{ github.event_path }}
