@@ -8,6 +8,7 @@ from common.get_config_from_s3 import download_packages_from_s3
 
 logger = Logger()
 
+
 @logger.inject_lambda_context
 def main(event, context) -> dict:
     """
@@ -18,11 +19,11 @@ def main(event, context) -> dict:
         new_packages (List): List of packages to be deployed
     """
 
-    python_version = event  # based on step function 
+    python_version = event  # based on step function
     logger.info({"python_version": python_version})
 
     packages_in_dynamo = get_from_common_service(
-        resource = f"/api/v1/config/{python_version}/pckgs"
+        resource=f"/api/v1/config/{python_version}/pckgs"
     )
     logger.info({f"packages_in_dynamo": packages_in_dynamo})
 

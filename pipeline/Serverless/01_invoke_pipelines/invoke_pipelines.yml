@@ -25,7 +25,7 @@ invoke_pipeline:
       - ${self:custom.dbArn}
     - Effect: Allow
       Action: execute-api:Invoke
-      Resource: ${ssm:/common-service/${self:provider.stage}/CommonServiceApi/arn}
+      Resource: ${ssm:/common-service/${self:provider.stage}/CommonServiceApi/arn}/GET*
   layers:
     - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPython:6
     - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-p39-aws-requests-auth:11
