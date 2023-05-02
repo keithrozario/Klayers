@@ -6,25 +6,6 @@ from aws_lambda_powertools.logging import Logger
 
 logger = Logger()
 
-from common.get_config import get_config_items
-
-
-def log_eventbridge_errors(response: dict, function_logger: Logger):
-    """
-    Args:
-          response: Response from putting events onto eventBridge
-          function_logger: logger to write out errors to (if any exists)
-    return:
-        None
-    """
-
-    if response["FailedEntryCount"] > 0:
-        for entry in response["Entries"]:
-            if entry.get("ErrorCode", False):
-                function_logger.error(entry)
-
-    return None
-
 
 @logger.inject_lambda_context
 def main(event, context):

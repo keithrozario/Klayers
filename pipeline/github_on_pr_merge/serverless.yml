@@ -122,6 +122,7 @@ functions:
                 - event-bus/default
     layers:
       - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPythonV2:13
+      - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-p39-aws-requests-auth:11
 
   get_pr_number:
     handler: get_pr_number.main
