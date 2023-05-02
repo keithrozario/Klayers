@@ -1,11 +1,10 @@
-import os
-import boto3
 from aws_lambda_powertools.logging import Logger
-from common.get_config_from_s3 import download_packages_from_s3
+from common.get_config import get_from_common_service
 
 logger = Logger()
-dynamodb = boto3.resource("dynamodb")
 
+
+@logger.inject_lambda_context
 def main(event, context):
     """
     Args:
@@ -16,34 +15,8 @@ def main(event, context):
         pr_number::dict
             pr_number::int PR Number associated with this event
     """
-    logger.info(event)
-    for elem in event[0]:
-        python_version = elem["python_version"]
-        load_config(python_version=python_version, config_type="pckgs")
+
+    response = get_from_common_service(resource="/api/v1/load-config", method="POST")
+    logger.info(response)
 
     return event
-
-
-def load_config(python_version: str, config_type: str) -> dict:
-    """
-    Args:
-        python_version: Version of python (e.g. p3.8, p3.9)
-        config_type: What type of item (e.g. rgns, pckgs) remember the 's'
-    Returns: None
-    """
-
-    logger.info(
-        f"Putting Dynamo Item type: {config_type} for python_version: {python_version}"
-    )
-    packages = download_packages_from_s3(python_version=python_version)
-    logger.info(f"Number of packages: {len(packages)}")
-    table = dynamodb.Table(os.environ["DB_NAME"])
-    response = table.put_item(
-        Item={
-            "pk": f"cnfg#{config_type}",
-            "sk": python_version,
-            "cnfg": packages,
-        }
-    )
-    logger.info(response)
-    return response
