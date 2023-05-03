@@ -15,6 +15,7 @@ from common.get_compatible import get_compatible_runtimes, get_compatible_archit
 
 dynamo_client = boto3.client("dynamodb")
 
+
 def check_regions_to_deploy(
     package: str,
     requirements_hash: str,
@@ -129,7 +130,7 @@ def main(event, context):
 
     regions = get_from_common_service(resource=f"/api/v1/config/{python_version}/rgns")
     logger.info({"regions": regions})
-    
+
     deployed_flag = False
 
     # Check if need to deploy

@@ -30,7 +30,6 @@ def get_aws_regions():
 
 
 if __name__ == "__main__":
-
     boto3.setup_default_session(profile_name="LayerUploader")
     regions = get_aws_regions()
 

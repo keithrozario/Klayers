@@ -1,14 +1,18 @@
 import json
 from aws_lambda_powertools.logging import Logger
-from common.get_config_from_s3 import download_packages_from_s3, download_regions_from_s3
+from common.get_config_from_s3 import (
+    download_packages_from_s3,
+    download_regions_from_s3,
+)
 
 logger = Logger()
+
 
 @logger.inject_lambda_context
 def main(event, context):
     """
     Returns a list of all python versions currently supported
-    
+
     Args:
         python_version: Python version to get config items for
         config_type: The type of configuration required (e.g. pckgs, rgns)
@@ -23,9 +27,9 @@ def main(event, context):
         config_items = download_packages_from_s3(python_version=python_version)
     elif config_type == "rgns":
         config_items = download_regions_from_s3()
-    else: 
+    else:
         config_items = []
-    
+
     return {
         "statusCode": 200,
         "headers": {"Content-Type": "application/json"},
