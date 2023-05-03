@@ -28,7 +28,6 @@ def download_packages_from_s3(python_version: str) -> list():
 
 
 def download_regions_from_s3() -> list():
-
     s3 = boto3.client("s3")
     region_file_name = "regions.csv"
     s3.download_file(

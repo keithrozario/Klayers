@@ -33,7 +33,6 @@ for region in regions:
 
     # every version of every layer
     for layer in client.list_layers()["Layers"]:
-
         if layer["LayerName"][: len(layer_name_prefix)] == layer_name_prefix:
             output[region][layer["LayerName"]] = []
             for version in client.list_layer_versions(LayerName=layer["LayerName"])[
