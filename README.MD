@@ -2,7 +2,7 @@
 
 🐍 A collection of Python Packages as AWS Lambda(λ) Layers 🐍
 
-[![Python 3.8](https://img.shields.io/badge/python-3.8-green.svg)](https://www.python.org/downloads/release/python-380/) [![Python 3.8](https://img.shields.io/badge/python-3.9-green.svg)](https://www.python.org/downloads/release/python-390/) [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/keithrozario/Klayers.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/keithrozario/Klayers/context:python) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Python 3.8](https://img.shields.io/badge/python-3.8-green.svg)](https://www.python.org/downloads/release/python-380/) [![Python 3.8](https://img.shields.io/badge/python-3.9-green.svg)](https://www.python.org/downloads/release/python-390/) [![Python 3.10](https://img.shields.io/badge/python-3.10-green.svg)](https://www.python.org/downloads/release/python-3100/) [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/keithrozario/Klayers.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/keithrozario/Klayers/context:python) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
   -   [List of ARNs](#list-of-arns)
   -   [Python Packages](#python-packages)
@@ -27,8 +27,10 @@ List of the latest layer version arns are available by region:
 
 * [Python 3.8](deployments/python3.8)
 * [Python 3.9](deployments/python3.9)
+* [Python 3.10](deployments/python3.10)
+* [Python 3.10-arm64](deployments/python3.10-arm64)
 
-*Note: We have deprecated layers for python3.6 and python 3.7, please use these newer versions that are built for python 3.8 and python 3.9 going forward.*
+*Note: We have deprecated layers for python3.6 and python 3.7 and will deprecate 3.8 shortly. Please use and python 3.9 or python 3.10 going forward.*
 
 ## Python Packages
 
@@ -36,6 +38,8 @@ For the full list of Python packages, refer to the following, feel free to make 
 
 * [Python 3.8](pipeline/config/packages_p38.csv)
 * [Python 3.9](pipeline/config/packages_p39.csv)
+* [Python 3.10](pipeline/config/packages_p310.csv)
+* [Python 3.10-arm64](pipeline/config/packages_p310-arm64.csv)
 
 ## Using the Layers
 
@@ -143,7 +147,7 @@ All functions deployed with a layer will still work indefinitely, but you won't 
 
 ## API
 
-API v2 has been released. Please use v2 going forward, as we'll end v1 by June-2022.
+API v1 has been deprecated. Please use API v2 instead.
 
 All API calls are http-based, and work only with https (TLS1.2 and above). The API is heavily cached, so there could be minor delays in updates.
 
@@ -174,8 +178,8 @@ example:
 ## Special Thanks
 
 * [Chahna107](https://github.com/chahna107) 
-* [@ldcorentin](https://github.com/ldcorentin) for making the awesome klayers-provider
+* [@ldcorentin](https://github.com/ldcorentin) for making the awesome Terraform klayers-provider
 
 ## Asking for additional layers
 
-If you would like a new package to be made a layer, raise a `pull request` modifying the `pipeline/config/packages_p39.csv` or `pipeline/config/packages_p38.csv` file (depending on which version of python you use). By default, please request for the latest version of python unless you absolutely need an older version. I hope to deprecate non-latest versions. 
+If you would like a new package to be made a layer, raise a `pull request` modifying the `pipeline/config/packages_p310.csv` or `pipeline/config/packages_p310-arm64.csv` file (depending on which architecture you prefer). By default, please request for the latest version of python unless you absolutely need an older version. I hope to deprecate non-latest versions. 
