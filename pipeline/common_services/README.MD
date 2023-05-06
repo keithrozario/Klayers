@@ -6,7 +6,7 @@ Some services may even trigger a new loading of configuration:
     * When the monthly build processes, we trigger a new load to ensure we're building all the latest packages
     * After a PR is merge and after `on_pr_merge` service has run, we'll load the latest packages to ensure we don't duplicate builds
 
-Load config by default runs on all python versions as speciefied in `pipelines/config/config.json`. This file is uploaded to the config S3 bucket on every push to the respective branches:
+Load config by default runs on all python versions as specified in `pipelines/config/config.json`. This file is uploaded to the config S3 bucket on every push to the respective branches:
 
     * klayers-default -> Default
     * klayers-dev -> Dev
