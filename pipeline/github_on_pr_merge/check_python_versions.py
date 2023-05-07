@@ -1,12 +1,7 @@
-import os
-import csv
-import json
-import boto3
 from aws_lambda_powertools.logging import Logger
+from common.get_config import get_from_common_service
 
 logger = Logger()
-s3 = boto3.client("s3")
-config_file = "config.json"  # config file in the config bucket, (pipeline/config/config.json in repo)
 
 
 @logger.inject_lambda_context
@@ -17,11 +12,6 @@ def main(event, context):
         python_versions : List of python versions e.g. ["p3.8","p3.9"]
     """
 
-    s3.download_file(os.getenv("CONFIG_BUCKET"), config_file, f"/tmp/{config_file}")
-    with open(f"/tmp/{config_file}", "r") as conf:
-        config = json.loads(conf.read())
-
-    python_versions = config["python_versions"]
-    logger.info(python_versions)
-
+    python_versions = get_from_common_service(resource="/api/v1/python-versions")
+    logger.info({"python_versions": python_versions, "event": event})
     return python_versions

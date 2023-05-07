@@ -42,7 +42,7 @@ build:
 deploy:
   handler: 02_pipeline/deploy.main
   description: Deploys functions to multiple regions
-  runtime: python3.8
+  runtime: python3.9
   timeout: 600
   memorySize: 512
   environment:
@@ -72,9 +72,13 @@ deploy:
       Action:
       - s3:GetObject
       Resource: ${self:custom.s3LayersArn}/*
+    - Effect: Allow
+      Action: execute-api:Invoke
+      Resource: ${ssm:/common-service/${self:provider.stage}/CommonServiceApi/arn}/GET*
   layers:
     - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-packaging:1
     - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPython:6
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-p39-aws-requests-auth:11
 
 build39:
   description: Builds the package in a container for python3.9 then uploads to S3
@@ -98,3 +102,50 @@ build39:
     - dynamodb:UpdateItem
     - dynamodb:GetItem
     Resource: ${self:custom.dbArn}
+
+build310:
+  description: Builds the package in a container for python3.10 then uploads to S3
+  image: ${ssm:/${self:service}/${self:provider.stage}/build/p310/x86/repo}@${ssm:/${self:service}/${self:provider.stage}/build/p310/x86/digest}
+  timeout: 600
+  memorySize: 1769  # exactly one vcpu
+  iamRoleStatementsName: ${self:provider.stage}-buildp310
+  iamRoleStatements:
+  - Effect: Allow
+    Action:
+    - s3:PutObject
+    - s3:PutObjectAcl
+    Resource: ${self:custom.s3LayersArn}/*
+  - Effect: Allow
+    Action:
+    - s3:ListBucket
+    Resource: ${self:custom.s3LayersArn}
+  - Effect: Allow
+    Action:
+    - dynamodb:PutItem
+    - dynamodb:UpdateItem
+    - dynamodb:GetItem
+    Resource: ${self:custom.dbArn}
+
+Build310Arm64:
+  description: Builds the package in a container for python3.10 then uploads to S3
+  image: ${ssm:/${self:service}/${self:provider.stage}/build/p310/arm64/repo}@${ssm:/${self:service}/${self:provider.stage}/build/p310/arm64/digest}
+  timeout: 600
+  memorySize: 1769  # exactly one vcpu
+  iamRoleStatementsName: ${self:provider.stage}-buildp310-arm64
+  iamRoleStatements:
+  - Effect: Allow
+    Action:
+    - s3:PutObject
+    - s3:PutObjectAcl
+    Resource: ${self:custom.s3LayersArn}/*
+  - Effect: Allow
+    Action:
+    - s3:ListBucket
+    Resource: ${self:custom.s3LayersArn}
+  - Effect: Allow
+    Action:
+    - dynamodb:PutItem
+    - dynamodb:UpdateItem
+    - dynamodb:GetItem
+    Resource: ${self:custom.dbArn}
+  architecture: arm64

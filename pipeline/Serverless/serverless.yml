@@ -21,16 +21,14 @@ provider:
     BUCKET_NAME: ${self:custom.s3LayersName}
     POWERTOOLS_SERVICE_NAME: ${self:provider.stage}
     LAMBDA_LAYER_PREFIX: "Klayers-"
+    CONFIG_BUCKET: ${self:custom.configBucketName}
+    COMMON_SERVICE_URL: ${ssm:/common-service/${self:provider.stage}/CommonServiceApi/URL}
   logs:
     httpApi: true
   httpApi:
     cors: true
   eventBridge:
     useCloudFormation: true
-  ecr:
-    images:
-      build_image:
-        path: ../container_images/build_image
   
 custom:
   # Env
@@ -46,11 +44,6 @@ custom:
   dbArn: ${ssm:/${self:service}/${self:provider.stage}/db-ver2/arn}
   dbStreamLabel: ${ssm:/${self:service}/${self:provider.stage}/db-ver2/stream/label}
   dbStreamArn: ${ssm:/${self:service}/${self:provider.stage}/db-ver2/stream/arn}
-
-  # Github
-  githubSSHKeyParameter: /${self:service}/${self:provider.stage}/github_ssh_key
-  githubRepo: ${ssm:/${self:service}/${self:provider.stage}/github_repo}
-  githubWebhookSecret: /${self:service}/${self:provider.stage}/github_webhook_secret
   
   # Slack
   slackTokenParameter: /${self:service}}/${self:provider.stage}/slack_token
@@ -59,6 +52,12 @@ custom:
   apiCertArn: ${ssm:/${self:service}/${self:provider.stage}/api/cert/arn}
   apiDomainName: ${ssm:/${self:service}/${self:provider.stage}/api/domain_name}
   
+  # Config bucket
+  configBucketArn: ${ssm:/kl/${self:provider.stage}/config_bucket/arn}
+  configBucketName: ${ssm:/kl/${self:provider.stage}/config_bucket/name}
+
+  # Cron for Invoke Pipelines
+  cron_expression_invoke_pipelines: ${file(../Terraform/terraform.tfvars.json):cron_expression_invoke_pipelines.${self:provider.stage}}
   
 functions:
   - ${file(01_invoke_pipelines/invoke_pipelines.yml)}
@@ -68,8 +67,6 @@ functions:
 
 stepFunctions:
   stateMachines:
-    invoke_pipelines:
-      ${file(state_machines/01_invoke_pipelines.yml)}
     pipeline:
       ${file(state_machines/02_pipeline.yml)}
 

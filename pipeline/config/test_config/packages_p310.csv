@@ -1,0 +1,4 @@
+Package_Name,License,Authors/Maintainers
+boto3,Apache-2.0,AWS
+requests,Apache-2.0,Kenneth Reitz <me@kennethreitz.org>
+cryptography,Apache-2.0,The Python Cryptographic Authority and individual contributors <cryptography-dev@python.org>

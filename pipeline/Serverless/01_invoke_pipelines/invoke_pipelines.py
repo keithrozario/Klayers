@@ -1,30 +1,11 @@
-import os
 import json
-import time
-
+import os
 import boto3
 from aws_lambda_powertools.logging import Logger
 
 logger = Logger()
 
-from common.get_config import get_config_items
-
-
-def log_eventbridge_errors(response: dict, function_logger: Logger):
-    """
-    Args:
-          response: Response from putting events onto eventBridge
-          function_logger: logger to write out errors to (if any exists)
-    return:
-        null
-    """
-
-    if response["FailedEntryCount"] > 0:
-        for entry in response["Entries"]:
-            if entry.get("ErrorCode", False):
-                function_logger.error(entry)
-
-    return None
+from common.get_config import get_from_common_service
 
 
 @logger.inject_lambda_context
@@ -37,11 +18,14 @@ def main(event, context):
     """
 
     client = boto3.client("events")
-    stage = os.environ["STAGE"]
+    python_versions = get_from_common_service(resource="/api/v1/python-versions")
+    logger.info(f"Python Versions: {python_versions}")
 
-    for python_version in ["p3.8", "p3.9"]:
-        packages = get_config_items(config_type="pckgs", python_version=python_version)
-        logger.info(f"Preparing {len(packages)} packages")
+    for python_version in python_versions:
+        packages = get_from_common_service(
+            resource=f"/api/v1/config/{python_version}/pckgs"
+        )
+        logger.info(f"{packages}")
 
         # post message to EventBridge to trigger step functions
         seconds_delay = 30  # Start with no delay
@@ -54,7 +38,7 @@ def main(event, context):
                 seconds_delay += seconds_interval
 
             entry = {
-                "Source": f"Klayers.invoke.{stage}",
+                "Source": f"Klayers.invoke.{os.environ['STAGE']}",
                 "Resources": [],
                 "DetailType": "invoke_pipeline",
                 "Detail": json.dumps(
@@ -69,19 +53,6 @@ def main(event, context):
                 "EventBusName": "default",
             }
             logger.info(entry)
-            response = client.put_events(Entries=[entry])
-            log_eventbridge_errors(response, logger)
+            client.put_events(Entries=[entry])
 
-        # Post Status to Slack
-        message = f"Started build on {len(packages)} packages for {python_version}"
-        entry = {
-            "Source": f"Klayers.invoke.{stage}",
-            "Resources": [],
-            "DetailType": "post_to_slack",
-            "Detail": json.dumps({"message": message}),
-            "EventBusName": "default",
-        }
-        slack_response = client.put_events(Entries=[entry])
-        log_eventbridge_errors(slack_response, logger)
-
-    return None
+    return python_versions

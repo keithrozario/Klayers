@@ -56,14 +56,6 @@ module "certificate" {
 
 # High level parameters
 
-# Remove this layer in next version...
-resource "aws_ssm_parameter" "lambda_prefix" {
-  type      = "String"
-  name      = "/${var.app_name}/${local.workspace_full_name}/lambda_prefix"
-  value     = lookup(var.lambda_prefix, local.workspace_full_name)
-  overwrite = true
-}
-
 resource "aws_ssm_parameter" "github_repo" {
   type      = "String"
   name      = "/${var.app_name}/${local.workspace_full_name}/github_repo"
