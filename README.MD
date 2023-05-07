@@ -182,4 +182,8 @@ example:
 
 ## Asking for additional layers
 
-If you would like a new package to be made a layer, raise a `pull request` modifying the `pipeline/config/packages_p310.csv` or `pipeline/config/packages_p310-arm64.csv` file (depending on which architecture you prefer). By default, please request for the latest version of python unless you absolutely need an older version. I hope to deprecate non-latest versions. 
+If you would like a new package to be made a layer, raise a `pull request` modifying the `pipeline/config/packages_p310.csv` or `pipeline/config/packages_p310-arm64.csv` file (depending on which architecture you prefer). By default, please request for the latest version of python unless you absolutely need an older version.
+
+## Consider Making a Donation
+
+If you've found Klayers helpful, consider making a small donation [here.](https://www.buymeacoffee.com/keithrozario)
