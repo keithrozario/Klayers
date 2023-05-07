@@ -1,0 +1,165 @@
+service: common-service
+frameworkVersion: '3'
+
+plugins:
+  - serverless-better-credentials
+  - serverless-iam-roles-per-function
+provider:
+  name: aws
+  runtime: python3.9
+  stage:  ${opt:stage, 'Klayers-defaultp38'}
+  region: ${file(../Terraform/terraform.tfvars.json):aws_region.${self:provider.stage}}
+  profile: ${file(../Terraform/terraform.tfvars.json):aws_profile.${self:provider.stage}}
+  versionFunctions: false
+  logRetentionInDays: 90
+  memorySize: 256
+  timeout: 29
+  environment:
+    STAGE: ${self:provider.stage}
+    LOG_LEVEL: INFO
+    DB_NAME: ${self:custom.dbName}
+    CONFIG_BUCKET: ${self:custom.configBucketName}
+    POWERTOOLS_SERVICE_NAME: Klayers.${self:service}
+
+
+custom:
+  # DynamoDB
+  dbArn: ${ssm:/kl/${self:provider.stage}/db-ver2/arn}
+  dbName: ${ssm:/kl/${self:provider.stage}/db-ver2/name}
+
+  # Config bucket
+  configBucketArn: ${ssm:/kl/${self:provider.stage}/config_bucket/arn}
+  configBucketName: ${ssm:/kl/${self:provider.stage}/config_bucket/name}
+
+resources:
+
+  Resources:
+    CommonServiceApi:
+      Type: AWS::SSM::Parameter
+      Properties: 
+        Description: URL for Common Service API
+        Name: /${self:service}/${self:provider.stage}/CommonServiceApi/URL
+        Type: String
+        Value:
+          Fn::GetAtt: 
+            - HttpApi
+            - ApiEndpoint
+
+    CommonServiceApiArn:
+      Type: AWS::SSM::Parameter
+      Properties: 
+        Description: Arn for Common Service API
+        Name: /${self:service}/${self:provider.stage}/CommonServiceApi/arn
+        Type: String
+        Value:
+          Fn::Join:
+            - ""
+            - - "arn:aws:execute-api:"
+              - ${self:provider.region}
+              - ":"
+              - ${aws:accountId}
+              - ":"
+              - Fn::GetAtt: 
+                - HttpApi
+                - ApiId
+              - "/*"
+
+functions:
+
+  check_python_versions:
+    handler: get_python_versions.main
+    description: Returns python versions currently supported
+    timeout: 3
+    iamRoleStatementsName: ${self:service}-${self:provider.stage}-check-python-versions
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+        - dynamodb:GetItem
+        Resource:
+        - ${self:custom.dbArn}
+    layers:
+      - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPythonV2:13
+    events:
+      - httpApi:
+          method: get
+          path: /api/v1/python-versions
+          authorizer:
+            type: aws_iam
+
+  get_config:
+    handler: get_config.main
+    description: Compares python versions
+    timeout: 3
+    iamRoleStatementsName: ${self:service}-${self:provider.stage}-get-config
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+        - dynamodb:GetItem
+        Resource:
+        - ${self:custom.dbArn}
+    layers:
+      - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPythonV2:13
+    events:
+      - httpApi:
+          method: get
+          path: /api/v1/config/{python_version}/{config_type}
+          authorizer:
+            type: aws_iam
+
+  get_config_s3:
+    handler: get_config_s3.main
+    description: Compares python versions
+    timeout: 3
+    iamRoleStatementsName: ${self:service}-${self:provider.stage}-get-config-s3
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+        - s3:GetObject
+        Resource:
+        - ${self:custom.configBucketArn}/*
+    layers:
+      - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPythonV2:13
+    events:
+      - httpApi:
+          method: get
+          path: /api/v1/configS3/{python_version}/{config_type}
+          authorizer:
+            type: aws_iam
+
+  load_config:
+    handler: load_config_from_s3.main
+    description: Load New config from S3 into Dynamo
+    timeout: 29
+    memorySize: 512
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+        - dynamodb:PutItem
+        Resource:
+        - ${self:custom.dbArn}
+      - Effect: Allow
+        Action:
+        - s3:GetObject
+        Resource:
+        - ${self:custom.configBucketArn}/*
+    layers:
+      - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPythonV2:13
+    events:
+      - httpApi:
+          method: post
+          path: /api/v1/load-config
+          authorizer:
+            type: aws_iam
+
+
+package:
+  exclude:
+    - package-lock.json
+    - package.json
+    - node_modules/**
+    - serverless.yml
+    - .gitignore
+    - .serverless/**
+    - sls_components/**
+    - README.MD
+    - tests/**

@@ -38,3 +38,17 @@ def download_regions_from_s3() -> list():
         regions_in_csv = [line["Code"] for line in csv_reader]
 
     return regions_in_csv
+
+
+def download_python_versions_from_s3() -> list():
+    s3 = boto3.client("s3")
+    config_file_name = "config.json"
+    s3.download_file(
+        os.getenv("CONFIG_BUCKET"), config_file_name, f"/tmp/{config_file_name}"
+    )
+    with open(f"/tmp/{config_file_name}", "r") as config_file:
+        config = json.loads(config_file.read())
+
+    python_versions = config["python_versions"]
+
+    return python_versions

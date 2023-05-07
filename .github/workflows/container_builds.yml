@@ -96,7 +96,7 @@ jobs:
           echo REPO_URL=$REPO_URL >> $GITHUB_ENV
           echo PARAM_PREFIX=$PARAM_PREFIX >> $GITHUB_ENV
           echo BUILD_DIR=$BUILD_DIR >> $GITHUB_ENV
-
+  
           cp ./pipeline/container_images/build_images/common/build.py ./$BUILD_DIR
 
       - name: Set up QEMU
@@ -110,7 +110,7 @@ jobs:
           push: true
           tags: ${{ env.REPO_URL }}:latest
           platforms: ${{ matrix.build_platform }}
-
+      
       - name: update SSM
         run: |
           DIGEST=$(aws ecr describe-images --repository-name $REPO_NAME --image-ids imageTag=latest | jq -r '.imageDetails[0].imageDigest')
