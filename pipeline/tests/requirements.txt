@@ -5,7 +5,7 @@ docutils==0.15.2
 importlib-metadata==1.6.0
 jmespath==0.10.0
 more-itertools==8.3.0
-packaging==20.4
+packaging==23.1
 pluggy==0.13.1
 py==1.8.1
 pyparsing==2.4.7
