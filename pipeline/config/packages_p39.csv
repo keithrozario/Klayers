@@ -39,7 +39,7 @@ PyJWT,MIT,Jose Padilla <https://github.com/jpadilla>
 kafka-python,Apache-2.0,Dana Powers
 lxml,BSD,<lxml-dev@lxml.de>
 sklearn,BSD,<scikit-learn@python.org>
-transformers,Apache-2.0,Thomas Wolf,<api-enterprise@huggingface.co>
+transformers,Apache-2.0,Thomas Wolf <api-enterprise@huggingface.co>
 selenium,Apache-2.0,The Selenium Project
 jieba,MIT,Sun Junyi,<ccnusjy@gmail.com>
 python-docx,MIT,<stcanny@gmail.com>
