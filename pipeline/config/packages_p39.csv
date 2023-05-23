@@ -47,3 +47,4 @@ xmltodict,MIT,Martin Blech <martinblech@gmail.com>
 dask,BSD, Matthew Rocklin
 google-api-python-client,Apache-2.0,Google LLC <googleapis-packages@google.com>
 GeoAlchemy2,MIT,GeoAlchemy
+aliyun-python-sdk-actiontrail,Apache-2.0,Aliyun <aliyun-developers-efficiency@list.alibaba-inc.com>
