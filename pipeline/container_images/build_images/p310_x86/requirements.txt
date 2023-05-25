@@ -8,6 +8,6 @@ jmespath==0.10.0
 python-dateutil==2.8.2
 s3transfer==0.6.0
 six==1.16.0
-typing_extensions==4.5.0
+typing_extensions==4.6.1
 urllib3==1.26.7
 wrapt==1.13.3
