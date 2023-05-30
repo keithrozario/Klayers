@@ -16,3 +16,4 @@ redshift-connector,Apache License Version 2.0,Amazon Web Services <redshift-driv
 requests,Apache-2.0,Kenneth Reitz <me@kennethreitz.org>
 mysql-connector-python,GNU GPLv2,Oracle
 Pillow,https://github.com/python-pillow/Pillow/blob/main/LICENSE,Jeffrey A. Clark
+aliyun-python-sdk-actiontrail,Apache-2.0,Aliyun <aliyun-developers-efficiency@list.alibaba-inc.com>
