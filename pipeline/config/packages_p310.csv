@@ -11,6 +11,7 @@ jinja2,BSD,Armin Ronache <armin.ronacher@active-4.com>; Pallets <contact@pallets
 numpy,https://www.numpy.org/license.html,numpy-discussion@python.org
 openpyxl,MIT,Charlie Clark <charlie.clark@clark-consulting.eu>
 pandas,BSD,<pydata@googlegroups.com>
+pyarrow,Apache-2.0,Apache Arrow Developers <dev@arrow.apache.org>
 pyqldb,Apache-2.0,AWS
 redshift-connector,Apache License Version 2.0,Amazon Web Services <redshift-drivers@amazon.com>
 requests,Apache-2.0,Kenneth Reitz <me@kennethreitz.org>
