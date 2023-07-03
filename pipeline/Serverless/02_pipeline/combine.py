@@ -5,9 +5,10 @@ from zipfile import ZipFile
 import boto3
 
 from aws_lambda_powertools.logging import Logger
+
 logger = Logger()
 
-s3 = boto3.client('s3')
+s3 = boto3.client("s3")
 
 
 @logger.inject_lambda_context
@@ -19,7 +20,7 @@ def main(event, context):
     Does **not** deploy, Does **not** write to Dynamo
     """
 
-    packages = event['packages']
+    packages = event["packages"]
     version = "1.0-man"
     build_flag = False
     name = combined_name(packages)
@@ -28,12 +29,9 @@ def main(event, context):
     requirements_hash = "n.a custom build"
     license_info = "Refer for individual package"
     force_deploy = True
-    
 
     archive_path = combine_packages(
-        packages=packages,
-        python_version=python_version,
-        combined_name=name
+        packages=packages, python_version=python_version, combined_name=name
     )
     upload_to_s3(archive_path=archive_path, s3_location=zip_file_S3key)
 
@@ -56,24 +54,26 @@ def combined_name(packages: list[str]) -> str:
     returns:
         combined_name: String of combined package name with dash in between
         Eg: custom-pandas-tabulate-...
-    
+
     Example:
         packages = ["pandas", "tabulate"]
         combined_name = "custom-pandas-tabulate-..."
-    
+
     Example:
         packages = ["pandas", "numpy", "tabulate", "scipy"]
         combined_name = "custom-pandas-numpy-tabulate-scipy-...
     """
-    combined_name = 'custom'
+    combined_name = "custom"
     for name in packages:
-        combined_name = combined_name + '-' + name
-    
+        combined_name = combined_name + "-" + name
+
     logger.info(f"New name: {combined_name}")
     return combined_name
 
 
-def combine_packages(packages: list[str], python_version: str, combined_name: str) -> None:
+def combine_packages(
+    packages: list[str], python_version: str, combined_name: str
+) -> None:
     """
     Args:
         packages: List of strings of packages to combine
@@ -88,14 +88,14 @@ def combine_packages(packages: list[str], python_version: str, combined_name: st
     for package in packages:
         s3_key = f"{python_version}/{package}.zip"
         download_path = f"/tmp/{package}.zip"
-        s3.download_file(os.environ['BUCKET_NAME'], s3_key, download_path)
+        s3.download_file(os.environ["BUCKET_NAME"], s3_key, download_path)
         logger.info(f"Download {s3_key} to {download_path}")
         # Unzip file
-        with ZipFile(download_path, 'r') as zip_object:
-            zip_object.extractall('/tmp')
+        with ZipFile(download_path, "r") as zip_object:
+            zip_object.extractall("/tmp")
 
     result = shutil.make_archive(
-        base_name=archive_path.split('.')[0],  # remove the .zip
+        base_name=archive_path.split(".")[0],  # remove the .zip
         format="zip",
         base_dir="python",
         root_dir="/tmp",
@@ -114,7 +114,9 @@ def upload_to_s3(archive_path: str, s3_location: str):
     """
     bucket_name = os.environ["BUCKET_NAME"]
 
-    logger.info(f"Uploading {archive_path} with name {s3_location} to S3 bucket {bucket_name}")
+    logger.info(
+        f"Uploading {archive_path} with name {s3_location} to S3 bucket {bucket_name}"
+    )
     s3.upload_file(archive_path, bucket_name, s3_location)
-    
+
     return None

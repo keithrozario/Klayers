@@ -26,14 +26,11 @@ def get_from_common_service(
     if method == "GET":
         response = requests.get(request_url, auth=auth)
     elif method == "POST":
-        response = requests.post(
-            request_url, auth=auth, json=data, headers=headers
-        )
+        response = requests.post(request_url, auth=auth, json=data, headers=headers)
     else:
         raise Exception(f"Method '{method}' not supported")
 
     if response.status_code != 200:
-        
         raise Exception(
             f"Error {response.status_code} from common service: {response.content}"
         )
