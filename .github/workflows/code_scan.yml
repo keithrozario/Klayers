@@ -11,7 +11,7 @@ permissions:
   # only required for workflows in private repositories
   actions: read
   contents: read
-git st
+
 jobs:
   build:
     runs-on: ubuntu-latest
