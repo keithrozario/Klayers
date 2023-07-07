@@ -16,6 +16,7 @@ pycryptodome,https://www.pycryptodome.org/src/license,Helder Eijs <helderijs@gma
 pyqldb,Apache-2.0,AWS
 redshift-connector,Apache License Version 2.0,Amazon Web Services <redshift-drivers@amazon.com>
 requests,Apache-2.0,Kenneth Reitz <me@kennethreitz.org>
+msal,MIT,Microsoft
 mysql-connector-python,GNU GPLv2,Oracle
 Pillow,https://github.com/python-pillow/Pillow/blob/main/LICENSE,Jeffrey A. Clark
 aliyun-python-sdk-actiontrail,Apache-2.0,Aliyun <aliyun-developers-efficiency@list.alibaba-inc.com>
