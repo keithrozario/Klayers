@@ -26,6 +26,13 @@ jobs:
           - python_version: p310
             arch: arm64
             build_platform: linux/arm64
+          - python_version: p311
+            arch: x86
+            build_platform: linux/amd64
+          - python_version: p311
+            arch: arm64
+            build_platform: linux/arm64
+
 
     permissions:
       id-token: write
