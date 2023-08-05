@@ -71,8 +71,8 @@ resource "aws_ecr_repository" "p311build" {
 resource "aws_ssm_parameter" "p311_build_repo" {
   type        = "String"
   description = "URL for p311 arm64 repo"
-  name        = "/${var.app_name}/${local.workspace_full_name}/build/p310/arm64/repo"
-  value       = aws_ecr_repository.p310build_arm64.repository_url
+  name        = "/${var.app_name}/${local.workspace_full_name}/build/p311/x86/repo"
+  value       = aws_ecr_repository.p311build.repository_url
   overwrite   = true
 }
 
@@ -90,8 +90,8 @@ resource "aws_ecr_repository" "p311build_arm64" {
 resource "aws_ssm_parameter" "p311_arm64_build_repo" {
   type        = "String"
   description = "URL for p311 arm64 repo"
-  name        = "/${var.app_name}/${local.workspace_full_name}/build/p310/arm64/repo"
-  value       = aws_ecr_repository.p310build_arm64.repository_url
+  name        = "/${var.app_name}/${local.workspace_full_name}/build/p311/arm64/repo"
+  value       = aws_ecr_repository.p311build_arm64.repository_url
   overwrite   = true
 }
 
