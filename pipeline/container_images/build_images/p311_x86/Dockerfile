@@ -1,4 +1,4 @@
-FROM public.ecr.aws/lambda/python:3.11-arm64
+FROM public.ecr.aws/lambda/python:3.11
 
 COPY build.py ./
 RUN pip install --upgrade pip
