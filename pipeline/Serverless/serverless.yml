@@ -62,6 +62,7 @@ custom:
 functions:
   - ${file(01_invoke_pipelines/invoke_pipelines.yml)}
   - ${file(02_pipeline/pipeline.yml)}
+  - ${file(02_pipeline/pipeline_build_containers.yml)}
   - ${file(04_stream_processor/streams.yml)}
   - ${file(05_slack_notification/slack.yml)}
 

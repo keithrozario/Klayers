@@ -9,36 +9,6 @@ check:
     - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-p38-requests:7
     - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPython:6
 
-build:
-  handler: 02_pipeline/build.main
-  description: Builds the package inside the lambda using pip
-  runtime: python3.8
-  timeout: 180
-  memorySize: 1769
-  environment:
-    POWERTOOLS_SERVICE_NAME: Klayers.Build
-  iamRoleStatementsName: ${self:provider.stage}-build
-  iamRoleStatements:
-  - Effect: Allow
-    Action:
-    - s3:PutObject
-    - s3:PutObjectAcl
-    Resource: ${self:custom.s3LayersArn}/*
-  - Effect: Allow
-    Action:
-    - s3:ListBucket
-    Resource: ${self:custom.s3LayersArn}
-  - Effect: Allow
-    Action:
-    - dynamodb:PutItem
-    - dynamodb:UpdateItem
-    - dynamodb:GetItem
-    Resource: ${self:custom.dbArn}
-  layers:
-    - arn:aws:lambda:${self:provider.region}:553035198032:layer:gcc-lambda2:4  # https://github.com/lambci/gcc-lambda-layer
-    - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPython:6
-
-
 deploy:
   handler: 02_pipeline/deploy.main
   description: Deploys functions to multiple regions
@@ -80,17 +50,19 @@ deploy:
     - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPython:6
     - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-p39-aws-requests-auth:11
 
-build39:
-  description: Builds the package in a container for python3.9 then uploads to S3
-  image: ${ssm:/${self:service}/${self:provider.stage}/build/p39/x86/repo}@${ssm:/${self:service}/${self:provider.stage}/build/p39/x86/digest}
+combine_packages:
+  handler: 02_pipeline/combine.main
+  description: Checks for package on PyPi via the API
+  runtime: python3.9
   timeout: 600
   memorySize: 1769  # exactly one vcpu
-  iamRoleStatementsName: ${self:provider.stage}-buildp39
+  iamRoleStatementsName: ${self:provider.stage}-combinep39
   iamRoleStatements:
   - Effect: Allow
     Action:
     - s3:PutObject
     - s3:PutObjectAcl
+    - s3:GetObject
     Resource: ${self:custom.s3LayersArn}/*
   - Effect: Allow
     Action:
@@ -98,54 +70,16 @@ build39:
     Resource: ${self:custom.s3LayersArn}
   - Effect: Allow
     Action:
-    - dynamodb:PutItem
-    - dynamodb:UpdateItem
-    - dynamodb:GetItem
-    Resource: ${self:custom.dbArn}
-
-build310:
-  description: Builds the package in a container for python3.10 then uploads to S3
-  image: ${ssm:/${self:service}/${self:provider.stage}/build/p310/x86/repo}@${ssm:/${self:service}/${self:provider.stage}/build/p310/x86/digest}
-  timeout: 600
-  memorySize: 1769  # exactly one vcpu
-  iamRoleStatementsName: ${self:provider.stage}-buildp310
-  iamRoleStatements:
+    - lambda:AddLayerVersionPermission
+    - lambda:GetLayerVersion
+    Resource: "*"
   - Effect: Allow
     Action:
-    - s3:PutObject
-    - s3:PutObjectAcl
-    Resource: ${self:custom.s3LayersArn}/*
+    - lambda:PublishLayerVersion
+    Resource: "*"
   - Effect: Allow
-    Action:
-    - s3:ListBucket
-    Resource: ${self:custom.s3LayersArn}
-  - Effect: Allow
-    Action:
-    - dynamodb:PutItem
-    - dynamodb:UpdateItem
-    - dynamodb:GetItem
-    Resource: ${self:custom.dbArn}
-
-Build310Arm64:
-  description: Builds the package in a container for python3.10 then uploads to S3
-  image: ${ssm:/${self:service}/${self:provider.stage}/build/p310/arm64/repo}@${ssm:/${self:service}/${self:provider.stage}/build/p310/arm64/digest}
-  timeout: 600
-  memorySize: 1769  # exactly one vcpu
-  iamRoleStatementsName: ${self:provider.stage}-buildp310-arm64
-  iamRoleStatements:
-  - Effect: Allow
-    Action:
-    - s3:PutObject
-    - s3:PutObjectAcl
-    Resource: ${self:custom.s3LayersArn}/*
-  - Effect: Allow
-    Action:
-    - s3:ListBucket
-    Resource: ${self:custom.s3LayersArn}
-  - Effect: Allow
-    Action:
-    - dynamodb:PutItem
-    - dynamodb:UpdateItem
-    - dynamodb:GetItem
-    Resource: ${self:custom.dbArn}
-  architecture: arm64
+    Action: execute-api:Invoke
+    Resource: ${ssm:/common-service/${self:provider.stage}/CommonServiceApi/arn}/GET*
+  layers:
+    - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPythonV2:37
+    - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-p39-aws-requests-auth:11

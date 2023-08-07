@@ -14,7 +14,6 @@ def scan_table(table_name, client):
     items = []
 
     while True:
-
         response = client.scan(**kwargs)
         items.extend(response["Items"])
 
@@ -29,7 +28,10 @@ def scan_table(table_name, client):
 session = boto3.session.Session(profile_name=profile, region_name=config["region"])
 client = session.client("dynamodb")
 
-version_items = scan_table(table_name=config["table_name"], client=client,)
+version_items = scan_table(
+    table_name=config["table_name"],
+    client=client,
+)
 
 with open("hashes.json", "r") as hash_file:
     hashes = json.loads(hash_file.read())

@@ -4,9 +4,7 @@ jobs:
   pr_commented:
     # This job only runs if Keith created the comment and addressed it to @Klayersbot,
     name: PR comment to Klayers bot
-    if: ${{ github.event.comment.author_association == 'OWNER' &&
-            github.event.comment.user.id == 795867 &&
-            startsWith(github.event.comment.body, '@KlayersBot') }}
+    if: ${{ github.event.comment.author_association == 'OWNER' && github.event.comment.user.id == 795867 && startsWith(github.event.comment.body, '@KlayersBot') }}
 
     runs-on: ubuntu-latest
     steps:
@@ -21,7 +19,7 @@ jobs:
       - name: Set up Git repository
         uses: actions/checkout@v3
       
-      - name: Setup AWS environment for Klayers-default (testing building a package in Klayers-defaultp38 env)
+      - name: Setup AWS environment for Klayers-default
         run: |
           AWS_ENV=Klayers-defaultp38 >> $GITHUB_ENV
           GITHUB_ROLE_ARN=$(cat ./.github/workflows/role_arns.json | jq -r --arg arg $AWS_ENV '.github_role_arn | .[$arg]')
@@ -35,5 +33,8 @@ jobs:
         with:
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
           role-to-assume: ${{ env.AWS_ROLE_ARN }}
-          role-duration-seconds: 1800
-          role-session-name: on-push-klayers-${{ env.AWS_ENV }}
+          role-duration-seconds: 600
+          role-session-name: on-issue-commented-${{ env.AWS_ENV }}
+
+      - name: invoke lambda
+        run: aws lambda invoke --function-name 
