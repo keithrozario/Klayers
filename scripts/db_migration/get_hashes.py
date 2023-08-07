@@ -10,7 +10,6 @@ def scan_table(table_name, client):
     items = []
 
     while True:
-
         response = client.scan(**kwargs)
         items.extend(response["Items"])
 

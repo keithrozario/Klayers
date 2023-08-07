@@ -21,13 +21,12 @@ def get_from_common_service(
         aws_region=os.environ["AWS_REGION"],
         aws_service="execute-api",
     )
+    request_url = f"{common_service_url}{resource}"
 
     if method == "GET":
-        response = requests.get(f"{common_service_url}{resource}", auth=auth)
+        response = requests.get(request_url, auth=auth)
     elif method == "POST":
-        response = requests.post(
-            f"{common_service_url}{resource}", auth=auth, json=data, headers=headers
-        )
+        response = requests.post(request_url, auth=auth, json=data, headers=headers)
     else:
         raise Exception(f"Method '{method}' not supported")
 

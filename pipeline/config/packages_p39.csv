@@ -39,11 +39,13 @@ PyJWT,MIT,Jose Padilla <https://github.com/jpadilla>
 kafka-python,Apache-2.0,Dana Powers
 lxml,BSD,<lxml-dev@lxml.de>
 sklearn,BSD,<scikit-learn@python.org>
-transformers,Apache-2.0,Thomas Wolf,<api-enterprise@huggingface.co>
+transformers,Apache-2.0,Thomas Wolf <api-enterprise@huggingface.co>
 selenium,Apache-2.0,The Selenium Project
-jieba,MIT,Sun Junyi,<ccnusjy@gmail.com>
+jieba,MIT,Sun Junyi <ccnusjy@gmail.com>
 python-docx,MIT,<stcanny@gmail.com>
 xmltodict,MIT,Martin Blech <martinblech@gmail.com>
 dask,BSD, Matthew Rocklin
 google-api-python-client,Apache-2.0,Google LLC <googleapis-packages@google.com>
 GeoAlchemy2,MIT,GeoAlchemy
+aliyun-python-sdk-actiontrail,Apache-2.0,Aliyun <aliyun-developers-efficiency@list.alibaba-inc.com>
+tabulate,MIT,s.astanin@gmail.com
