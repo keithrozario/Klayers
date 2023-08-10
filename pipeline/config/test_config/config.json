@@ -1,5 +1,8 @@
 {
-    "python_versions": ["p3.9", "p3.10", "p3.10-arm64", "p3.11", "p3.11-arm64"],
+    "python_versions": ["p3.8","p3.9", "p3.10", "p3.10-arm64", "p3.11", "p3.11-arm64"],
+    "p3.8": {
+        "packages_file": "packages_p38.csv"
+    },
     "p3.9": {
         "packages_file": "packages_p39.csv"
     },

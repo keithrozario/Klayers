@@ -30,6 +30,9 @@ definition:
       Type: Choice
       Choices:
         - Variable: $.python_version
+          StringEquals: "p3.8"
+          Next: Build38
+        - Variable: $.python_version
           StringEquals: "p3.9"
           Next: Build39
         - Variable: $.python_version
@@ -45,6 +48,25 @@ definition:
           StringEquals: "p3.11-arm64"
           Next: Build311arm64
       Default: UnknownPythonVersion
+    Build38:
+      Type: Task
+      Resource:
+        Fn::GetAtt: [BuildLambdaFunction, Arn]
+      Next: Deploy
+      Retry:
+        - ErrorEquals:
+          - States.Timeout
+          - Lambda.ClientExecutionTimeoutException
+          - Lambda.ServiceException
+          - Lambda.AWSLambdaException
+          - Lambda.TooManyRequestsException
+          MaxAttempts: 5
+          BackoffRate: 2
+          IntervalSeconds: 15
+      Catch:
+        - ErrorEquals:
+          - States.ALL
+          Next: BuildFail
     Build39:
       Type: Task
       Resource:
