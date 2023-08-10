@@ -9,6 +9,35 @@ check:
     - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-p38-requests:7
     - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPython:6
 
+build:
+  handler: 02_pipeline/build.main
+  description: Builds the package inside the lambda using pip
+  runtime: python3.8
+  timeout: 180
+  memorySize: 1769
+  environment:
+    POWERTOOLS_SERVICE_NAME: Klayers.Build
+  iamRoleStatementsName: ${self:provider.stage}-build
+  iamRoleStatements:
+  - Effect: Allow
+    Action:
+    - s3:PutObject
+    - s3:PutObjectAcl
+    Resource: ${self:custom.s3LayersArn}/*
+  - Effect: Allow
+    Action:
+    - s3:ListBucket
+    Resource: ${self:custom.s3LayersArn}
+  - Effect: Allow
+    Action:
+    - dynamodb:PutItem
+    - dynamodb:UpdateItem
+    - dynamodb:GetItem
+    Resource: ${self:custom.dbArn}
+  layers:
+    - arn:aws:lambda:${self:provider.region}:553035198032:layer:gcc-lambda2:4  # https://github.com/lambci/gcc-lambda-layer
+    - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPython:6
+
 deploy:
   handler: 02_pipeline/deploy.main
   description: Deploys functions to multiple regions
