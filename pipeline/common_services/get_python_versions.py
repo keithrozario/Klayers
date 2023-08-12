@@ -13,7 +13,7 @@ def main(event, context):
 
     Args: None
     Return:
-        python_versions : List of python versions e.g. ["p3.8","p3.9"]
+        python_versions : List of python versions e.g. ["p3.8","p3.9","p3.10-arm64"]
     """
     status_code = 200 
     try:
