@@ -30,7 +30,9 @@ def main(event, context):
     license_info = "Refer for individual package"
 
     archive_path = combine_packages(
-        packages=packages, python_version=python_version, combined_name=combined_package_name
+        packages=packages,
+        python_version=python_version,
+        combined_name=combined_package_name,
     )
     upload_to_s3(archive_path=archive_path, s3_location=zip_file_S3key)
 
@@ -42,7 +44,7 @@ def main(event, context):
         archive_path=archive_path,
         python_version=python_version,
         license_info=license_info,
-        combined_name=combined_package_name
+        combined_name=combined_package_name,
     )
 
     return layers
@@ -123,7 +125,13 @@ def upload_to_s3(archive_path: str, s3_location: str):
     return None
 
 
-def publish_layer(regions: list[str], archive_path: str, python_version: str, combined_name: str, license_info: str):
+def publish_layer(
+    regions: list[str],
+    archive_path: str,
+    python_version: str,
+    combined_name: str,
+    license_info: str,
+):
     """
     Args:
         regions: List of regions to deploy to
@@ -133,10 +141,7 @@ def publish_layer(regions: list[str], archive_path: str, python_version: str, co
         layer_arns: List of layer ARNs deployed
     """
 
-
-    layer_name = (
-        f"{os.environ['LAMBDA_LAYER_PREFIX']}{python_version.replace('.','')}-{combined_name}"
-    )
+    layer_name = f"{os.environ['LAMBDA_LAYER_PREFIX']}{python_version.replace('.','')}-{combined_name}"
 
     with open(archive_path, "rb") as zip_file:
         zip_binary = zip_file.read()
@@ -144,7 +149,9 @@ def publish_layer(regions: list[str], archive_path: str, python_version: str, co
     layer_arns = []
 
     for region in regions:
-        logger.info({"message": "Deploying", "region": region, "package": combined_name})
+        logger.info(
+            {"message": "Deploying", "region": region, "package": combined_name}
+        )
         lambda_client = boto3.client("lambda", region_name=region)
         response = lambda_client.publish_layer_version(
             LayerName=layer_name,
@@ -167,7 +174,7 @@ def publish_layer(regions: list[str], archive_path: str, python_version: str, co
                 "region": region,
                 "package": combined_name,
                 "python_version": python_version,
-                "arn": layer_version_arn
+                "arn": layer_version_arn,
             }
         )
         lambda_client.add_layer_version_permission(
