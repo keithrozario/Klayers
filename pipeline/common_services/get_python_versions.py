@@ -13,9 +13,9 @@ def main(event, context):
 
     Args: None
     Return:
-        python_versions : List of python versions e.g. ["p3.8","p3.9"]
+        python_versions : List of python versions e.g. ["p3.8","p3.9","p3.10-arm64"]
     """
-    status_code = 200 
+    status_code = 200
     try:
         python_versions = get_config_items(python_version="all", config_type="pyVrsns")
         logger.info(python_versions)
