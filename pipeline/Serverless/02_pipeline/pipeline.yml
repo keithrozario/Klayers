@@ -38,7 +38,6 @@ build:
     - arn:aws:lambda:${self:provider.region}:553035198032:layer:gcc-lambda2:4  # https://github.com/lambci/gcc-lambda-layer
     - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPython:6
 
-
 deploy:
   handler: 02_pipeline/deploy.main
   description: Deploys functions to multiple regions
@@ -79,76 +78,6 @@ deploy:
     - arn:aws:lambda:${self:provider.region}:113088814899:layer:Klayers-python37-packaging:1
     - arn:aws:lambda:${self:provider.region}:017000801446:layer:AWSLambdaPowertoolsPython:6
     - arn:aws:lambda:${self:provider.region}:770693421928:layer:Klayers-p39-aws-requests-auth:11
-
-build39:
-  description: Builds the package in a container for python3.9 then uploads to S3
-  image: ${ssm:/${self:service}/${self:provider.stage}/build/p39/x86/repo}@${ssm:/${self:service}/${self:provider.stage}/build/p39/x86/digest}
-  timeout: 600
-  memorySize: 1769  # exactly one vcpu
-  iamRoleStatementsName: ${self:provider.stage}-buildp39
-  iamRoleStatements:
-  - Effect: Allow
-    Action:
-    - s3:PutObject
-    - s3:PutObjectAcl
-    Resource: ${self:custom.s3LayersArn}/*
-  - Effect: Allow
-    Action:
-    - s3:ListBucket
-    Resource: ${self:custom.s3LayersArn}
-  - Effect: Allow
-    Action:
-    - dynamodb:PutItem
-    - dynamodb:UpdateItem
-    - dynamodb:GetItem
-    Resource: ${self:custom.dbArn}
-
-build310:
-  description: Builds the package in a container for python3.10 then uploads to S3
-  image: ${ssm:/${self:service}/${self:provider.stage}/build/p310/x86/repo}@${ssm:/${self:service}/${self:provider.stage}/build/p310/x86/digest}
-  timeout: 600
-  memorySize: 1769  # exactly one vcpu
-  iamRoleStatementsName: ${self:provider.stage}-buildp310
-  iamRoleStatements:
-  - Effect: Allow
-    Action:
-    - s3:PutObject
-    - s3:PutObjectAcl
-    Resource: ${self:custom.s3LayersArn}/*
-  - Effect: Allow
-    Action:
-    - s3:ListBucket
-    Resource: ${self:custom.s3LayersArn}
-  - Effect: Allow
-    Action:
-    - dynamodb:PutItem
-    - dynamodb:UpdateItem
-    - dynamodb:GetItem
-    Resource: ${self:custom.dbArn}
-
-build310Arm64:
-  description: Builds the package in a container for python3.10 then uploads to S3
-  image: ${ssm:/${self:service}/${self:provider.stage}/build/p310/arm64/repo}@${ssm:/${self:service}/${self:provider.stage}/build/p310/arm64/digest}
-  timeout: 600
-  memorySize: 1769  # exactly one vcpu
-  iamRoleStatementsName: ${self:provider.stage}-buildp310arm64
-  iamRoleStatements:
-  - Effect: Allow
-    Action:
-    - s3:PutObject
-    - s3:PutObjectAcl
-    Resource: ${self:custom.s3LayersArn}/*
-  - Effect: Allow
-    Action:
-    - s3:ListBucket
-    Resource: ${self:custom.s3LayersArn}
-  - Effect: Allow
-    Action:
-    - dynamodb:PutItem
-    - dynamodb:UpdateItem
-    - dynamodb:GetItem
-    Resource: ${self:custom.dbArn}
-  architecture: arm64
 
 combine_packages:
   handler: 02_pipeline/combine.main
