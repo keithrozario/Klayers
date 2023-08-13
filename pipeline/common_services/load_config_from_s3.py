@@ -84,7 +84,7 @@ def main(event, context):
 def load_config(python_version: str, config_type: str, config_items: list) -> dict:
     """
     Args:
-        python_version: Version of python (e.g. p3.8, p3.9)
+        python_version: Version of python (e.g. p3.8, p3.9, p3.11-arm64)
         config_type: What type of item (e.g. rgns, pckgs) remember the 's'
     Returns:
         response::dict
