@@ -2,7 +2,7 @@
 
 🐍 A collection of Python Packages as AWS Lambda(λ) Layers 🐍
 
-[![Python 3.8](https://img.shields.io/badge/python-3.8-green.svg)](https://www.python.org/downloads/release/python-380/) [![Python 3.8](https://img.shields.io/badge/python-3.9-green.svg)](https://www.python.org/downloads/release/python-390/) [![Python 3.10](https://img.shields.io/badge/python-3.10-green.svg)](https://www.python.org/downloads/release/python-3100/) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Python 3.8](https://img.shields.io/badge/python-3.8-green.svg)](https://www.python.org/downloads/release/python-380/) [![Python 3.8](https://img.shields.io/badge/python-3.9-green.svg)](https://www.python.org/downloads/release/python-390/) [![Python 3.10](https://img.shields.io/badge/python-3.10-green.svg)](https://www.python.org/downloads/release/python-3100/)[![Python 3.11](https://img.shields.io/badge/python-3.11-green.svg)](https://www.python.org/downloads/release/python-3110/) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
   -   [List of ARNs](#list-of-arns)
   -   [Python Packages](#python-packages)
@@ -28,7 +28,9 @@ List of the latest layer version arns are available by region:
 * [Python 3.8](deployments/python3.8)
 * [Python 3.9](deployments/python3.9)
 * [Python 3.10](deployments/python3.10)
+* [Python 3.11](deployments/python3.11)
 * [Python 3.10-arm64](deployments/python3.10-arm64)
+* [Python 3.11-arm64](deployments/python3.11-arm64)
 
 *Note: We have deprecated layers for python3.6 and python 3.7 and will deprecate 3.8 shortly. Please use python 3.10 going forward.*
 
@@ -39,7 +41,9 @@ For the full list of Python packages, refer to the following, feel free to make 
 * [Python 3.8](pipeline/config/packages_p38.csv)
 * [Python 3.9](pipeline/config/packages_p39.csv)
 * [Python 3.10](pipeline/config/packages_p310.csv)
+* [Python 3.11](pipeline/config/packages_p311.csv)
 * [Python 3.10-arm64](pipeline/config/packages_p310-arm64.csv)
+* [Python 3.11-arm64](pipeline/config/packages_p311-arm64.csv)
 
 ## Using the Layers
 
