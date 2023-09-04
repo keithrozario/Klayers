@@ -8,10 +8,12 @@ cryptography,Apache-2.0,The Python Cryptographic Authority and individual contri
 dynamodb-encryption-sdk,Apache-2.0,<aws-cryptools@amazon.com>
 idna,https://github.com/kjd/idna/blob/master/LICENSE.rst,Kim Davis kim@cynosure.com.au
 jinja2,BSD,Armin Ronache <armin.ronacher@active-4.com>; Pallets <contact@palletsprojects.com>
+matplotlib,PSF,matplotlib-users@python.org
+mysql-connector-python,GNU GPLv2,Oracle
 numpy,https://www.numpy.org/license.html,numpy-discussion@python.org
 pandas,BSD,<pydata@googlegroups.com>
+pymongo,Apache-2.0,Bernie Hackett <bernie@mongodb.com>
 pyqldb,Apache-2.0,AWS
 redshift-connector,Apache License Version 2.0,Amazon Web Services <redshift-drivers@amazon.com>
 requests,Apache-2.0,Kenneth Reitz <me@kennethreitz.org>
-mysql-connector-python,GNU GPLv2,Oracle
 tabulate,MIT,s.astanin@gmail.com
