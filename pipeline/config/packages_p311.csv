@@ -20,3 +20,4 @@ tabulate,MIT,s.astanin@gmail.com
 requests-html,MIT,Kenneth Reitz <me@kennethreitz.org>
 elasticsearch,Apache-2.0,Honza Kral <honza.kral@gmail.com>; Nick Lang <nick@nicklang.com>
 Pillow,https://github.com/python-pillow/Pillow/blob/master/LICENSE,Alex Clark <aclark@aclark.net>
+pymysql,MIT,songofacandy@gmail.com
