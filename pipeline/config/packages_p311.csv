@@ -22,3 +22,6 @@ elasticsearch,Apache-2.0,Honza Kral <honza.kral@gmail.com>; Nick Lang <nick@nick
 Pillow,https://github.com/python-pillow/Pillow/blob/master/LICENSE,Alex Clark <aclark@aclark.net>
 pymysql,MIT,songofacandy@gmail.com
 selenium,Apache Software License (Apache 2.0),The Selenium Project
+PyJWT
+pyOpenSSL
+
