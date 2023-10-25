@@ -22,3 +22,8 @@ elasticsearch,Apache-2.0,Honza Kral <honza.kral@gmail.com>; Nick Lang <nick@nick
 Pillow,https://github.com/python-pillow/Pillow/blob/master/LICENSE,Alex Clark <aclark@aclark.net>
 pymysql,MIT,songofacandy@gmail.com
 selenium,Apache Software License (Apache 2.0),The Selenium Project
+paramiko,GNU GPLv2,Jeff Forcier <jeff@bitprophet.org>
+pydantic,MIT,Samuel Colvin <s@muelcolvin.com>
+polars,MIT,Ritchie Vink <ritchie46@gmail.com>
+s3fs,BSD,Matthew Rocklin
+zeep,MIT, Michael van Tellingen <michaelvantellingen@gmail.com>
