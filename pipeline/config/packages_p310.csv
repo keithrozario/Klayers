@@ -22,3 +22,8 @@ mysql-connector-python,GNU GPLv2,Oracle
 Pillow,https://github.com/python-pillow/Pillow/blob/main/LICENSE,Jeffrey A. Clark
 aliyun-python-sdk-actiontrail,Apache-2.0,Aliyun <aliyun-developers-efficiency@list.alibaba-inc.com>
 tabulate,MIT,s.astanin@gmail.com
+paramiko,GNU GPLv2,Jeff Forcier <jeff@bitprophet.org>
+pydantic,MIT,Samuel Colvin <s@muelcolvin.com>
+polars,MIT,Ritchie Vink <ritchie46@gmail.com>
+s3fs,BSD,Matthew Rocklin
+zeep,MIT, Michael van Tellingen <michaelvantellingen@gmail.com>
