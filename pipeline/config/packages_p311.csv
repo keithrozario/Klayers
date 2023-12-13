@@ -1,4 +1,5 @@
 Package_Name,License,Authors/Maintainers
+aws-psycopg2,MIT,<manyu1994@hotmail.com>
 aws-xray-sdk,Apache-2.0,AWS
 aws-requests-auth,BSD,davehmuller@gmail.com
 bcrypt,Apache-2.0,cryptography-dev@python.org
@@ -7,6 +8,7 @@ boto3,Apache-2.0,AWS
 cryptography,Apache-2.0,The Python Cryptographic Authority and individual contributors <cryptography-dev@python.org>
 dynamodb-encryption-sdk,Apache-2.0,<aws-cryptools@amazon.com>
 fastapi, MIT, Sebastián Ramírez <tiangolo@gmail.com>
+google-cloud-bigquery,Apache 2.0,Google LLC
 idna,https://github.com/kjd/idna/blob/master/LICENSE.rst,Kim Davis kim@cynosure.com.au
 jinja2,BSD,Armin Ronache <armin.ronacher@active-4.com>; Pallets <contact@palletsprojects.com>
 mangum, MIT, Jordan Eremieff
@@ -22,6 +24,7 @@ tabulate,MIT,s.astanin@gmail.com
 requests-html,MIT,Kenneth Reitz <me@kennethreitz.org>
 elasticsearch,Apache-2.0,Honza Kral <honza.kral@gmail.com>; Nick Lang <nick@nicklang.com>
 Pillow,https://github.com/python-pillow/Pillow/blob/master/LICENSE,Alex Clark <aclark@aclark.net>
+psycopg,LGPL-3.0,Daniele Varrazzo <daniele.varrazzo@gmail.com>
 pymysql,MIT,songofacandy@gmail.com
 selenium,Apache Software License (Apache 2.0),The Selenium Project
 paramiko,GNU GPLv2,Jeff Forcier <jeff@bitprophet.org>
