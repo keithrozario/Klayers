@@ -25,6 +25,7 @@ dynamodb-encryption-sdk,Apache-2.0,<aws-cryptools@amazon.com>
 elasticsearch,Apache-2.0,Honza Kral <honza.kral@gmail.com>; Nick Lang <nick@nicklang.com>
 envelopes,MIT,tomekwojcik <tomek@bthlabs.pl>
 exchangelib,BSD, Erik Cederstrand <erik@cederstrand.dk>
+fastapi, MIT, Sebastián Ramírez <tiangolo@gmail.com>
 ffmpeg-python,Apache-2.0,Karl Kroening <karlk@kralnet.us>
 flashtext,MIT,Vikash Singh <vikash.duliajan@gmail.com>
 geopy,MIT,Kostya Esmukov <kostya@esmukov.ru>
@@ -45,6 +46,7 @@ ldap3,LGPLv3, Giovanni Cannata <cannatag@gmail.com>
 langdetect,Apache-2.0,Michal Mimino Danilak <michal.danilak@gmail.com>
 loguru,MIT,Delgan <delgan.py@gmail.com>
 lxml,BSD,<lxml-dev@lxml.de>
+mangum, MIT, Jordan Eremieff
 matplotlib,PSF,matplotlib-users@python.org
 mpld3,BSD,<jakevdp@cs.washington.edu>
 nltk,Apache-2.0,Steven Bird <stevenbird1@gmail.com>
