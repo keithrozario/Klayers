@@ -95,3 +95,20 @@ resource "aws_ssm_parameter" "p311_arm64_build_repo" {
   overwrite   = true
 }
 
+## Python 3.12 builds
+
+module "python312_x86_build" {
+  source             = "./container_repository"
+  app_name           = var.app_name
+  workspace_full_name = local.workspace_full_name
+  python_version = "p312"
+  architecture = "x86"
+}
+
+module "python312_arm64_build" {
+  source             = "./container_repository"
+  app_name           = var.app_name
+  workspace_full_name = local.workspace_full_name
+  python_version = "p312"
+  architecture = "arm64"
+}
