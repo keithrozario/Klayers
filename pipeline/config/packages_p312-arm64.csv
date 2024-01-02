@@ -1,0 +1,18 @@
+Package_Name,License,Authors/Maintainers
+aws-xray-sdk,Apache-2.0,AWS
+aws-requests-auth,BSD,davehmuller@gmail.com
+bcrypt,Apache-2.0,cryptography-dev@python.org
+beautifulsoup4,MIT,Leonard Richardson <leonardr@segfault.org>
+boto3,Apache-2.0,AWS
+cryptography,Apache-2.0,The Python Cryptographic Authority and individual contributors <cryptography-dev@python.org>
+dynamodb-encryption-sdk,Apache-2.0,<aws-cryptools@amazon.com>
+idna,https://github.com/kjd/idna/blob/master/LICENSE.rst,Kim Davis kim@cynosure.com.au
+jinja2,BSD,Armin Ronache <armin.ronacher@active-4.com>; Pallets <contact@palletsprojects.com>
+numpy,https://www.numpy.org/license.html,numpy-discussion@python.org
+pandas,BSD,<pydata@googlegroups.com>
+pyqldb,Apache-2.0,AWS
+redshift-connector,Apache License Version 2.0,Amazon Web Services <redshift-drivers@amazon.com>
+requests,Apache-2.0,Kenneth Reitz <me@kennethreitz.org>
+mysql-connector-python,GNU GPLv2,Oracle
+aliyun-python-sdk-actiontrail,Apache-2.0,Aliyun <aliyun-developers-efficiency@list.alibaba-inc.com>
+tabulate,MIT,s.astanin@gmail.com

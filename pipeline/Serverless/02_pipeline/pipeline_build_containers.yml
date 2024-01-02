@@ -67,6 +67,29 @@ build311:
     - dynamodb:GetItem
     Resource: ${self:custom.dbArn}
 
+build312:
+  description: Builds the package in a container for python3.12 then uploads to S3
+  image: ${ssm:/${self:service}/${self:provider.stage}/build/p312/x86/repo}@${ssm:/${self:service}/${self:provider.stage}/build/p312/x86/digest}
+  timeout: 600
+  memorySize: 1769  # exactly one vcpu
+  iamRoleStatementsName: ${self:provider.stage}-buildp312
+  iamRoleStatements:
+  - Effect: Allow
+    Action:
+    - s3:PutObject
+    - s3:PutObjectAcl
+    Resource: ${self:custom.s3LayersArn}/*
+  - Effect: Allow
+    Action:
+    - s3:ListBucket
+    Resource: ${self:custom.s3LayersArn}
+  - Effect: Allow
+    Action:
+    - dynamodb:PutItem
+    - dynamodb:UpdateItem
+    - dynamodb:GetItem
+    Resource: ${self:custom.dbArn}
+
 
 build310Arm64:
   description: Builds the package in a container for python3.10 then uploads to S3
@@ -98,6 +121,30 @@ build311Arm64:
   timeout: 600
   memorySize: 1769  # exactly one vcpu
   iamRoleStatementsName: ${self:provider.stage}-buildp311arm64
+  iamRoleStatements:
+  - Effect: Allow
+    Action:
+    - s3:PutObject
+    - s3:PutObjectAcl
+    Resource: ${self:custom.s3LayersArn}/*
+  - Effect: Allow
+    Action:
+    - s3:ListBucket
+    Resource: ${self:custom.s3LayersArn}
+  - Effect: Allow
+    Action:
+    - dynamodb:PutItem
+    - dynamodb:UpdateItem
+    - dynamodb:GetItem
+    Resource: ${self:custom.dbArn}
+  architecture: arm64
+
+build312Arm64:
+  description: Builds the package in a container for python3.12 then uploads to S3
+  image: ${ssm:/${self:service}/${self:provider.stage}/build/p312/arm64/repo}@${ssm:/${self:service}/${self:provider.stage}/build/p312/arm64/digest}
+  timeout: 600
+  memorySize: 1769  # exactly one vcpu
+  iamRoleStatementsName: ${self:provider.stage}-buildp312arm64
   iamRoleStatements:
   - Effect: Allow
     Action:
