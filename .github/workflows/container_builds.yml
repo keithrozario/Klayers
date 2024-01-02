@@ -17,9 +17,6 @@ jobs:
     strategy:
       matrix:
         include:
-          - python_version: p39
-            arch: x86
-            build_platform: linux/amd64
           - python_version: p310
             arch: x86
             build_platform: linux/amd64
