@@ -14,5 +14,4 @@ pyqldb,Apache-2.0,AWS
 redshift-connector,Apache License Version 2.0,Amazon Web Services <redshift-drivers@amazon.com>
 requests,Apache-2.0,Kenneth Reitz <me@kennethreitz.org>
 mysql-connector-python,GNU GPLv2,Oracle
-aliyun-python-sdk-actiontrail,Apache-2.0,Aliyun <aliyun-developers-efficiency@list.alibaba-inc.com>
 tabulate,MIT,s.astanin@gmail.com
