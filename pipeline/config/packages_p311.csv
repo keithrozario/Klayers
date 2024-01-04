@@ -34,3 +34,4 @@ s3fs,BSD,Matthew Rocklin
 zeep,MIT, Michael van Tellingen <michaelvantellingen@gmail.com>
 XlsxWriter, BSD 2-Clause, John McNamara <jmcnamara@cpan.org>
 xlsx2csv, MIT, Dilshod Temirkhdojaev <tdilshod@gmail.com>
+sqlmodel, MIT, Sebastián Ramírez <tiangolo@gmail.com>
