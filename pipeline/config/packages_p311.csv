@@ -35,3 +35,4 @@ zeep,MIT, Michael van Tellingen <michaelvantellingen@gmail.com>
 XlsxWriter, BSD 2-Clause, John McNamara <jmcnamara@cpan.org>
 xlsx2csv, MIT, Dilshod Temirkhdojaev <tdilshod@gmail.com>
 sqlmodel, MIT, Sebastián Ramírez <tiangolo@gmail.com>
+python-docx, MIT, Steve Canny <stcanny@gmail.com>
