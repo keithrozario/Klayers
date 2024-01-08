@@ -16,3 +16,4 @@ requests,Apache-2.0,Kenneth Reitz <me@kennethreitz.org>
 mysql-connector-python,GNU GPLv2,Oracle
 aliyun-python-sdk-actiontrail,Apache-2.0,Aliyun <aliyun-developers-efficiency@list.alibaba-inc.com>
 tabulate,MIT,s.astanin@gmail.com
+s3fs,BSD,Kenneth Reitz <me@kennethreitz.com>
