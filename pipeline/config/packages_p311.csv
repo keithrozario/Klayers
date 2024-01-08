@@ -36,3 +36,4 @@ XlsxWriter, BSD 2-Clause, John McNamara <jmcnamara@cpan.org>
 xlsx2csv, MIT, Dilshod Temirkhdojaev <tdilshod@gmail.com>
 sqlmodel, MIT, Sebastián Ramírez <tiangolo@gmail.com>
 python-docx, MIT, Steve Canny <stcanny@gmail.com>
+extract-msg, GPL-3.0, Destiny Peterson <arceusthe@gmail.com>
