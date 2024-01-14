@@ -29,4 +29,4 @@ pydantic,MIT,Samuel Colvin <s@muelcolvin.com>
 polars,MIT,Ritchie Vink <ritchie46@gmail.com>
 s3fs,BSD,Matthew Rocklin
 zeep,MIT, Michael van Tellingen <michaelvantellingen@gmail.com>
-scipy,BSD,scipy-dev@python.org
+scipy,BSD-3-Clause,scipy-dev@python.org
