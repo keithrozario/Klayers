@@ -1,4 +1,4 @@
-# Layers for Python 3.11-arm64
+# Layers for Python 3.12-arm64
 
 
 | Region (Code) | Region (Name)| ARNs|
