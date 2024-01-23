@@ -30,3 +30,4 @@ polars,MIT,Ritchie Vink <ritchie46@gmail.com>
 s3fs,BSD,Matthew Rocklin
 zeep,MIT, Michael van Tellingen <michaelvantellingen@gmail.com>
 scipy,BSD-3-Clause,scipy-dev@python.org
+openai,Apache Software License,support@openai.com
