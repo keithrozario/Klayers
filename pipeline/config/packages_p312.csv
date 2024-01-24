@@ -1,6 +1,6 @@
 Package_Name,License,Authors/Maintainers
 aws-xray-sdk,Apache-2.0,AWS
-aws-requests-auth,BSD,davehmuller@gmail.com
+aws-requests-auth,BSD,davehmuller@gmail.comhalley@dnspython.org
 bcrypt,Apache-2.0,cryptography-dev@python.org
 beautifulsoup4,MIT,Leonard Richardson <leonardr@segfault.org>
 boto3,Apache-2.0,AWS
@@ -16,4 +16,4 @@ requests,Apache-2.0,Kenneth Reitz <me@kennethreitz.org>
 mysql-connector-python,GNU GPLv2,Oracle
 aliyun-python-sdk-actiontrail,Apache-2.0,Aliyun <aliyun-developers-efficiency@list.alibaba-inc.com>
 tabulate,MIT,s.astanin@gmail.com
-s3fs,BSD,Kenneth Reitz <me@kennethreitz.com>
+dnspython,ISC License (ISCL),halley@dnspython.org
