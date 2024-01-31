@@ -17,3 +17,4 @@ mysql-connector-python,GNU GPLv2,Oracle
 aliyun-python-sdk-actiontrail,Apache-2.0,Aliyun <aliyun-developers-efficiency@list.alibaba-inc.com>
 tabulate,MIT,s.astanin@gmail.com
 dnspython,ISC License (ISCL),halley@dnspython.org
+python-pptx, MIT, python-pptx <python-pptx@googlegroups.com>
