@@ -38,3 +38,6 @@ sqlmodel, MIT, Sebastián Ramírez <tiangolo@gmail.com>
 python-docx, MIT, Steve Canny <stcanny@gmail.com>
 extract-msg, GPL-3.0, Destiny Peterson <arceusthe@gmail.com>
 polars, MIT, Ritchie Vink <ritchie46@gmail.com>
+msal, MIT, Microsoft
+lxml, BSD, Infrae <http://consulting.behnel.de/>
+reportlab, BSD, ReportLab Europe Ltd. <reportlab-users@lists2.reportlab.com>
