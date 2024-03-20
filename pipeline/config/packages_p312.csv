@@ -21,4 +21,6 @@ python-pptx, MIT, python-pptx <python-pptx@googlegroups.com>
 memray, Apache 2.0, godlygeek pablogsal
 polars, MIT, Ritchie Vink <ritchie46@gmail.com>
 Pillow,https://github.com/python-pillow/Pillow/blob/master/LICENSE,Alex Clark <aclark@aclark.net>
-pdf2image, Spire.Doc, Spire.Xls, Daniel Abdi <daniel.abdi@digimentr.com>
+pdf2image, Daniel Abdi <daniel.abdi@digimentr.com>
+Spire.Doc, <daniel.abdi@digimentr.com>
+Spire.Xls, <daniel.abdi@digimentr.com>
