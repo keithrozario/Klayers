@@ -21,5 +21,5 @@ python-pptx, MIT, python-pptx <python-pptx@googlegroups.com>
 memray, Apache 2.0, godlygeek pablogsal
 polars, MIT, Ritchie Vink <ritchie46@gmail.com>
 Pillow,https://github.com/python-pillow/Pillow/blob/master/LICENSE,Alex Clark <aclark@aclark.net>
-openai, Apache-2.0, OpenAI <support@openai.com>
 psycopg, LGPL-3.0, Daniele Varrazzo <daniele.varrazzo@gmail.com>
+praw,https://github.com/praw-dev/praw/blob/master/LICENSE.txt,Bryce Boe <bbzbryce@gmail.com>
