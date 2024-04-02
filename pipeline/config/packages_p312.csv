@@ -21,3 +21,4 @@ python-pptx, MIT, python-pptx <python-pptx@googlegroups.com>
 memray, Apache 2.0, godlygeek pablogsal
 polars, MIT, Ritchie Vink <ritchie46@gmail.com>
 Pillow,https://github.com/python-pillow/Pillow/blob/master/LICENSE,Alex Clark <aclark@aclark.net>
+praw,https://github.com/praw-dev/praw/blob/master/LICENSE.txt,Bryce Boe <bbzbryce@gmail.com>
