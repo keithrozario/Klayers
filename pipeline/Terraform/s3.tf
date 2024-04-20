@@ -121,3 +121,26 @@ resource "aws_s3_bucket_lifecycle_configuration" "ddb_backup_bucket_config" {
     status = "Enabled"
   }
 }
+
+
+# Website bucket
+
+resource "aws_s3_bucket" "website_bucket" {
+  force_destroy = true
+}
+
+resource "aws_ssm_parameter" "website_bucket_name" {
+  type        = "String"
+  description = "Name of s3 bucket to hold website"
+  name        = "/${var.app_name}/${local.workspace_full_name}/website_bucket/name"
+  value       = aws_s3_bucket.website_bucket.bucket
+}
+
+resource "aws_s3_bucket_public_access_block" "website_bucket" {
+  bucket = aws_s3_bucket.website_bucket.id
+
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
