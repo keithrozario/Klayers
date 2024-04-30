@@ -12,6 +12,7 @@
       -   [Option 3: Using Serverless Framework](#option-3-using-serverless-framework)
       -   [Option 4: Using AWS Serverless Application Model (SAM)](#option-4-using-aws-serverless-application-model-sam)
       -   [Option 5: Using Terraform with the Klayer provider](#option-5-using-terraform-with-the-klayer-provider)
+      -   [Option 6: Using CDK with cdk-klayers](#option-6-using-cdk-with-cdk-klayers)
   -   [Status of layers](#status-of-layers)
   -   [Layer expiry](#layer-expiry)
   -   [Architecture Diagram](#architecture-diagram)
@@ -130,6 +131,42 @@ resource "aws_lambda_function" "test_lambda" {
   ]
 }
 ```
+
+### Option 6: Using CDK with cdk-klayers
+
+Using CDK, you can use the [cdk-klayers](https://github.com/keithrozario/cdk-klayers) package to help you pull in the latest layers for your Stack or App.
+
+```python
+
+from cdk_klayers import Klayers
+
+class MockStack(Stack):
+
+    def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
+        super().__init__(scope, construct_id, **kwargs)
+
+        runtime = aws_lambda.Runtime.PYTHON_3_12
+
+        # Initialize Klayers Class
+        klayers = Klayers(
+            self,
+            python_version = runtime
+            region = "ap-southeast-1"
+        )
+    
+        # get the latest layer version for the requests package
+        requests_layer = klayers.layer_version(self, "requests")
+
+        lambda_function = aws_lambda.Function(
+            self, 'HelloHandler',
+            runtime=runtime,
+            layers=[requests_layer],
+            code=aws_lambda.Code.from_asset('lambda'),
+            handler='hello.handler'
+        )
+
+```
+
 
 ## Status of layers
 
