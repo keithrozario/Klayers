@@ -33,3 +33,4 @@ scipy,BSD-3-Clause,scipy-dev@python.org
 openai,Apache Software License,support@openai.com
 llama-index,MIT,Jerry Liu <jerryjliu98@gmail.com>
 praw,https://github.com/praw-dev/praw/blob/master/LICENSE.txt,Bryce Boe <bbzbryce@gmail.com>
+jsonschema,MIT,Julian Berman <jsonschema@GrayVines.com>

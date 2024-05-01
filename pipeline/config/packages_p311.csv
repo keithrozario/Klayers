@@ -42,3 +42,4 @@ msal, MIT, Microsoft
 lxml, BSD, Infrae <http://consulting.behnel.de/>
 reportlab, BSD, ReportLab Europe Ltd. <reportlab-users@lists2.reportlab.com>
 praw,https://github.com/praw-dev/praw/blob/master/LICENSE.txt,Bryce Boe <bbzbryce@gmail.com>
+jsonschema,MIT,Julian Berman <jsonschema@GrayVines.com>
