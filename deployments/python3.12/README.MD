@@ -1,4 +1,4 @@
-# Layers for Python 3.11
+# Layers for Python 3.12
 
 
 | Region (Code) | Region (Name)| ARNs|
