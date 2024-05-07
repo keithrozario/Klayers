@@ -15,3 +15,4 @@ redshift-connector,Apache License Version 2.0,Amazon Web Services <redshift-driv
 requests,Apache-2.0,Kenneth Reitz <me@kennethreitz.org>
 mysql-connector-python,GNU GPLv2,Oracle
 tabulate,MIT,s.astanin@gmail.com
+pycryptodome,BSD,Helder Eijs <helderijs@gmail.com>
