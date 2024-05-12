@@ -52,3 +52,44 @@ module "website_certificate" {
   }
 
 }
+
+## Role
+
+data "aws_iam_policy_document" "github_actions_assume_role_policy" {
+  statement {
+    actions = ["sts:AssumeRoleWithWebIdentity"]
+    principals {
+      type = "Federated"
+      identifiers = [module.oidc_github.github_oidc_provider_arn]
+    }
+    condition {
+      test     = "StringLike"
+      variable = "token.actions.githubusercontent.com:sub"
+      values   = ["repo:${var.website_github_repo}:*"]
+    }
+  }
+}
+
+resource "aws_iam_role" "website_github_role" {
+  name = var.website_role_name
+  assume_role_policy = data.aws_iam_policy_document.github_actions_assume_role_policy.json
+}
+
+data "aws_iam_policy_document" "website_github_role" {
+  statement {
+    actions   = ["s3:PutObject"]
+    resources = ["${aws_s3_bucket.website_bucket.arn}/*"]
+  }
+}
+
+resource "aws_iam_policy" "website_github_policy" {
+  name        = "github-action-website"
+  path        = "/"
+  description = "Sync to website bucket"
+  policy = data.aws_iam_policy_document.website_github_role.json
+}
+
+resource "aws_iam_role_policy_attachment" "attach_github_on_push" {
+  role       = aws_iam_role.website_github_role.name
+  policy_arn = aws_iam_policy.website_github_policy.arn
+}
