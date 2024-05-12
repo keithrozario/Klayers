@@ -1,3 +1,17 @@
+/*
+We automated the AWS portion of the website, by creating:
+
+1. A S3 bucket to host the static assets
+2. A CloudFront distribution to serve the content
+3. An IAM role for the repo to `s3 sync` to the bucket via the OIDC provider already created.
+4. The IAM role will be limited to the github repo under website_github_repo variable in tfvars.json
+
+
+Unfortunately, because we host the domain on Cloudfront, the cert still has to be manually verified.
+And the DNS has to manually pointed (via CNAME entry) from Cloudflare to the Cloudfront distribution in (2)
+*/
+
+
 # Creates the bucket and CDN for the website.data
 resource "aws_s3_bucket" "website_bucket" {
   provider = aws.cloudfront
