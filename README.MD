@@ -150,7 +150,7 @@ class MockStack(Stack):
         # Initialize Klayers Class
         klayers = Klayers(
             self,
-            python_version = runtime
+            python_version = runtime,
             region = "ap-southeast-1"
         )
     
