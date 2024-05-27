@@ -248,6 +248,19 @@ def dir_size(path="."):
     return total
 
 
+def find_test_dirs(start_dir):
+    """
+    List out all diretories named 'tests' in the current directory and its subdirectories
+    Removing this reduces the size of the final output
+    """
+    test_dirs = []
+    for root, dirs, files in os.walk(start_dir):
+        for dir in dirs:
+            if dir == 'tests':
+                test_dirs.append(os.path.join(root, dir))
+    return test_dirs
+
+
 def install(package, package_dir):
     """ "
     Args:
@@ -267,12 +280,27 @@ def install(package, package_dir):
             "-t",
             package_dir,
             "--quiet",
+            "--no-compile",  # does not compile __pycache__ or .pyc to save space
             "--upgrade",
             "--no-cache-dir",
         ],
         capture_output=True,
     )
     logger.info(output)
+
+    tests_dirs = find_test_dirs(package_dir)
+    logger.info(f"Test Directories: {tests_dirs}")
+    size_before_tests_deletion = dir_size(package_dir) 
+    for dir in tests_dirs:
+        shutil.rmtree(dir)  # delete tests dirs to save space
+    size_after_tests_deletion = dir_size(package_dir) 
+    logger.info(
+        {
+            "message": "Deleted tests directories",
+            "size before": size_before_tests_deletion,
+            "size after": size_after_tests_deletion,
+        }
+    )
 
     return package_dir
 

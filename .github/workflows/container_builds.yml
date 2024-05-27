@@ -108,6 +108,7 @@ jobs:
           echo BUILD_DIR=$BUILD_DIR >> $GITHUB_ENV
   
           cp ./pipeline/container_images/build_images/common/build.py ./$BUILD_DIR
+          cp ./pipeline/container_images/build_images/common/build_optimized.py ./$BUILD_DIR
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
