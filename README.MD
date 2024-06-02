@@ -48,7 +48,7 @@ For the full list of Python packages, refer to the following, feel free to make 
 
 ## Using the Layers
 
-You can use the layers anyway you see fit, and here are 4 options based on what method you use to deploy your lambda functions:
+You can use the layers anyway you see fit, and here are 6 options based on what method you use to deploy your lambda functions:
 
 ### Option 1: Using the Console
 
@@ -150,7 +150,7 @@ class MockStack(Stack):
         # Initialize Klayers Class
         klayers = Klayers(
             self,
-            python_version = runtime
+            python_version = runtime,
             region = "ap-southeast-1"
         )
     

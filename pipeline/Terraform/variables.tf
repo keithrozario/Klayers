@@ -10,3 +10,4 @@ variable "config_dir" { type = map(string) } # not used but declared to avoid wa
 variable "website_domain_name" { type = map(any) }
 variable "website_github_repo" { type = string }
 variable "website_role_name" { type = string }
+

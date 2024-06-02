@@ -17,9 +17,12 @@ mysql-connector-python,GNU GPLv2,Oracle
 aliyun-python-sdk-actiontrail,Apache-2.0,Aliyun <aliyun-developers-efficiency@list.alibaba-inc.com>
 tabulate,MIT,s.astanin@gmail.com
 dnspython,ISC License (ISCL),halley@dnspython.org
-python-pptx, MIT, python-pptx <python-pptx@googlegroups.com>
-memray, Apache 2.0, godlygeek pablogsal
-polars, MIT, Ritchie Vink <ritchie46@gmail.com>
+python-pptx,MIT, python-pptx <python-pptx@googlegroups.com>
+memray,Apache 2.0, godlygeek pablogsal
+polars,MIT, Ritchie Vink <ritchie46@gmail.com>
 Pillow,https://github.com/python-pillow/Pillow/blob/master/LICENSE,Alex Clark <aclark@aclark.net>
-psycopg, LGPL-3.0, Daniele Varrazzo <daniele.varrazzo@gmail.com>
+psycopg,LGPL-3.0, Daniele Varrazzo <daniele.varrazzo@gmail.com>
 praw,https://github.com/praw-dev/praw/blob/master/LICENSE.txt,Bryce Boe <bbzbryce@gmail.com>
+orjson, Apache 2.0,ijl <ijl@mailbox.org>
+pymssql, LGPL-2.1, https://github.com/pymssql/pymssql
+awswrangler,Apache 2.0,AWS
