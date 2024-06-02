@@ -6,8 +6,10 @@ beautifulsoup4,MIT,Leonard Richardson <leonardr@segfault.org>
 boto3,Apache-2.0,AWS
 cryptography,Apache-2.0,The Python Cryptographic Authority and individual contributors <cryptography-dev@python.org>
 dynamodb-encryption-sdk,Apache-2.0,<aws-cryptools@amazon.com>
+fastapi, MIT, Sebastián Ramírez <tiangolo@gmail.com>
 idna,https://github.com/kjd/idna/blob/master/LICENSE.rst,Kim Davis kim@cynosure.com.au
 jinja2,BSD,Armin Ronache <armin.ronacher@active-4.com>; Pallets <contact@palletsprojects.com>
+mangum, MIT, Jordan Eremieff
 numpy,https://www.numpy.org/license.html,numpy-discussion@python.org
 openpyxl,MIT,Charlie Clark <charlie.clark@clark-consulting.eu>
 pandas,BSD,<pydata@googlegroups.com>
@@ -22,3 +24,12 @@ mysql-connector-python,GNU GPLv2,Oracle
 Pillow,https://github.com/python-pillow/Pillow/blob/main/LICENSE,Jeffrey A. Clark
 aliyun-python-sdk-actiontrail,Apache-2.0,Aliyun <aliyun-developers-efficiency@list.alibaba-inc.com>
 tabulate,MIT,s.astanin@gmail.com
+paramiko,GNU GPLv2,Jeff Forcier <jeff@bitprophet.org>
+pydantic,MIT,Samuel Colvin <s@muelcolvin.com>
+polars,MIT,Ritchie Vink <ritchie46@gmail.com>
+s3fs,BSD,Matthew Rocklin
+zeep,MIT, Michael van Tellingen <michaelvantellingen@gmail.com>
+scipy,BSD-3-Clause,scipy-dev@python.org
+openai,Apache Software License,support@openai.com
+llama-index,MIT,Jerry Liu <jerryjliu98@gmail.com>
+praw,https://github.com/praw-dev/praw/blob/master/LICENSE.txt,Bryce Boe <bbzbryce@gmail.com>

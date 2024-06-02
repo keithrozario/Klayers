@@ -2,7 +2,7 @@
 
 🐍 A collection of Python Packages as AWS Lambda(λ) Layers 🐍
 
-[![Python 3.8](https://img.shields.io/badge/python-3.8-green.svg)](https://www.python.org/downloads/release/python-380/) [![Python 3.8](https://img.shields.io/badge/python-3.9-green.svg)](https://www.python.org/downloads/release/python-390/) [![Python 3.10](https://img.shields.io/badge/python-3.10-green.svg)](https://www.python.org/downloads/release/python-3100/)[![Python 3.11](https://img.shields.io/badge/python-3.11-green.svg)](https://www.python.org/downloads/release/python-3110/) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Python 3.10](https://img.shields.io/badge/python-3.10-green?style=for-the-badge)](https://www.python.org/downloads/release/python-3100/)  [![Python 3.11](https://img.shields.io/badge/python-3.11-green?style=for-the-badge)](https://www.python.org/downloads/release/python-3110/)  [![Python 3.12](https://img.shields.io/badge/python-3.12-green?style=for-the-badge)](https://www.python.org/downloads/release/python-3120/)  [![Code style: black](https://img.shields.io/badge/code%20style-black-000000?style=for-the-badge)](https://github.com/psf/black)
 
   -   [List of ARNs](#list-of-arns)
   -   [Python Packages](#python-packages)
@@ -12,6 +12,7 @@
       -   [Option 3: Using Serverless Framework](#option-3-using-serverless-framework)
       -   [Option 4: Using AWS Serverless Application Model (SAM)](#option-4-using-aws-serverless-application-model-sam)
       -   [Option 5: Using Terraform with the Klayer provider](#option-5-using-terraform-with-the-klayer-provider)
+      -   [Option 6: Using CDK with cdk-klayers](#option-6-using-cdk-with-cdk-klayers)
   -   [Status of layers](#status-of-layers)
   -   [Layer expiry](#layer-expiry)
   -   [Architecture Diagram](#architecture-diagram)
@@ -25,25 +26,25 @@
 
 List of the latest layer version arns are available by region:
 
-* [Python 3.8](deployments/python3.8)
-* [Python 3.9](deployments/python3.9)
 * [Python 3.10](deployments/python3.10)
 * [Python 3.11](deployments/python3.11)
+* [Python 3.12](deployments/python3.12)
 * [Python 3.10-arm64](deployments/python3.10-arm64)
 * [Python 3.11-arm64](deployments/python3.11-arm64)
+* [Python 3.12-arm64](deployments/python3.12-arm64)
 
-*Note: We have deprecated layers for python3.6 and python 3.7 and will deprecate 3.8 shortly. Please use python 3.10 going forward.*
+*Note: We have deprecated layers for python3.6, python3.7, python 3.8 and python3.9, Please use the latest version of python (currently python3.12) going forward*
 
 ## Python Packages
 
 For the full list of Python packages, refer to the following, feel free to make a `pull requests` modifying the files below to requests for a specific package.
 
-* [Python 3.8](pipeline/config/packages_p38.csv)
-* [Python 3.9](pipeline/config/packages_p39.csv)
 * [Python 3.10](pipeline/config/packages_p310.csv)
 * [Python 3.11](pipeline/config/packages_p311.csv)
+* [Python 3.12](pipeline/config/packages_p312.csv)
 * [Python 3.10-arm64](pipeline/config/packages_p310-arm64.csv)
 * [Python 3.11-arm64](pipeline/config/packages_p311-arm64.csv)
+* [Python 3.12-arm64](pipeline/config/packages_p312-arm64.csv)
 
 ## Using the Layers
 
@@ -130,6 +131,42 @@ resource "aws_lambda_function" "test_lambda" {
   ]
 }
 ```
+
+### Option 6: Using CDK with cdk-klayers
+
+Using CDK, you can use the [cdk-klayers](https://github.com/keithrozario/cdk-klayers) package to help you pull in the latest layers for your Stack or App.
+
+```python
+
+from cdk_klayers import Klayers
+
+class MockStack(Stack):
+
+    def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
+        super().__init__(scope, construct_id, **kwargs)
+
+        runtime = aws_lambda.Runtime.PYTHON_3_12
+
+        # Initialize Klayers Class
+        klayers = Klayers(
+            self,
+            python_version = runtime
+            region = "ap-southeast-1"
+        )
+    
+        # get the latest layer version for the requests package
+        requests_layer = klayers.layer_version(self, "requests")
+
+        lambda_function = aws_lambda.Function(
+            self, 'HelloHandler',
+            runtime=runtime,
+            layers=[requests_layer],
+            code=aws_lambda.Code.from_asset('lambda'),
+            handler='hello.handler'
+        )
+
+```
+
 
 ## Status of layers
 

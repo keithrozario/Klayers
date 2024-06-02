@@ -6,9 +6,9 @@
     "serverless": "^2.69.1"
   },
   "devDependencies": {
-    "serverless-better-credentials": "^1.1.3",
+    "serverless-better-credentials": "^2.0.0",
     "serverless-iam-roles-per-function": "^3.2.0",
-    "serverless-step-functions": "^3.11.0"
+    "serverless-step-functions": "^3.21.0"
   },
   "main": "index.js",
   "scripts": {

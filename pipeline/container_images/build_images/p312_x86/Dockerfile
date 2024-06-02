@@ -1,6 +1,7 @@
 FROM public.ecr.aws/lambda/python:3.12
 
 COPY build.py ./
+COPY build_optimized.py ./build.py
 RUN pip install --upgrade pip
 RUN pip install boto3
 RUN pip install aws-lambda-powertools

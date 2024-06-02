@@ -121,3 +121,5 @@ resource "aws_s3_bucket_lifecycle_configuration" "ddb_backup_bucket_config" {
     status = "Enabled"
   }
 }
+
+
