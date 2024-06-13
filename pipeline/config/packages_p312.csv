@@ -26,3 +26,4 @@ praw,https://github.com/praw-dev/praw/blob/master/LICENSE.txt,Bryce Boe <bbzbryc
 orjson, Apache 2.0,ijl <ijl@mailbox.org>
 pymssql, LGPL-2.1, https://github.com/pymssql/pymssql
 awswrangler,Apache 2.0,AWS
+stripe,MIT,Stripe <support@stripe.com>
