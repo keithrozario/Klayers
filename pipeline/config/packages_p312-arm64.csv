@@ -17,3 +17,4 @@ mysql-connector-python,GNU GPLv2,Oracle
 tabulate,MIT,s.astanin@gmail.com
 pycryptodome,BSD,Helder Eijs <helderijs@gmail.com>
 fake-useragent, Apache-2.0, Melroy van den Berg <melroy@melroy.org>
+stripe,MIT,Stripe <support@stripe.com>
