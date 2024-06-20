@@ -1,3 +1,11 @@
+"""
+This is an optimized version of build.py that:
+
+1. Uses the --no-compile python installation option to save space
+2. Deletes all directories in the installation that is named 'tests', to save space.
+"""
+
+
 import os
 import sys
 import shutil
@@ -280,7 +288,7 @@ def install(package, package_dir):
             "-t",
             package_dir,
             "--quiet",
-            "--no-compile",  # does not compile __pycache__ or .pyc to save space
+            "--no-compile",  # does not compile __pycache__ to save space
             "--upgrade",
             "--no-cache-dir",
         ],
@@ -288,12 +296,13 @@ def install(package, package_dir):
     )
     logger.info(output)
 
+    # Delete all directories named 'tests'.
     tests_dirs = find_test_dirs(package_dir)
     logger.info(f"Test Directories: {tests_dirs}")
-    size_before_tests_deletion = dir_size(package_dir) 
+    size_before_tests_deletion = dir_size(package_dir)
     for dir in tests_dirs:
         shutil.rmtree(dir)  # delete tests dirs to save space
-    size_after_tests_deletion = dir_size(package_dir) 
+    size_after_tests_deletion = dir_size(package_dir)
     logger.info(
         {
             "message": "Deleted tests directories",
