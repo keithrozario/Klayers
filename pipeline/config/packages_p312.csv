@@ -29,3 +29,5 @@ awswrangler,Apache 2.0,AWS
 stripe,MIT,Stripe <support@stripe.com>
 pandasql,Open Yhat Inc.,greg@hathq.com
 duckdb,MIT,hannes@cwi.nl
+scipy,BSD-3-Clause,scipy-dev@python.org
+
