@@ -30,4 +30,4 @@ stripe,MIT,Stripe <support@stripe.com>
 pandasql,Open Yhat Inc.,greg@hathq.com
 duckdb,MIT,hannes@cwi.nl
 scipy,BSD-3-Clause,scipy-dev@python.org
-
+defusedxml,Python Software Foundation License (PSFL),christian@python.org
