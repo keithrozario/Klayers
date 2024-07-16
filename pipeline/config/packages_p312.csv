@@ -32,3 +32,4 @@ duckdb,MIT,hannes@cwi.nl
 scipy,BSD-3-Clause,scipy-dev@python.org
 defusedxml,Python Software Foundation License (PSFL),christian@python.org
 opensearch-py,Apache-2.0,https://pypi.org/user/OpenSearch/
+gdal, MIT, Gdal <gdal-dev-owner@lists.osgeo.org>
