@@ -33,3 +33,4 @@ scipy,BSD-3-Clause,scipy-dev@python.org
 defusedxml,Python Software Foundation License (PSFL),christian@python.org
 opensearch-py,Apache-2.0,https://pypi.org/user/OpenSearch/
 gdal, MIT, Gdal <gdal-dev-owner@lists.osgeo.org>
+pycountry, OSI Approved, GNU Lesser General Public License v2 (LGPLv2) (LGPL-2.1-only), nschimmo@gmail.com
