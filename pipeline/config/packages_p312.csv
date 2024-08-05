@@ -36,3 +36,4 @@ gdal, MIT, Gdal <gdal-dev-owner@lists.osgeo.org>
 pycountry, OSI Approved GNU Lesser General Public License v2 (LGPLv2) (LGPL-2.1-only), nschimmo@gmail.com
 tzlocal,MIT,Lennart Regebro <regebro@gmail.com>
 feedparser,BSD,Kurt McKee <contactme@kurtmckee.org>
+fuzzywuzzy[speedup],GNU General Public License v2 (GPLv2) (GPLv2),adam@seatgeek.com
