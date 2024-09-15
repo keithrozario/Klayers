@@ -40,4 +40,4 @@ fuzzywuzzy[speedup],GNU General Public License v2 (GPLv2) (GPLv2),adam@seatgeek.
 mail-parser,Apache-2.0,mantuano.fedele@gmail.com
 pyyaml,MIT,https://pypi.org/project/PyYAML/
 gspread,MIT, Anton Burnashev <fuss.here@gmail.com>
-pymongo, OSI Approved, The MongoDB Python Team
+pymongo, Apache-2.0, The MongoDB Python Team
