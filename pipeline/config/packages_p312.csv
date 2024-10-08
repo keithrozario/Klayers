@@ -43,3 +43,4 @@ gspread,MIT, Anton Burnashev <fuss.here@gmail.com>
 pymongo, Apache-2.0, The MongoDB Python Team
 icalendar,BSD,Plone Foundation <plone-developers@lists.sourceforge.net>
 tls-client,MIT, Florian Zager
+pdfplumber,MIT, Jeremy Singer-Vine
