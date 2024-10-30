@@ -45,3 +45,4 @@ icalendar,BSD,Plone Foundation <plone-developers@lists.sourceforge.net>
 tls-client,MIT, Florian Zager
 pdfplumber,MIT, Jeremy Singer-Vine
 python-gitlab,GNU GPLv3,https://github.com/nejch
+opencv-python,MIT, OpenCV Team
