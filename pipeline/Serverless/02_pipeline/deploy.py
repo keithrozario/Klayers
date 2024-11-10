@@ -132,6 +132,9 @@ def main(event, context):
     logger.info({"regions": regions})
 
     deployed_flag = False
+    # remove Optional dependencies from name to conform to Lambda Layer Arn naming requirements
+    if "[" in package:
+        package = package.split("[")[0]
 
     # Check if need to deploy
     regions_to_deploy = check_regions_to_deploy(
@@ -167,6 +170,7 @@ def main(event, context):
     for region in regions_to_deploy:
         # Publish Layer Version
         logger.info({"message": "Deploying", "region": region, "package": package})
+
         lambda_client = boto3.client("lambda", region_name=region)
         response = lambda_client.publish_layer_version(
             LayerName=layer_name,
