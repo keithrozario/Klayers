@@ -169,16 +169,21 @@ def freeze_requirements(package, path):
     logger.info(f"Requirements txt : \n{requirements_txt}")
     requirements_hash = hashlib.sha256(requirements_txt.encode("utf-8")).hexdigest()
 
+    # we need to check because some packages have optional dependencies
+    # https://packaging.python.org/en/latest/specifications/dependency-specifiers/#dependency-specifiers
+    package_name=package.split("[")[0].lower()
+
     version = None
     for line in requirements_txt.split("\n"):
-        if line[: len(package)].lower() == package.lower():
+        if line[: len(package_name)].lower() == package_name:
             version = line.split("==")[1]
             logger.info(f"Version of {package} found is {version}")
             break
 
     if version is None:
+        # if the package itself is not in the requirements.txt, then it signals the installation process failed
         logger.error(
-            "Unable to determine version of package....refer to logs for requirements.txt"
+            f"Unable to determine version of {package_name}....refer to logs for requirements.txt"
         )
         exit(1)
 
