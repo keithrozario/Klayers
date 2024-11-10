@@ -28,8 +28,9 @@ def main(event, context) -> dict:
     logger.info({f"packages_in_dynamo": packages_in_dynamo})
 
     packages_in_s3 = download_packages_from_s3(python_version=python_version)
-
-    new_packages = [pckg for pckg in packages_in_s3 if pckg not in packages_in_dynamo]
+    
+    packages_in_s3_trim = [pckg.split("[")[0] for pckg in packages_in_s3]
+    new_packages = [pckg for pckg in packages_in_s3_trim if pckg not in packages_in_dynamo]
     logger.info({"new_packages": new_packages})
 
     return {"python_version": python_version, "new_packages": new_packages}
