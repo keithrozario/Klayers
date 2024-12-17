@@ -48,3 +48,4 @@ python-gitlab,GNU GPLv3,https://github.com/nejch
 PyMuPDF,AGPL,Jorj X. McKie <jorj.x.mckie@outlook.de>
 opencv-python,MIT, OpenCV Team
 imutils,MIT, Adrian Rosebrock <adrian@pyimagesearch.com>
+pytz,MIT, stuart@stuartbishop.net
