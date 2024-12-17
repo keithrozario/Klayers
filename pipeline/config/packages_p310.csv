@@ -36,3 +36,4 @@ praw,https://github.com/praw-dev/praw/blob/master/LICENSE.txt,Bryce Boe <bbzbryc
 jsonschema,MIT,Julian Berman <jsonschema@GrayVines.com>
 pymssql, LGPL-2.1, https://github.com/pymssql/pymssql
 snowflake-connector-python,Apache 2.0,Snowflake Inc
+jwcrypto,LGPLv3+,JWCrypto Project Contributors
