@@ -19,3 +19,4 @@ pycryptodome,BSD,Helder Eijs <helderijs@gmail.com>
 fake-useragent, Apache-2.0, Melroy van den Berg <melroy@melroy.org>
 stripe,MIT,Stripe <support@stripe.com>
 "psycopg[binary,pool]", LGPL-3.0, Daniele Varrazzo <daniele.varrazzo@gmail.com>
+huggingface_hub,Apache,julien@huggingface.co
