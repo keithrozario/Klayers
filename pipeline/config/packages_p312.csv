@@ -50,3 +50,4 @@ opencv-python,MIT, OpenCV Team
 imutils,MIT, Adrian Rosebrock <adrian@pyimagesearch.com>
 pytz,MIT, stuart@stuartbishop.net
 amazon-textract-caller,Apache-2.0,AWS
+curl_cffi,MIT License, Lyonnet <infinitesheldon@gmail.com>
