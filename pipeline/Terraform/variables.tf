@@ -7,4 +7,4 @@ variable "cron_expression_invoke_pipelines" { type = map(any) }
 variable "s3bucket_config_parameter_name_suffix" { type = string }
 variable "github_role_name" { type = map(any) }
 variable "config_dir" { type = map(string) } # not used but declared to avoid warning from Terraform
-variable "website_domain_name" { type = string }
+variable "website_domain_name" { type = map(string)}

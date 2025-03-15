@@ -10,7 +10,8 @@ terraform {
 
   backend "remote" {
     organization = "keithrozario"
-
+    ## Required for Terraform Enterprise; Defaults to app.terraform.io for Terraform Cloud
+    hostname = "app.terraform.io"
     workspaces {
       prefix = "Klayers-"
     }
@@ -60,14 +61,12 @@ resource "aws_ssm_parameter" "github_repo" {
   type      = "String"
   name      = "/${var.app_name}/${local.workspace_full_name}/github_repo"
   value     = var.github_repo
-  overwrite = true
 }
 
 resource "aws_ssm_parameter" "api_domain_name" {
   type      = "String"
   name      = "/${var.app_name}/${local.workspace_full_name}/api/domain_name"
   value     = lookup(var.api_domain_name, local.workspace_full_name)
-  overwrite = true
 }
 
 resource "aws_ssm_parameter" "cert_arn" {
@@ -75,7 +74,6 @@ resource "aws_ssm_parameter" "cert_arn" {
   description = "Certificate Arn"
   name        = "/${var.app_name}/${local.workspace_full_name}/api/cert/arn"
   value       = module.certificate.cert_arn
-  overwrite   = true
 }
 
 
