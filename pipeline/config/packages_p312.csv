@@ -54,3 +54,4 @@ curl_cffi,MIT License, Lyonnet <infinitesheldon@gmail.com>
 mysqlclient, GNU General Public License v2 or later (GPLv2+), Inada Naoki
 pandera,MIT,Niels Bantilan
 pyopenssl,Apache-2.0,https://github.com/pyca/pyopenssl
+redis,MIT,Redis Inc.
