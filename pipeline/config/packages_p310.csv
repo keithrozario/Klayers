@@ -39,3 +39,4 @@ snowflake-connector-python,Apache 2.0,Snowflake Inc
 jwcrypto,LGPLv3+,JWCrypto Project Contributors
 matplotlib,PSF,matplotlib-users@python.org
 pandera,MIT,Niels Bantilan
+pyodbc,MIT,Michael Kleehammer
