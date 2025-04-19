@@ -10,6 +10,7 @@ idna,https://github.com/kjd/idna/blob/master/LICENSE.rst,Kim Davis kim@cynosure.
 jinja2,BSD,Armin Ronache <armin.ronacher@active-4.com>; Pallets <contact@palletsprojects.com>
 numpy,https://www.numpy.org/license.html,numpy-discussion@python.org
 pandas,BSD,<pydata@googlegroups.com>
+paramiko,GNU GPLv2,Jeff Forcier <jeff@bitprophet.org>
 Pillow,https://github.com/python-pillow/Pillow/blob/master/LICENSE,Alex Clark <aclark@aclark.net>
 pyqldb,Apache-2.0,AWS
 redshift-connector,Apache License Version 2.0,Amazon Web Services <redshift-drivers@amazon.com>
