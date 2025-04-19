@@ -40,3 +40,4 @@ jwcrypto,LGPLv3+,JWCrypto Project Contributors
 matplotlib,PSF,matplotlib-users@python.org
 pandera,MIT,Niels Bantilan
 weasyprint,BSD, Kozea <https://www.courtbouillon.org>
+pyodbc,MIT,Michael Kleehammer
