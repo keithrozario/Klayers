@@ -57,3 +57,4 @@ pyopenssl,Apache-2.0,https://github.com/pyca/pyopenssl
 SQLAlchemy,MIT,https://pypi.org/org/sqlalchemy/
 redis,MIT,Redis Inc.
 PyJWT, MIT, jpadilla
+psycopg2-binary,GNU General Public License v2 or later (GPLv2+),https://github.com/psycopg/psycopg2
