@@ -21,4 +21,4 @@ stripe,MIT,Stripe <support@stripe.com>
 "psycopg[binary,pool]", LGPL-3.0, Daniele Varrazzo <daniele.varrazzo@gmail.com>
 huggingface_hub,Apache,julien@huggingface.co
 pyopenssl,Apache-2.0,https://github.com/pyca/pyopenssl
-pyiceberg,Apache-2.0,Apache Software Foundation <dev@iceberg.apache.org>
+"pyiceberg[s3fs,glue,pyarrow]",Apache-2.0,Apache Software Foundation <dev@iceberg.apache.org>
