@@ -59,3 +59,4 @@ redis,MIT,Redis Inc.
 PyJWT, MIT, jpadilla
 psycopg2-binary,GNU General Public License v2 or later (GPLv2+),https://github.com/psycopg/psycopg2
 pyotp,MIT,https://github.com/pyauth/pyotp
+RapidFuzz, MIT, Max Bachmann
