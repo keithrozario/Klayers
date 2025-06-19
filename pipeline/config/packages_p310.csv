@@ -43,3 +43,4 @@ weasyprint,BSD, Kozea <https://www.courtbouillon.org>
 pyodbc,MIT,Michael Kleehammer
 redis,MIT,Redis Inc. <oss@redis.com>
 aiohttp,Apache-2.0,aiohttp team <team@aiohttp.org>
+pymongo,Apache-2.0,The MongoDB Python Team
