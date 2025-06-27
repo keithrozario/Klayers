@@ -45,3 +45,4 @@ praw,https://github.com/praw-dev/praw/blob/master/LICENSE.txt,Bryce Boe <bbzbryc
 jsonschema,MIT,Julian Berman <jsonschema@GrayVines.com>
 PyMuPDF,AGPL,Jorj X. McKie <jorj.x.mckie@outlook.de>
 pandera,MIT,Niels Bantilan
+pymupdf4llm,AGPL,Jorj X. McKie <jorj.x.mckie@outlook.de>
