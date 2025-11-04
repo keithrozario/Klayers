@@ -1,5 +1,6 @@
 Package_Name,License,Authors/Maintainers
 aws-xray-sdk,Apache-2.0,AWS
+cfnresponse,Apache-2.0,Amazon Web Services
 aws-requests-auth,BSD,davehmuller@gmail.com
 bcrypt,Apache-2.0,cryptography-dev@python.org
 beautifulsoup4,MIT,Leonard Richardson <leonardr@segfault.org>
