@@ -5,6 +5,7 @@ aws-requests-auth,BSD,davehmuller@gmail.com
 bcrypt,Apache-2.0,cryptography-dev@python.org
 beautifulsoup4,MIT,Leonard Richardson <leonardr@segfault.org>
 boto3,Apache-2.0,AWS
+cfnresponse,Apache-2.0,Amazon Web Services
 cryptography,Apache-2.0,The Python Cryptographic Authority and individual contributors <cryptography-dev@python.org>
 dynamodb-encryption-sdk,Apache-2.0,<aws-cryptools@amazon.com>
 fastapi, MIT, Sebastián Ramírez <tiangolo@gmail.com>
