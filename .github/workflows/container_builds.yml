@@ -35,6 +35,12 @@ jobs:
           - python_version: p312
             arch: arm64
             build_platform: linux/arm64
+          - python_version: p314
+            arch: x86
+            build_platform: linux/amd64
+          - python_version: p314
+            arch: arm64
+            build_platform: linux/arm64
 
 
     permissions:

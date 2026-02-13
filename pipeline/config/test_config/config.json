@@ -1,5 +1,5 @@
 {
-    "python_versions": ["p3.10", "p3.10-arm64", "p3.11", "p3.11-arm64", "p3.12", "p3.12-arm64"],
+    "python_versions": ["p3.10", "p3.10-arm64", "p3.11", "p3.11-arm64", "p3.12", "p3.12-arm64", "p3.14", "p3.14-arm64"],
     "p3.10": {
         "packages_file": "packages_p310.csv"
     },
@@ -9,6 +9,9 @@
     "p3.12":{
         "packages_file": "packages_p312.csv"
     },
+    "p3.1":{
+        "packages_file": "packages_p314.csv"
+    },
     "p3.10-arm64": {
         "packages_file": "packages_p310-arm64.csv"
     },
@@ -17,5 +20,8 @@
     },
     "p3.12-arm64":{
         "packages_file": "packages_p312-arm64.csv"
+    },
+    "p3.14-arm64":{
+        "packages_file": "packages_p314-arm64.csv"
     }
 }
