@@ -10,6 +10,7 @@ dynamodb-encryption-sdk,Apache-2.0,<aws-cryptools@amazon.com>
 idna,https://github.com/kjd/idna/blob/master/LICENSE.rst,Kim Davis kim@cynosure.com.au
 jinja2,BSD,Armin Ronache <armin.ronacher@active-4.com>; Pallets <contact@palletsprojects.com>
 numpy,https://www.numpy.org/license.html,numpy-discussion@python.org
+oci,"Apache Software License, Universal Permissive License (UPL) (Universal Permissive License 1.0 or Apache License 2.0)",joe.levy@oracle.com
 openai,Apache Software License,support@openai.com
 pandas,BSD,<pydata@googlegroups.com>
 pyqldb,Apache-2.0,AWS
