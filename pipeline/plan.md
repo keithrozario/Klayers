@@ -32,12 +32,20 @@ This plan outlines the steps to add support for Python 3.13 and 3.14 while remov
     *   Update base image tags: `FROM public.ecr.aws/lambda/python:3.13` and `FROM public.ecr.aws/lambda/python:3.14`.
     *   Ensure `dnf` commands are retained (valid for Amazon Linux 2023 used in newer runtimes).
     *   Note: `build.py` is copied into these directories by the GitHub workflow, so no need to manually copy it.
+*   **Execution Note:**
+    *   Created new Dockerfiles for 3.13/3.14.
+    *   Removed old build directories.
+    *   Updated `.github/workflows/container_builds.yml` to reflect new versions.
+    *   Pushed to `container_builds-default` and verified successful GitHub Actions run.
+    *   Verified images exist in ECR.
 
 ## 3. Update Serverless Build Configuration
 *   **File:** `pipeline/Serverless/02_pipeline/pipeline_build_containers.yml`
 *   **Remove:** Functions `build310`, `build311`, `build310Arm64`, `build311Arm64`.
 *   **Add:** Functions `build313`, `build314`, `build313Arm64`, `build314Arm64`.
-    *   Copy configuration from `build312`/`build312Arm64`, replacing `312` with `313` and `314` respectively.
+*   **Execution Note:**
+    *   Files updated.
+    *   Switched to `klayers-default` branch for deployment.
 
 ## 4. Update Serverless State Machine
 *   **File:** `pipeline/Serverless/state_machines/02_pipeline.yml`
@@ -48,6 +56,8 @@ This plan outlines the steps to add support for Python 3.13 and 3.14 while remov
 *   **Add:** States `Build313`, `Build314`, `Build313arm64`, `Build314arm64`.
     *   Link new choice branches to these new states.
     *   Set `Next` to `Deploy` (same as existing states).
+*   **Execution Note:**
+    *   Updated state machine definition.
 
 ## 5. Update Configuration Files
 *   **Files:** `pipeline/config/config.json` and `pipeline/config/test_config/config.json`
@@ -61,6 +71,9 @@ This plan outlines the steps to add support for Python 3.13 and 3.14 while remov
     *   Remove old CSVs: `packages_p310*.csv`, `packages_p311*.csv`.
     *   Create new CSVs: `packages_p313.csv`, `packages_p313-arm64.csv`, `packages_p314.csv`, `packages_p314-arm64.csv`.
     *   Content: Header only (`Package_Name,License,Authors/Maintainers`) to start fresh.
+*   **Execution Note:**
+    *   Updated config JSONs.
+    *   Created new CSVs, removed old CSVs.
 
 ## 6. Update GitHub Workflows
 *   **File:** `.github/workflows/container_builds.yml`
