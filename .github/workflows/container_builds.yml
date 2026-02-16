@@ -120,6 +120,7 @@ jobs:
           push: true
           tags: ${{ env.REPO_URL }}:latest
           platforms: ${{ matrix.build_platform }}
+          provenance: false
       
       - name: update SSM
         run: |
