@@ -102,6 +102,10 @@ This plan outlines the steps to add support for Python 3.13 and 3.14 while remov
             *   p3.13 (x86 & arm64)
             *   p3.14 (x86 & arm64)
         *   All 8 executions SUCCEEDED.
+    *   **End-to-End Test:**
+        *   Populated `packages_p313.csv` and `packages_p314.csv` with `requests` and `idna`.
+        *   Pushed config, ran `load_config`, and invoked `invoke_pipeline` lambda.
+        *   Verified 4 automatic Step Function executions triggered and SUCCEEDED.
 
 ## 8. Next Steps (Execution)
 All steps completed and verified.
@@ -110,3 +114,4 @@ All steps completed and verified.
 3.  Serverless pipeline updated and deployed.
 4.  Configuration updated in S3 and DynamoDB.
 5.  Verification tests passed for multiple packages and architectures.
+6.  End-to-end `invoke_pipeline` test passed.
