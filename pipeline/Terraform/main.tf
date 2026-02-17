@@ -24,12 +24,12 @@ locals {
 
 # Provider Block
 provider "aws" {
-  profile = lookup(var.aws_profile, local.workspace_full_name)
+  # profile = lookup(var.aws_profile, local.workspace_full_name)
   region  = lookup(var.aws_region, local.workspace_full_name)
 }
 
 provider "aws" {
-  profile = lookup(var.aws_profile, local.workspace_full_name)
+  # profile = lookup(var.aws_profile, local.workspace_full_name)
   region  = "us-east-1"
   alias   = "cloudfront"
 }

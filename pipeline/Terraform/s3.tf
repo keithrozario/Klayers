@@ -126,6 +126,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "ddb_backup_bucket_config" {
 # Website bucket
 
 resource "aws_s3_bucket" "website_bucket" {
+  provider      = aws.cloudfront
   force_destroy = true
 }
 
@@ -137,7 +138,8 @@ resource "aws_ssm_parameter" "website_bucket_name" {
 }
 
 resource "aws_s3_bucket_public_access_block" "website_bucket" {
-  bucket = aws_s3_bucket.website_bucket.id
+  provider = aws.cloudfront
+  bucket   = aws_s3_bucket.website_bucket.id
 
   block_public_acls       = true
   block_public_policy     = true
