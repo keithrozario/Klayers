@@ -107,11 +107,35 @@ This plan outlines the steps to add support for Python 3.13 and 3.14 while remov
         *   Pushed config, ran `load_config`, and invoked `invoke_pipeline` lambda.
         *   Verified 4 automatic Step Function executions triggered and SUCCEEDED.
 
-## 8. Next Steps (Execution)
-All steps completed and verified.
-1.  Terraform updated infrastructure.
-2.  Container images built and pushed for Py 3.12/3.13/3.14 (ARM64 base images corrected).
-3.  Serverless pipeline updated and deployed.
-4.  Configuration updated in S3 and DynamoDB.
-5.  Verification tests passed for multiple packages and architectures.
-6.  End-to-end `invoke_pipeline` test passed.
+## 9. Dev Environment Update
+*   **Status:** Completed and Verified.
+*   **Branch:** `klayers-dev` (created from `klayers-default`).
+*   **Workspace:** `devp38`.
+*   **Action:**
+    *   Applied Terraform changes (new ECRs, removed old ones).
+    *   Updated `container_builds-dev` branch and triggered successful build workflow (including ARM64).
+    *   Deployed Serverless `kl`, `common-service`, `api`, and `gh-push` stacks to `Klayers-devp38`.
+    *   Pushed config changes to `klayers-dev` and verified S3 update via workflow.
+    *   Triggered `load_config` (DynamoDB updated).
+    *   Triggered `invoke_pipeline` and verified 8 successful Step Function executions (p3.13/p3.14 x86/arm64).
+    *   **API Verification:**
+        *   Deployed `api` service.
+        *   Verified `GET /api/v2/p3.14/layers/latest/us-west-2` returns new layers.
+        *   Verified `GET /api/v2/p3.13/layers/latest/us-west-2` returns new layers.
+        *   Verified `GET /api/v2/p3.14-arm64/layers/latest/us-west-2` returns new layers.
+
+## 10. Prod Environment Update
+*   **Status:** Completed and Verified.
+*   **Branch:** `master` (merged from `klayers-dev`).
+*   **Workspace:** `prodp38`.
+*   **Action:**
+    *   Merged `klayers-dev` to `master` (resolving conflicts by removing old p3.10/p3.11 files).
+    *   Applied Terraform changes (new ECRs, cleanup).
+    *   Updated `container_builds-prod` branch and triggered successful build workflow.
+    *   Deployed Serverless stacks to `Klayers-prodp38`.
+    *   Verified config update (S3) via `Push To Master` workflow.
+    *   Triggered `load_config`.
+    *   Triggered `invoke_pipeline`.
+    *   **Verification:**
+        *   Pipeline executions running/succeeded.
+        *   Verified API `https://api.klayers.cloud` returns new layers (e.g., `p3.13` requests).
