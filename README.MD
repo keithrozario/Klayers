@@ -2,7 +2,7 @@
 
 🐍 A collection of Python Packages as AWS Lambda(λ) Layers 🐍
 
-[![Python 3.10](https://img.shields.io/badge/python-3.10-green?style=for-the-badge)](https://www.python.org/downloads/release/python-3100/)  [![Python 3.11](https://img.shields.io/badge/python-3.11-green?style=for-the-badge)](https://www.python.org/downloads/release/python-3110/)  [![Python 3.12](https://img.shields.io/badge/python-3.12-green?style=for-the-badge)](https://www.python.org/downloads/release/python-3120/)  [![Code style: black](https://img.shields.io/badge/code%20style-black-000000?style=for-the-badge)](https://github.com/psf/black)
+[![Python 3.14](https://img.shields.io/badge/python-3.14-green?style=for-the-badge)](https://www.python.org/downloads/release/python-3100/)  [![Python 3.13](https://img.shields.io/badge/python-3.13-green?style=for-the-badge)](https://www.python.org/downloads/release/python-3110/)  [![Python 3.12](https://img.shields.io/badge/python-3.12-green?style=for-the-badge)](https://www.python.org/downloads/release/python-3120/)  [![Code style: black](https://img.shields.io/badge/code%20style-black-000000?style=for-the-badge)](https://github.com/psf/black)
 
   -   [List of ARNs](#list-of-arns)
   -   [Python Packages](#python-packages)
@@ -26,12 +26,12 @@
 
 List of the latest layer version arns are available by region:
 
-* [Python 3.10](deployments/python3.10)
-* [Python 3.11](deployments/python3.11)
 * [Python 3.12](deployments/python3.12)
-* [Python 3.10-arm64](deployments/python3.10-arm64)
-* [Python 3.11-arm64](deployments/python3.11-arm64)
+* [Python 3.13](deployments/python3.13)
+* [Python 3.14](deployments/python3.14)
 * [Python 3.12-arm64](deployments/python3.12-arm64)
+* [Python 3.13-arm64](deployments/python3.13-arm64)
+* [Python 3.14-arm64](deployments/python3.14-arm64)
 
 *Note: We have deprecated layers for python3.6, python3.7, python 3.8 and python3.9, Please use the latest version of python (currently python3.12) going forward*
 
@@ -39,12 +39,12 @@ List of the latest layer version arns are available by region:
 
 For the full list of Python packages, refer to the following, feel free to make a `pull requests` modifying the files below to requests for a specific package.
 
-* [Python 3.10](pipeline/config/packages_p310.csv)
-* [Python 3.11](pipeline/config/packages_p311.csv)
 * [Python 3.12](pipeline/config/packages_p312.csv)
-* [Python 3.10-arm64](pipeline/config/packages_p310-arm64.csv)
-* [Python 3.11-arm64](pipeline/config/packages_p311-arm64.csv)
+* [Python 3.13](pipeline/config/packages_p313.csv)
+* [Python 3.14](pipeline/config/packages_p314.csv)
 * [Python 3.12-arm64](pipeline/config/packages_p312-arm64.csv)
+* [Python 3.13-arm64](pipeline/config/packages_p313-arm64.csv)
+* [Python 3.14-arm64](pipeline/config/packages_p314-arm64.csv)
 
 ## Using the Layers
 
@@ -223,7 +223,7 @@ example:
 
 ## Asking for additional layers
 
-If you would like a new package to be made a layer, raise a `pull request` modifying the `pipeline/config/packages_p310.csv` or `pipeline/config/packages_p310-arm64.csv` file (depending on which architecture you prefer). By default, please request for the latest version of python unless you absolutely need an older version.
+If you would like a new package to be made a layer, raise a `pull request` modifying the `pipeline/config/packages_p314.csv` or `pipeline/config/packages_p314-arm64.csv` file (depending on which architecture you prefer). By default, please request for the latest version of python unless you absolutely need an older version.
 
 ## Consider Making a Donation
 
