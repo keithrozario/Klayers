@@ -92,13 +92,21 @@ This plan outlines the steps to add support for Python 3.13 and 3.14 while remov
     *   `klayers-default` (maps to `Klayers-defaultp38`)
     *   `klayers-dev` (maps to `Klayers-devp38`)
     *   `master` (maps to `Klayers-prodp38`)
+*   **Execution Note:**
+    *   Pushed config changes to `klayers-default`.
+    *   Workflow ran successfully, updating S3 config.
+    *   Invoked `load_config` lambda -> Success.
+    *   Invoked `check_python_versions` -> Confirmed new versions (p3.12, p3.13, p3.14).
+    *   **Comprehensive Verification:**
+        *   Ran Step Function executions for `idna` and `requests` on:
+            *   p3.13 (x86 & arm64)
+            *   p3.14 (x86 & arm64)
+        *   All 8 executions SUCCEEDED.
 
 ## 8. Next Steps (Execution)
-Once this plan is approved/implemented:
-1.  Push changes to the appropriate `container_builds-*` branch.
-2.  GitHub Actions will trigger build and push of new containers to ECR and update digest SSM parameters.
-3.  Deploy Terraform changes to create new ECR repositories (this should technically happen *before* or *during* step 1/2 if new repos are needed).
-4.  Deploy Serverless changes.
-5.  Push config changes to the appropriate `klayers-*` or `master` branch to update S3.
-6.  Run `common_services/load_config_from_s3` lambda functions to load new config from s3 to DynamoDB.
-7.  Invoke pipeline to verify.
+All steps completed and verified.
+1.  Terraform updated infrastructure.
+2.  Container images built and pushed for Py 3.12/3.13/3.14 (ARM64 base images corrected).
+3.  Serverless pipeline updated and deployed.
+4.  Configuration updated in S3 and DynamoDB.
+5.  Verification tests passed for multiple packages and architectures.
