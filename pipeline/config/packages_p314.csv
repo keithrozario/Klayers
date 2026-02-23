@@ -22,3 +22,5 @@ scipy,BSD-3-Clause,scipy-dev@python.org
 opensearch-py,Apache-2.0,https://pypi.org/user/OpenSearch/
 PyJWT, MIT, jpadilla
 psycopg2-binary,GNU General Public License v2 or later (GPLv2+),https://github.com/psycopg/psycopg2
+PyMuPDF,AGPL,Jorj X. McKie <jorj.x.mckie@outlook.de>
+pytz,MIT,stuart@stuartbishop.net
