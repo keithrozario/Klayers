@@ -228,3 +228,22 @@ If you would like a new package to be made a layer, raise a `pull request` modif
 ## Consider Making a Donation
 
 If you've found Klayers helpful, consider making a small donation [here.](https://www.buymeacoffee.com/keithrozario)
+
+## Repository History Rewrite (March 7, 2026)
+
+On March 7, 2026, this repository underwent a major history rewrite to remove large, non-essential artifacts and significantly reduce the repository's clone size (from ~200MB+ down to ~17MB).
+
+**Impact on existing Clones and Forks:**
+Because the commit hashes have changed, your existing local clone or fork is now incompatible with the current `master` branch. To continue contributing or staying up-to-date, you must perform one of the following:
+
+1. **Re-clone the repository:**
+   ```bash
+   git clone https://github.com/keithrozario/Klayers.git
+   ```
+2. **Hard Reset (for existing clones):**
+   ```bash
+   git fetch origin
+   git reset --hard origin/master
+   ```
+
+A full backup of the legacy history (including the removed large files) is preserved as a permanent asset in the [Legacy History Backup Release](https://github.com/keithrozario/Klayers/releases/tag/legacy-backup).
