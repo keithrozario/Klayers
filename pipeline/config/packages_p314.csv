@@ -24,3 +24,4 @@ PyJWT, MIT, jpadilla
 psycopg2-binary,GNU General Public License v2 or later (GPLv2+),https://github.com/psycopg/psycopg2
 PyMuPDF,AGPL,Jorj X. McKie <jorj.x.mckie@outlook.de>
 pytz,MIT,stuart@stuartbishop.net
+pyarrow,Apache-2.0,Apache Arrow Developers <dev@arrow.apache.org>
