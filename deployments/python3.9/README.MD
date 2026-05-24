@@ -1,5 +1,6 @@
 # Layers for Python 3.9
 
+> **Deprecated:** Python 3.9 reached end-of-life on 2025-10-05 and is no longer supported by AWS Lambda. No new layer versions will be published. Existing layers remain accessible. Please migrate to Python 3.12 or later.
 
 | Region (Code) | Region (Name)| ARNs|
 | :------------- |:--------|:--------|

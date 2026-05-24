@@ -1,5 +1,7 @@
 # Layers for Python 3.8
 
+> **Deprecated:** Python 3.8 reached end-of-life on 2024-10-07 and is no longer supported by AWS Lambda. No new layer versions will be published. Existing layers remain accessible. Please migrate to Python 3.12 or later.
+
 Use the following links to download the latest Arns for your specific region in the format you prefer (json, csv or html). 
 
 | Region (Code) | Region (Name)| ARNs|
