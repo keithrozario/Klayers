@@ -1,6 +1,5 @@
 # Layers for Python 3.11
 
-> **Deprecated:** Python 3.11 is no longer supported by Klayers. No new layer versions will be published. Existing layers remain accessible. Please migrate to Python 3.12 or later.
 
 | Region (Code) | Region (Name)| ARNs|
 | :------------- |:--------|:--------|
