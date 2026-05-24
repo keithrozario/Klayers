@@ -33,10 +33,13 @@ List of the latest layer version arns are available by region:
 * [Python 3.13-arm64](deployments/python3.13-arm64)
 * [Python 3.14-arm64](deployments/python3.14-arm64)
 
+**End of life approaching** (still supported by Klayers, but plan your migration):
+
+* [Python 3.11](deployments/python3.11) | [Python 3.11-arm64](deployments/python3.11-arm64) — EOL October 2027
+* [Python 3.10](deployments/python3.10) | [Python 3.10-arm64](deployments/python3.10-arm64) — EOL October 2026
+
 **Deprecated versions** (no longer receiving updates, existing layers still accessible):
 
-* [Python 3.11](deployments/python3.11) | [Python 3.11-arm64](deployments/python3.11-arm64)
-* [Python 3.10](deployments/python3.10) | [Python 3.10-arm64](deployments/python3.10-arm64)
 * [Python 3.9](deployments/python3.9)
 * [Python 3.8](deployments/python3.8)
 
