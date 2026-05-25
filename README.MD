@@ -2,7 +2,7 @@
 
 🐍 A collection of Python Packages as AWS Lambda(λ) Layers 🐍
 
-[![Python 3.14](https://img.shields.io/badge/python-3.14-green?style=for-the-badge)](https://www.python.org/downloads/release/python-3100/)  [![Python 3.13](https://img.shields.io/badge/python-3.13-green?style=for-the-badge)](https://www.python.org/downloads/release/python-3110/)  [![Python 3.12](https://img.shields.io/badge/python-3.12-green?style=for-the-badge)](https://www.python.org/downloads/release/python-3120/)  [![Code style: black](https://img.shields.io/badge/code%20style-black-000000?style=for-the-badge)](https://github.com/psf/black)
+[![Python 3.14](https://img.shields.io/badge/python-3.14-green?style=for-the-badge)](https://www.python.org/downloads/release/python-3140/)  [![Python 3.13](https://img.shields.io/badge/python-3.13-green?style=for-the-badge)](https://www.python.org/downloads/release/python-3130/)  [![Python 3.12](https://img.shields.io/badge/python-3.12-green?style=for-the-badge)](https://www.python.org/downloads/release/python-3120/)  [![Code style: black](https://img.shields.io/badge/code%20style-black-000000?style=for-the-badge)](https://github.com/psf/black)
 
   -   [List of ARNs](#list-of-arns)
   -   [Python Packages](#python-packages)
@@ -33,7 +33,17 @@ List of the latest layer version arns are available by region:
 * [Python 3.13-arm64](deployments/python3.13-arm64)
 * [Python 3.14-arm64](deployments/python3.14-arm64)
 
-*Note: We have deprecated layers for python3.6, python3.7, python 3.8 and python3.9, Please use the latest version of python (currently python3.12) going forward*
+**End of life approaching** (still supported by Klayers, but plan your migration):
+
+* [Python 3.11](deployments/python3.11) | [Python 3.11-arm64](deployments/python3.11-arm64) — EOL October 2027
+* [Python 3.10](deployments/python3.10) | [Python 3.10-arm64](deployments/python3.10-arm64) — EOL October 2026
+
+**Deprecated versions** (no longer receiving updates, existing layers still accessible):
+
+* [Python 3.9](deployments/python3.9)
+* [Python 3.8](deployments/python3.8)
+
+*Please use Python 3.12 or later for new functions.*
 
 ## Python Packages
 
@@ -200,10 +210,10 @@ Returns data on the latest layer for a all packages in a specific *{region}* for
 
 example:
 
-* [https://api.klayers.cloud/api/v2/p3.9/layers/latest/us-east-1/](https://api.klayers.cloud/api/v2/p3.9/layers/latest/us-east-1/)
-* [https://api.klayers.cloud/api/v2/p3.8/layers/latest/ap-southeast-1/](https://api.klayers.cloud/api/v2/p3.9/layers/latest/ap-southeast-1/)
-* [https://api.klayers.cloud/api/v2/p3.10/layers/latest/ap-southeast-1/csv](https://api.klayers.cloud/api/v2/p3.10/layers/latest/ap-southeast-1/csv)
-* [https://api.klayers.cloud/api/v2/p3.10-arm64/layers/latest/ap-southeast-1/html](https://api.klayers.cloud/api/v2/p3.10-arm64/layers/latest/ap-southeast-1/html)
+* [https://api.klayers.cloud/api/v2/p3.14/layers/latest/us-east-1/](https://api.klayers.cloud/api/v2/p3.14/layers/latest/us-east-1/)
+* [https://api.klayers.cloud/api/v2/p3.13/layers/latest/ap-southeast-1/](https://api.klayers.cloud/api/v2/p3.13/layers/latest/ap-southeast-1/)
+* [https://api.klayers.cloud/api/v2/p3.12/layers/latest/ap-southeast-1/csv](https://api.klayers.cloud/api/v2/p3.12/layers/latest/ap-southeast-1/csv)
+* [https://api.klayers.cloud/api/v2/p3.12-arm64/layers/latest/ap-southeast-1/html](https://api.klayers.cloud/api/v2/p3.12-arm64/layers/latest/ap-southeast-1/html)
 
 ### Get all ARNs for specific package in region
 
@@ -213,8 +223,8 @@ Returns data on the all layers (latest and deprecated) for a **specific** *{pack
 
 example:
 
-* [https://api.klayers.cloud/api/v2/p3.8/layers/us-east-1/requests](https://api.klayers.cloud/api/v2/p3.8/layers/us-east-1/requests)
-* [https://api.klayers.cloud/api/v2/p3.9/layers/ap-southeast-1/boto3](https://api.klayers.cloud/api/v2/p3.9/layers/ap-southeast-1/boto3)
+* [https://api.klayers.cloud/api/v2/p3.14/layers/us-east-1/requests](https://api.klayers.cloud/api/v2/p3.14/layers/us-east-1/requests)
+* [https://api.klayers.cloud/api/v2/p3.13/layers/ap-southeast-1/boto3](https://api.klayers.cloud/api/v2/p3.13/layers/ap-southeast-1/boto3)
 
 ## Special Thanks
 

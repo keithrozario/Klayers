@@ -16,5 +16,5 @@ keith+githubcontributing@keithrozario.com
 
 Contributing here refers to writing code to do something. 
 
-If you would like a new package to be made a layer, raise a `pull request` modifying the `pipeline/config/Klayers-prodp38` file.
+If you would like a new package to be made a layer, raise a `pull request` modifying the `pipeline/config/packages_p314.csv` or `pipeline/config/packages_p314-arm64.csv` file (depending on which architecture you prefer).
 
