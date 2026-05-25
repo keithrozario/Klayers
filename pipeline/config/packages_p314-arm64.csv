@@ -2,3 +2,4 @@ Package_Name,License,Authors/Maintainers
 requests,Apache-2.0,Kenneth Reitz <me@kennethreitz.org>
 idna,https://github.com/kjd/idna/blob/master/LICENSE.rst,Kim Davis kim@cynosure.com.au
 cryptography,Apache-2.0,The Python Cryptographic Authority and individual contributors <cryptography-dev@python.org>
+psycopg, LGPL-3.0, Daniele Varrazzo <daniele.varrazzo@gmail.com>
