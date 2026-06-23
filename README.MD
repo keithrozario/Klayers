@@ -230,6 +230,7 @@ example:
 
 * [Chahna107](https://github.com/chahna107) 
 * [@ldcorentin](https://github.com/ldcorentin) for making the awesome Terraform klayers-provider
+* [@DanielKilgallon](https://github.com/DanielKilgallon) for helping keep the documentation up to date
 
 ## Asking for additional layers
 
