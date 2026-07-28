@@ -4,3 +4,4 @@ idna,https://github.com/kjd/idna/blob/master/LICENSE.rst,Kim Davis kim@cynosure.
 pdfplumber,MIT,Jeremy Singer-Vine
 PyMuPDF,AGPL,Jorj X. McKie <jorj.x.mckie@outlook.de>
 cryptography,Apache-2.0,The Python Cryptographic Authority and individual contributors <cryptography-dev@python.org>
+Pillow,https://github.com/python-pillow/Pillow/blob/master/LICENSE,Alex Clark <aclark@aclark.net>
