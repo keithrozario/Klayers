@@ -18,6 +18,7 @@ definition:
           - Lambda.ClientExecutionTimeoutException
           - Lambda.ServiceException
           - Lambda.AWSLambdaException
+          - Lambda.SdkClientException
           - Lambda.TooManyRequestsException
           MaxAttempts: 5
           BackoffRate: 2
@@ -55,12 +56,14 @@ definition:
       Next: Deploy
       Retry:
         - ErrorEquals:
-          - Lambda.AWSLambdaException
           - States.Timeout
           - Lambda.ClientExecutionTimeoutException
           - Lambda.ServiceException
           - Lambda.AWSLambdaException
+          - Lambda.SdkClientException
           - Lambda.TooManyRequestsException
+          - Lambda.ResourceConflictException
+          - Lambda.CodeArtifactUserPendingException
           MaxAttempts: 5
           BackoffRate: 2
           IntervalSeconds: 15
@@ -75,12 +78,14 @@ definition:
       Next: Deploy
       Retry:
         - ErrorEquals:
-          - Lambda.AWSLambdaException
           - States.Timeout
           - Lambda.ClientExecutionTimeoutException
           - Lambda.ServiceException
           - Lambda.AWSLambdaException
+          - Lambda.SdkClientException
           - Lambda.TooManyRequestsException
+          - Lambda.ResourceConflictException
+          - Lambda.CodeArtifactUserPendingException
           MaxAttempts: 5
           BackoffRate: 2
           IntervalSeconds: 15
@@ -95,12 +100,14 @@ definition:
       Next: Deploy
       Retry:
         - ErrorEquals:
-          - Lambda.AWSLambdaException
           - States.Timeout
           - Lambda.ClientExecutionTimeoutException
           - Lambda.ServiceException
           - Lambda.AWSLambdaException
+          - Lambda.SdkClientException
           - Lambda.TooManyRequestsException
+          - Lambda.ResourceConflictException
+          - Lambda.CodeArtifactUserPendingException
           MaxAttempts: 5
           BackoffRate: 2
           IntervalSeconds: 15
@@ -119,7 +126,10 @@ definition:
           - Lambda.ClientExecutionTimeoutException
           - Lambda.ServiceException
           - Lambda.AWSLambdaException
+          - Lambda.SdkClientException
           - Lambda.TooManyRequestsException
+          - Lambda.ResourceConflictException
+          - Lambda.CodeArtifactUserPendingException
           MaxAttempts: 5
           BackoffRate: 2
           IntervalSeconds: 15
@@ -138,7 +148,10 @@ definition:
           - Lambda.ClientExecutionTimeoutException
           - Lambda.ServiceException
           - Lambda.AWSLambdaException
+          - Lambda.SdkClientException
           - Lambda.TooManyRequestsException
+          - Lambda.ResourceConflictException
+          - Lambda.CodeArtifactUserPendingException
           MaxAttempts: 5
           BackoffRate: 2
           IntervalSeconds: 15
@@ -157,7 +170,10 @@ definition:
           - Lambda.ClientExecutionTimeoutException
           - Lambda.ServiceException
           - Lambda.AWSLambdaException
+          - Lambda.SdkClientException
           - Lambda.TooManyRequestsException
+          - Lambda.ResourceConflictException
+          - Lambda.CodeArtifactUserPendingException
           MaxAttempts: 5
           BackoffRate: 2
           IntervalSeconds: 15
@@ -173,11 +189,10 @@ definition:
       Retry:
         - ErrorEquals:
           - States.Timeout
-          - Lambda.AWSLambdaException
-          - States.Timeout
           - Lambda.ClientExecutionTimeoutException
           - Lambda.ServiceException
           - Lambda.AWSLambdaException
+          - Lambda.SdkClientException
           - Lambda.TooManyRequestsException
           MaxAttempts: 2
           BackoffRate: 30
