@@ -1,0 +1,173 @@
+name: Reusable CDK Deploy
+
+on:
+  workflow_call:
+    inputs:
+      project_dir:
+        description: "Directory of the CDK project to test/synth/deploy"
+        type: string
+        required: true
+      target_environment:
+        description: "Target environment: default, dev, prod, or promote_all"
+        type: string
+        required: false
+        default: "promote_all"
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  test-and-synth:
+    name: Test and Synth (${{ inputs.project_dir }})
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ inputs.project_dir }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install dependencies
+        run: uv sync --frozen || uv sync
+
+      - name: Run Ruff check
+        run: uv run ruff check .
+
+      - name: Run Pytest
+        run: uv run pytest
+
+      - name: CDK Synth
+        env:
+          KLAYERS_OFFLINE_SYNTH: "1"
+        run: npx --yes aws-cdk@2 synth -c stage=Klayers-defaultp38
+
+  deploy-default:
+    name: Deploy to Default (${{ inputs.project_dir }})
+    needs: test-and-synth
+    if: inputs.target_environment == 'default' || inputs.target_environment == 'promote_all'
+    runs-on: ubuntu-latest
+    environment: default
+    defaults:
+      run:
+        working-directory: ${{ inputs.project_dir }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+          role-session-name: cdk-deploy-default
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install dependencies
+        run: uv sync --frozen || uv sync
+
+      - name: CDK Deploy to Default
+        run: npx --yes aws-cdk@2 deploy --all --require-approval never -c stage=${{ vars.AWS_STAGE }}
+
+  deploy-dev:
+    name: Deploy to Dev (${{ inputs.project_dir }})
+    needs: [test-and-synth, deploy-default]
+    if: always() && needs.test-and-synth.result == 'success' && (inputs.target_environment == 'dev' || (inputs.target_environment == 'promote_all' && needs.deploy-default.result == 'success'))
+    runs-on: ubuntu-latest
+    environment: dev
+    defaults:
+      run:
+        working-directory: ${{ inputs.project_dir }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+          role-session-name: cdk-deploy-dev
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install dependencies
+        run: uv sync --frozen || uv sync
+
+      - name: CDK Deploy to Dev
+        run: npx --yes aws-cdk@2 deploy --all --require-approval never -c stage=${{ vars.AWS_STAGE }}
+
+  deploy-prod:
+    name: Deploy to Prod (${{ inputs.project_dir }})
+    needs: [test-and-synth, deploy-dev]
+    if: always() && needs.test-and-synth.result == 'success' && (inputs.target_environment == 'prod' || (inputs.target_environment == 'promote_all' && needs.deploy-dev.result == 'success'))
+    runs-on: ubuntu-latest
+    environment: prod
+    defaults:
+      run:
+        working-directory: ${{ inputs.project_dir }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+          role-session-name: cdk-deploy-prod
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install dependencies
+        run: uv sync --frozen || uv sync
+
+      - name: CDK Deploy to Prod
+        run: npx --yes aws-cdk@2 deploy --all --require-approval never -c stage=${{ vars.AWS_STAGE }}

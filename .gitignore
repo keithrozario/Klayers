@@ -15,4 +15,15 @@ scripts/gen_key/id_*
 .devcontainer/
 
 *.pyc
-.pytest_cache
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+.venv/
+**/.venv/
+**/cdk.out/
+**/.layer_build/
+cdk.context.json
+.terraform/
+**/.terraform/
+*.tfstate
+*.tfstate.*

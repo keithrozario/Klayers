@@ -1,0 +1,383 @@
+name: Deploy Containers
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - "pipeline/container_images/**"
+      - "pipeline/config/config.json"
+      - ".github/workflows/deploy-containers.yml"
+  workflow_dispatch:
+    inputs:
+      target_environment:
+        description: "Target environment"
+        type: choice
+        options:
+          - default
+          - dev
+          - prod
+          - promote_all
+        default: default
+      python_version:
+        description: "Python version to build"
+        type: choice
+        options:
+          - all
+          - p3.12
+          - p3.12-arm64
+          - p3.13
+          - p3.13-arm64
+          - p3.14
+          - p3.14-arm64
+        default: all
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  generate-matrix:
+    name: Generate Matrix
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Determine Matrix
+        id: set-matrix
+        env:
+          INPUT_PYTHON_VERSION: ${{ inputs.python_version || 'all' }}
+        run: |
+          python3 - << 'EOF'
+          import json, os
+
+          with open("pipeline/config/config.json") as f:
+              data = json.load(f)
+
+          versions = data.get("python_versions", [])
+          input_ver = os.environ.get("INPUT_PYTHON_VERSION", "all")
+          if input_ver and input_ver != "all":
+              versions = [v for v in versions if v == input_ver]
+
+          matrix = []
+          for v in versions:
+              arch = "arm64" if v.endswith("-arm64") else "x86"
+              py_param = v.replace("-arm64", "").replace(".", "")
+              base_tag = v.lstrip("p")
+              platform = "linux/arm64" if arch == "arm64" else "linux/amd64"
+              runner = "ubuntu-24.04-arm" if arch == "arm64" else "ubuntu-latest"
+              matrix.append({
+                  "config_ver": v,
+                  "py_param": py_param,
+                  "arch": arch,
+                  "base_tag": base_tag,
+                  "platform": platform,
+                  "runner": runner,
+              })
+
+          matrix_json = json.dumps(matrix)
+          print(f"Generated matrix: {matrix_json}")
+          with open(os.environ["GITHUB_OUTPUT"], "a") as gh_out:
+              gh_out.write(f"matrix={matrix_json}\n")
+          EOF
+
+  build-images:
+    name: Build Image (${{ matrix.py_param }}-${{ matrix.arch }})
+    needs: generate-matrix
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: pipeline/container_images
+          build-args: BASE_IMAGE_TAG=${{ matrix.base_tag }}
+          platforms: ${{ matrix.platform }}
+          provenance: false
+          sbom: false
+          outputs: type=oci,dest=/tmp/image-${{ matrix.py_param }}-${{ matrix.arch }}.tar
+
+      - name: Upload Image Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: container-${{ matrix.py_param }}-${{ matrix.arch }}
+          path: /tmp/image-${{ matrix.py_param }}-${{ matrix.arch }}.tar
+          retention-days: 1
+
+  promote-default:
+    name: Promote to Default
+    needs: [generate-matrix, build-images]
+    if: github.event_name == 'push' || inputs.target_environment == 'default' || inputs.target_environment == 'promote_all'
+    environment: default
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download container artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: container-*
+          path: /tmp/containers
+          merge-multiple: true
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ vars.AWS_REGION }}
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          role-duration-seconds: 1800
+          role-session-name: deploy-containers-${{ vars.AWS_STAGE }}
+
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Ensure skopeo is installed
+        run: |
+          if ! command -v skopeo >/dev/null 2>&1; then
+            sudo apt-get update && sudo apt-get install -y skopeo
+          fi
+
+      - name: Push Images to ECR & Update SSM
+        env:
+          MATRIX_JSON: ${{ needs.generate-matrix.outputs.matrix }}
+          AWS_STAGE: ${{ vars.AWS_STAGE }}
+        run: |
+          set -euo pipefail
+          echo "$MATRIX_JSON" | jq -c '.[]' | while read -r item; do
+            py_param=$(echo "$item" | jq -r '.py_param')
+            arch=$(echo "$item" | jq -r '.arch')
+            echo "=== Processing $py_param ($arch) ==="
+
+            TAR_FILE=$(find /tmp/containers -name "image-${py_param}-${arch}.tar" | head -n 1)
+            if [ -z "$TAR_FILE" ] || [ ! -f "$TAR_FILE" ]; then
+              echo "Error: OCI archive image-${py_param}-${arch}.tar not found in /tmp/containers"
+              exit 1
+            fi
+
+            PARAM_PREFIX="build/${py_param}/${arch}"
+            REPO_PARAM="/kl/${AWS_STAGE}/${PARAM_PREFIX}/repo"
+            echo "Fetching repository URL from SSM: $REPO_PARAM"
+            REPO_URL=$(aws ssm get-parameter --name "$REPO_PARAM" --query 'Parameter.Value' --output text)
+            REPO_NAME="${REPO_URL#*/}"
+
+            echo "Copying OCI archive ($arch) to ${REPO_URL}:latest and ${REPO_URL}:${GITHUB_SHA}..."
+            skopeo copy "oci-archive:${TAR_FILE}" "docker://${REPO_URL}:latest"
+            skopeo copy "oci-archive:${TAR_FILE}" "docker://${REPO_URL}:${GITHUB_SHA}"
+
+            echo "Fetching image digest for latest..."
+            DIGEST=$(aws ecr describe-images --repository-name "$REPO_NAME" --image-ids imageTag=latest --query 'imageDetails[0].imageDigest' --output text)
+            echo "Writing digest ($DIGEST) to SSM: /kl/${AWS_STAGE}/${PARAM_PREFIX}/digest"
+            aws ssm put-parameter --name "/kl/${AWS_STAGE}/${PARAM_PREFIX}/digest" --value "$DIGEST" --overwrite --type String
+          done
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Roll forward CDK infra if present
+        run: |
+          if [ -f pipeline/core_pipeline/infra.py ]; then
+            cd pipeline/core_pipeline
+            if [ -f pyproject.toml ]; then
+              uv sync --frozen || uv sync
+            fi
+            npx --yes aws-cdk@2 deploy --all --require-approval never -c stage=${{ vars.AWS_STAGE }}
+          fi
+
+  promote-dev:
+    name: Promote to Dev
+    needs: [generate-matrix, build-images, promote-default]
+    if: |
+      always() &&
+      needs.build-images.result == 'success' &&
+      (
+        inputs.target_environment == 'dev' ||
+        ((github.event_name == 'push' || inputs.target_environment == 'promote_all') && needs.promote-default.result == 'success')
+      )
+    environment: dev
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download container artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: container-*
+          path: /tmp/containers
+          merge-multiple: true
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ vars.AWS_REGION }}
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          role-duration-seconds: 1800
+          role-session-name: deploy-containers-${{ vars.AWS_STAGE }}
+
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Ensure skopeo is installed
+        run: |
+          if ! command -v skopeo >/dev/null 2>&1; then
+            sudo apt-get update && sudo apt-get install -y skopeo
+          fi
+
+      - name: Push Images to ECR & Update SSM
+        env:
+          MATRIX_JSON: ${{ needs.generate-matrix.outputs.matrix }}
+          AWS_STAGE: ${{ vars.AWS_STAGE }}
+        run: |
+          set -euo pipefail
+          echo "$MATRIX_JSON" | jq -c '.[]' | while read -r item; do
+            py_param=$(echo "$item" | jq -r '.py_param')
+            arch=$(echo "$item" | jq -r '.arch')
+            echo "=== Processing $py_param ($arch) ==="
+
+            TAR_FILE=$(find /tmp/containers -name "image-${py_param}-${arch}.tar" | head -n 1)
+            if [ -z "$TAR_FILE" ] || [ ! -f "$TAR_FILE" ]; then
+              echo "Error: OCI archive image-${py_param}-${arch}.tar not found in /tmp/containers"
+              exit 1
+            fi
+
+            PARAM_PREFIX="build/${py_param}/${arch}"
+            REPO_PARAM="/kl/${AWS_STAGE}/${PARAM_PREFIX}/repo"
+            echo "Fetching repository URL from SSM: $REPO_PARAM"
+            REPO_URL=$(aws ssm get-parameter --name "$REPO_PARAM" --query 'Parameter.Value' --output text)
+            REPO_NAME="${REPO_URL#*/}"
+
+            echo "Copying OCI archive ($arch) to ${REPO_URL}:latest and ${REPO_URL}:${GITHUB_SHA}..."
+            skopeo copy "oci-archive:${TAR_FILE}" "docker://${REPO_URL}:latest"
+            skopeo copy "oci-archive:${TAR_FILE}" "docker://${REPO_URL}:${GITHUB_SHA}"
+
+            echo "Fetching image digest for latest..."
+            DIGEST=$(aws ecr describe-images --repository-name "$REPO_NAME" --image-ids imageTag=latest --query 'imageDetails[0].imageDigest' --output text)
+            echo "Writing digest ($DIGEST) to SSM: /kl/${AWS_STAGE}/${PARAM_PREFIX}/digest"
+            aws ssm put-parameter --name "/kl/${AWS_STAGE}/${PARAM_PREFIX}/digest" --value "$DIGEST" --overwrite --type String
+          done
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Roll forward CDK infra if present
+        run: |
+          if [ -f pipeline/core_pipeline/infra.py ]; then
+            cd pipeline/core_pipeline
+            if [ -f pyproject.toml ]; then
+              uv sync --frozen || uv sync
+            fi
+            npx --yes aws-cdk@2 deploy --all --require-approval never -c stage=${{ vars.AWS_STAGE }}
+          fi
+
+  promote-prod:
+    name: Promote to Prod
+    needs: [generate-matrix, build-images, promote-dev]
+    if: |
+      always() &&
+      needs.build-images.result == 'success' &&
+      (
+        inputs.target_environment == 'prod' ||
+        ((github.event_name == 'push' || inputs.target_environment == 'promote_all') && needs.promote-dev.result == 'success')
+      )
+    environment: prod
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download container artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: container-*
+          path: /tmp/containers
+          merge-multiple: true
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ vars.AWS_REGION }}
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          role-duration-seconds: 1800
+          role-session-name: deploy-containers-${{ vars.AWS_STAGE }}
+
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Ensure skopeo is installed
+        run: |
+          if ! command -v skopeo >/dev/null 2>&1; then
+            sudo apt-get update && sudo apt-get install -y skopeo
+          fi
+
+      - name: Push Images to ECR & Update SSM
+        env:
+          MATRIX_JSON: ${{ needs.generate-matrix.outputs.matrix }}
+          AWS_STAGE: ${{ vars.AWS_STAGE }}
+        run: |
+          set -euo pipefail
+          echo "$MATRIX_JSON" | jq -c '.[]' | while read -r item; do
+            py_param=$(echo "$item" | jq -r '.py_param')
+            arch=$(echo "$item" | jq -r '.arch')
+            echo "=== Processing $py_param ($arch) ==="
+
+            TAR_FILE=$(find /tmp/containers -name "image-${py_param}-${arch}.tar" | head -n 1)
+            if [ -z "$TAR_FILE" ] || [ ! -f "$TAR_FILE" ]; then
+              echo "Error: OCI archive image-${py_param}-${arch}.tar not found in /tmp/containers"
+              exit 1
+            fi
+
+            PARAM_PREFIX="build/${py_param}/${arch}"
+            REPO_PARAM="/kl/${AWS_STAGE}/${PARAM_PREFIX}/repo"
+            echo "Fetching repository URL from SSM: $REPO_PARAM"
+            REPO_URL=$(aws ssm get-parameter --name "$REPO_PARAM" --query 'Parameter.Value' --output text)
+            REPO_NAME="${REPO_URL#*/}"
+
+            echo "Copying OCI archive ($arch) to ${REPO_URL}:latest and ${REPO_URL}:${GITHUB_SHA}..."
+            skopeo copy "oci-archive:${TAR_FILE}" "docker://${REPO_URL}:latest"
+            skopeo copy "oci-archive:${TAR_FILE}" "docker://${REPO_URL}:${GITHUB_SHA}"
+
+            echo "Fetching image digest for latest..."
+            DIGEST=$(aws ecr describe-images --repository-name "$REPO_NAME" --image-ids imageTag=latest --query 'imageDetails[0].imageDigest' --output text)
+            echo "Writing digest ($DIGEST) to SSM: /kl/${AWS_STAGE}/${PARAM_PREFIX}/digest"
+            aws ssm put-parameter --name "/kl/${AWS_STAGE}/${PARAM_PREFIX}/digest" --value "$DIGEST" --overwrite --type String
+          done
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Roll forward CDK infra if present
+        run: |
+          if [ -f pipeline/core_pipeline/infra.py ]; then
+            cd pipeline/core_pipeline
+            if [ -f pyproject.toml ]; then
+              uv sync --frozen || uv sync
+            fi
+            npx --yes aws-cdk@2 deploy --all --require-approval never -c stage=${{ vars.AWS_STAGE }}
+          fi

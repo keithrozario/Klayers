@@ -1,0 +1,5 @@
+aws-lambda-powertools>=3.0.0
+requests>=2.32.0
+packaging>=24.0
+aws-requests-auth>=0.4.3
+slack-sdk>=3.33.0

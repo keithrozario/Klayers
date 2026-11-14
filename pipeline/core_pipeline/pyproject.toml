@@ -1,0 +1,31 @@
+[project]
+name = "klayers-core-pipeline"
+version = "0.1.0"
+description = "CDK Mini-App for Klayers Core Pipeline"
+readme = "README.MD"
+requires-python = ">=3.13"
+dependencies = [
+    "aws-cdk-lib>=2.170.0",
+    "constructs>=10.0.0",
+    "boto3>=1.35.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0.0",
+    "moto[dynamodb,s3,ssm,events]>=5.0.0",
+    "aws-lambda-powertools>=3.0.0",
+    "requests>=2.32.0",
+    "packaging>=24.0",
+    "aws-requests-auth>=0.4.3",
+    "slack-sdk>=3.33.0",
+    "ruff>=0.8.0",
+]
+
+[tool.pytest.ini_options]
+pythonpath = [".", "src"]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py313"

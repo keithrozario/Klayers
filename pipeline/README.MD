@@ -1,40 +1,102 @@
-# Intro
+# Klayers Pipeline Architecture
 
-This directory contains the various services that make up Klayers.
+This directory contains the services and infrastructure that power Klayers. Each service is structured as an independent, modular **Python CDK Mini-App** (`infra.py` + `cdk.json` + `pyproject.toml` managed with `uv`), decoupled strictly via **AWS SSM Parameter Store** (zero CloudFormation cross-stack `Export`/`ImportValue` locks).
 
-## Terraform
-Contains the terraform scripts that create the buckets, dynamodb tables, ECR registry, etc. This is the main infra for all services and should be deployed first.
+All deployments run on **GitHub Actions** promoting sequentially across **GitHub Environments** (`default` -> `dev` -> `prod`).
 
-## common_services
-Contains common services used by most of the other services. Terraform and the common services should be deployed first before any other service further below this list.
+---
 
-## container_images
-Contains the container images used for building the layers. These are pushed via scripts to ECR
+## Component Overview
 
-## Serverless
-Contains the Serverless scripts for the main build pipeline
+### 1. `Terraform/`
+Maintains foundational stateful cloud resources:
+- DynamoDB table (`db-ver2`)
+- CloudFront ACM certificate (`us-east-1`)
+- S3 buckets (layers storage and config)
+- ECR container repositories
+- GitHub Actions OIDC roles (`github_role_default`, `github_role_dev`, `github_role_prod`)
 
-## API
-Contains the Serverless scripts for the API (api.klayers.cloud)
+### 2. `common_services/` (Stack: `klayers-common-<stage>`)
+Central configuration microservice:
+- Provides SigV4 IAM-authorized HTTP API (v2) routes:
+  - `GET /api/v1/python-versions`
+  - `GET /api/v1/config/{python_version}/{config_type}`
+  - `GET /api/v1/configS3/{python_version}/{config_type}`
+  - `POST /api/v1/load-config`
+- Lambda functions running Python 3.13.
+- Publishes SSM parameters:
+  - `/common-service/<stage>/CommonServiceApi/URL`
+  - `/common-service/<stage>/CommonServiceApi/arn`
 
-## github_on_pr_merge
-The main functionality (step functions) for when a PR is merged in github. see also the `.github/workflows` for more info.
+### 3. `container_images/`
+Container build system for Lambda Layer builders:
+- Single parameterized `Dockerfile` (`ARG BASE_IMAGE_TAG`) + `build.py`.
+- Automated GitHub Actions matrix builds using native runners:
+  - `ubuntu-latest` for `x86_64`
+  - `ubuntu-24.04-arm` for `arm64` (native ARM64 execution, no QEMU emulation)
+- Builds once and promotes exact OCI image digests across environment ECR repositories.
+- Updates SSM digest parameters `/kl/<stage>/build/<py>/<arch>/digest`.
 
-## To add a new version of Python
+### 4. `core_pipeline/` (Stack: `klayers-core-<stage>`, formerly `Serverless/`)
+The primary build and publication engine:
+- Data-driven Python CDK stack dynamically synthesizing `Build<PyVer>` container Lambdas and Step Function `Choice` branches from `config/config.json`.
+- State Machines orchestrating package build, verification, multi-region layer deployment, and DynamoDB updates.
+- DynamoDB Stream processor for TTL layer expiration.
+- Slack notifications service using `slack_sdk`.
 
-* Update `Terraform/container_repositories.tf` to reflect new containers for building with new version of Python
-* Update `container_images/build_images` with new folder for new version of Python
-* Update `Serverless/02_pipeline/pipeline_build_containers.yml` to create new build function
-* Update `Serverless/state_machines/02_pipeline.yml` to update build step function to use new functions
-* Update `config/test_config/config.json` to include new python versions (or remove old ones)
-    * Remember to do the same for `config` as well. `test_config` is used by klayers-default and klayers-dev
-* Push update to `klayers-default`, `klayers-dev` and `klayers-prod` branch so that Github-Actions can push update to s3
-    * For simplicity ensure the config csvs do not have packages, (but have headers)
-* Run `common_services/load_config_from_s3` lambda functions to load new config from s3 to DynamoDB
-    * sls invoke -f load_config -s <stage>
-    * sls invoke -f check_python_versions -s <stage>
-        * this function has a heavy cache, you might have to clear it
-* Update new packages in `config/packages_<pythonversion>.csv`
-    * push to branch to start building
-* Run `invoke_pipeline` to invoke new pipelines
+### 5. `api/` (Stack: `klayers-api-<stage>`)
+Public read-only API and CloudFront CDN distribution:
+- Serves `api.klayers.cloud` (and `api-dev.klayers.cloud`, `api-default.klayers.cloud`).
+- Lambda functions on Python 3.13 (`arm64` Graviton) querying DynamoDB and returning JSON, CSV, and HTML views of available layers.
 
+### 6. `github_on_pr_merge/` (Stack: `klayers-gh-push-<stage>`)
+Event handler invoked when community PRs add new packages to CSV files:
+- Validates changes and triggers the build pipeline Step Function.
+
+---
+
+## Environments & Promotion Pipeline
+
+All deployments operate from a single trunk (`master`) through three isolated AWS accounts:
+
+| GitHub Environment | Legacy Stage Name (`STAGE`) | AWS Account ID | Primary Region | S3 Config Source | API Domain |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **`default`** | `Klayers-defaultp38` | `367660174341` | `ap-southeast-1` | `pipeline/config/test_config` | `api-default.klayers.cloud` |
+| **`dev`** | `Klayers-devp38` | `908645878701` | `us-west-2` | `pipeline/config/test_config` | `api-dev.klayers.cloud` |
+| **`prod`** | `Klayers-prodp38` | `770693421928` | `us-east-2` | `pipeline/config` | `api.klayers.cloud` |
+
+### Promotion Flow
+```
+Merge to master (or workflow_dispatch)
+  ↓
+Test & Synth (uv run pytest + cdk synth)
+  ↓
+Deploy: default (ap-southeast-1)
+  ↓
+Deploy: dev (us-west-2)
+  ↓
+GitHub Approval Gate (prod)
+  ↓
+Deploy: prod (us-east-2)
+```
+
+---
+
+## Simplified Workflow: Adding a New Version of Python
+
+With the parameterized container images and dynamic CDK mini-app loops, adding a new Python runtime (e.g. `p3.15` and `p3.15-arm64`) requires zero YAML copy-pasting:
+
+1. **Add ECR Repositories**:
+   Add the ECR module in `pipeline/Terraform/container_repositories.tf` and apply via Terraform.
+
+2. **Update Configuration**:
+   Add `"p3.15"` and `"p3.15-arm64"` to `python_versions` and configure their package file references in `pipeline/config/config.json` (and `pipeline/config/test_config/config.json`).
+   Create initial `pipeline/config/packages_p3.15.csv` and `pipeline/config/packages_p3.15-arm64.csv` with standard CSV headers.
+
+3. **Commit & Push to `master`**:
+   - `deploy-containers.yml` automatically detects the new versions, builds the x86 and ARM64 container images in parallel on native runners, and pushes to ECR.
+   - `deploy-core-pipeline.yml` reads `config.json` and dynamically instantiates the new `BuildP315` and `BuildP315Arm64` Lambdas and wires their Step Function `Choice` branches.
+   - `load_config` in `common_services` populates DynamoDB with the new Python versions and package lists.
+
+4. **Add Desired Packages**:
+   Add package rows to `packages_p3.15.csv` and push to start building layers automatically!

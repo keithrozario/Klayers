@@ -1,0 +1,31 @@
+name: Deploy API
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "pipeline/api/**"
+      - ".github/workflows/deploy-api.yml"
+  workflow_dispatch:
+    inputs:
+      target_environment:
+        description: "Target environment to deploy"
+        type: choice
+        options:
+          - default
+          - dev
+          - prod
+          - promote_all
+        default: default
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    uses: ./.github/workflows/_reusable-cdk-deploy.yml
+    with:
+      project_dir: pipeline/api
+      target_environment: ${{ github.event_name == 'workflow_dispatch' && inputs.target_environment || 'promote_all' }}

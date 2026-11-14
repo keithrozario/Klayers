@@ -1,0 +1,164 @@
+name: Sync Config & Trigger Pipeline
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'pipeline/config/**'
+  workflow_dispatch:
+    inputs:
+      target_environment:
+        description: 'Target environment'
+        type: choice
+        options:
+          - default
+          - dev
+          - prod-config
+        default: default
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  detect:
+    runs-on: ubuntu-latest
+    outputs:
+      sync_default: ${{ steps.check.outputs.sync_default }}
+      sync_dev: ${{ steps.check.outputs.sync_dev }}
+      sync_prod: ${{ steps.check.outputs.sync_prod }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Detect Config Changes
+        id: check
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            TARGET="${{ github.event.inputs.target_environment }}"
+            echo "Workflow dispatch target: $TARGET"
+            echo "sync_default=$([ "$TARGET" = "default" ] && echo true || echo false)" >> $GITHUB_OUTPUT
+            echo "sync_dev=$([ "$TARGET" = "dev" ] && echo true || echo false)" >> $GITHUB_OUTPUT
+            echo "sync_prod=$([ "$TARGET" = "prod-config" ] && echo true || echo false)" >> $GITHUB_OUTPUT
+          else
+            BEFORE="${{ github.event.before }}"
+            if [ -z "$BEFORE" ] || [ "$BEFORE" = "0000000000000000000000000000000000000000" ]; then
+              CHANGED=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }})
+            else
+              CHANGED=$(git diff --name-only "$BEFORE" "${{ github.sha }}")
+            fi
+            echo "Changed files in commit:"
+            echo "$CHANGED"
+
+            if echo "$CHANGED" | grep -q '^pipeline/config/test_config/'; then
+              echo "Detected changes in pipeline/config/test_config/"
+              echo "sync_default=true" >> $GITHUB_OUTPUT
+              echo "sync_dev=true" >> $GITHUB_OUTPUT
+            else
+              echo "sync_default=false" >> $GITHUB_OUTPUT
+              echo "sync_dev=false" >> $GITHUB_OUTPUT
+            fi
+
+            if echo "$CHANGED" | grep '^pipeline/config/' | grep -v -q '^pipeline/config/test_config/'; then
+              echo "Detected production config changes in pipeline/config/"
+              echo "sync_prod=true" >> $GITHUB_OUTPUT
+            else
+              echo "sync_prod=false" >> $GITHUB_OUTPUT
+            fi
+          fi
+
+  sync-default:
+    needs: [detect]
+    if: needs.detect.outputs.sync_default == 'true'
+    runs-on: ubuntu-latest
+    environment: default
+    env:
+      AWS_STAGE: ${{ vars.AWS_STAGE || 'Klayers-defaultp38' }}
+      AWS_REGION: ${{ vars.AWS_REGION || 'ap-southeast-1' }}
+      AWS_ROLE_ARN: ${{ vars.AWS_ROLE_ARN || 'arn:aws:iam::367660174341:role/github_role_default' }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ env.AWS_REGION }}
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
+          role-duration-seconds: 1200
+          role-session-name: sync-config-default
+
+      - name: Upload test_config to S3 & Trigger Step Function
+        run: |
+          CONFIG_BUCKET_NAME=$(aws ssm get-parameter --name "/kl/${AWS_STAGE}/config_bucket/name" --query "Parameter.Value" --output text)
+          echo "Syncing ./pipeline/config/test_config to s3://${CONFIG_BUCKET_NAME}"
+          aws s3 sync ./pipeline/config/test_config "s3://${CONFIG_BUCKET_NAME}"
+
+          STATE_MACHINE_ARN=$(aws ssm get-parameter --name "/gh-push/${AWS_STAGE}/PipelineArn" --query "Parameter.Value" --output text)
+          echo "Starting Step Function execution: ${STATE_MACHINE_ARN}"
+          aws stepfunctions start-execution --state-machine-arn "${STATE_MACHINE_ARN}" --input "file://${{ github.event_path }}"
+
+  sync-dev:
+    needs: [detect, sync-default]
+    if: always() && needs.detect.outputs.sync_dev == 'true' && (needs.sync-default.result == 'success' || needs.sync-default.result == 'skipped')
+    runs-on: ubuntu-latest
+    environment: dev
+    env:
+      AWS_STAGE: ${{ vars.AWS_STAGE || 'Klayers-devp38' }}
+      AWS_REGION: ${{ vars.AWS_REGION || 'us-west-2' }}
+      AWS_ROLE_ARN: ${{ vars.AWS_ROLE_ARN || 'arn:aws:iam::908645878701:role/github_role_dev' }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ env.AWS_REGION }}
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
+          role-duration-seconds: 1200
+          role-session-name: sync-config-dev
+
+      - name: Upload test_config to S3 & Trigger Step Function
+        run: |
+          CONFIG_BUCKET_NAME=$(aws ssm get-parameter --name "/kl/${AWS_STAGE}/config_bucket/name" --query "Parameter.Value" --output text)
+          echo "Syncing ./pipeline/config/test_config to s3://${CONFIG_BUCKET_NAME}"
+          aws s3 sync ./pipeline/config/test_config "s3://${CONFIG_BUCKET_NAME}"
+
+          STATE_MACHINE_ARN=$(aws ssm get-parameter --name "/gh-push/${AWS_STAGE}/PipelineArn" --query "Parameter.Value" --output text)
+          echo "Starting Step Function execution: ${STATE_MACHINE_ARN}"
+          aws stepfunctions start-execution --state-machine-arn "${STATE_MACHINE_ARN}" --input "file://${{ github.event_path }}"
+
+  sync-prod-config:
+    needs: [detect]
+    if: needs.detect.outputs.sync_prod == 'true'
+    runs-on: ubuntu-latest
+    environment: prod-config
+    env:
+      AWS_STAGE: ${{ vars.AWS_STAGE || 'Klayers-prodp38' }}
+      AWS_REGION: ${{ vars.AWS_REGION || 'us-east-2' }}
+      AWS_ROLE_ARN: ${{ vars.AWS_ROLE_ARN || 'arn:aws:iam::770693421928:role/github_role_prod' }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ env.AWS_REGION }}
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
+          role-duration-seconds: 1200
+          role-session-name: sync-config-prod
+
+      - name: Upload Production Config to S3 & Trigger Step Function
+        run: |
+          CONFIG_BUCKET_NAME=$(aws ssm get-parameter --name "/kl/${AWS_STAGE}/config_bucket/name" --query "Parameter.Value" --output text)
+          echo "Syncing ./pipeline/config (excluding test_config/*) to s3://${CONFIG_BUCKET_NAME}"
+          aws s3 sync ./pipeline/config "s3://${CONFIG_BUCKET_NAME}" --exclude "test_config/*"
+
+          STATE_MACHINE_ARN=$(aws ssm get-parameter --name "/gh-push/${AWS_STAGE}/PipelineArn" --query "Parameter.Value" --output text)
+          echo "Starting Step Function execution: ${STATE_MACHINE_ARN}"
+          aws stepfunctions start-execution --state-machine-arn "${STATE_MACHINE_ARN}" --input "file://${{ github.event_path }}"

@@ -1,0 +1,337 @@
+name: PR Validation
+
+on:
+  pull_request:
+    branches:
+      - master
+
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: write
+
+jobs:
+  changes:
+    name: Detect Changed Paths
+    runs-on: ubuntu-latest
+    outputs:
+      config: ${{ steps.filter.outputs.config }}
+      api: ${{ steps.filter.outputs.api }}
+      common_services: ${{ steps.filter.outputs.common_services }}
+      github_on_pr_merge: ${{ steps.filter.outputs.github_on_pr_merge }}
+      core_pipeline: ${{ steps.filter.outputs.core_pipeline }}
+      container_images: ${{ steps.filter.outputs.container_images }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Filter Paths
+        id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            config:
+              - 'pipeline/config/**'
+              - 'pipeline/scripts/**'
+            api:
+              - 'pipeline/api/**'
+            common_services:
+              - 'pipeline/common_services/**'
+            github_on_pr_merge:
+              - 'pipeline/github_on_pr_merge/**'
+            core_pipeline:
+              - 'pipeline/core_pipeline/**'
+            container_images:
+              - 'pipeline/container_images/**'
+
+  validate-config:
+    name: Validate Config and Packages CSV
+    needs: changes
+    if: needs.changes.outputs.config == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: pipeline/scripts
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: uv sync --frozen || uv sync
+
+      - name: Run CSV & Config Validation
+        run: uv run python validate_csv.py --check-pypi --base-ref origin/${{ github.base_ref }}
+
+  validate-api:
+    name: Validate API Component
+    needs: changes
+    if: needs.changes.outputs.api == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: pipeline/api
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install dependencies
+        run: uv sync --frozen || uv sync
+
+      - name: Run Ruff check
+        run: uv run ruff check .
+
+      - name: Run Pytest
+        run: uv run pytest
+
+      - name: CDK Synth
+        run: |
+          if [ -f cdk.json ]; then
+            npx --yes aws-cdk@2 synth -c stage=Klayers-devp38
+          fi
+
+  validate-common-services:
+    name: Validate Common Services Component
+    needs: changes
+    if: needs.changes.outputs.common_services == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: pipeline/common_services
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install dependencies
+        run: uv sync --frozen || uv sync
+
+      - name: Run Ruff check
+        run: uv run ruff check .
+
+      - name: Run Pytest
+        run: uv run pytest
+
+      - name: CDK Synth
+        run: |
+          if [ -f cdk.json ]; then
+            npx --yes aws-cdk@2 synth -c stage=Klayers-devp38
+          fi
+
+  validate-github-on-pr-merge:
+    name: Validate GitHub on PR Merge Component
+    needs: changes
+    if: needs.changes.outputs.github_on_pr_merge == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: pipeline/github_on_pr_merge
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install dependencies
+        run: uv sync --frozen || uv sync
+
+      - name: Run Ruff check
+        run: uv run ruff check .
+
+      - name: Run Pytest
+        run: uv run pytest
+
+      - name: CDK Synth
+        run: |
+          if [ -f cdk.json ]; then
+            npx --yes aws-cdk@2 synth -c stage=Klayers-devp38
+          fi
+
+  validate-core-pipeline:
+    name: Validate Core Pipeline Component
+    needs: changes
+    if: needs.changes.outputs.core_pipeline == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: pipeline/core_pipeline
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install dependencies
+        run: uv sync --frozen || uv sync
+
+      - name: Run Ruff check
+        run: uv run ruff check .
+
+      - name: Run Pytest
+        run: uv run pytest
+
+      - name: CDK Synth
+        env:
+          KLAYERS_OFFLINE_SYNTH: "1"
+        run: |
+          if [ -f cdk.json ]; then
+            npx --yes aws-cdk@2 synth -c stage=Klayers-devp38
+          fi
+
+  validate-container-images:
+    name: Validate Container Images Component
+    needs: changes
+    if: needs.changes.outputs.container_images == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: pipeline/container_images
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: uv sync --frozen || uv sync
+
+      - name: Run Ruff check
+        run: uv run ruff check .
+
+      - name: Run Pytest
+        run: uv run pytest
+
+  cdk-diff-dev:
+    name: CDK Diff vs Dev
+    needs:
+      - changes
+      - validate-api
+      - validate-common-services
+      - validate-github-on-pr-merge
+      - validate-core-pipeline
+    if: |
+      always() &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      (
+        needs.changes.outputs.api == 'true' ||
+        needs.changes.outputs.common_services == 'true' ||
+        needs.changes.outputs.github_on_pr_merge == 'true' ||
+        needs.changes.outputs.core_pipeline == 'true'
+      )
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+          role-session-name: cdk-diff-pr
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Run CDK Diff for Changed Components
+        run: |
+          echo "### CDK Diff Report (Environment: dev)" >> $GITHUB_STEP_SUMMARY
+          echo "Comparing pull request changes against \`dev\` environment resources." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          for comp in api common_services github_on_pr_merge core_pipeline; do
+            CHANGED="false"
+            case $comp in
+              api) [ "${{ needs.changes.outputs.api }}" == "true" ] && CHANGED="true" ;;
+              common_services) [ "${{ needs.changes.outputs.common_services }}" == "true" ] && CHANGED="true" ;;
+              github_on_pr_merge) [ "${{ needs.changes.outputs.github_on_pr_merge }}" == "true" ] && CHANGED="true" ;;
+              core_pipeline) [ "${{ needs.changes.outputs.core_pipeline }}" == "true" ] && CHANGED="true" ;;
+            esac
+
+            if [ "$CHANGED" == "true" ] && [ -d "pipeline/$comp" ] && [ -f "pipeline/$comp/cdk.json" ]; then
+              echo "Processing pipeline/$comp..."
+              pushd "pipeline/$comp" > /dev/null
+              uv sync --frozen || uv sync
+              DIFF_OUTPUT=$(npx --yes aws-cdk@2 diff -c stage=${{ vars.AWS_STAGE }} 2>&1 || true)
+              echo "<details><summary><b>pipeline/$comp Diff Summary</b></summary>" >> $GITHUB_STEP_SUMMARY
+              echo "" >> $GITHUB_STEP_SUMMARY
+              echo '```text' >> $GITHUB_STEP_SUMMARY
+              echo "$DIFF_OUTPUT" >> $GITHUB_STEP_SUMMARY
+              echo '```' >> $GITHUB_STEP_SUMMARY
+              echo "</details>" >> $GITHUB_STEP_SUMMARY
+              popd > /dev/null
+            fi
+          done

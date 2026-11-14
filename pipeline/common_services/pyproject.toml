@@ -1,0 +1,26 @@
+[project]
+name = "klayers-common-services"
+version = "0.1.0"
+description = "Klayers common services CDK mini-app"
+readme = "README.MD"
+requires-python = ">=3.13"
+dependencies = [
+    "aws-cdk-lib>=2.170.0",
+    "constructs>=10.0.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0.0",
+    "moto[dynamodb,s3]>=5.0.0",
+    "boto3>=1.34.0",
+    "aws-lambda-powertools>=3.0.0",
+    "ruff>=0.8.0",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+
+[tool.pytest.ini_options]
+pythonpath = [".", "src"]
