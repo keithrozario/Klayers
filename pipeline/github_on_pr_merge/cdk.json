@@ -1,0 +1,21 @@
+{
+  "app": "uv run python infra.py",
+  "watch": {
+    "include": [
+      "**"
+    ],
+    "exclude": [
+      "README.md",
+      "cdk*.json",
+      "requirements*.txt",
+      "source.bat",
+      "**/__init__.py",
+      "tests/**",
+      "node_modules",
+      ".layer_build/**"
+    ]
+  },
+  "context": {
+    "@aws-cdk/core:checkSecretUsage": true
+  }
+}

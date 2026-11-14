@@ -1,0 +1,31 @@
+name: Deploy Common Services
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "pipeline/common_services/**"
+      - ".github/workflows/deploy-common-services.yml"
+  workflow_dispatch:
+    inputs:
+      target_environment:
+        description: "Target environment to deploy"
+        type: choice
+        options:
+          - default
+          - dev
+          - prod
+          - promote_all
+        default: default
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    uses: ./.github/workflows/_reusable-cdk-deploy.yml
+    with:
+      project_dir: pipeline/common_services
+      target_environment: ${{ github.event_name == 'workflow_dispatch' && inputs.target_environment || 'promote_all' }}

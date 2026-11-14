@@ -1,0 +1,20 @@
+[project]
+name = "klayers-container-images"
+version = "0.1.0"
+description = "Klayers container image build scripts"
+requires-python = ">=3.13"
+dependencies = [
+    "aws-lambda-powertools>=2.0.0",
+    "boto3>=1.34.0",
+]
+
+[dependency-groups]
+dev = [
+    "moto[dynamodb,s3]>=5.0.0",
+    "pytest>=8.0.0",
+    "ruff>=0.8.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

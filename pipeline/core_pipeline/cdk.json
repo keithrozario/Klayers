@@ -1,0 +1,3 @@
+{
+  "app": "uv run python infra.py"
+}
