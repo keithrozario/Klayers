@@ -23,7 +23,7 @@ Central configuration microservice:
   - `GET /api/v1/config/{python_version}/{config_type}`
   - `GET /api/v1/configS3/{python_version}/{config_type}`
   - `POST /api/v1/load-config`
-- Lambda functions running Python 3.13.
+- Lambda functions running Python 3.14.
 - Publishes SSM parameters:
   - `/common-service/<stage>/CommonServiceApi/URL`
   - `/common-service/<stage>/CommonServiceApi/arn`
@@ -42,12 +42,11 @@ The primary build and publication engine:
 - Data-driven Python CDK stack dynamically synthesizing `Build<PyVer>` container Lambdas and Step Function `Choice` branches from `config/config.json`.
 - State Machines orchestrating package build, verification, multi-region layer deployment, and DynamoDB updates.
 - DynamoDB Stream processor for TTL layer expiration.
-- Slack notifications service using `slack_sdk`.
 
 ### 5. `api/` (Stack: `klayers-api-<stage>`)
 Public read-only API and CloudFront CDN distribution:
 - Serves `api.klayers.cloud` (and `api-dev.klayers.cloud`, `api-default.klayers.cloud`).
-- Lambda functions on Python 3.13 (`arm64` Graviton) querying DynamoDB and returning JSON, CSV, and HTML views of available layers.
+- Lambda functions on Python 3.14 (`arm64` Graviton) querying DynamoDB and returning JSON, CSV, and HTML views of available layers.
 
 ### 6. `github_on_pr_merge/` (Stack: `klayers-gh-push-<stage>`)
 Event handler invoked when community PRs add new packages to CSV files:

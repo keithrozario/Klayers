@@ -9,7 +9,6 @@ from packaging.version import parse
 
 from common import get_config
 
-slack_notification = importlib.import_module("05_slack_notification.slack_notification")
 check = importlib.import_module("02_pipeline.check")
 stream_processor = importlib.import_module("04_stream_processor.stream_processor")
 layer_delete = importlib.import_module("04_stream_processor.layer_delete")
@@ -92,49 +91,6 @@ def test_check_get_latest_release():
         ver, license_info = check.get_latest_release("testpkg")
         assert ver == parse("1.9.0")
         assert license_info == "MIT"
-
-
-# ---------------------------------------------------------------------------
-# Slack notification lazy init tests
-# ---------------------------------------------------------------------------
-def test_slack_lazy_init_does_not_crash_on_import():
-    assert hasattr(slack_notification, "post_to_slack")
-    assert hasattr(slack_notification, "slack_notification_pipeline_error")
-
-
-@mock_aws
-def test_slack_notification_lazy_get_client(monkeypatch):
-    slack_notification._slack_client = None
-    slack_notification._default_channel = None
-
-    ssm = boto3.client("ssm", region_name="us-east-2")
-    ssm.put_parameter(
-        Name="/kl/Klayers-defaultp38/slack_token",
-        Value="xoxb-mock-token-123",
-        Type="SecureString",
-    )
-
-    client, channel = slack_notification._get_slack_client_and_channel()
-    assert channel == "#buildstatus-default"
-    assert client.token == "xoxb-mock-token-123"
-
-    with patch.object(client, "chat_postMessage", return_value={"ok": True}) as mock_post:
-        status = slack_notification.post_to_slack("Test message")
-        assert status == "Success"
-        mock_post.assert_called_once_with(channel="#buildstatus-default", text="Test message")
-
-
-def test_slack_notification_pipeline_error(dummy_context):
-    mock_event = {
-        "detail": {
-            "status": "FAILED",
-            "input": json.dumps({"detail": {"package": "requests"}}),
-        }
-    }
-    with patch.object(slack_notification, "post_to_slack", return_value="Success") as mock_post:
-        res = slack_notification.slack_notification_pipeline_error(mock_event, dummy_context)
-        assert json.loads(res)["status"] == "Success"
-        mock_post.assert_called_once_with(message="ERROR: Building requests status: FAILED")
 
 
 # ---------------------------------------------------------------------------

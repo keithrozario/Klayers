@@ -15,7 +15,7 @@ def test_common_services_infra_stack():
     )
     template = Template.from_stack(stack)
 
-    # 1. Assert exactly 4 Lambda functions with Python 3.13
+    # 1. Assert exactly 4 Lambda functions with Python 3.14
     template.resource_count_is("AWS::Lambda::Function", 4)
 
     # Verify check_python_versions function properties
@@ -23,7 +23,7 @@ def test_common_services_infra_stack():
         "AWS::Lambda::Function",
         {
             "Handler": "get_python_versions.main",
-            "Runtime": "python3.13",
+            "Runtime": "python3.14",
             "Timeout": 3,
             "MemorySize": 256,
             "Environment": {
@@ -41,7 +41,7 @@ def test_common_services_infra_stack():
         "AWS::Lambda::Function",
         {
             "Handler": "get_config.main",
-            "Runtime": "python3.13",
+            "Runtime": "python3.14",
             "Timeout": 3,
             "MemorySize": 256,
         },
@@ -52,7 +52,7 @@ def test_common_services_infra_stack():
         "AWS::Lambda::Function",
         {
             "Handler": "get_config_s3.main",
-            "Runtime": "python3.13",
+            "Runtime": "python3.14",
             "Timeout": 3,
             "MemorySize": 256,
         },
@@ -63,7 +63,7 @@ def test_common_services_infra_stack():
         "AWS::Lambda::Function",
         {
             "Handler": "load_config_from_s3.main",
-            "Runtime": "python3.13",
+            "Runtime": "python3.14",
             "Timeout": 29,
             "MemorySize": 512,
         },

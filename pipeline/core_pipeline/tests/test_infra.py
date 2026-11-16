@@ -29,8 +29,8 @@ def stack():
 def test_lambda_counts(stack):
     template = Template.from_stack(stack)
 
-    # 10 Zip Lambdas + 6 Dynamic Container Lambdas = 16
-    template.resource_count_is("AWS::Lambda::Function", 16)
+    # 6 Zip Lambdas + 6 Dynamic Container Lambdas = 12
+    template.resource_count_is("AWS::Lambda::Function", 12)
 
     # 1 Self-Contained Dependency Layer
     template.resource_count_is("AWS::Lambda::LayerVersion", 1)
@@ -86,13 +86,11 @@ def test_step_function_and_dynamic_choices(stack):
 def test_event_bridge_rules(stack):
     template = Template.from_stack(stack)
 
-    # We expect 5 EventBridge rules:
+    # We expect 3 EventBridge rules:
     # 1. InvokePipelineScheduleRule
     # 2. LayerDeleteRule
-    # 3. PostMessageToSlackRule
-    # 4. TriggerPipelineRule
-    # 5. PipelineStatusFailureRule
-    template.resource_count_is("AWS::Events::Rule", 5)
+    # 3. TriggerPipelineRule
+    template.resource_count_is("AWS::Events::Rule", 3)
 
     # Schedule rule
     template.has_resource_properties(
@@ -107,20 +105,6 @@ def test_event_bridge_rules(stack):
             "EventPattern": {
                 "detail-type": ["REMOVE"],
                 "detail": {"pk_type": ["lyr"]},
-            }
-        },
-    )
-
-    # Status failure rule
-    template.has_resource_properties(
-        "AWS::Events::Rule",
-        {
-            "EventPattern": {
-                "source": ["aws.states"],
-                "detail-type": ["Step Functions Execution Status Change"],
-                "detail": {
-                    "status": ["ABORTED", "FAILED", "TIMED_OUT"],
-                },
             }
         },
     )

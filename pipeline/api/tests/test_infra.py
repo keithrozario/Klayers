@@ -15,18 +15,18 @@ def test_infra_stack_prod():
     )
     template = Template.from_stack(stack)
 
-    # Assert 4 Lambda functions on python3.13 and arm64
-    py313_arm64_functions = template.find_resources(
+    # Assert 4 Lambda functions on python3.14 and arm64
+    py314_arm64_functions = template.find_resources(
         "AWS::Lambda::Function",
         {
             "Properties": {
-                "Runtime": "python3.13",
+                "Runtime": "python3.14",
                 "Architectures": ["arm64"],
             }
         },
     )
-    assert len(py313_arm64_functions) == 4
-    for fn in py313_arm64_functions.values():
+    assert len(py314_arm64_functions) == 4
+    for fn in py314_arm64_functions.values():
         props = fn["Properties"]
         assert props["MemorySize"] == 256
         assert props["Timeout"] == 10
@@ -41,7 +41,7 @@ def test_infra_stack_prod():
         "AWS::Lambda::LayerVersion",
         {
             "CompatibleArchitectures": ["arm64"],
-            "CompatibleRuntimes": ["python3.13"],
+            "CompatibleRuntimes": ["python3.14"],
         },
     )
 
@@ -117,16 +117,16 @@ def test_infra_stack_default():
         env=cdk.Environment(account="367660174341", region="ap-southeast-1"),
     )
     template = Template.from_stack(stack)
-    py313_arm64_functions = template.find_resources(
+    py314_arm64_functions = template.find_resources(
         "AWS::Lambda::Function",
         {
             "Properties": {
-                "Runtime": "python3.13",
+                "Runtime": "python3.14",
                 "Architectures": ["arm64"],
             }
         },
     )
-    assert len(py313_arm64_functions) == 4
+    assert len(py314_arm64_functions) == 4
     template.has_resource_properties(
         "AWS::SSM::Parameter",
         {

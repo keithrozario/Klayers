@@ -3,7 +3,7 @@ name = "klayers-pipeline-scripts"
 version = "0.1.0"
 description = "Validation and utility scripts for Klayers pipeline"
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.14"
 dependencies = [
     "packaging>=24.0",
     "requests>=2.32.0",
@@ -17,7 +17,7 @@ dev = [
 
 [tool.ruff]
 line-length = 100
-target-version = "py313"
+target-version = "py314"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "W"]

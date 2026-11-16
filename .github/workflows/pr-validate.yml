@@ -58,13 +58,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install uv
+      - name: Install uv and Python 3.14
         uses: astral-sh/setup-uv@v5
-
-      - name: Set up Python 3.13
-        uses: actions/setup-python@v5
         with:
-          python-version: "3.13"
+          python-version: "3.14"
 
       - name: Install dependencies
         run: uv sync --frozen || uv sync
@@ -84,13 +81,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install uv
+      - name: Install uv and Python 3.14
         uses: astral-sh/setup-uv@v5
-
-      - name: Set up Python 3.13
-        uses: actions/setup-python@v5
         with:
-          python-version: "3.13"
+          python-version: "3.14"
 
       - name: Set up Node.js 22
         uses: actions/setup-node@v4
@@ -124,13 +118,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install uv
+      - name: Install uv and Python 3.14
         uses: astral-sh/setup-uv@v5
-
-      - name: Set up Python 3.13
-        uses: actions/setup-python@v5
         with:
-          python-version: "3.13"
+          python-version: "3.14"
 
       - name: Set up Node.js 22
         uses: actions/setup-node@v4
@@ -164,13 +155,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install uv
+      - name: Install uv and Python 3.14
         uses: astral-sh/setup-uv@v5
-
-      - name: Set up Python 3.13
-        uses: actions/setup-python@v5
         with:
-          python-version: "3.13"
+          python-version: "3.14"
 
       - name: Set up Node.js 22
         uses: actions/setup-node@v4
@@ -204,13 +192,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install uv
+      - name: Install uv and Python 3.14
         uses: astral-sh/setup-uv@v5
-
-      - name: Set up Python 3.13
-        uses: actions/setup-python@v5
         with:
-          python-version: "3.13"
+          python-version: "3.14"
 
       - name: Set up Node.js 22
         uses: actions/setup-node@v4
@@ -246,13 +231,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install uv
+      - name: Install uv and Python 3.14
         uses: astral-sh/setup-uv@v5
-
-      - name: Set up Python 3.13
-        uses: actions/setup-python@v5
         with:
-          python-version: "3.13"
+          python-version: "3.14"
 
       - name: Install dependencies
         run: uv sync --frozen || uv sync
@@ -293,13 +275,10 @@ jobs:
           aws-region: ${{ vars.AWS_REGION }}
           role-session-name: cdk-diff-pr
 
-      - name: Install uv
+      - name: Install uv and Python 3.14
         uses: astral-sh/setup-uv@v5
-
-      - name: Set up Python 3.13
-        uses: actions/setup-python@v5
         with:
-          python-version: "3.13"
+          python-version: "3.14"
 
       - name: Set up Node.js 22
         uses: actions/setup-node@v4

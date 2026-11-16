@@ -3,7 +3,7 @@ name = "klayers-api"
 version = "0.1.0"
 description = "CDK Mini-App for Klayers API"
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.14"
 dependencies = [
     "aws-cdk-lib>=2.170.0",
     "constructs>=10.0.0",

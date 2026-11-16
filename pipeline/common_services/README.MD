@@ -6,7 +6,7 @@ This component provides the central configuration services used across Klayers. 
 
 This service is a self-contained AWS CDK (Python) mini-app deployed as stack `klayers-common-<stage>`:
 
-- **Runtime**: Python 3.13 for all Lambda functions.
+- **Runtime**: Python 3.14 for all Lambda functions.
 - **Dependency Bundling**: Zero external layer ARNs. Pure-Python dependencies (`aws-lambda-powertools`) are packaged into a local Lambda Layer (`.layer_build/python`) during synthesis via `uv pip install`.
 - **API Gateway**: HTTP API (v2) with `AWS_IAM` (SigV4) authorization enabled by default on all routes.
 - **State & Storage**:

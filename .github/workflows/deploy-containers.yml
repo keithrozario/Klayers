@@ -187,8 +187,10 @@ jobs:
         with:
           node-version: 22
 
-      - name: Setup uv
+      - name: Setup uv and Python 3.14
         uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.14"
 
       - name: Roll forward CDK infra if present
         run: |
@@ -278,8 +280,10 @@ jobs:
         with:
           node-version: 22
 
-      - name: Setup uv
+      - name: Setup uv and Python 3.14
         uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.14"
 
       - name: Roll forward CDK infra if present
         run: |
@@ -369,8 +373,10 @@ jobs:
         with:
           node-version: 22
 
-      - name: Setup uv
+      - name: Setup uv and Python 3.14
         uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.14"
 
       - name: Roll forward CDK infra if present
         run: |

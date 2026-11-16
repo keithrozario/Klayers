@@ -1,7 +1,7 @@
 """CDK Mini-App for Klayers Common Services.
 
 Deploys:
-  - 4 Python 3.13 Lambda functions for configuration management
+  - 4 Python 3.14 Lambda functions for configuration management
   - HTTP API (API Gateway v2) with AWS_IAM default authorization
   - SSM Parameters for CommonServiceApi URL and ARN
 """
@@ -57,7 +57,7 @@ def build_deps_layer(scope: Construct) -> lambda_.LayerVersion:
                 "--python-platform",
                 "x86_64-manylinux2014",
                 "--python-version",
-                "3.13",
+                "3.14",
                 "--target",
                 str(target_python_dir),
                 "-r",
@@ -71,7 +71,7 @@ def build_deps_layer(scope: Construct) -> lambda_.LayerVersion:
         scope,
         "CommonDepsLayer",
         code=lambda_.Code.from_asset(str(layer_dir)),
-        compatible_runtimes=[lambda_.Runtime.PYTHON_3_13],
+        compatible_runtimes=[lambda_.Runtime.PYTHON_3_14],
         description="Self-contained dependencies layer for common services",
     )
 
@@ -117,7 +117,7 @@ class CommonServicesStack(cdk.Stack):
         check_python_versions = lambda_.Function(
             self,
             "CheckPythonVersionsFunction",
-            runtime=lambda_.Runtime.PYTHON_3_13,
+            runtime=lambda_.Runtime.PYTHON_3_14,
             handler="get_python_versions.main",
             code=lambda_.Code.from_asset(str(src_dir)),
             layers=[deps_layer],
@@ -143,7 +143,7 @@ class CommonServicesStack(cdk.Stack):
         get_config = lambda_.Function(
             self,
             "GetConfigFunction",
-            runtime=lambda_.Runtime.PYTHON_3_13,
+            runtime=lambda_.Runtime.PYTHON_3_14,
             handler="get_config.main",
             code=lambda_.Code.from_asset(str(src_dir)),
             layers=[deps_layer],
@@ -169,7 +169,7 @@ class CommonServicesStack(cdk.Stack):
         get_config_s3 = lambda_.Function(
             self,
             "GetConfigS3Function",
-            runtime=lambda_.Runtime.PYTHON_3_13,
+            runtime=lambda_.Runtime.PYTHON_3_14,
             handler="get_config_s3.main",
             code=lambda_.Code.from_asset(str(src_dir)),
             layers=[deps_layer],
@@ -195,7 +195,7 @@ class CommonServicesStack(cdk.Stack):
         load_config = lambda_.Function(
             self,
             "LoadConfigFunction",
-            runtime=lambda_.Runtime.PYTHON_3_13,
+            runtime=lambda_.Runtime.PYTHON_3_14,
             handler="load_config_from_s3.main",
             code=lambda_.Code.from_asset(str(src_dir)),
             layers=[deps_layer],

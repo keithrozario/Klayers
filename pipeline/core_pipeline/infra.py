@@ -78,7 +78,7 @@ def build_deps_layer(scope: Construct) -> lambda_.LayerVersion:
                 "--python-platform",
                 "x86_64-manylinux2014",
                 "--python-version",
-                "3.13",
+                "3.14",
                 "--target",
                 str(python_dir),
                 "-r",
@@ -92,7 +92,7 @@ def build_deps_layer(scope: Construct) -> lambda_.LayerVersion:
         scope,
         "CorePipelineDepsLayer",
         code=lambda_.Code.from_asset(str(layer_dir)),
-        compatible_runtimes=[lambda_.Runtime.PYTHON_3_13],
+        compatible_runtimes=[lambda_.Runtime.PYTHON_3_14],
         description="Shared dependencies for Klayers core pipeline Lambdas",
     )
 
@@ -174,8 +174,6 @@ class CorePipelineStack(Stack):
         db_stream_label = ssm.StringParameter.value_for_string_parameter(self, f"/kl/{stage}/db-ver2/stream/label")
         db_stream_arn = ssm.StringParameter.value_for_string_parameter(self, f"/kl/{stage}/db-ver2/stream/arn")
 
-        slack_token_param = f"/kl/{stage}/slack_token"
-
         # Read config.json for dynamic python versions
         config_path = Path(__file__).resolve().parent.parent / "config" / "config.json"
         with open(config_path) as f:
@@ -242,14 +240,14 @@ class CorePipelineStack(Stack):
             build_lambdas[py_ver] = build_fn
 
         # ---------------------------------------------------------------------------
-        # 10 Zip Lambdas (Python 3.13)
+        # 6 Zip Lambdas (Python 3.14)
         # ---------------------------------------------------------------------------
 
         # 1. invoke_pipeline
         invoke_pipeline_fn = lambda_.Function(
             self,
             "InvokePipelineFunction",
-            runtime=lambda_.Runtime.PYTHON_3_13,
+            runtime=lambda_.Runtime.PYTHON_3_14,
             handler="01_invoke_pipelines/invoke_pipelines.main",
             code=code,
             layers=[deps_layer],
@@ -303,7 +301,7 @@ class CorePipelineStack(Stack):
         check_fn = lambda_.Function(
             self,
             "CheckFunction",
-            runtime=lambda_.Runtime.PYTHON_3_13,
+            runtime=lambda_.Runtime.PYTHON_3_14,
             handler="02_pipeline/check.main",
             code=code,
             layers=[deps_layer],
@@ -322,7 +320,7 @@ class CorePipelineStack(Stack):
         deploy_fn = lambda_.Function(
             self,
             "DeployFunction",
-            runtime=lambda_.Runtime.PYTHON_3_13,
+            runtime=lambda_.Runtime.PYTHON_3_14,
             handler="02_pipeline/deploy.main",
             code=code,
             layers=[deps_layer],
@@ -383,7 +381,7 @@ class CorePipelineStack(Stack):
         combine_packages_fn = lambda_.Function(
             self,
             "CombinePackagesFunction",
-            runtime=lambda_.Runtime.PYTHON_3_13,
+            runtime=lambda_.Runtime.PYTHON_3_14,
             handler="02_pipeline/combine.main",
             code=code,
             layers=[deps_layer],
@@ -438,7 +436,7 @@ class CorePipelineStack(Stack):
         stream_handler_fn = lambda_.Function(
             self,
             "StreamHandlerFunction",
-            runtime=lambda_.Runtime.PYTHON_3_13,
+            runtime=lambda_.Runtime.PYTHON_3_14,
             handler="04_stream_processor/stream_processor.main",
             code=code,
             layers=[deps_layer],
@@ -484,7 +482,7 @@ class CorePipelineStack(Stack):
         layer_delete_fn = lambda_.Function(
             self,
             "LayerDeleteFunction",
-            runtime=lambda_.Runtime.PYTHON_3_13,
+            runtime=lambda_.Runtime.PYTHON_3_14,
             handler="04_stream_processor/layer_delete.main",
             code=code,
             layers=[deps_layer],
@@ -522,101 +520,6 @@ class CorePipelineStack(Stack):
             ),
             targets=[targets.LambdaFunction(layer_delete_fn)],
         )
-
-        # Slack Lambdas
-        slack_env = {
-            "STAGE": stage,
-            "SLACK_TOKEN_PARAMETER": slack_token_param,
-        }
-        slack_ssm_policy = iam.PolicyStatement(
-            actions=["ssm:GetParameter"],
-            resources=[f"arn:aws:ssm:{region}:{account_id}:parameter{slack_token_param}"],
-        )
-
-        # 7. slack_pipeline
-        slack_pipeline_fn = lambda_.Function(
-            self,
-            "SlackPipelineFunction",
-            runtime=lambda_.Runtime.PYTHON_3_13,
-            handler="05_slack_notification/slack_notification.slack_notification_pipeline_error",
-            code=code,
-            layers=[deps_layer],
-            timeout=Duration.seconds(20),
-            memory_size=256,
-            log_group=make_log_group("SlackPipelineLogGroup"),
-            description="Notify Slack when there's an error on the pipeline state machine",
-            environment={
-                **slack_env,
-                "POWERTOOLS_SERVICE_NAME": "slack_pipeline",
-            },
-        )
-        slack_pipeline_fn.add_to_role_policy(slack_ssm_policy)
-
-        # 8. slack_publish
-        slack_publish_fn = lambda_.Function(
-            self,
-            "SlackPublishFunction",
-            runtime=lambda_.Runtime.PYTHON_3_13,
-            handler="05_slack_notification/slack_notification.slack_notification_publish",
-            code=code,
-            layers=[deps_layer],
-            timeout=Duration.seconds(20),
-            memory_size=256,
-            log_group=make_log_group("SlackPublishLogGroup"),
-            description="Notify Slack when a publish is successful or failed",
-            environment={
-                **slack_env,
-                "POWERTOOLS_SERVICE_NAME": "slack_publish",
-            },
-        )
-        slack_publish_fn.add_to_role_policy(slack_ssm_policy)
-
-        # 9. post_message_to_slack
-        post_message_to_slack_fn = lambda_.Function(
-            self,
-            "PostMessageToSlackFunction",
-            runtime=lambda_.Runtime.PYTHON_3_13,
-            handler="05_slack_notification/slack_notification.post_message_to_slack",
-            code=code,
-            layers=[deps_layer],
-            timeout=Duration.seconds(20),
-            memory_size=256,
-            log_group=make_log_group("PostMessageToSlackLogGroup"),
-            description="Generic Slack notifications via EventBridge",
-            environment={
-                **slack_env,
-                "POWERTOOLS_SERVICE_NAME": "post_to_slack",
-            },
-        )
-        post_message_to_slack_fn.add_to_role_policy(slack_ssm_policy)
-
-        events.Rule(
-            self,
-            "PostMessageToSlackRule",
-            event_pattern=events.EventPattern(
-                detail_type=["post_to_slack"],
-            ),
-            targets=[targets.LambdaFunction(post_message_to_slack_fn)],
-        )
-
-        # 10. slack_invokepipeline
-        slack_invokepipeline_fn = lambda_.Function(
-            self,
-            "SlackInvokePipelineFunction",
-            runtime=lambda_.Runtime.PYTHON_3_13,
-            handler="05_slack_notification/slack_notification.slack_notification_invoke_pipeline_error",
-            code=code,
-            layers=[deps_layer],
-            timeout=Duration.seconds(20),
-            memory_size=256,
-            log_group=make_log_group("SlackInvokePipelineLogGroup"),
-            description="Notify Slack when there's an error on the invoke pipeline state machine",
-            environment={
-                **slack_env,
-                "POWERTOOLS_SERVICE_NAME": "slack_invoke_pipeline",
-            },
-        )
-        slack_invokepipeline_fn.add_to_role_policy(slack_ssm_policy)
 
         # ---------------------------------------------------------------------------
         # Step Function (kl-${stage}-pipeline)
@@ -744,21 +647,6 @@ class CorePipelineStack(Stack):
                 detail_type=["invoke_pipeline"],
             ),
             targets=[targets.SfnStateMachine(state_machine)],
-        )
-
-        # Monitor state machine execution failures
-        events.Rule(
-            self,
-            "PipelineStatusFailureRule",
-            event_pattern=events.EventPattern(
-                source=["aws.states"],
-                detail_type=["Step Functions Execution Status Change"],
-                detail={
-                    "status": ["ABORTED", "FAILED", "TIMED_OUT"],
-                    "stateMachineArn": [state_machine.state_machine_arn],
-                },
-            ),
-            targets=[targets.LambdaFunction(slack_pipeline_fn)],
         )
 
 

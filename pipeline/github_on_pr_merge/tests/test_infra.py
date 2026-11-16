@@ -19,10 +19,10 @@ def test_gh_push_stack():
     # 1. Assert exactly 6 Lambda functions exist
     template.resource_count_is("AWS::Lambda::Function", 6)
 
-    # Assert all functions use Python 3.13 and 256 MB memory
+    # Assert all functions use Python 3.14 and 256 MB memory
     functions = template.find_resources("AWS::Lambda::Function")
     for _, fn_props in functions.items():
-        assert fn_props["Properties"]["Runtime"] == "python3.13"
+        assert fn_props["Properties"]["Runtime"] == "python3.14"
         assert fn_props["Properties"]["MemorySize"] == 256
 
     # 2. Assert State Machine exists and has ItemProcessor

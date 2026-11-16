@@ -29,19 +29,19 @@ Klayers is intentionally structured as **separate, loosely coupled components** 
 | Component Directory | Current Tooling | Target Tooling | AWS Resources Owned |
 | :--- | :--- | :--- | :--- |
 | `pipeline/Terraform` | Terraform Cloud | **Keep as-is** *(+ CDK OIDC policy)* | DynamoDB (`db-ver2`), S3 buckets, ECR repos, ACM cert (`us-east-1`), GitHub OIDC roles, base SSM params |
-| `pipeline/common_services` | Serverless v3 (`python3.9`) | **CDK Python Mini-App (`python3.13`)** | IAM-authed HTTP API + 4 config Lambdas + `/common-service/<stage>/*` SSM params |
-| `pipeline/github_on_pr_merge` | Serverless v3 (`python3.9`) | **CDK Python Mini-App (`python3.13`)** | `gh-push` Step Function + 6 Lambdas + `/gh-push/<stage>/PipelineArn` SSM param |
+| `pipeline/common_services` | Serverless v3 (`python3.9`) | **CDK Python Mini-App (`python3.14`)** | IAM-authed HTTP API + 4 config Lambdas + `/common-service/<stage>/*` SSM params |
+| `pipeline/github_on_pr_merge` | Serverless v3 (`python3.9`) | **CDK Python Mini-App (`python3.14`)** | `gh-push` Step Function + 6 Lambdas + `/gh-push/<stage>/PipelineArn` SSM param |
 | `pipeline/container_images` | 6x duplicate Dockerfiles + QEMU GHA | **1x Parameterized `Dockerfile` + Native ARM64 GHA** | Builds `x86` & `arm64` builder images -> pushes ECR -> updates `/kl/<stage>/build/*/digest` SSM |
-| `pipeline/api` | Serverless v2/v3 (`python3.8`) | **CDK Python Mini-App (`python3.13` `arm64`)** | CloudFront (`api.klayers.cloud`) + HTTP API + 4 query Lambdas + CF ID SSM param |
-| `pipeline/core_pipeline` *(was `Serverless`)* | Serverless v2/v3 + Bref (`python3.8`/`3.9`) | **CDK Python Mini-App (`python3.13` + ECR)** | Build Step Function, dynamic `Build*` container Lambdas, monthly cron, DDB Stream TTL deleter, Slack Lambdas |
+| `pipeline/api` | Serverless v2/v3 (`python3.8`) | **CDK Python Mini-App (`python3.14` `arm64`)** | CloudFront (`api.klayers.cloud`) + HTTP API + 4 query Lambdas + CF ID SSM param |
+| `pipeline/core_pipeline` *(was `Serverless`)* | Serverless v2/v3 + Bref (`python3.8`/`3.9`) | **CDK Python Mini-App (`python3.14` + ECR)** | Build Step Function, dynamic `Build*` container Lambdas, monthly cron, DDB Stream TTL deleter |
 
 ### 2.3 Technical Debt Resolved Along the Way
 
-1. **EOL Lambda Runtimes (`python3.8` & `python3.9` -> `python3.13`)**: AWS blocks CloudFormation updates on Python 3.8/3.9. All zip-based control-plane Lambdas are upgraded to `python3.13` (and `datetime.utcnow()` calls updated to `datetime.now(timezone.utc)`).
-2. **Self-Contained Packaging (No Circular Layer Dependencies)**: Control-plane functions currently reference legacy external/self-hosted layers (`113088814899:layer:Klayers-python37-packaging:1`, `Klayers-p38-slackclient:6`, Powertools v1). Each CDK mini-app bundles its own `requirements.txt` dependencies cleanly at deploy time alongside AWS's official regional `AWSLambdaPowertoolsPythonV3` layer.
+1. **EOL Lambda Runtimes (`python3.8` & `python3.9` -> `python3.14`)**: AWS blocks CloudFormation updates on Python 3.8/3.9. All zip-based control-plane Lambdas are upgraded to `python3.14` (and `datetime.utcnow()` calls updated to `datetime.now(timezone.utc)`).
+2. **Self-Contained Packaging (No Circular Layer Dependencies)**: Control-plane functions previously referenced legacy external/self-hosted layers (`113088814899:layer:Klayers-python37-packaging:1`, `Klayers-p38-slackclient:6`, Powertools v1). Each CDK mini-app bundles its own `requirements.txt` dependencies cleanly into a self-contained `uv`-built layer at synth time.
 3. **Data-Driven Python Versions**: `pipeline/core_pipeline/infra.py` reads `../config/config.json` in a standard Python loop to generate all `Build<PyVer>` container Lambdas and Step Function `Choice` branches automatically—eliminating manual YAML copy-pasting when Python 3.15+ arrives.
-4. **Bug Fixes**:
-   - Fix `slackTokenParameter` double-brace typo in `pipeline/Serverless/serverless.yml` (`/${self:service}}/...` -> `/kl/${stage}/slack_token`) and replace deprecated `import slack` (`slackclient` v2) with `slack_sdk` / `urllib.request`.
+4. **Cleanup & Bug Fixes**:
+   - Retire unused Slack notification Lambdas (`05_slack_notification/*`), EventBridge rules, and `slackclient` / `/kl/<stage>/slack_token` dependencies completely.
    - Upgrade `github_on_pr_merge` Step Function `Map` state from legacy `Iterator` to `ItemProcessor`.
    - Remove the broken `.github/workflows/issue_commented.yml` stub and retire the 6 multi-branch workflow triggers.
 
@@ -125,8 +125,8 @@ Klayers/
         ├── cdk.json
         ├── infra.py                 # Dynamically loops over ../config/config.json for Build* Lambdas & SFN Choice
         ├── pyproject.toml
-        ├── requirements.txt         # requests, packaging, aws-requests-auth, slack_sdk
-        ├── src/                     # 01_invoke_pipelines/, 02_pipeline/, 04_stream_processor/, 05_slack_notification/, common/
+        ├── requirements.txt         # aws-lambda-powertools, requests, packaging, aws-requests-auth
+        ├── src/                     # 01_invoke_pipelines/, 02_pipeline/, 04_stream_processor/, common/
         └── tests/
 ```
 
@@ -326,7 +326,7 @@ flowchart LR
    - Commit `.github/workflows/_reusable-cdk-deploy.yml`, `pr-validate.yml`, and `manual-ops.yml`.
 
 ### Phase 1: Migrate `pipeline/api` (`api.klayers.cloud` — Standalone Read-Only API)
-1. Upgrade query handlers from `python3.8` -> `python3.13` (`arm64` Graviton2), bundle `tabulate` locally, and add unit tests verifying identical JSON, CSV, and HTML outputs.
+1. Upgrade query handlers from `python3.8` -> `python3.14` (`arm64` Graviton2), bundle `tabulate` locally, and add unit tests verifying identical JSON, CSV, and HTML outputs.
 2. Create `pipeline/api/infra.py`, `cdk.json`, `pyproject.toml`, and `.github/workflows/deploy-api.yml` (configuring CloudFront + `apiDomainName` + `/kl/<stage>/api/cfDistribution/id`).
 3. **Cutover (`default` -> `dev` -> `prod`)**:
    - In `default` and `dev`: delete legacy `api-<stage>` -> deploy `klayers-api-<stage>` -> verify JSON, CSV, and HTML responses against live DynamoDB data.
@@ -338,7 +338,7 @@ flowchart LR
 3. Remove legacy `.github/workflows/container_builds.yml` and retire `container_builds-*` branches.
 
 ### Phase 3: Migrate `pipeline/github_on_pr_merge`
-1. Upgrade the 6 handlers from `python3.9` -> `python3.13`, update `get_config.py` to resolve `/common-service/${STAGE}/CommonServiceApi/URL` dynamically from SSM (cached 300s), bundle `requests` + `aws-requests-auth` locally, and upgrade the Step Function `Map` state from `Iterator` to `ItemProcessor`.
+1. Upgrade the 6 handlers from `python3.9` -> `python3.14`, update `get_config.py` to resolve `/common-service/${STAGE}/CommonServiceApi/URL` dynamically from SSM (cached 300s), bundle `requests` + `aws-requests-auth` locally, and upgrade the Step Function `Map` state from `Iterator` to `ItemProcessor`.
 2. Create `pipeline/github_on_pr_merge/infra.py`, `cdk.json`, `pyproject.toml`, `.github/workflows/deploy-pr-merge.yml`, and `.github/workflows/sync-config.yml`.
 3. **Cutover (`default` -> `dev` -> `prod`)**:
    - In `default` and `dev`: delete legacy `gh-push-<stage>` -> deploy `klayers-gh-push-<stage>` -> test end-to-end with a `test_config` sync.
@@ -346,17 +346,16 @@ flowchart LR
 
 ### Phase 4: Rename & Migrate `pipeline/core_pipeline` (Was `pipeline/Serverless`)
 1. Rename `pipeline/Serverless` -> `pipeline/core_pipeline` (removing `.serverless/` and `node_modules/`).
-2. Upgrade the 8 zip handlers (`invoke_pipeline`, `check`, `deploy`, `combine_packages`, `stream_handler`, `layer_delete`, `slack_*`) from `python3.8`/`3.9` -> `python3.13`:
+2. Upgrade the 6 remaining zip handlers (`invoke_pipeline`, `check`, `deploy`, `combine_packages`, `stream_handler`, `layer_delete`) from `python3.8`/`3.9` -> `python3.14` and remove the 4 retired Slack Lambdas (`05_slack_notification`):
    - Update `get_config.py` for dynamic cold-start SSM lookup of `/common-service/${STAGE}/CommonServiceApi/URL`.
-   - Fix `slackTokenParameter` (`/${service}}/...` -> `/kl/${stage}/slack_token`) and replace `import slack` with `slack_sdk`.
-   - Bundle `requests`, `packaging`, `aws-requests-auth`, `slack_sdk` locally.
+   - Bundle `aws-lambda-powertools`, `requests`, `packaging`, and `aws-requests-auth` locally.
 3. Create `pipeline/core_pipeline/infra.py`, `cdk.json`, `pyproject.toml`, and `.github/workflows/deploy-core-pipeline.yml`, looping over `../config/config.json` (`python_versions`) to dynamically define `Build<PyVer>` ECR container Lambdas and Step Function `ChoicePythonVersion` branches.
 4. **Cutover (`default` -> `dev` -> `prod`)**:
    - In `default` and `dev`: delete legacy `kl-<stage>` -> deploy `klayers-core-<stage>` -> run `pipeline/tests/test_pipeline_execution.py` end-to-end.
    - In `prod` (mid-month when idle): delete `kl-Klayers-prodp38` -> approve `prod` deploy -> run a single-package smoke check via `manual-ops.yml`.
 
 ### Phase 5: Migrate `pipeline/common_services` (Final Swap & Cleanup)
-1. Upgrade the 4 handlers in `pipeline/common_services` from `python3.9` -> `python3.13` and add unit tests.
+1. Upgrade the 4 handlers in `pipeline/common_services` from `python3.9` -> `python3.14` and add unit tests.
 2. Create `pipeline/common_services/infra.py`, `cdk.json`, `pyproject.toml`, and `.github/workflows/deploy-common-services.yml`, writing directly to `/common-service/<stage>/CommonServiceApi/{URL,arn}`.
 3. **Cutover (`default` -> `dev` -> `prod`) & Final Cleanup**:
    - In each environment: delete legacy `common-service-<stage>` -> deploy `klayers-common-<stage>` (~60s) -> verify the 4 SigV4 endpoints (Phases 3 & 4 automatically pick up the new URL from SSM).

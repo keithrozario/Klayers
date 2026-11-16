@@ -47,7 +47,7 @@ def build_deps_layer(scope: Construct) -> lambda_.LayerVersion:
             "--python-platform",
             "x86_64-manylinux2014",
             "--python-version",
-            "3.13",
+            "3.14",
             "--target",
             str(python_dir),
             "-r",
@@ -60,7 +60,7 @@ def build_deps_layer(scope: Construct) -> lambda_.LayerVersion:
         scope,
         "DependenciesLayer",
         code=lambda_.Code.from_asset(str(layer_dir)),
-        compatible_runtimes=[lambda_.Runtime.PYTHON_3_13],
+        compatible_runtimes=[lambda_.Runtime.PYTHON_3_14],
         description="Internal dependencies layer for klayers-gh-push",
     )
 
@@ -100,7 +100,7 @@ class GhPushStack(cdk.Stack):
         fn_check_new_packages = lambda_.Function(
             self,
             "CheckNewPackagesFunction",
-            runtime=lambda_.Runtime.PYTHON_3_13,
+            runtime=lambda_.Runtime.PYTHON_3_14,
             handler="check_new_packages.main",
             code=code,
             timeout=cdk.Duration.seconds(120),
@@ -147,7 +147,7 @@ class GhPushStack(cdk.Stack):
         fn_check_python_versions = lambda_.Function(
             self,
             "CheckPythonVersionsFunction",
-            runtime=lambda_.Runtime.PYTHON_3_13,
+            runtime=lambda_.Runtime.PYTHON_3_14,
             handler="check_python_versions.main",
             code=code,
             timeout=cdk.Duration.seconds(120),
@@ -182,7 +182,7 @@ class GhPushStack(cdk.Stack):
         fn_invoke_pipelines = lambda_.Function(
             self,
             "InvokePipelinesFunction",
-            runtime=lambda_.Runtime.PYTHON_3_13,
+            runtime=lambda_.Runtime.PYTHON_3_14,
             handler="invoke_pipelines.main",
             code=code,
             timeout=cdk.Duration.seconds(120),
@@ -211,7 +211,7 @@ class GhPushStack(cdk.Stack):
         fn_get_pr_number = lambda_.Function(
             self,
             "GetPrNumberFunction",
-            runtime=lambda_.Runtime.PYTHON_3_13,
+            runtime=lambda_.Runtime.PYTHON_3_14,
             handler="get_pr_number.main",
             code=code,
             timeout=cdk.Duration.seconds(120),
@@ -234,7 +234,7 @@ class GhPushStack(cdk.Stack):
         fn_update_pr = lambda_.Function(
             self,
             "UpdatePrFunction",
-            runtime=lambda_.Runtime.PYTHON_3_13,
+            runtime=lambda_.Runtime.PYTHON_3_14,
             handler="update_pr.main",
             code=code,
             timeout=cdk.Duration.seconds(30),
@@ -257,7 +257,7 @@ class GhPushStack(cdk.Stack):
         fn_load_config = lambda_.Function(
             self,
             "LoadConfigFunction",
-            runtime=lambda_.Runtime.PYTHON_3_13,
+            runtime=lambda_.Runtime.PYTHON_3_14,
             handler="load_config.main",
             code=code,
             timeout=cdk.Duration.seconds(30),

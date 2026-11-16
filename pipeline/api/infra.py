@@ -41,7 +41,7 @@ STAGE_ACCOUNTS = {
 
 
 def build_deps_layer(scope: constructs.Construct) -> lambda_.LayerVersion:
-    """Builds and packages requirements.txt for arm64 Python 3.13 into a Lambda Layer."""
+    """Builds and packages requirements.txt for arm64 Python 3.14 into a Lambda Layer."""
     app_dir = Path(__file__).parent.resolve()
     layer_dir = app_dir / ".layer_build"
     target_dir = layer_dir / "python"
@@ -68,7 +68,7 @@ def build_deps_layer(scope: constructs.Construct) -> lambda_.LayerVersion:
                 "--python-platform",
                 "aarch64-manylinux2014",
                 "--python-version",
-                "3.13",
+                "3.14",
                 "--target",
                 str(target_dir),
                 "-r",
@@ -82,7 +82,7 @@ def build_deps_layer(scope: constructs.Construct) -> lambda_.LayerVersion:
         scope,
         "ApiDepsLayer",
         code=lambda_.Code.from_asset(str(layer_dir)),
-        compatible_runtimes=[lambda_.Runtime.PYTHON_3_13],
+        compatible_runtimes=[lambda_.Runtime.PYTHON_3_14],
         compatible_architectures=[lambda_.Architecture.ARM_64],
         description="Dependencies layer for Klayers API (powertools, tabulate)",
     )
@@ -134,7 +134,7 @@ class KlayersApiStack(Stack):
         fn_arn_by_package_region = lambda_.Function(
             self,
             "ArnByPackageRegionFunction",
-            runtime=lambda_.Runtime.PYTHON_3_13,
+            runtime=lambda_.Runtime.PYTHON_3_14,
             architecture=lambda_.Architecture.ARM_64,
             handler="layers.latest_region_package.main",
             code=lambda_.Code.from_asset(src_dir),
@@ -161,7 +161,7 @@ class KlayersApiStack(Stack):
         fn_arn_by_regions = lambda_.Function(
             self,
             "ArnByRegionsFunction",
-            runtime=lambda_.Runtime.PYTHON_3_13,
+            runtime=lambda_.Runtime.PYTHON_3_14,
             architecture=lambda_.Architecture.ARM_64,
             handler="layers.latest_region.main",
             code=lambda_.Code.from_asset(src_dir),
@@ -188,7 +188,7 @@ class KlayersApiStack(Stack):
         fn_list_layers = lambda_.Function(
             self,
             "ListLayersFunction",
-            runtime=lambda_.Runtime.PYTHON_3_13,
+            runtime=lambda_.Runtime.PYTHON_3_14,
             architecture=lambda_.Architecture.ARM_64,
             handler="layers.list_layer_version.main",
             code=lambda_.Code.from_asset(src_dir),
@@ -215,7 +215,7 @@ class KlayersApiStack(Stack):
         fn_list_builds = lambda_.Function(
             self,
             "ListBuildsFunction",
-            runtime=lambda_.Runtime.PYTHON_3_13,
+            runtime=lambda_.Runtime.PYTHON_3_14,
             architecture=lambda_.Architecture.ARM_64,
             handler="builds.list_builds.main",
             code=lambda_.Code.from_asset(src_dir),
