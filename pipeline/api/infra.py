@@ -306,47 +306,69 @@ class KlayersApiStack(Stack):
         )
 
         # CloudFront Distribution
+        enable_alias_ctx = self.node.try_get_context("enable_alias")
+        if enable_alias_ctx is None:
+            enable_alias = True
+        elif isinstance(enable_alias_ctx, str):
+            enable_alias = enable_alias_ctx.lower() in ("true", "1", "yes")
+        else:
+            enable_alias = bool(enable_alias_ctx)
+
+        dist_config_kwargs = {
+            "enabled": True,
+            "http_version": "http2",
+            "price_class": "PriceClass_All",
+            "origins": [
+                cloudfront.CfnDistribution.OriginProperty(
+                    id=stage,
+                    domain_name=f"{http_api.api_id}.execute-api.{region}.amazonaws.com",
+                    custom_origin_config=cloudfront.CfnDistribution.CustomOriginConfigProperty(
+                        http_port=80,
+                        https_port=443,
+                        origin_protocol_policy="https-only",
+                        origin_ssl_protocols=["TLSv1.2"],
+                    ),
+                ),
+            ],
+            "default_cache_behavior": cloudfront.CfnDistribution.DefaultCacheBehaviorProperty(
+                allowed_methods=["GET", "HEAD"],
+                cached_methods=["GET", "HEAD"],
+                target_origin_id=stage,
+                forwarded_values=cloudfront.CfnDistribution.ForwardedValuesProperty(
+                    query_string=True,
+                    cookies=cloudfront.CfnDistribution.CookiesProperty(
+                        forward="none"
+                    ),
+                ),
+                min_ttl=3600,
+                default_ttl=3600,
+                max_ttl=86400,
+                viewer_protocol_policy="https-only",
+                compress=True,
+            ),
+        }
+
+        if enable_alias:
+            dist_config_kwargs["aliases"] = [api_domain_name]
+            dist_config_kwargs["viewer_certificate"] = (
+                cloudfront.CfnDistribution.ViewerCertificateProperty(
+                    acm_certificate_arn=api_cert_arn,
+                    minimum_protocol_version="TLSv1.2_2019",
+                    ssl_support_method="sni-only",
+                )
+            )
+        else:
+            dist_config_kwargs["viewer_certificate"] = (
+                cloudfront.CfnDistribution.ViewerCertificateProperty(
+                    cloud_front_default_certificate=True,
+                )
+            )
+
         cfn_dist = cloudfront.CfnDistribution(
             self,
             "CloudFrontDistribution",
             distribution_config=cloudfront.CfnDistribution.DistributionConfigProperty(
-                aliases=[api_domain_name],
-                enabled=True,
-                http_version="http2",
-                price_class="PriceClass_All",
-                viewer_certificate=cloudfront.CfnDistribution.ViewerCertificateProperty(
-                    acm_certificate_arn=api_cert_arn,
-                    minimum_protocol_version="TLSv1.2_2019",
-                    ssl_support_method="sni-only",
-                ),
-                origins=[
-                    cloudfront.CfnDistribution.OriginProperty(
-                        id=stage,
-                        domain_name=f"{http_api.api_id}.execute-api.{region}.amazonaws.com",
-                        custom_origin_config=cloudfront.CfnDistribution.CustomOriginConfigProperty(
-                            http_port=80,
-                            https_port=443,
-                            origin_protocol_policy="https-only",
-                            origin_ssl_protocols=["TLSv1.2"],
-                        ),
-                    ),
-                ],
-                default_cache_behavior=cloudfront.CfnDistribution.DefaultCacheBehaviorProperty(
-                    allowed_methods=["GET", "HEAD"],
-                    cached_methods=["GET", "HEAD"],
-                    target_origin_id=stage,
-                    forwarded_values=cloudfront.CfnDistribution.ForwardedValuesProperty(
-                        query_string=True,
-                        cookies=cloudfront.CfnDistribution.CookiesProperty(
-                            forward="none"
-                        ),
-                    ),
-                    min_ttl=3600,
-                    default_ttl=3600,
-                    max_ttl=86400,
-                    viewer_protocol_policy="https-only",
-                    compress=True,
-                ),
+                **dist_config_kwargs
             ),
         )
 
@@ -358,6 +380,19 @@ class KlayersApiStack(Stack):
             string_value=cfn_dist.ref,
             description="Cloudfront Distribution ID for API",
             tier=ssm.ParameterTier.STANDARD,
+        )
+
+        cdk.CfnOutput(
+            self,
+            "HttpApiUrl",
+            value=http_api.api_endpoint,
+            description="URL of HTTP API",
+        )
+        cdk.CfnOutput(
+            self,
+            "CloudFrontDomainName",
+            value=cfn_dist.attr_domain_name,
+            description="CloudFront distribution domain name",
         )
 
 

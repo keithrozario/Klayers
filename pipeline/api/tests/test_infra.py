@@ -134,3 +134,27 @@ def test_infra_stack_default():
             "Type": "String",
         },
     )
+
+
+def test_infra_stack_disable_alias():
+    app = cdk.App(context={"enable_alias": "false"})
+    stack = KlayersApiStack(
+        app,
+        "TestApiStackNoAlias",
+        stage="Klayers-defaultp38",
+        region="ap-southeast-1",
+        env=cdk.Environment(account="367660174341", region="ap-southeast-1"),
+    )
+    template = Template.from_stack(stack)
+    template.has_resource_properties(
+        "AWS::CloudFront::Distribution",
+        {
+            "DistributionConfig": Match.object_like(
+                {
+                    "ViewerCertificate": {
+                        "CloudFrontDefaultCertificate": True,
+                    }
+                }
+            )
+        },
+    )
