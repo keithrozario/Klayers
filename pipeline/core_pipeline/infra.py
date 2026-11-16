@@ -335,6 +335,7 @@ class CorePipelineStack(Stack):
                 "BUCKET_NAME": layers_bucket_name,
                 "POWERTOOLS_SERVICE_NAME": "Klayers.Deploy",
                 "EXPIRY_DAYS": "365",
+                "LAMBDA_LAYER_PREFIX": "Klayers-",
             },
         )
         deploy_fn.add_to_role_policy(
@@ -395,6 +396,7 @@ class CorePipelineStack(Stack):
                 "DB_NAME": db_name,
                 "BUCKET_NAME": layers_bucket_name,
                 "POWERTOOLS_SERVICE_NAME": stage,
+                "LAMBDA_LAYER_PREFIX": "Klayers-",
             },
         )
         combine_packages_fn.add_to_role_policy(
