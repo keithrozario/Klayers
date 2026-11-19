@@ -1,0 +1,201 @@
+name: Manual Operations
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_environment:
+        description: "Target environment"
+        type: choice
+        options:
+          - default
+          - dev
+          - prod
+        default: default
+      action:
+        description: "Operation to execute"
+        type: choice
+        options:
+          - build_single_package
+          - run_all_packages
+          - reload_config
+          - combine_packages
+      package:
+        description: "Package name (or comma-separated packages for combine_packages)"
+        type: string
+        required: false
+      python_version:
+        description: "Target Python runtime version"
+        type: choice
+        options:
+          - p3.12
+          - p3.12-arm64
+          - p3.13
+          - p3.13-arm64
+          - p3.14
+          - p3.14-arm64
+        default: p3.14
+      force_build:
+        description: "Force rebuild even if version has not changed"
+        type: boolean
+        default: false
+      force_deploy:
+        description: "Force redeploy even if layer hash matches"
+        type: boolean
+        default: false
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  execute-ops:
+    name: Execute Manual Op (${{ inputs.action }})
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.target_environment }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+          role-session-name: manual-ops-${{ github.actor }}
+
+      - name: Run Selected Action
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          ACTION="${{ inputs.action }}"
+          STAGE="${{ vars.AWS_STAGE }}"
+          PACKAGE="${{ inputs.package }}"
+          PYTHON_VERSION="${{ inputs.python_version }}"
+          FORCE_BUILD="${{ inputs.force_build }}"
+          FORCE_DEPLOY="${{ inputs.force_deploy }}"
+
+          echo "============================================="
+          echo "Action:             $ACTION"
+          echo "Target Environment: ${{ inputs.target_environment }}"
+          echo "Stage:              $STAGE"
+          echo "Python Version:     $PYTHON_VERSION"
+          echo "Package:            $PACKAGE"
+          echo "Force Build:        $FORCE_BUILD"
+          echo "Force Deploy:       $FORCE_DEPLOY"
+          echo "============================================="
+
+          case "$ACTION" in
+            build_single_package)
+              if [ -z "$PACKAGE" ]; then
+                echo "::error::'package' input is required for build_single_package"
+                exit 1
+              fi
+
+              SOURCE="Klayers.invoke.${STAGE}"
+              DETAIL_TYPE="invoke_pipeline"
+
+              DETAIL=$(jq -c -n \
+                --arg pkg "$PACKAGE" \
+                --arg py "$PYTHON_VERSION" \
+                --argjson fb "$FORCE_BUILD" \
+                --argjson fd "$FORCE_DEPLOY" \
+                '{package: $pkg, python_version: $py, force_build: $fb, force_deploy: $fd, secondsDelay: 0}')
+
+              ENTRY=$(jq -c -n \
+                --arg src "$SOURCE" \
+                --arg dt "$DETAIL_TYPE" \
+                --arg det "$DETAIL" \
+                '[{Source: $src, DetailType: $dt, Detail: $det, EventBusName: "default"}]')
+
+              echo "Publishing EventBridge event to default bus:"
+              echo "$ENTRY" | jq .
+
+              aws events put-events --entries "$ENTRY"
+              echo "Event successfully published for single package build ($PACKAGE)."
+              ;;
+
+            run_all_packages)
+              echo "Locating invoke_pipelines Lambda for stage $STAGE..."
+              FUNC_NAME=$(aws lambda list-functions \
+                --query "Functions[?(contains(FunctionName, 'klayers-core') && contains(FunctionName, 'InvokePipeline')) || contains(FunctionName, 'invoke_pipeline')].FunctionName | [0]" \
+                --output text || true)
+
+              if [ -z "$FUNC_NAME" ] || [ "$FUNC_NAME" == "None" ]; then
+                FUNC_NAME="klayers-${STAGE}-invoke_pipelines"
+              fi
+
+              echo "Invoking Lambda: $FUNC_NAME"
+              aws lambda invoke \
+                --function-name "$FUNC_NAME" \
+                --payload '{}' \
+                --cli-binary-format raw-in-base64-out \
+                response.json
+
+              echo "Invocation response:"
+              cat response.json
+              echo ""
+              ;;
+
+            reload_config)
+              echo "Locating load_config Lambda for stage $STAGE..."
+              FUNC_NAME=$(aws lambda list-functions \
+                --query "Functions[?(contains(FunctionName, 'klayers-common') && contains(FunctionName, 'LoadConfig')) || contains(FunctionName, 'load_config')].FunctionName | [0]" \
+                --output text || true)
+
+              if [ -z "$FUNC_NAME" ] || [ "$FUNC_NAME" == "None" ]; then
+                FUNC_NAME="klayers-${STAGE}-load_config"
+              fi
+
+              echo "Invoking Lambda: $FUNC_NAME"
+              PAYLOAD='{"calling_service": "github_manual_ops"}'
+              aws lambda invoke \
+                --function-name "$FUNC_NAME" \
+                --payload "$PAYLOAD" \
+                --cli-binary-format raw-in-base64-out \
+                response.json
+
+              echo "Invocation response:"
+              cat response.json
+              echo ""
+              ;;
+
+            combine_packages)
+              if [ -z "$PACKAGE" ]; then
+                echo "::error::'package' input (comma-separated packages) is required for combine_packages"
+                exit 1
+              fi
+
+              echo "Locating combine packages Lambda for stage $STAGE..."
+              FUNC_NAME=$(aws lambda list-functions \
+                --query "Functions[?(contains(FunctionName, 'klayers-core') && contains(FunctionName, 'CombinePackages')) || contains(FunctionName, 'combine')].FunctionName | [0]" \
+                --output text || true)
+
+              if [ -z "$FUNC_NAME" ] || [ "$FUNC_NAME" == "None" ]; then
+                FUNC_NAME="klayers-${STAGE}-combine"
+              fi
+
+              PACKAGES_JSON=$(jq -c -n --arg pkgs "$PACKAGE" '$pkgs | split(",") | map(gsub("^\\s+|\\s+$"; ""))')
+
+              PAYLOAD=$(jq -c -n \
+                --argjson pkgs "$PACKAGES_JSON" \
+                --arg py "$PYTHON_VERSION" \
+                '{packages: $pkgs, python_version: $py}')
+
+              echo "Invoking Lambda: $FUNC_NAME with payload: $PAYLOAD"
+              aws lambda invoke \
+                --function-name "$FUNC_NAME" \
+                --payload "$PAYLOAD" \
+                --cli-binary-format raw-in-base64-out \
+                response.json
+
+              echo "Invocation response:"
+              cat response.json
+              echo ""
+              ;;
+
+            *)
+              echo "::error::Unknown action '$ACTION'"
+              exit 1
+              ;;
+          esac
