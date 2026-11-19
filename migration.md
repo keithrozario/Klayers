@@ -266,8 +266,7 @@ on:
 
 | Scenario | Trigger | Target Environment(s) |
 | :--- | :--- | :--- |
-| **Community PR adds a package** to `pipeline/config/packages_*.csv` | Merge PR to `master` (`sync-config.yml`) | **`prod` (`prod-config`)** — Immediately uploads `pipeline/config` to `prod` S3 and starts `prod` `gh-push` Step Function (no second approval click needed). |
-| **Testing config changes** in `pipeline/config/test_config/**` | Push to `master` touching `test_config/**` (or `workflow_dispatch` dropdown) | **`default` -> `dev`** — Uploads `test_config` to `default`/`dev` S3 buckets and triggers their `gh-push` Step Functions. |
+| **Community PR or commit changes `pipeline/config/**`** | Merge/push to `master` (`sync-config.yml`) | **`prod` only (`prod-config`)** — Immediately uploads `pipeline/config` (excluding `test_config/*`) to `prod` S3 and starts `prod`'s `gh-push` Step Function. Never updates `default` or `dev`. |
 | **1st-of-the-Month Full Rebuild** | AWS EventBridge Schedule in `core_pipeline` | **`prod` only** (`cron(0 2 1 * ? *)`). Kept disabled in `default` and `dev` so test accounts don't run monthly builds automatically. |
 | **Test a tricky package in `default`/`dev`, or force-rebuild in `prod`** | **`manual-ops.yml` (`workflow_dispatch` dropdowns)** | **Whichever environment you pick in the dropdown** (`default`, `dev`, or `prod`), sending the `invoke_pipeline` EventBridge payload straight to that account via OIDC. |
 
@@ -280,7 +279,7 @@ on:
    - **If a CDK project folder changed** (`common_services`, `github_on_pr_merge`, `api`, `core_pipeline`): Runs `ruff`, `pytest`, and `cdk diff` against `dev`/`prod` **only for that folder**, posting a clean CloudFormation diff comment on the PR.
 3. **`deploy-common-services.yml` / `deploy-pr-merge.yml` / `deploy-api.yml` / `deploy-core-pipeline.yml`**: Thin ~30-line callers into `_reusable-cdk-deploy.yml` with path filters and `target_environment` dropdown inputs.
 4. **`deploy-containers.yml`**: Dynamic `config.json` matrix build on `ubuntu-latest` + `ubuntu-24.04-arm`, OCI artifact promotion, SSM digest update, and `core_pipeline` digest rollout.
-5. **`sync-config.yml`**: Syncs config CSVs/JSON to S3 and invokes `gh-push` Step Function (`test_config` -> `default`/`dev`; `config` -> `prod-config`), plus `workflow_dispatch` dropdown override.
+5. **`sync-config.yml`**: Triggers on any push to `master` touching `pipeline/config/**` (or `workflow_dispatch`), syncing `pipeline/config` to production S3 and invoking `gh-push` Step Function in **`prod` only** (`prod-config`) — never updating `default` or `dev`.
 6. **`manual-ops.yml`**: `workflow_dispatch` dropdown panel for single-package builds (`package`, `python_version`, `force_build`, `force_deploy`), `load_config` reloads, full `invoke_pipeline` runs, and `combine_packages`.
 
 ---
